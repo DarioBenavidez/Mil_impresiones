@@ -57,19 +57,19 @@
 <script src="chrome.js?v=2"></script>
 <script>
 const WORKS = [
-  { cat: 'packaging',    title: 'Cervecería Artesanal Norte', meta: 'Packaging · 2025',               bg: 'bg-m',     size: 'span-6 wide', glyph: 'CN', img: 'photo-1607082349566-187342175e2f' },
-  { cat: 'diseno',       title: 'Estudio Almendra',           meta: 'Identidad · 2025',               bg: 'bg-k',     size: 'span-3',      glyph: 'AM', img: 'photo-1626785774625-0b1c2c4eab67' },
-  { cat: 'papeleria',    title: 'Clínica Sonrisas',           meta: 'Papelería · 2024',               bg: 'bg-y',     size: 'span-3',      glyph: 'CS', img: 'photo-1524758631624-e2822e304c36' },
-  { cat: 'merchandising',title: 'Agencia Deportiva Sur',      meta: 'Merchandising / Souvenir · 2024',bg: 'bg-c',     size: 'span-4',      glyph: '01', img: 'photo-1572635196237-14b3f281503f' },
-  { cat: 'diseno',       title: 'Restó Ñ',                    meta: 'Carta editorial · 2024',         bg: 'bg-paper', size: 'span-4',      glyph: 'Ñ',  img: 'photo-1414235077428-338989a2e8c0' },
-  { cat: 'gigantografia',title: 'Feria Emprendedora',         meta: 'Gigantografías · 2024',          bg: 'bg-m',     size: 'span-4',      glyph: 'FE', img: 'photo-1492168732976-cef7c2bfb6e1' },
-  { cat: 'packaging',    title: 'Miel del Monte',             meta: 'Etiquetas · 2024',               bg: 'bg-y',     size: 'span-4',      glyph: 'M',  img: 'photo-1558618666-fcd25c85cd64' },
-  { cat: 'offset',       title: 'Grupo Textil Sur · Catálogo',meta: 'Offset · 2024',                  bg: 'bg-k',     size: 'span-8 wide', glyph: 'TS', img: 'photo-1542744095-fcf48d80b0fd' },
-  { cat: 'papeleria',    title: 'Boda Soler-Navarro',         meta: 'Invitaciones · 2024',            bg: 'bg-c',     size: 'span-4',      glyph: 'SN', img: 'photo-1544078751-58fee2d8a03b' },
-  { cat: 'merchandising',title: 'Kit bienvenida Koalinga',    meta: 'Merchandising / Souvenir · 2023',bg: 'bg-m',     size: 'span-4',      glyph: 'KO', img: 'photo-1452860851378-7a9ae1378ef7' },
-  { cat: 'diseno',       title: 'Escuela Arrayanes',          meta: 'Identidad · 2023',               bg: 'bg-y',     size: 'span-4',      glyph: 'EA', img: 'photo-1580582932707-520afc6477c4' },
-  { cat: 'gigantografia',title: 'Vinilado de local Arena',    meta: 'Viniles · 2023',                 bg: 'bg-c',     size: 'span-6',      glyph: 'AR', img: 'photo-1579017331263-ef82f0bbc748' },
-  { cat: 'packaging',    title: 'Té de las Sierras',          meta: 'Packaging · 2023',               bg: 'bg-paper', size: 'span-6',      glyph: 'TS', img: 'photo-1564890369478-c89ca6d9cde9' },
+  { cat: 'packaging',    title: 'Cervecería Artesanal Norte', meta: 'Packaging · 2025',               bg: 'bg-m',     size: 'span-6 wide', glyph: 'CN', img: 'https://loremflickr.com/800/600/beer,packaging,bottle?lock=101' },
+  { cat: 'diseno',       title: 'Estudio Almendra',           meta: 'Identidad · 2025',               bg: 'bg-k',     size: 'span-3',      glyph: 'AM', img: 'https://loremflickr.com/800/600/branding,logo,identity?lock=102' },
+  { cat: 'papeleria',    title: 'Clínica Sonrisas',           meta: 'Papelería · 2024',               bg: 'bg-y',     size: 'span-3',      glyph: 'CS', img: 'https://loremflickr.com/800/600/stationery,card,paper?lock=103' },
+  { cat: 'merchandising',title: 'Agencia Deportiva Sur',      meta: 'Merchandising / Souvenir · 2024',bg: 'bg-c',     size: 'span-4',      glyph: '01', img: 'https://loremflickr.com/800/600/merchandise,sport,tshirt?lock=104' },
+  { cat: 'diseno',       title: 'Restó Ñ',                    meta: 'Carta editorial · 2024',         bg: 'bg-paper', size: 'span-4',      glyph: 'Ñ',  img: 'https://loremflickr.com/800/600/menu,restaurant,design?lock=105' },
+  { cat: 'gigantografia',title: 'Feria Emprendedora',         meta: 'Gigantografías · 2024',          bg: 'bg-m',     size: 'span-4',      glyph: 'FE', img: 'https://loremflickr.com/800/600/banner,fair,event?lock=106' },
+  { cat: 'packaging',    title: 'Miel del Monte',             meta: 'Etiquetas · 2024',               bg: 'bg-y',     size: 'span-4',      glyph: 'M',  img: 'https://loremflickr.com/800/600/honey,jar,label?lock=107' },
+  { cat: 'offset',       title: 'Grupo Textil Sur · Catálogo',meta: 'Offset · 2024',                  bg: 'bg-k',     size: 'span-8 wide', glyph: 'TS', img: 'https://loremflickr.com/800/600/catalog,printing,magazine?lock=108' },
+  { cat: 'papeleria',    title: 'Boda Soler-Navarro',         meta: 'Invitaciones · 2024',            bg: 'bg-c',     size: 'span-4',      glyph: 'SN', img: 'https://loremflickr.com/800/600/wedding,invitation,card?lock=109' },
+  { cat: 'merchandising',title: 'Kit bienvenida Koalinga',    meta: 'Merchandising / Souvenir · 2023',bg: 'bg-m',     size: 'span-4',      glyph: 'KO', img: 'https://loremflickr.com/800/600/welcome,kit,gift?lock=110' },
+  { cat: 'diseno',       title: 'Escuela Arrayanes',          meta: 'Identidad · 2023',               bg: 'bg-y',     size: 'span-4',      glyph: 'EA', img: 'https://loremflickr.com/800/600/school,brand,identity?lock=111' },
+  { cat: 'gigantografia',title: 'Vinilado de local Arena',    meta: 'Viniles · 2023',                 bg: 'bg-c',     size: 'span-6',      glyph: 'AR', img: 'https://loremflickr.com/800/600/vinyl,storefront,signage?lock=112' },
+  { cat: 'packaging',    title: 'Té de las Sierras',          meta: 'Packaging · 2023',               bg: 'bg-paper', size: 'span-6',      glyph: 'TS', img: 'https://loremflickr.com/800/600/tea,packaging,box?lock=113' },
 ];
 
 const getGlyphBgSVG = (bg) => {
@@ -83,7 +83,7 @@ function render(filter) {
   grid.innerHTML = items.map((w, i) => `
     <div class="work-card ${w.size} reveal" data-cat="${w.cat}" style="transition-delay:${(i%4)*0.08}s">
       <div class="work-thumb ${w.bg}">
-        ${w.img ? `<img src="https://images.unsplash.com/${w.img}?w=800&h=600&fit=crop&q=80&auto=format" alt="${w.title}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" loading="lazy">` : getGlyphBgSVG(w.bg) + `<span style="position:relative">${w.glyph}</span>`}
+        ${w.img ? `<img src="${w.img}" alt="${w.title}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" loading="lazy">` : getGlyphBgSVG(w.bg) + `<span style="position:relative">${w.glyph}</span>`}
       </div>
       <div class="work-overlay">
         <div>
