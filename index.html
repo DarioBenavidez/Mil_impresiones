@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1000 Impresiones · Diseño e impresión en Buenos Aires</title>
+<meta name="description" content="Más de 500 clientes. Cotización en 2 horas. Entrega en 48-72 hs hábiles. Diseño, impresión y packaging sin intermediarios.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Bricolage+Grotesque:wght@400;500;600&family=Archivo:wght@400;500;600&family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+
+/* ── Hero v3 ── */
+.hero-sub-v3 {
+  margin-top: var(--s5);
+  font-size: clamp(16px, 1.4vw, 20px);
+  max-width: 560px;
+  color: var(--fg-2);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.hero-proof {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+.proof-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-3);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+.proof-chip .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--m);
+  flex-shrink: 0;
+}
+.proof-chip.wa .dot { background: #25D366; }
+.proof-chip.clock .dot { background: var(--c); }
+
+.btn-wa {
+  background: #25D366;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.btn-wa:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 28px -8px rgba(37,211,102,0.5);
+}
+
+/* ── Process strip (horizontal, entre hero y servicios) ── */
+.process-strip {
+  background: var(--bg-2);
+  border-radius: var(--radius-lg);
+  padding: var(--s5) var(--s6);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+}
+.ps-step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  border-radius: var(--radius-sm);
+  transition: background 0.2s;
+}
+.ps-step:hover { background: var(--bg); }
+.ps-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--fg-3);
+  min-width: 20px;
+}
+.ps-body { display: flex; flex-direction: column; gap: 2px; }
+.ps-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.ps-sub {
+  font-size: 12px;
+  color: var(--fg-3);
+  line-height: 1.3;
+}
+.ps-title .accent { color: var(--m); }
+.ps-title .accent-c { color: var(--c); }
+.ps-title .accent-y { color: var(--c); }
+.ps-sep {
+  color: var(--border);
+  flex-shrink: 0;
+  padding: 0 var(--s2);
+  font-size: 18px;
+}
+@media (max-width: 860px) {
+  .process-strip { flex-wrap: wrap; gap: var(--s2); }
+  .ps-sep { display: none; }
+  .ps-step { flex: 1 1 40%; }
+}
+@media (max-width: 500px) {
+  .ps-step { flex: 1 1 100%; }
+}
+
+/* ── Service rows v3 ── */
+.services-list { border-top: 1px solid var(--border); }
+.service-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s5) var(--s4) var(--s5) var(--s4);
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.3s ease, border-color 0.3s ease, padding-left 0.35s cubic-bezier(.2,.9,.3,1);
+}
+.service-row:hover {
+  background: color-mix(in srgb, var(--row-color, var(--m)) 7%, var(--bg));
+  border-left-color: var(--row-color, var(--m));
+  padding-left: var(--s6);
+}
+.sr-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--fg-3);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}
+.service-row:hover .sr-num { color: var(--row-color, var(--m)); }
+.sr-body { display: flex; flex-direction: column; gap: 3px; }
+.sr-name {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.sr-tag {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--fg-3);
+}
+.sr-badge {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--fg-3);
+  white-space: nowrap;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+.service-row:hover .sr-badge {
+  border-color: var(--row-color, var(--m));
+  color: var(--row-color, var(--m));
+  background: color-mix(in srgb, var(--row-color, var(--m)) 8%, transparent);
+}
+.sr-arrow {
+  color: var(--fg-3);
+  transition: transform 0.25s cubic-bezier(.2,.9,.3,1), color 0.2s;
+  display: flex;
+}
+.service-row:hover .sr-arrow { transform: translateX(4px); color: var(--row-color, var(--m)); }
+@media (max-width: 600px) {
+  .service-row { grid-template-columns: 36px 1fr 20px; }
+  .sr-badge { display: none; }
+}
+
+/* ── Testimonials ── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s4);
+}
+.tcard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  transition: transform 0.3s cubic-bezier(.2,.9,.3,1), box-shadow 0.3s;
+}
+.tcard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -16px rgba(0,0,0,0.12);
+}
+.tcard-stars {
+  display: flex;
+  gap: 3px;
+}
+.tcard-stars span {
+  font-size: 14px;
+  color: var(--y);
+  filter: drop-shadow(0 0 2px rgba(255,229,0,0.4));
+}
+[data-theme="dark"] .tcard-stars span { filter: none; }
+.tcard-quote {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  flex: 1;
+}
+.tcard-author {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--border);
+}
+.tcard-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.tcard-name { font-weight: 600; font-size: 14px; font-family: var(--font-display); letter-spacing: -0.01em; }
+.tcard-role { font-size: 12px; color: var(--fg-3); margin-top: 1px; }
+@media (max-width: 860px) { .testimonials-grid { grid-template-columns: 1fr; } }
+@media (min-width: 600px) and (max-width: 860px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ── Works overlay always visible ── */
+.work-overlay-v3 {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--s4) var(--s5);
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0) 100%);
+  color: #fff;
+}
+.work-overlay-v3 .work-meta { font-size: 12px; opacity: 0.75; font-family: var(--font-display); }
+.work-overlay-v3 .work-title { font-size: 18px; font-weight: 600; margin-top: 2px; font-family: var(--font-display); letter-spacing: -0.02em; }
+
+/* ── Mobile hero circles ── */
+@media (max-width: 900px) {
+  .hero-cmyk {
+    position: relative;
+    top: auto; right: auto;
+    transform: none;
+    width: 240px; height: 240px;
+    margin: var(--s6) auto 0;
+    opacity: 0.75;
+  }
+  .cmyk-circle { width: 130px; height: 130px; }
+}
+
+</style>
+</head>
+<body data-page="home">
+
+<main>
+
+  <!-- HERO v3 -->
+  <section class="hero">
+    <div class="container hero-inner">
+
+      <div class="hero-cmyk" aria-hidden="true">
+        <div class="cmyk-circle cmyk-c"></div>
+        <div class="cmyk-circle cmyk-m"></div>
+        <div class="cmyk-circle cmyk-y"></div>
+      </div>
+
+      <div class="hero-eyebrow-row reveal">
+        <span class="eyebrow">Diseño · Impresión · Acompañamiento · Desde 2019</span>
+      </div>
+
+      <h1 class="hero-title reveal reveal-delay-1">
+        <span class="ink-k">Impresiones para </span><span class="ink-c">vos</span><span class="ink-k">,</span><br>
+        <span class="ink-k">para tu </span><span class="ink-m">emprendimiento</span><br>
+        <span class="ink-k">y para tu </span><span class="ink-y">empresa</span><span class="ink-k">.</span>
+      </h1>
+
+      <div class="hero-sub-v3 reveal reveal-delay-2">
+        <p>Sin intermediarios. Cotización en menos de 2 horas. Tu pedido listo en 48-72 hs hábiles.</p>
+        <div class="hero-proof">
+          <span class="proof-chip"><span class="dot"></span>+500 clientes</span>
+          <span class="proof-chip clock"><span class="dot"></span>Respuesta en &lt; 2 hs</span>
+          <span class="proof-chip wa"><span class="dot"></span>WhatsApp directo</span>
+        </div>
+      </div>
+
+      <div class="hero-ctas reveal reveal-delay-3">
+        <a href="contacto.html" class="btn btn-primary">
+          Pedí tu cotización
+          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://wa.me/5491136365889" class="btn btn-wa" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+          WhatsApp directo
+        </a>
+      </div>
+
+      <div class="hero-meta reveal reveal-delay-3" style="margin-top: var(--s8)">
+        <div class="hero-meta-item">
+          <div class="num">+200</div>
+          <div class="label">Clientes satisfechos</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="num">7</div>
+          <div class="label">Años en el mercado</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="num">+1.000</div>
+          <div class="label">Trabajos entregados</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESO (arriba, antes de servicios) -->
+  <section style="padding-top: 0; padding-bottom: var(--s7)">
+    <div class="container">
+      <div class="process-strip reveal">
+        <div class="ps-step">
+          <span class="ps-num">01</span>
+          <div class="ps-body">
+            <span class="ps-title">Nos contás</span>
+            <span class="ps-sub">WhatsApp, email o formulario</span>
+          </div>
+        </div>
+        <span class="ps-sep">›</span>
+        <div class="ps-step">
+          <span class="ps-num">02</span>
+          <div class="ps-body">
+            <span class="ps-title">Te cotizamos</span>
+            <span class="ps-sub">En menos de 2 horas hábiles</span>
+          </div>
+        </div>
+        <span class="ps-sep">›</span>
+        <div class="ps-step">
+          <span class="ps-num">03</span>
+          <div class="ps-body">
+            <span class="ps-title">Producimos</span>
+            <span class="ps-sub">Con tu aprobación previa</span>
+          </div>
+        </div>
+        <span class="ps-sep">›</span>
+        <div class="ps-step">
+          <span class="ps-num">04</span>
+          <div class="ps-body">
+            <span class="ps-title accent" style="color:var(--m)">Listo en 48-72 hs</span>
+            <span class="ps-sub">Entrega o retiro en local</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS con contexto -->
+  <section id="servicios">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Servicios</span>
+          <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">
+            Todo lo que tu marca<br>necesita para comunicar.
+          </h2>
+        </div>
+        <a href="servicios.html" class="link reveal reveal-delay-2">
+          Ver todos los servicios
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="services-list">
+
+        <a href="servicios.html#impresion" class="service-row reveal" style="--row-color: var(--m)">
+          <span class="sr-num">01</span>
+          <div class="sr-body">
+            <span class="sr-name">Impresión digital</span>
+            <span class="sr-tag">Flyers · Folletos · Tarjetas · Afiches</span>
+          </div>
+          <span class="sr-badge">Desde 24 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#diseno" class="service-row reveal" style="--row-color: var(--c)">
+          <span class="sr-num">02</span>
+          <div class="sr-body">
+            <span class="sr-name">Diseño gráfico</span>
+            <span class="sr-tag">Logos · Etiquetas · Identidad visual</span>
+          </div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#packaging" class="service-row reveal" style="--row-color: var(--y)">
+          <span class="sr-num">03</span>
+          <div class="sr-body">
+            <span class="sr-name">Packaging</span>
+            <span class="sr-tag">Etiquetas · Cajas · Troquelados</span>
+          </div>
+          <span class="sr-badge">Desde 72 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#gigantografias" class="service-row reveal" style="--row-color: var(--k)">
+          <span class="sr-num">04</span>
+          <div class="sr-body">
+            <span class="sr-name">Gigantografías</span>
+            <span class="sr-tag">Banners · Vinilos · Carteles</span>
+          </div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#merchandising" class="service-row reveal" style="--row-color: var(--m)">
+          <span class="sr-num">05</span>
+          <div class="sr-body">
+            <span class="sr-name">Merchandising / Souvenir</span>
+            <span class="sr-tag">Tazas · Remeras · Bolsas · Libretas</span>
+          </div>
+          <span class="sr-badge">Consultar stock</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#offset" class="service-row reveal" style="--row-color: var(--c)">
+          <span class="sr-num">06</span>
+          <div class="sr-body">
+            <span class="sr-name">Offset &amp; tiradas grandes</span>
+            <span class="sr-tag">Revistas · Catálogos · Agendas</span>
+          </div>
+          <span class="sr-badge">A convenir</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+        <a href="servicios.html#papeleria" class="service-row reveal" style="--row-color: var(--y)">
+          <span class="sr-num">07</span>
+          <div class="sr-body">
+            <span class="sr-name">Papelería creativa</span>
+            <span class="sr-tag">Tarjetas · Agendas · Invitaciones</span>
+          </div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TRABAJOS -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Trabajos recientes</span>
+          <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">
+            Lo que hacemos<br>habla por nosotros.
+          </h2>
+        </div>
+        <a href="trabajos.html" class="link reveal reveal-delay-2">
+          Ver todos los trabajos
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="works-grid">
+        <div class="work-card wide span-8 reveal">
+          <div class="work-thumb bg-m">
+            <svg width="55%" height="55%" viewBox="0 0 200 120" fill="none" opacity="0.2"><rect x="20" y="20" width="160" height="80" stroke="#fff" stroke-width="2" rx="4"/><path d="M30 30 L190 110 M170 30 L10 110" stroke="#fff" stroke-width="1"/></svg>
+          </div>
+          <div class="work-overlay-v3">
+            <div class="work-meta">Packaging · 2025</div>
+            <div class="work-title">Línea de cervecería artesanal</div>
+          </div>
+        </div>
+        <div class="work-card span-4 reveal reveal-delay-1">
+          <div class="work-thumb bg-k">AM</div>
+          <div class="work-overlay-v3">
+            <div class="work-meta">Identidad · 2025</div>
+            <div class="work-title">Estudio Almendra</div>
+          </div>
+        </div>
+        <div class="work-card span-4 reveal">
+          <div class="work-thumb bg-y">
+            <svg width="65%" height="65%" viewBox="0 0 100 100" fill="none" opacity="0.25"><circle cx="50" cy="50" r="35" stroke="#111" stroke-width="2"/><circle cx="50" cy="50" r="20" stroke="#111" stroke-width="2"/></svg>
+          </div>
+          <div class="work-overlay-v3">
+            <div class="work-meta">Papelería · 2024</div>
+            <div class="work-title">Clínica dental Sonrisas</div>
+          </div>
+        </div>
+        <div class="work-card span-4 reveal reveal-delay-1">
+          <div class="work-thumb bg-c">
+            <svg width="55%" height="55%" viewBox="0 0 100 100" fill="none" opacity="0.25"><rect x="20" y="20" width="60" height="60" stroke="#fff" stroke-width="2"/><rect x="30" y="30" width="40" height="40" stroke="#fff" stroke-width="2"/></svg>
+          </div>
+          <div class="work-overlay-v3">
+            <div class="work-meta">Merchandising · 2024</div>
+            <div class="work-title">Kit agencia deportiva</div>
+          </div>
+        </div>
+        <div class="work-card span-4 reveal reveal-delay-2">
+          <div class="work-thumb bg-paper">Ñ</div>
+          <div class="work-overlay-v3">
+            <div class="work-meta">Diseño · 2024</div>
+            <div class="work-title">Restó Ñ · Carta editorial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALES -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Testimonios</span>
+          <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">
+            Lo que dicen<br>nuestros clientes.
+          </h2>
+        </div>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="tcard reveal">
+          <div class="tcard-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="tcard-quote">"Cotizamos a la mañana y a la tarde ya teníamos respuesta. Los flyers quedaron perfectos y llegaron antes de lo prometido."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background: var(--m)">LC</div>
+            <div>
+              <div class="tcard-name">Laura C.</div>
+              <div class="tcard-role">Emprendedora · Indumentaria</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcard reveal reveal-delay-1">
+          <div class="tcard-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="tcard-quote">"Nos hicieron las etiquetas para toda la línea de productos. Excelente calidad y los colores salieron exactamente como los necesitábamos."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background: var(--c)">MR</div>
+            <div>
+              <div class="tcard-name">Martín R.</div>
+              <div class="tcard-role">Dueño · Cervecería artesanal</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tcard reveal reveal-delay-2">
+          <div class="tcard-stars">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+          </div>
+          <p class="tcard-quote">"Ya vamos por el tercer pedido. El diseño del menú nos lo hicieron desde cero, entendieron exactamente el estilo que buscábamos."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar" style="background: var(--k)">SV</div>
+            <div>
+              <div class="tcard-name">Sofía V.</div>
+              <div class="tcard-role">Socia · Restó Ñ</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section>
+    <div class="container">
+      <div class="cta-band reveal">
+        <div class="bg-dot c"></div>
+        <div class="bg-dot m"></div>
+        <span class="eyebrow" style="color: #ffffff99">Empecemos</span>
+        <h2 style="margin-top: var(--s4)">¿Tenés un proyecto en mente?</h2>
+        <p class="cta-sub">Cotización en menos de 2 horas. Entrega en 48-72 hs hábiles. Sin vueltas.</p>
+        <div class="hero-ctas" style="margin-top: var(--s6); justify-content: center;">
+          <a href="contacto.html" class="btn btn-primary">
+            Pedí tu cotización
+            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://wa.me/5491136365889" class="btn" style="background:#25D366; color:#fff; gap: var(--s2);" target="_blank">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/></svg>
+            WhatsApp directo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="chrome.js?v=2"></script>
+</body>
+</html>

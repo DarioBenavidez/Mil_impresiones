@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nosotros · 1000 Impresiones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Bricolage+Grotesque:wght@400;500;600&family=Archivo:wght@400;500;600&family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .about-hero { padding: var(--s9) 0 var(--s7); }
+  .about-hero .big-quote {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3.2vw, 48px);
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    max-width: 1000px;
+  }
+  .about-hero .big-quote .ink-c { color: var(--c); }
+  .about-hero .big-quote .ink-m { color: var(--m); }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s4);
+  }
+  .process-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--s6);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  .process-step .step-num {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .process-step:nth-child(1) .step-num { color: var(--c); }
+  .process-step:nth-child(2) .step-num { color: var(--m); }
+  .process-step:nth-child(3) .step-num { color: var(--y); }
+  .process-step:nth-child(4) .step-num { color: var(--fg); }
+  .process-step h3 { font-size: 17px; margin-bottom: var(--s2); letter-spacing: -0.02em; }
+  .process-step p { font-size: 14px; color: var(--fg-2); line-height: 1.45; }
+  @media (max-width: 900px) { .process-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .process-grid { grid-template-columns: 1fr; } }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s8);
+    align-items: center;
+  }
+  .values-visual {
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .values-visual .dot {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+  }
+  .values-visual .d1 { background: var(--c); width: 60%; height: 60%; top: -10%; left: -10%; }
+  .values-visual .d2 { background: var(--m); width: 55%; height: 55%; bottom: -10%; right: -10%; }
+  .values-visual .d3 { background: var(--y); width: 45%; height: 45%; top: 30%; left: 30%; }
+  .values-visual .word {
+    position: relative;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 64px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    padding: 0 var(--s5);
+    text-align: center;
+  }
+  .values-list { display: flex; flex-direction: column; gap: var(--s5); }
+  .value-item { display: flex; gap: var(--s4); padding-bottom: var(--s5); border-bottom: 1px solid var(--border); }
+  .value-item:last-child { border-bottom: 0; padding-bottom: 0; }
+  .value-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; margin-top: 8px; }
+  .value-item h3 { font-size: 22px; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .value-item p { color: var(--fg-2); font-size: 15px; line-height: 1.45; }
+  @media (max-width: 860px) { .values-grid { grid-template-columns: 1fr; gap: var(--s6); } }
+</style>
+</head>
+<body data-page="nosotros">
+
+<main>
+  <section class="about-hero">
+    <div class="container">
+      <img src="assets/logo-tight.png" alt="1000 Impresiones" class="reveal logo-light" style="height:88px; width:auto; margin-bottom: var(--s6);">
+      <img src="assets/logo-icon-dark.png" alt="1000 Impresiones" class="reveal logo-dark" style="height:88px; width:auto; margin-bottom: var(--s6); display:none;">
+      <span class="eyebrow reveal">Quiénes somos</span>
+      <div class="big-quote reveal reveal-delay-1" style="margin-top: var(--s5)">
+        Somos <span class="ink-m">1000 Impresiones</span>. No somos solo una imprenta: somos el equipo que revisa el archivo, sugiere el material y se asegura de que el resultado sea <span class="ink-c">exactamente</span> lo que imaginaste.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Nuestro proceso</span>
+          <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">Cuatro pasos. Sin vueltas.</h2>
+        </div>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step reveal">
+          <div class="step-num">01</div>
+          <div>
+            <h3>Nos contás tu idea</h3>
+            <p>Por WhatsApp, email o el formulario. Sin formularios complicados ni presupuestos que tardan días.</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-num">02</div>
+          <div>
+            <h3>Te asesoramos</h3>
+            <p>Revisamos juntos materiales, medidas, terminaciones y cantidades. Para que no haya sorpresas.</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-num">03</div>
+          <div>
+            <h3>Producimos</h3>
+            <p>Con tu aprobación, arrancamos. Controlamos cada detalle del proceso.</p>
+          </div>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-num">04</div>
+          <div>
+            <h3>Lo tenés en tus manos</h3>
+            <p>Entrega en tiempo y forma. Y si algo no cierra, lo resolvemos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="values-grid">
+        <div class="values-visual reveal">
+          <div class="dot d1"></div>
+          <div class="dot d2"></div>
+          <div class="dot d3"></div>
+          <div class="word">De la idea<br>al papel.</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <span class="eyebrow">Cómo trabajamos</span>
+          <h2 style="margin: var(--s3) 0 var(--s6)">Tres cosas que hacen la diferencia.</h2>
+          <div class="values-list">
+            <div class="value-item">
+              <div class="value-dot" style="background: var(--c)"></div>
+              <div>
+                <h3>Hablamos como colegas, no como vendedores.</h3>
+                <p>Te explicamos qué material conviene y por qué. Sin jerga, sin ocultar nada.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-dot" style="background: var(--m)"></div>
+              <div>
+                <h3>Controlamos el proceso de punta a punta.</h3>
+                <p>Diseño, pruebas, impresión y terminación bajo el mismo techo. Menos intermediarios, más control.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-dot" style="background: var(--y); border: 1px solid var(--ink)"></div>
+              <div>
+                <h3>Te acompañamos en cada etapa.</h3>
+                <p>Desde tu primera tarjeta hasta la campaña corporativa. Crecemos con vos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-band reveal">
+        <div class="bg-dot c"></div>
+        <div class="bg-dot m"></div>
+        <h2>¿Empezamos?</h2>
+        <p class="cta-sub">Respondemos en menos de 24 hs hábiles con una propuesta clara.</p>
+        <div class="hero-ctas">
+          <a href="contacto.html" class="btn btn-primary">Pedí tu cotización
+            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="chrome.js?v=2"></script>
+</body>
+</html>
