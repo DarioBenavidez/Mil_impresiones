@@ -9,9 +9,12 @@ function sendMessage(res, content, token) {
     try { localStorage.setItem('decap-cms-oauth-result', msg); } catch(e) {}
     try {
       if (window.BroadcastChannel) {
-        new BroadcastChannel('decap-oauth').postMessage('reload');
+        new BroadcastChannel('decap-oauth').postMessage(msg);
       }
     } catch(e) {}
+    if (window.opener) {
+      try { window.opener.postMessage(msg, '*'); } catch(e) {}
+    }
     setTimeout(function(){ window.close(); }, 800);
   <\/script></body></html>`);
 }
