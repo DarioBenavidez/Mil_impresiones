@@ -188,7 +188,6 @@
         --card:    #16161A;
         --paper:   #0B0B0C;
         --paper-2: #141416;
-        --ink:     #FAFAF7;
         --c-soft:  #062733;
         --m-soft:  #2E0820;
         --y-soft:  #2E2A05;
