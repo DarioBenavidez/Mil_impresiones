@@ -2,7 +2,7 @@ backend:
   name: github
   repo: DarioBenavidez/Mil_impresiones
   branch: main
-  base_url: https://milimpresiones.com
+  base_url: https://www.milimpresiones.com
   auth_endpoint: /api/auth
 
 media_folder: assets/uploads
