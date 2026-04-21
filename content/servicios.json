@@ -1,9 +1,23 @@
 {
-  "impresion":     { "img": "" },
-  "diseno":        { "img": "" },
-  "packaging":     { "img": "" },
-  "gigantografias":{ "img": "" },
-  "merchandising": { "img": "" },
-  "offset":        { "img": "" },
-  "papeleria":     { "img": "" }
+  "impresion": {
+    "img": ""
+  },
+  "diseno": {
+    "img": ""
+  },
+  "packaging": {
+    "img": ""
+  },
+  "gigantografias": {
+    "img": ""
+  },
+  "merchandising": {
+    "img": ""
+  },
+  "offset": {
+    "img": "assets/uploads/a8a6fe8b-e7ae-46f4-8da1-91de5a16cdaf-1024x675.png"
+  },
+  "papeleria": {
+    "img": ""
+  }
 }
