@@ -7,17 +7,58 @@
   <link rel="cms-config-url" type="application/x-yaml" href="/admin/config.yml">
 </head>
 <body>
+  <div id="dbg" style="position:fixed;bottom:0;left:0;right:0;background:#111;color:#0f0;font:12px monospace;padding:8px;z-index:99999;max-height:120px;overflow:auto"></div>
   <script>
-    // When the OAuth popup writes to localStorage, relay it to Decap as a message event
+    function log(msg) {
+      var d = document.getElementById('dbg');
+      d.textContent += '\n' + new Date().toISOString().slice(11,19) + ' ' + msg;
+      d.scrollTop = d.scrollHeight;
+      console.log('[ADMIN]', msg);
+    }
+
+    log('page loaded');
+
+    // Method 1: storage event (fires when another window writes to localStorage)
     window.addEventListener('storage', function(e) {
+      log('storage event: key=' + e.key);
       if (e.key === 'decap-cms-oauth-result' && e.newValue) {
+        log('relaying auth token via message event, data=' + e.newValue.slice(0,60));
         window.dispatchEvent(new MessageEvent('message', {
           data: e.newValue,
-          origin: window.location.origin
+          origin: window.location.origin,
+          source: window
         }));
-        localStorage.removeItem('decap-cms-oauth-result');
       }
     });
+
+    // Method 2: BroadcastChannel
+    if (window.BroadcastChannel) {
+      var bc = new BroadcastChannel('decap-oauth');
+      bc.onmessage = function(e) {
+        log('BroadcastChannel received: ' + e.data.slice(0,60));
+        window.dispatchEvent(new MessageEvent('message', {
+          data: e.data,
+          origin: window.location.origin,
+          source: window
+        }));
+      };
+      log('BroadcastChannel listening');
+    }
+
+    // Method 3: poll localStorage directly
+    var pollInterval = setInterval(function() {
+      var val = localStorage.getItem('decap-cms-oauth-result');
+      if (val) {
+        log('poll found token: ' + val.slice(0,60));
+        localStorage.removeItem('decap-cms-oauth-result');
+        window.dispatchEvent(new MessageEvent('message', {
+          data: val,
+          origin: window.location.origin,
+          source: window
+        }));
+        clearInterval(pollInterval);
+      }
+    }, 500);
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>

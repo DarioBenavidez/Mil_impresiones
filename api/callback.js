@@ -7,11 +7,16 @@ function sendMessage(res, content) {
     var msg = ${JSON.stringify(content)};
     try { localStorage.setItem('decap-cms-oauth-result', msg); } catch(e) {}
     try {
+      if (window.BroadcastChannel) {
+        new BroadcastChannel('decap-oauth').postMessage(msg);
+      }
+    } catch(e) {}
+    try {
       if (window.opener && window.opener.postMessage) {
         window.opener.postMessage(msg, '*');
       }
     } catch(e) {}
-    setTimeout(function(){ window.close(); }, 500);
+    setTimeout(function(){ window.close(); }, 1500);
   <\/script></body></html>`);
 }
 
