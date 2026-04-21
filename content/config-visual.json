@@ -1,13 +1,13 @@
 {
-  "logoLight": "",
-  "logoDark": "",
-  "accentColor": "#EC008C",
   "cyanColor": "#00AEEF",
-  "yellowColor": "#FFE500",
-  "paperColor": "#F4F1EA",
-  "inkColor": "#1a1815",
-  "fontDisplay": "Space Grotesk",
-  "fontBody": "DM Sans",
+  "logoDark": "",
+  "radiusBase": 18,
   "containerWidth": 1240,
-  "radiusBase": 18
+  "logoLight": "",
+  "yellowColor": "#FFE500",
+  "fontBody": "DM Sans",
+  "fontDisplay": "Space Grotesk",
+  "paperColor": "#a12727",
+  "accentColor": "#EC008C",
+  "inkColor": "#1a1815"
 }
