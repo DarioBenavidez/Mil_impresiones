@@ -47,6 +47,12 @@
         <div class="footer-brand">
           <img src="assets/logo-icon-dark.png" alt="1000 Impresiones" style="height:48px; width:auto; margin-bottom: var(--s4);">
           <p>Diseñamos, producimos y acompañamos.</p>
+          <p style="color:#ffffff66; font-size:13px; line-height:1.6; margin-top: var(--s4);">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline; vertical-align:middle; margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Ana María Janer 345, C1437 CABA<br>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline; vertical-align:middle; margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Cafferata 2911, B1768 Villa Madero, GBA
+          </p>
         </div>
         <div class="footer-col">
           <h4>Navegación</h4>
@@ -75,11 +81,6 @@
             <li><a href="https://wa.me/5491136365889" target="_blank">WhatsApp</a></li>
             <li><a href="https://www.instagram.com/1000_impresiones" target="_blank">Instagram</a></li>
             <li style="color:#ffffff99; font-size: 13px; margin-top: 8px;">milimpresiones.com</li>
-          </ul>
-          <h4 style="margin-top: var(--s5)">Dónde estamos</h4>
-          <ul>
-            <li style="color:#ffffff99; font-size: 13px; line-height: 1.5;">Ana María Janer 345, C1437<br>Cdad. Autónoma de Buenos Aires</li>
-            <li style="color:#ffffff99; font-size: 13px; line-height: 1.5; margin-top: 8px;">Cafferata 2911, B1768<br>Villa Madero, Pcia. de Buenos Aires</li>
           </ul>
         </div>
       </div>
