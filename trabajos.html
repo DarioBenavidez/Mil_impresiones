@@ -95,15 +95,26 @@ function render(filter) {
   `).join('');
   if (window.__reObserveReveal) window.__reObserveReveal();
 }
+let activeFilter = 'all';
 render('all');
 
 document.querySelectorAll('#filters .filter-chip').forEach(c => {
   c.addEventListener('click', () => {
     document.querySelectorAll('#filters .filter-chip').forEach(x => x.classList.remove('active'));
     c.classList.add('active');
-    render(c.dataset.filter);
+    activeFilter = c.dataset.filter;
+    render(activeFilter);
   });
 });
+
+// Carga imágenes desde el CMS (content/trabajos.json)
+fetch('content/trabajos.json').then(r => r.json()).then(data => {
+  if (!data.items) return;
+  data.items.forEach((item, i) => {
+    if (item.img && WORKS[i]) WORKS[i].img = item.img;
+  });
+  render(activeFilter);
+}).catch(() => {});
 </script>
 </body>
 </html>

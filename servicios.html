@@ -147,5 +147,26 @@
 </main>
 
 <script src="chrome.js?v=2"></script>
+<script>
+// Reemplaza ilustraciones SVG con fotos reales si están cargadas en el CMS
+fetch('content/servicios.json').then(r => r.json()).then(data => {
+  const map = {
+    impresion:      '#impresion .service-detail-visual',
+    diseno:         '#diseno .service-detail-visual',
+    packaging:      '#packaging .service-detail-visual',
+    gigantografias: '#gigantografias .service-detail-visual',
+    merchandising:  '#merchandising .service-detail-visual',
+    offset:         '#offset .service-detail-visual',
+    papeleria:      '#papeleria .service-detail-visual'
+  };
+  Object.entries(map).forEach(([key, selector]) => {
+    const img = data[key]?.img;
+    if (!img) return;
+    const el = document.querySelector(selector);
+    if (!el) return;
+    el.innerHTML = `<img src="${img}" alt="${key}" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+  });
+}).catch(() => {});
+</script>
 </body>
 </html>

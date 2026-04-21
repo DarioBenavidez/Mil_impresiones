@@ -613,5 +613,26 @@
 </main>
 
 <script src="chrome.js?v=2"></script>
+<script>
+// Carga avatars de testimonios desde el CMS
+fetch('content/testimonios.json').then(r => r.json()).then(data => {
+  if (!data.items) return;
+  document.querySelectorAll('.tcard').forEach((card, i) => {
+    const item = data.items[i];
+    if (!item?.avatar) return;
+    const avatar = card.querySelector('.tcard-avatar');
+    if (!avatar) return;
+    avatar.innerHTML = '';
+    avatar.style.background = 'transparent';
+    avatar.style.padding = '0';
+    avatar.style.overflow = 'hidden';
+    const img = document.createElement('img');
+    img.src = item.avatar;
+    img.alt = item.name;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+    avatar.appendChild(img);
+  });
+}).catch(() => {});
+</script>
 </body>
 </html>

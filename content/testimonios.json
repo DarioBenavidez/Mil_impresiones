@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "name": "Laura C.",
+      "role": "Emprendedora · Indumentaria",
+      "quote": "Cotizamos a la mañana y a la tarde ya teníamos respuesta. Los flyers quedaron perfectos y llegaron antes de lo prometido.",
+      "initials": "LC",
+      "color": "m",
+      "avatar": ""
+    },
+    {
+      "name": "Martín R.",
+      "role": "Dueño · Cervecería artesanal",
+      "quote": "Nos hicieron las etiquetas para toda la línea de productos. Excelente calidad y los colores salieron exactamente como los necesitábamos.",
+      "initials": "MR",
+      "color": "c",
+      "avatar": ""
+    },
+    {
+      "name": "Sofía V.",
+      "role": "Socia · Restó Ñ",
+      "quote": "Ya vamos por el tercer pedido. El diseño del menú nos lo hicieron desde cero, entendieron exactamente el estilo que buscábamos.",
+      "initials": "SV",
+      "color": "k",
+      "avatar": ""
+    }
+  ]
+}

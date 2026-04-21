@@ -210,5 +210,14 @@
 </main>
 
 <script src="chrome.js?v=2"></script>
+<script>
+// Reemplaza círculos CSS con foto real del equipo si está cargada en el CMS
+fetch('content/nosotros.json').then(r => r.json()).then(data => {
+  if (!data.teamPhoto) return;
+  const visual = document.querySelector('.values-visual');
+  if (!visual) return;
+  visual.innerHTML = `<img src="${data.teamPhoto}" alt="Equipo 1000 Impresiones" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+}).catch(() => {});
+</script>
 </body>
 </html>

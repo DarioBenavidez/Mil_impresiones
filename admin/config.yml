@@ -1,0 +1,133 @@
+backend:
+  name: github
+  repo: DarioBenavidez/Mil_impresiones
+  branch: main
+  base_url: https://milimpresiones.com
+  auth_endpoint: /api/auth
+
+media_folder: assets/uploads
+public_folder: assets/uploads
+
+locale: es
+
+collections:
+
+  - name: trabajos
+    label: "Trabajos / Portfolio"
+    files:
+      - name: portfolio
+        label: "Proyectos del portfolio"
+        file: content/trabajos.json
+        fields:
+          - label: Proyectos
+            name: items
+            widget: list
+            summary: "{{title}} — {{meta}}"
+            fields:
+              - { label: Título del proyecto,    name: title, widget: string }
+              - { label: "Meta (ej: Packaging · 2025)", name: meta, widget: string }
+              - label: Categoría
+                name: cat
+                widget: select
+                options:
+                  - { label: Packaging,              value: packaging }
+                  - { label: Diseño gráfico,         value: diseno }
+                  - { label: Papelería,              value: papeleria }
+                  - { label: Merchandising/Souvenir, value: merchandising }
+                  - { label: Gigantografías,         value: gigantografia }
+                  - { label: Offset,                 value: offset }
+              - label: Tamaño en grilla
+                name: size
+                widget: select
+                options:
+                  - { label: Pequeño (1/4),       value: span-3 }
+                  - { label: Mediano (1/3),        value: span-4 }
+                  - { label: Grande (1/2),         value: span-6 }
+                  - { label: Grande ancho (1/2),   value: "span-6 wide" }
+                  - { label: Extra grande (2/3),   value: span-8 }
+                  - { label: Extra grande ancho,   value: "span-8 wide" }
+              - { label: Imagen del trabajo, name: img, widget: image, required: false }
+
+  - name: servicios
+    label: Servicios
+    files:
+      - name: imagenes
+        label: "Imágenes de servicios"
+        file: content/servicios.json
+        fields:
+          - label: "01 — Impresión digital"
+            name: impresion
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "02 — Diseño gráfico"
+            name: diseno
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "03 — Packaging & etiquetas"
+            name: packaging
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "04 — Gigantografías & viniles"
+            name: gigantografias
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "05 — Merchandising / Souvenir"
+            name: merchandising
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "06 — Offset & tiradas grandes"
+            name: offset
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+          - label: "07 — Papelería creativa"
+            name: papeleria
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Imagen, name: img, widget: image, required: false, hint: "Si no subís imagen se muestra la ilustración predeterminada" }
+
+  - name: testimonios
+    label: Testimonios
+    files:
+      - name: testimonios
+        label: "Testimonios de clientes"
+        file: content/testimonios.json
+        fields:
+          - label: Testimonios
+            name: items
+            widget: list
+            summary: "{{name}} — {{role}}"
+            fields:
+              - { label: Nombre,        name: name,     widget: string }
+              - { label: "Rol / Empresa", name: role,   widget: string }
+              - { label: Testimonio,    name: quote,    widget: text }
+              - { label: "Iniciales (se muestran si no hay foto)", name: initials, widget: string }
+              - label: "Color de fondo (sin foto)"
+                name: color
+                widget: select
+                options:
+                  - { label: Magenta, value: m }
+                  - { label: Cyan,    value: c }
+                  - { label: Negro,   value: k }
+              - { label: "Foto del cliente (opcional)", name: avatar, widget: image, required: false }
+
+  - name: nosotros
+    label: Nosotros
+    files:
+      - name: equipo
+        label: "Foto del equipo / taller"
+        file: content/nosotros.json
+        fields:
+          - { label: "Foto del equipo o taller", name: teamPhoto, widget: image, required: false, hint: "Recomendado: foto horizontal, mínimo 1200px de ancho" }
