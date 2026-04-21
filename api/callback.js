@@ -1,5 +1,22 @@
 const ALLOWED_USERS = (process.env.ALLOWED_USERS || '').split(',').map(u => u.trim().toLowerCase()).filter(Boolean);
 
+function sendMessage(res, content) {
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`<!DOCTYPE html><html><body><script>
+    var msg = ${JSON.stringify(content)};
+    try {
+      if (window.opener && window.opener.postMessage) {
+        window.opener.postMessage(msg, '*');
+      } else {
+        localStorage.setItem('decap-cms-oauth-result', msg);
+      }
+    } catch(e) {
+      try { localStorage.setItem('decap-cms-oauth-result', msg); } catch(e2) {}
+    }
+    window.close();
+  <\/script></body></html>`);
+}
+
 export default async function handler(req, res) {
   const { code } = req.query;
 
@@ -16,9 +33,7 @@ export default async function handler(req, res) {
   const data = await tokenRes.json();
 
   if (data.error) {
-    const content = `authorization:github:error:${JSON.stringify(data)}`;
-    res.setHeader('Content-Type', 'text/html');
-    return res.send(`<script>window.opener.postMessage('${content}','*');window.close();</script>`);
+    return sendMessage(res, `authorization:github:error:${JSON.stringify(data)}`);
   }
 
   if (ALLOWED_USERS.length > 0) {
@@ -27,13 +42,9 @@ export default async function handler(req, res) {
     });
     const user = await userRes.json();
     if (!ALLOWED_USERS.includes(user.login?.toLowerCase())) {
-      const content = `authorization:github:error:${JSON.stringify({ error: 'access_denied', error_description: 'Usuario no autorizado' })}`;
-      res.setHeader('Content-Type', 'text/html');
-      return res.send(`<script>window.opener.postMessage('${content}','*');window.close();</script>`);
+      return sendMessage(res, `authorization:github:error:${JSON.stringify({ error: 'access_denied', error_description: 'Usuario no autorizado' })}`);
     }
   }
 
-  const content = `authorization:github:success:${JSON.stringify({ token: data.access_token, provider: 'github' })}`;
-  res.setHeader('Content-Type', 'text/html');
-  res.send(`<script>window.opener.postMessage('${content}','*');window.close();</script>`);
+  sendMessage(res, `authorization:github:success:${JSON.stringify({ token: data.access_token, provider: 'github' })}`);
 }

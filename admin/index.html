@@ -7,6 +7,22 @@
   <link rel="cms-config-url" type="application/x-yaml" href="/admin/config.yml">
 </head>
 <body>
+  <script>
+    // Fallback for browsers that sever window.opener via COOP (e.g. GitHub OAuth)
+    (function() {
+      var iv = setInterval(function() {
+        var result = localStorage.getItem('decap-cms-oauth-result');
+        if (!result) return;
+        localStorage.removeItem('decap-cms-oauth-result');
+        clearInterval(iv);
+        window.dispatchEvent(new MessageEvent('message', {
+          data: result,
+          origin: window.location.origin
+        }));
+      }, 300);
+      setTimeout(function() { clearInterval(iv); }, 300000);
+    })();
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
