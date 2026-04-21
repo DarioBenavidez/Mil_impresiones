@@ -8,8 +8,6 @@ backend:
 media_folder: assets/uploads
 public_folder: assets/uploads
 
-locale: es
-
 collections:
 
   - name: trabajos
