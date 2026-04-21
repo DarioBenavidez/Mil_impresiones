@@ -8,26 +8,41 @@
 </head>
 <body>
   <script>
-    // Debug: log all incoming postMessages
-    window.addEventListener('message', function(e) {
-      console.log('[CMS DEBUG] message received:', 'origin=' + e.origin, 'data=' + (e.data || '').toString().substring(0, 80), 'trusted=' + e.isTrusted);
-    });
-    // Fallback for browsers that sever window.opener via COOP (e.g. GitHub OAuth)
+    // Fix: Decap CMS checks e.source === this.popup, but GitHub's COOP header
+    // creates a new window proxy after navigation, breaking that strict equality.
+    // We intercept window.open and patch message handlers to restore the reference.
     (function() {
-      var iv = setInterval(function() {
-        var result = localStorage.getItem('decap-cms-oauth-result');
-        if (!result) return;
-        localStorage.removeItem('decap-cms-oauth-result');
-        clearInterval(iv);
-        console.log('[CMS DEBUG] dispatching from localStorage:', result.substring(0, 80));
-        window.dispatchEvent(new MessageEvent('message', {
-          data: result,
-          origin: window.location.origin
-        }));
-      }, 300);
-      setTimeout(function() { clearInterval(iv); }, 300000);
+      var _origOpen = window.open;
+      var _decapPopup = null;
+
+      window.open = function() {
+        var popup = _origOpen.apply(this, arguments);
+        _decapPopup = popup;
+        return popup;
+      };
+
+      var _origAddEL = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function(type, handler, options) {
+        if (this === window && type === 'message') {
+          var wrapped = function(e) {
+            if (_decapPopup && e.data && typeof e.data === 'string' && e.data.indexOf('authorization:') === 0) {
+              var proxied = new Proxy(e, {
+                get: function(target, prop) {
+                  if (prop === 'source') return _decapPopup;
+                  var val = target[prop];
+                  return typeof val === 'function' ? val.bind(target) : val;
+                }
+              });
+              return handler.call(this, proxied);
+            }
+            return handler.call(this, e);
+          };
+          return _origAddEL.call(this, type, wrapped, options);
+        }
+        return _origAddEL.apply(this, arguments);
+      };
     })();
   </script>
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
