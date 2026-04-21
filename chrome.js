@@ -140,20 +140,15 @@
   function applyVisualConfig(cfg) {
     if (!cfg) return;
     const r = document.documentElement;
+
+    // Inline styles para variables que dark mode NO sobreescribe:
+    // accent, CMYK primaries, fonts, container, radius
     if (cfg.accentColor) {
       r.style.setProperty('--accent', cfg.accentColor);
       r.style.setProperty('--m', cfg.accentColor);
     }
-    if (cfg.cyanColor)  r.style.setProperty('--c', cfg.cyanColor);
+    if (cfg.cyanColor)   r.style.setProperty('--c', cfg.cyanColor);
     if (cfg.yellowColor) r.style.setProperty('--y', cfg.yellowColor);
-    if (cfg.paperColor) {
-      r.style.setProperty('--paper', cfg.paperColor);
-      r.style.setProperty('--bg', cfg.paperColor);
-    }
-    if (cfg.inkColor) {
-      r.style.setProperty('--ink', cfg.inkColor);
-      r.style.setProperty('--fg', cfg.inkColor);
-    }
     if (cfg.fontDisplay) {
       r.style.setProperty('--font-display', `'${cfg.fontDisplay}', ui-sans-serif, system-ui, sans-serif`);
     }
@@ -170,6 +165,35 @@
       r.style.setProperty('--radius-lg',  Math.round(b * 1.56) + 'px');
       r.style.setProperty('--radius-xl',  Math.round(b * 2.22) + 'px');
     }
+
+    // Para colores de fondo y texto: usar <style> tag (NO inline)
+    // así [data-theme="dark"] en styles.css puede seguir sobrescribiéndolos
+    const paper = cfg.paperColor || '#F4F1EA';
+    const ink   = cfg.inkColor   || '#1a1815';
+    const styleTag = document.getElementById('__visual-cfg') || document.head.appendChild(
+      Object.assign(document.createElement('style'), { id: '__visual-cfg' })
+    );
+    styleTag.textContent = `
+      :root {
+        --paper: ${paper};
+        --ink:   ${ink};
+      }
+      [data-theme="dark"] {
+        --bg:      #0B0B0C;
+        --bg-2:    #141416;
+        --fg:      #FAFAF7;
+        --fg-2:    #D4D4CE;
+        --fg-3:    #8A8A84;
+        --border:  #24242A;
+        --card:    #16161A;
+        --paper:   #0B0B0C;
+        --paper-2: #141416;
+        --ink:     #FAFAF7;
+        --c-soft:  #062733;
+        --m-soft:  #2E0820;
+        --y-soft:  #2E2A05;
+      }
+    `;
   }
 
   // ---- Init (runs after visual config is fetched) ----
