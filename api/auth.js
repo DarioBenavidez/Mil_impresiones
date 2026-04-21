@@ -6,5 +6,12 @@ export default function handler(req, res) {
     scope: 'openid email',
     access_type: 'online',
   });
-  res.redirect(302, `https://accounts.google.com/o/oauth2/v2/auth?${params}`);
+  const googleUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`<!DOCTYPE html><html><body><script>
+    if (window.opener) {
+      window.opener.postMessage('authorizing:github', '*');
+    }
+    window.location.href = ${JSON.stringify(googleUrl)};
+  <\/script></body></html>`);
 }

@@ -8,24 +8,30 @@
 </head>
 <body>
   <script>
-    // After Google OAuth, the callback sets decap-cms-user in localStorage and signals here.
-    // We reload so Decap reads decap-cms-user on startup and auto-logs in.
-    function reloadForAuth() {
-      window.location.reload();
+    // After the OAuth popup sends the handshake, it redirects to Google.
+    // When Google returns to /api/callback, the callback signals here via BroadcastChannel.
+    // We relay the success message to Decap (origin check passes, no source check).
+    function relayAuthMessage(msg) {
+      window.dispatchEvent(new MessageEvent('message', {
+        data: msg,
+        origin: window.location.origin,
+        source: window
+      }));
     }
 
-    // BroadcastChannel signal from popup
     if (window.BroadcastChannel) {
       var bc = new BroadcastChannel('decap-oauth');
       bc.onmessage = function(e) {
-        if (e.data === 'reload') reloadForAuth();
+        if (e.data && e.data.indexOf('authorization:github:') === 0) {
+          relayAuthMessage(e.data);
+        }
       };
     }
 
-    // Storage event fallback
     window.addEventListener('storage', function(e) {
       if (e.key === 'decap-cms-oauth-result' && e.newValue) {
-        reloadForAuth();
+        relayAuthMessage(e.newValue);
+        localStorage.removeItem('decap-cms-oauth-result');
       }
     });
   </script>
