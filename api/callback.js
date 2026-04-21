@@ -1,11 +1,25 @@
 const ALLOWED_USERS = (process.env.ALLOWED_USERS || '').split(',').map(u => u.trim().toLowerCase()).filter(Boolean);
 
 function sendMessage(res, content) {
+  const isError = content.includes(':error:');
+  const label = isError ? '❌ Error' : '✅ Autenticado';
   res.setHeader('Content-Type', 'text/html');
-  res.send(`<!DOCTYPE html><html><body><script>
+  res.send(`<!DOCTYPE html><html><body style="font-family:sans-serif;padding:32px;background:#f5f5f5">
+  <h2 style="color:${isError?'#c00':'#090'}">${label}</h2>
+  <pre id="dbg" style="font-size:12px;word-break:break-all;background:#fff;padding:12px;border-radius:6px"></pre>
+  <p id="countdown" style="color:#666;font-size:13px"></p>
+  <script>
     var msg = ${JSON.stringify(content)};
+    document.getElementById('dbg').textContent = msg;
+    var opener_ok = !!(window.opener && window.opener.postMessage);
+    var sec = 5;
+    var iv = setInterval(function(){
+      document.getElementById('countdown').textContent =
+        'opener=' + opener_ok + ' · cerrando en ' + (sec--) + 's';
+      if (sec < 0) { clearInterval(iv); window.close(); }
+    }, 1000);
     try {
-      if (window.opener && window.opener.postMessage) {
+      if (opener_ok) {
         window.opener.postMessage(msg, '*');
       } else {
         localStorage.setItem('decap-cms-oauth-result', msg);
@@ -13,7 +27,6 @@ function sendMessage(res, content) {
     } catch(e) {
       try { localStorage.setItem('decap-cms-oauth-result', msg); } catch(e2) {}
     }
-    window.close();
   <\/script></body></html>`);
 }
 
