@@ -211,7 +211,6 @@
     // Inject DOM elements
     document.body.insertAdjacentHTML('afterbegin', buildNav(cfg));
     document.body.insertAdjacentHTML('beforeend', footerHTML);
-    document.body.insertAdjacentHTML('beforeend', waHTML);
     document.body.insertAdjacentHTML('beforeend', tweaksHTML);
 
     // Mark active nav link
