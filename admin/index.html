@@ -8,24 +8,24 @@
 </head>
 <body>
   <script>
-    // Fix: Decap CMS checks e.source === this.popup, but GitHub's COOP header
-    // creates a new window proxy after navigation, breaking that strict equality.
-    // We intercept window.open and patch message handlers to restore the reference.
     (function() {
-      var _origOpen = window.open;
       var _decapPopup = null;
 
+      // Intercept window.open
+      var _origOpen = window.open;
       window.open = function() {
         var popup = _origOpen.apply(this, arguments);
+        console.log('[FIX] window.open intercepted, popup null?', popup === null);
         _decapPopup = popup;
         return popup;
       };
 
-      var _origAddEL = EventTarget.prototype.addEventListener;
-      EventTarget.prototype.addEventListener = function(type, handler, options) {
-        if (this === window && type === 'message') {
-          var wrapped = function(e) {
-            if (_decapPopup && e.data && typeof e.data === 'string' && e.data.indexOf('authorization:') === 0) {
+      // Intercept window.addEventListener (own property first, then prototype)
+      function wrapHandler(handler) {
+        return function(e) {
+          if (e.data && typeof e.data === 'string' && e.data.indexOf('authorization:') === 0) {
+            console.log('[FIX] auth message intercepted, _decapPopup set?', !!_decapPopup, 'e.source===popup?', e.source === _decapPopup);
+            if (_decapPopup) {
               var proxied = new Proxy(e, {
                 get: function(target, prop) {
                   if (prop === 'source') return _decapPopup;
@@ -33,14 +33,36 @@
                   return typeof val === 'function' ? val.bind(target) : val;
                 }
               });
+              console.log('[FIX] calling handler with proxied event');
               return handler.call(this, proxied);
             }
-            return handler.call(this, e);
-          };
-          return _origAddEL.call(this, type, wrapped, options);
+          }
+          return handler.call(this, e);
+        };
+      }
+
+      // Patch both the prototype and the own property
+      var _origProtoAddEL = EventTarget.prototype.addEventListener;
+      EventTarget.prototype.addEventListener = function(type, handler, options) {
+        if (this === window && type === 'message') {
+          console.log('[FIX] wrapping window message listener');
+          return _origProtoAddEL.call(this, type, wrapHandler(handler), options);
         }
-        return _origAddEL.apply(this, arguments);
+        return _origProtoAddEL.apply(this, arguments);
       };
+
+      // Also patch window.addEventListener directly in case it's an own property
+      var _origWinAddEL = window.addEventListener;
+      if (_origWinAddEL !== _origProtoAddEL) {
+        console.log('[FIX] window.addEventListener is an own property, patching directly');
+        window.addEventListener = function(type, handler, options) {
+          if (type === 'message') {
+            console.log('[FIX] wrapping window message listener (own)');
+            return _origWinAddEL.call(this, type, wrapHandler(handler), options);
+          }
+          return _origWinAddEL.apply(this, arguments);
+        };
+      }
     })();
   </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
