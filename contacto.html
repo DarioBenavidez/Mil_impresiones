@@ -53,7 +53,10 @@
 
         <div class="form-card reveal reveal-delay-1">
           <h3 style="margin-bottom: var(--s5); font-size: 24px;">Contanos tu proyecto</h3>
-          <form id="contactForm" action="https://formspree.io/f/xjgjagdq" method="POST">
+          <form id="contactForm">
+            <input type="hidden" name="access_key" value="d1b10572-b5fd-4b85-b9ae-bcde20db4662">
+            <input type="hidden" name="subject" value="Nueva consulta - Mil Impresiones">
+            <input type="hidden" name="from_name" value="Formulario milimpresiones.com">
             <div class="form-group">
               <label>¿Cómo te llamás?</label>
               <input type="text" name="nombre" class="form-input" placeholder="Tu nombre" required>
@@ -178,11 +181,35 @@
     });
   });
 
-  // Submit con feedback visual (Formspree maneja el envío real)
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
+  // Submit via Web3Forms
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
     const btn = this.querySelector('button[type=submit]');
+    const originalHTML = btn.innerHTML;
     btn.innerHTML = 'Enviando...';
     btn.disabled = true;
+
+    const data = Object.fromEntries(new FormData(this));
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.success) {
+        btn.innerHTML = '✓ Consulta enviada · Te respondemos en 24 hs';
+        btn.style.background = '#22c55e';
+        setTimeout(() => { this.reset(); btn.innerHTML = originalHTML; btn.style.background = ''; btn.disabled = false; }, 4000);
+      } else {
+        throw new Error(json.message);
+      }
+    } catch(err) {
+      btn.innerHTML = 'Error al enviar · Intentá de nuevo';
+      btn.style.background = '#ef4444';
+      setTimeout(() => { btn.innerHTML = originalHTML; btn.style.background = ''; btn.disabled = false; }, 3000);
+    }
   });
 </script>
 </body>
