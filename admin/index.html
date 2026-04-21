@@ -8,6 +8,10 @@
 </head>
 <body>
   <script>
+    // Debug: log all incoming postMessages
+    window.addEventListener('message', function(e) {
+      console.log('[CMS DEBUG] message received:', 'origin=' + e.origin, 'data=' + (e.data || '').toString().substring(0, 80), 'trusted=' + e.isTrusted);
+    });
     // Fallback for browsers that sever window.opener via COOP (e.g. GitHub OAuth)
     (function() {
       var iv = setInterval(function() {
@@ -15,6 +19,7 @@
         if (!result) return;
         localStorage.removeItem('decap-cms-oauth-result');
         clearInterval(iv);
+        console.log('[CMS DEBUG] dispatching from localStorage:', result.substring(0, 80));
         window.dispatchEvent(new MessageEvent('message', {
           data: result,
           origin: window.location.origin
