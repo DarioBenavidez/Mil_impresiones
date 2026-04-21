@@ -76,6 +76,11 @@
             <li><a href="https://www.instagram.com/1000_impresiones" target="_blank">Instagram</a></li>
             <li style="color:#ffffff99; font-size: 13px; margin-top: 8px;">milimpresiones.com</li>
           </ul>
+          <h4 style="margin-top: var(--s5)">Dónde estamos</h4>
+          <ul>
+            <li style="color:#ffffff99; font-size: 13px; line-height: 1.5;">Ana María Janer 345, C1437<br>Cdad. Autónoma de Buenos Aires</li>
+            <li style="color:#ffffff99; font-size: 13px; line-height: 1.5; margin-top: 8px;">Cafferata 2911, B1768<br>Villa Madero, Pcia. de Buenos Aires</li>
+          </ul>
         </div>
       </div>
       <div class="footer-bottom">
