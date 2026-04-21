@@ -1,22 +1,18 @@
 const ALLOWED_EMAILS = (process.env.ALLOWED_EMAILS || '').split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
 
-function sendMessage(res, content) {
+function sendMessage(res, content, token) {
   res.setHeader('Content-Type', 'text/html');
   res.send(`<!DOCTYPE html><html><body>
   <script>
     var msg = ${JSON.stringify(content)};
+    ${token ? `try { localStorage.setItem('decap-cms-user', JSON.stringify({token:${JSON.stringify(token)}})); } catch(e) {}` : ''}
     try { localStorage.setItem('decap-cms-oauth-result', msg); } catch(e) {}
     try {
       if (window.BroadcastChannel) {
-        new BroadcastChannel('decap-oauth').postMessage(msg);
+        new BroadcastChannel('decap-oauth').postMessage('reload');
       }
     } catch(e) {}
-    try {
-      if (window.opener && window.opener.postMessage) {
-        window.opener.postMessage(msg, '*');
-      }
-    } catch(e) {}
-    setTimeout(function(){ window.close(); }, 1500);
+    setTimeout(function(){ window.close(); }, 800);
   <\/script></body></html>`);
 }
 
@@ -54,5 +50,5 @@ export default async function handler(req, res) {
     return sendMessage(res, `authorization:github:error:${JSON.stringify({ error: 'access_denied', error_description: 'Email no autorizado: ' + user.email })}`);
   }
 
-  sendMessage(res, `authorization:github:success:${JSON.stringify({ token: process.env.GITHUB_PAT, provider: 'github' })}`);
+  sendMessage(res, `authorization:github:success:${JSON.stringify({ token: process.env.GITHUB_PAT, provider: 'github' })}`, process.env.GITHUB_PAT);
 }
