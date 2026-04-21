@@ -1,0 +1,13 @@
+{
+  "logoLight": "",
+  "logoDark": "",
+  "accentColor": "#EC008C",
+  "cyanColor": "#00AEEF",
+  "yellowColor": "#FFE500",
+  "paperColor": "#F4F1EA",
+  "inkColor": "#1a1815",
+  "fontDisplay": "Space Grotesk",
+  "fontBody": "DM Sans",
+  "containerWidth": 1240,
+  "radiusBase": 18
+}

@@ -164,3 +164,76 @@ collections:
             name: teamPhoto
             widget: image
             required: false
+
+  - name: diseno
+    label: "Diseño Visual"
+    files:
+      - name: visual
+        label: "Colores, Logo y Tipografía"
+        file: content/config-visual.json
+        fields:
+          - label: "Logo (modo claro)"
+            name: logoLight
+            widget: image
+            required: false
+            hint: "Logo que se muestra en el encabezado. PNG o SVG con fondo transparente."
+          - label: "Logo (modo oscuro)"
+            name: logoDark
+            widget: image
+            required: false
+            hint: "Logo para cuando el usuario activa el modo oscuro."
+          - label: "Color de acento principal"
+            name: accentColor
+            widget: color
+            default: "#EC008C"
+            hint: "Color de botones, links y elementos destacados."
+          - label: "Color cyan (barra CMYK)"
+            name: cyanColor
+            widget: color
+            default: "#00AEEF"
+          - label: "Color amarillo (barra CMYK)"
+            name: yellowColor
+            widget: color
+            default: "#FFE500"
+          - label: "Color de fondo general"
+            name: paperColor
+            widget: color
+            default: "#F4F1EA"
+            hint: "Color de fondo de toda la página."
+          - label: "Color de texto"
+            name: inkColor
+            widget: color
+            default: "#1a1815"
+          - label: "Tipografía de títulos"
+            name: fontDisplay
+            widget: select
+            default: "Space Grotesk"
+            options:
+              - { label: "Space Grotesk (actual)", value: "Space Grotesk" }
+              - { label: "Fraunces (serif elegante)", value: "Fraunces" }
+              - { label: "Bricolage Grotesque (moderna)", value: "Bricolage Grotesque" }
+              - { label: "Archivo (bold industrial)", value: "Archivo" }
+          - label: "Tipografía de cuerpo"
+            name: fontBody
+            widget: select
+            default: "DM Sans"
+            options:
+              - { label: "DM Sans (actual)", value: "DM Sans" }
+              - { label: "Inter (tech limpia)", value: "Inter" }
+              - { label: "IBM Plex Sans (formal)", value: "IBM Plex Sans" }
+          - label: "Ancho máximo del contenido (px)"
+            name: containerWidth
+            widget: number
+            default: 1240
+            value_type: int
+            min: 900
+            max: 1600
+            hint: "Ancho de las secciones del sitio. Default: 1240px."
+          - label: "Redondez de bordes (px)"
+            name: radiusBase
+            widget: number
+            default: 18
+            value_type: int
+            min: 0
+            max: 40
+            hint: "Radio de bordes de tarjetas y botones. 0 = sin redondeo, 40 = muy redondeado."

@@ -2,19 +2,19 @@
 (function() {
   const CURRENT = document.body.dataset.page || 'home';
 
-  // ---- Logo mark (real PNG, swapped for dark mode) ----
-  const logoMark = () => `
+  // ---- Logo mark (uses custom logo if set in config-visual.json) ----
+  const logoMark = (lightSrc, darkSrc) => `
     <picture class="logo-mark" aria-hidden="true">
-      <img src="assets/logo-icon-tight.png" alt="" class="logo-light" height="30">
-      <img src="assets/logo-icon-dark.png" alt="" class="logo-dark" height="30">
+      <img src="${lightSrc || 'assets/logo-icon-tight.png'}" alt="" class="logo-light" height="30">
+      <img src="${darkSrc || 'assets/logo-icon-dark.png'}" alt="" class="logo-dark" height="30">
     </picture>`;
 
   // ---- Nav ----
-  const navHTML = `
+  const buildNav = (cfg) => `
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="1000 Impresiones">
-        ${logoMark()}
+        ${logoMark(cfg.logoLight, cfg.logoDark)}
         <span>Impresiones</span>
       </a>
       <div class="nav-links">
@@ -99,7 +99,7 @@
     <span class="wa-float-text">Escribinos</span>
   </a>`;
 
-  // ---- Tweaks panel (always in DOM; toggled by body class via parent message) ----
+  // ---- Tweaks panel ----
   const tweaksHTML = `
   <div class="tweaks-panel" id="tweaksPanel">
     <h4>
@@ -136,103 +136,152 @@
     </div>
   </div>`;
 
-  // ---- Inject ----
-  document.body.insertAdjacentHTML('afterbegin', navHTML);
-  document.body.insertAdjacentHTML('beforeend', footerHTML);
-  document.body.insertAdjacentHTML('beforeend', tweaksHTML);
-
-  // Mark active link
-  document.querySelectorAll(`.nav-links a[data-link="${CURRENT}"]`).forEach(a => a.classList.add('active'));
-
-  // ---- Theme ----
-  const applyTheme = (t) => {
-    document.documentElement.dataset.theme = t;
-    const icon = document.getElementById('themeIcon');
-    if (t === 'dark') {
-      icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-    } else {
-      icon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  // ---- Apply visual config from JSON to CSS variables ----
+  function applyVisualConfig(cfg) {
+    if (!cfg) return;
+    const r = document.documentElement;
+    if (cfg.accentColor) {
+      r.style.setProperty('--accent', cfg.accentColor);
+      r.style.setProperty('--m', cfg.accentColor);
     }
-  };
-  const savedTheme = localStorage.getItem('mili-theme') || 'light';
-  applyTheme(savedTheme);
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    localStorage.setItem('mili-theme', next);
-  });
+    if (cfg.cyanColor)  r.style.setProperty('--c', cfg.cyanColor);
+    if (cfg.yellowColor) r.style.setProperty('--y', cfg.yellowColor);
+    if (cfg.paperColor) {
+      r.style.setProperty('--paper', cfg.paperColor);
+      r.style.setProperty('--bg', cfg.paperColor);
+    }
+    if (cfg.inkColor) {
+      r.style.setProperty('--ink', cfg.inkColor);
+      r.style.setProperty('--fg', cfg.inkColor);
+    }
+    if (cfg.fontDisplay) {
+      r.style.setProperty('--font-display', `'${cfg.fontDisplay}', ui-sans-serif, system-ui, sans-serif`);
+    }
+    if (cfg.fontBody) {
+      r.style.setProperty('--font-body', `'${cfg.fontBody}', ui-sans-serif, system-ui, sans-serif`);
+    }
+    if (cfg.containerWidth) {
+      r.style.setProperty('--container', cfg.containerWidth + 'px');
+    }
+    if (cfg.radiusBase !== undefined && cfg.radiusBase !== '') {
+      const b = parseInt(cfg.radiusBase) || 18;
+      r.style.setProperty('--radius-sm',  Math.round(b * 0.56) + 'px');
+      r.style.setProperty('--radius',     b + 'px');
+      r.style.setProperty('--radius-lg',  Math.round(b * 1.56) + 'px');
+      r.style.setProperty('--radius-xl',  Math.round(b * 2.22) + 'px');
+    }
+  }
 
-  // Nav scroll state
-  const nav = document.getElementById('nav');
-  const onScroll = () => {
-    if (window.scrollY > 8) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  // ---- Init (runs after visual config is fetched) ----
+  function init(cfg) {
+    cfg = cfg || {};
 
-  // ---- Scroll reveal ----
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    // Apply CSS variables from config
+    applyVisualConfig(cfg);
+
+    // Inject DOM elements
+    document.body.insertAdjacentHTML('afterbegin', buildNav(cfg));
+    document.body.insertAdjacentHTML('beforeend', footerHTML);
+    document.body.insertAdjacentHTML('beforeend', waHTML);
+    document.body.insertAdjacentHTML('beforeend', tweaksHTML);
+
+    // Mark active nav link
+    document.querySelectorAll(`.nav-links a[data-link="${CURRENT}"]`).forEach(a => a.classList.add('active'));
+
+    // ---- Theme ----
+    const applyTheme = (t) => {
+      document.documentElement.dataset.theme = t;
+      const icon = document.getElementById('themeIcon');
+      if (t === 'dark') {
+        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+      } else {
+        icon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+      }
+    };
+    const savedTheme = localStorage.getItem('mili-theme') || 'light';
+    applyTheme(savedTheme);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      localStorage.setItem('mili-theme', next);
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Re-observe new nodes (for dynamic pages)
-  window.__reObserveReveal = () => {
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
-  };
+    // Nav scroll state
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-  // ---- Tweaks ----
-  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-    "accent": "#EC008C",
-    "fontDisplay": "'Space Grotesk'",
-    "fontBody": "'DM Sans'"
-  }/*EDITMODE-END*/;
+    // ---- Scroll reveal ----
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  const applyTweaks = (t) => {
-    document.documentElement.style.setProperty('--accent', t.accent);
-    // accent-soft as faded version
-    document.documentElement.style.setProperty('--font-display', `${t.fontDisplay}, ui-sans-serif, system-ui, sans-serif`);
-    document.documentElement.style.setProperty('--font-body', `${t.fontBody}, ui-sans-serif, system-ui, sans-serif`);
-    // Update active states
+    window.__reObserveReveal = () => {
+      document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    };
+
+    // ---- Tweaks ----
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "accent":      cfg.accentColor  || "#EC008C",
+      "fontDisplay": cfg.fontDisplay  ? `'${cfg.fontDisplay}'` : "'Space Grotesk'",
+      "fontBody":    cfg.fontBody     ? `'${cfg.fontBody}'`    : "'DM Sans'"
+    }/*EDITMODE-END*/;
+
+    const applyTweaks = (t) => {
+      document.documentElement.style.setProperty('--accent', t.accent);
+      document.documentElement.style.setProperty('--font-display', `${t.fontDisplay}, ui-sans-serif, system-ui, sans-serif`);
+      document.documentElement.style.setProperty('--font-body', `${t.fontBody}, ui-sans-serif, system-ui, sans-serif`);
+      document.querySelectorAll('#accentSwatches .tweak-swatch').forEach(s => {
+        s.classList.toggle('active', s.dataset.accent.toLowerCase() === t.accent.toLowerCase());
+      });
+      document.querySelectorAll('#fontDisplayBtns .tweak-font-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.font === t.fontDisplay);
+      });
+      document.querySelectorAll('#fontBodyBtns .tweak-font-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.font === t.fontBody);
+      });
+    };
+
+    const state = { ...TWEAK_DEFAULTS };
+    applyTweaks(state);
+
+    const notifyHost = () => {
+      try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: state }, '*'); } catch(e){}
+    };
+
     document.querySelectorAll('#accentSwatches .tweak-swatch').forEach(s => {
-      s.classList.toggle('active', s.dataset.accent.toLowerCase() === t.accent.toLowerCase());
+      s.addEventListener('click', () => { state.accent = s.dataset.accent; applyTweaks(state); notifyHost(); });
     });
     document.querySelectorAll('#fontDisplayBtns .tweak-font-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.font === t.fontDisplay);
+      b.addEventListener('click', () => { state.fontDisplay = b.dataset.font; applyTweaks(state); notifyHost(); });
     });
     document.querySelectorAll('#fontBodyBtns .tweak-font-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.font === t.fontBody);
+      b.addEventListener('click', () => { state.fontBody = b.dataset.font; applyTweaks(state); notifyHost(); });
     });
-  };
 
-  const state = { ...TWEAK_DEFAULTS };
-  applyTweaks(state);
+    // ---- Edit mode messaging ----
+    window.addEventListener('message', (e) => {
+      const d = e.data || {};
+      if (d.type === '__activate_edit_mode') {
+        document.getElementById('tweaksPanel').classList.add('on');
+      } else if (d.type === '__deactivate_edit_mode') {
+        document.getElementById('tweaksPanel').classList.remove('on');
+      }
+    });
+    try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
+  }
 
-  const notifyHost = () => {
-    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: state }, '*'); } catch(e){}
-  };
+  // ---- Bootstrap: load visual config, then init ----
+  fetch('/content/config-visual.json')
+    .then(r => r.ok ? r.json() : {})
+    .catch(() => ({}))
+    .then(cfg => init(cfg));
 
-  document.querySelectorAll('#accentSwatches .tweak-swatch').forEach(s => {
-    s.addEventListener('click', () => { state.accent = s.dataset.accent; applyTweaks(state); notifyHost(); });
-  });
-  document.querySelectorAll('#fontDisplayBtns .tweak-font-btn').forEach(b => {
-    b.addEventListener('click', () => { state.fontDisplay = b.dataset.font; applyTweaks(state); notifyHost(); });
-  });
-  document.querySelectorAll('#fontBodyBtns .tweak-font-btn').forEach(b => {
-    b.addEventListener('click', () => { state.fontBody = b.dataset.font; applyTweaks(state); notifyHost(); });
-  });
-
-  // ---- Edit mode messaging ----
-  window.addEventListener('message', (e) => {
-    const d = e.data || {};
-    if (d.type === '__activate_edit_mode') {
-      document.getElementById('tweaksPanel').classList.add('on');
-    } else if (d.type === '__deactivate_edit_mode') {
-      document.getElementById('tweaksPanel').classList.remove('on');
-    }
-  });
-  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
 })();
