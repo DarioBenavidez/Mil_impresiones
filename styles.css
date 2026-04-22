@@ -711,13 +711,13 @@ section { padding: var(--s7) 0; position: relative; }
 .cta-band {
   border-radius: var(--radius-lg);
   padding: var(--s7) var(--s7);
-  background: var(--ink);
+  background: #111;
   color: #fff;
   position: relative;
   overflow: hidden;
   text-align: center;
 }
-[data-theme="dark"] .cta-band { background: linear-gradient(135deg, #0d1f2d 0%, #1a0d1f 100%); }
+[data-theme="dark"] .cta-band { background: #111; }
 .cta-band h2 {
   font-size: clamp(22px, 2.8vw, 40px);
   max-width: 820px;
