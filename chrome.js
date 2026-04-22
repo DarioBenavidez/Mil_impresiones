@@ -243,6 +243,29 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = nav.querySelector('.nav-links');
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('mobile-open');
+        mobileMenuBtn.classList.toggle('open', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        // Change icon: hamburger ↔ X
+        mobileMenuBtn.querySelector('svg').innerHTML = isOpen
+          ? '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'
+          : '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
+      });
+      // Close on nav link click
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('mobile-open');
+          mobileMenuBtn.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
     // ---- Scroll reveal ----
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
