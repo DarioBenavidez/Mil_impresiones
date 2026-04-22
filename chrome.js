@@ -243,27 +243,33 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Mobile menu toggle
+    // Mobile menu — drawer injected as direct body child
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = nav.querySelector('.nav-links');
-    if (mobileMenuBtn && navLinks) {
-      mobileMenuBtn.addEventListener('click', () => {
-        const isOpen = navLinks.classList.toggle('mobile-open');
-        mobileMenuBtn.classList.toggle('open', isOpen);
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-        // Change icon: hamburger ↔ X
-        mobileMenuBtn.querySelector('svg').innerHTML = isOpen
-          ? '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'
-          : '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
-      });
-      // Close on nav link click
-      navLinks.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          navLinks.classList.remove('mobile-open');
-          mobileMenuBtn.classList.remove('open');
-          document.body.style.overflow = '';
-        });
-      });
+    const drawerLinks = [
+      { href: 'index.html',     label: 'Inicio',    key: 'home'      },
+      { href: 'servicios.html', label: 'Servicios', key: 'servicios' },
+      { href: 'trabajos.html',  label: 'Trabajos',  key: 'trabajos'  },
+      { href: 'nosotros.html',  label: 'Nosotros',  key: 'nosotros'  },
+      { href: 'contacto.html',  label: 'Contacto',  key: 'contacto'  },
+    ];
+    const drawer = document.createElement('div');
+    drawer.className = 'mobile-drawer';
+    drawer.innerHTML = drawerLinks.map(l =>
+      `<a href="${l.href}"${l.key === CURRENT ? ' class="active"' : ''}>${l.label}</a>`
+    ).join('');
+    document.body.appendChild(drawer);
+
+    const toggleDrawer = (open) => {
+      drawer.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      mobileMenuBtn.querySelector('svg').innerHTML = open
+        ? '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'
+        : '<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>';
+    };
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => toggleDrawer(!drawer.classList.contains('open')));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleDrawer(false)));
     }
 
     // ---- Scroll reveal ----

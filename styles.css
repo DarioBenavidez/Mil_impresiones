@@ -228,32 +228,33 @@ section { padding: var(--s7) 0; position: relative; }
   .nav-actions .btn-pill { display: none; }
 }
 
-/* Mobile nav drawer */
-.nav-links.mobile-open {
-  display: flex;
-  flex-direction: column;
+/* Mobile nav drawer — injected as direct body child */
+.mobile-drawer {
+  display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
+  z-index: 200;
   background: var(--bg);
-  z-index: 49;
-  padding: 100px var(--s6) var(--s6);
-  gap: var(--s3);
+  flex-direction: column;
+  padding: 80px var(--s6) var(--s6);
+  gap: var(--s2);
   align-items: flex-start;
+  overflow-y: auto;
 }
-.nav-links.mobile-open a {
-  font-size: 28px;
+.mobile-drawer.open { display: flex; }
+.mobile-drawer a {
+  font-size: 30px;
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--fg);
-  padding: var(--s2) 0;
+  text-decoration: none;
+  padding: var(--s3) 0;
   width: 100%;
+  border-bottom: 1px solid var(--border);
 }
-.nav-links.mobile-open a.active { color: var(--accent); }
-.mobile-menu-btn.open svg {
-  transform: rotate(90deg);
-  transition: transform 0.2s ease;
-}
+.mobile-drawer a:last-child { border-bottom: 0; }
+.mobile-drawer a.active { color: var(--accent); }
 
 /* ============ Buttons ============ */
 .btn {
