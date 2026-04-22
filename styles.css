@@ -140,7 +140,7 @@ p { text-wrap: pretty; }
   margin: 0 auto;
   padding: 0 var(--s5);
 }
-section { padding: var(--s8) 0; position: relative; }
+section { padding: var(--s7) 0; position: relative; }
 @media (max-width: 768px) {
   section { padding: var(--s7) 0; }
   .container { padding: 0 var(--s4); }

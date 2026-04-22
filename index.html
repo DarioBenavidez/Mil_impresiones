@@ -86,21 +86,21 @@
 .ps-step:hover { background: var(--bg); }
 .ps-num {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   color: var(--fg-3);
-  min-width: 20px;
+  min-width: 28px;
 }
-.ps-body { display: flex; flex-direction: column; gap: 2px; }
+.ps-body { display: flex; flex-direction: column; gap: 3px; }
 .ps-title {
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: -0.01em;
 }
 .ps-sub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--fg-3);
   line-height: 1.3;
 }
@@ -137,7 +137,7 @@
   transition: background 0.3s ease, border-color 0.3s ease, padding-left 0.35s cubic-bezier(.2,.9,.3,1);
 }
 .service-row:hover {
-  background: color-mix(in srgb, var(--row-color, var(--m)) 7%, var(--bg));
+  background: color-mix(in srgb, var(--row-color, var(--m)) 14%, var(--bg));
   border-left-color: var(--row-color, var(--m));
   padding-left: var(--s6);
 }
@@ -301,11 +301,6 @@
 
       <div class="hero-sub-v3 reveal reveal-delay-2">
         <p>Sin intermediarios. Cotización en menos de 2 horas. Tu pedido listo en 48-72 hs hábiles.</p>
-        <div class="hero-proof">
-          <span class="proof-chip"><span class="dot"></span>+500 clientes</span>
-          <span class="proof-chip clock"><span class="dot"></span>Respuesta en &lt; 2 hs</span>
-          <span class="proof-chip wa"><span class="dot"></span>WhatsApp directo</span>
-        </div>
       </div>
 
       <div class="hero-ctas reveal reveal-delay-3">
@@ -321,15 +316,15 @@
 
       <div class="hero-meta reveal reveal-delay-3" style="margin-top: var(--s8)">
         <div class="hero-meta-item">
-          <div class="num">+200</div>
-          <div class="label">Clientes satisfechos</div>
+          <div class="num">+100</div>
+          <div class="label">Clientes</div>
         </div>
         <div class="hero-meta-item">
-          <div class="num">7</div>
+          <div class="num">5</div>
           <div class="label">Años en el mercado</div>
         </div>
         <div class="hero-meta-item">
-          <div class="num">+1.000</div>
+          <div class="num">+500</div>
           <div class="label">Trabajos entregados</div>
         </div>
       </div>
@@ -383,7 +378,7 @@
         <div>
           <span class="eyebrow reveal">Servicios</span>
           <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">
-            Todo lo que tu marca<br>necesita para comunicar.
+            Todo lo que tu marca necesita.
           </h2>
         </div>
         <a href="servicios.html" class="link reveal reveal-delay-2">
@@ -408,7 +403,7 @@
           <span class="sr-num">02</span>
           <div class="sr-body">
             <span class="sr-name">Diseño gráfico</span>
-            <span class="sr-tag">Logos · Etiquetas · Identidad visual</span>
+            <span class="sr-tag">Logos · Identidad visual · Branding</span>
           </div>
           <span class="sr-badge">Desde 48 hs</span>
           <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
@@ -438,7 +433,7 @@
           <span class="sr-num">05</span>
           <div class="sr-body">
             <span class="sr-name">Merchandising / Souvenir</span>
-            <span class="sr-tag">Tazas · Remeras · Bolsas · Libretas</span>
+            <span class="sr-tag">Remeras · Tazas · Bolsas · Libretas</span>
           </div>
           <span class="sr-badge">Consultar stock</span>
           <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
@@ -448,7 +443,7 @@
           <span class="sr-num">06</span>
           <div class="sr-body">
             <span class="sr-name">Offset &amp; tiradas grandes</span>
-            <span class="sr-tag">Revistas · Catálogos · Agendas</span>
+            <span class="sr-tag">Revistas · Catálogos · Folletos</span>
           </div>
           <span class="sr-badge">A convenir</span>
           <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
@@ -458,7 +453,7 @@
           <span class="sr-num">07</span>
           <div class="sr-body">
             <span class="sr-name">Papelería creativa</span>
-            <span class="sr-tag">Tarjetas · Agendas · Invitaciones</span>
+            <span class="sr-tag">Tarjetas · Invitaciones</span>
           </div>
           <span class="sr-badge">Desde 48 hs</span>
           <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
@@ -530,65 +525,6 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALES -->
-  <section>
-    <div class="container">
-      <div class="section-head">
-        <div>
-          <span class="eyebrow reveal">Testimonios</span>
-          <h2 class="reveal reveal-delay-1" style="margin-top: var(--s3)">
-            Lo que dicen<br>nuestros clientes.
-          </h2>
-        </div>
-      </div>
-
-      <div class="testimonials-grid">
-
-        <div class="tcard reveal">
-          <div class="tcard-stars">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <p class="tcard-quote">"Cotizamos a la mañana y a la tarde ya teníamos respuesta. Los flyers quedaron perfectos y llegaron antes de lo prometido."</p>
-          <div class="tcard-author">
-            <div class="tcard-avatar" style="background: var(--m)">LC</div>
-            <div>
-              <div class="tcard-name">Laura C.</div>
-              <div class="tcard-role">Emprendedora · Indumentaria</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tcard reveal reveal-delay-1">
-          <div class="tcard-stars">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <p class="tcard-quote">"Nos hicieron las etiquetas para toda la línea de productos. Excelente calidad y los colores salieron exactamente como los necesitábamos."</p>
-          <div class="tcard-author">
-            <div class="tcard-avatar" style="background: var(--c)">MR</div>
-            <div>
-              <div class="tcard-name">Martín R.</div>
-              <div class="tcard-role">Dueño · Cervecería artesanal</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tcard reveal reveal-delay-2">
-          <div class="tcard-stars">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-          </div>
-          <p class="tcard-quote">"Ya vamos por el tercer pedido. El diseño del menú nos lo hicieron desde cero, entendieron exactamente el estilo que buscábamos."</p>
-          <div class="tcard-author">
-            <div class="tcard-avatar" style="background: var(--k)">SV</div>
-            <div>
-              <div class="tcard-name">Sofía V.</div>
-              <div class="tcard-role">Socia · Restó Ñ</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
 
   <!-- CTA FINAL -->
   <section>
@@ -609,6 +545,10 @@
             WhatsApp directo
           </a>
         </div>
+        <p style="margin-top: var(--s4); font-size: 13px; color: #ffffff88; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Envío gratis a todo el país
+        </p>
 
       </div>
     </div>

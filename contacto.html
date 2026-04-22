@@ -23,6 +23,11 @@
           <h2>Elegí por dónde<br>te resulte más cómodo.</h2>
           <p>Respondemos en menos de 24 hs hábiles. WhatsApp es el canal más rápido para cotizaciones.</p>
 
+          <div style="display:inline-flex; align-items:center; gap:8px; background:color-mix(in srgb, var(--c) 12%, var(--bg)); border:1px solid color-mix(in srgb, var(--c) 30%, transparent); border-radius:999px; padding:8px 16px; font-size:13px; font-weight:500; color:var(--c); margin-bottom: var(--s4);">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Enviamos a todo el país
+          </div>
+
           <div class="contact-channels">
             <a href="https://wa.me/5491136365889" target="_blank" class="channel">
               <div class="channel-icon wa">
@@ -149,12 +154,22 @@
 
 <script src="chrome.js?v=2"></script>
 <script>
-  // Preselect service from query string (e.g. ?s=packaging)
+  // Preselect service from query string (e.g. ?s=impresion)
+  const slugMap = {
+    'impresion':      'Impresión digital',
+    'diseno':         'Diseño gráfico',
+    'packaging':      'Packaging & etiquetas',
+    'gigantografias': 'Gigantografías & viniles',
+    'merchandising':  'Merchandising / Souvenir',
+    'offset':         'Offset & tiradas grandes',
+    'papeleria':      'Papelería creativa'
+  };
   const params = new URLSearchParams(location.search);
   const s = params.get('s');
   if (s) {
     const sel = document.getElementById('serviceSelect');
-    if (sel && [...sel.options].some(o => o.value === s)) sel.value = s;
+    const val = slugMap[s] || s;
+    if (sel && [...sel.options].some(o => o.value === val)) sel.value = val;
   }
 
   // Toggle WhatsApp / Email
