@@ -10,51 +10,109 @@ public_folder: assets/uploads
 
 collections:
 
-  - name: trabajos
-    label: "Trabajos / Portfolio"
+  - name: home
+    label: "Pagina principal"
     files:
-      - name: portfolio
-        label: "Proyectos del portfolio"
-        file: content/trabajos.json
+
+      - name: hero
+        label: "Hero Encabezado"
+        file: content/home.json
         fields:
-          - label: "Proyectos"
-            name: items
+          - label: "Eyebrow (texto pequeno arriba del titulo)"
+            name: eyebrow
+            widget: string
+            default: "Diseno - Impresion - Acompanamiento - Desde 2020"
+          - label: "Subtitulo"
+            name: subtitle
+            widget: text
+            default: "Sin intermediarios. Cotizacion en menos de 2 horas. Tu pedido listo en 48-72 hs habiles."
+          - label: "Texto boton principal"
+            name: ctaPrimary
+            widget: string
+            default: "Pedi tu cotizacion"
+          - label: "Badge de envio"
+            name: shippingBadge
+            widget: string
+            default: "Envio a todo el pais"
+          - label: "Estadisticas"
+            name: stats
             widget: list
-            summary: "{{title}}"
+            summary: "{{num}} - {{label}}"
             fields:
-              - label: "Titulo del proyecto"
+              - label: "Numero"
+                name: num
+                widget: string
+              - label: "Etiqueta"
+                name: label
+                widget: string
+
+      - name: proceso
+        label: "Proceso - Pasos del flujo"
+        file: content/proceso.json
+        fields:
+          - label: "Pasos"
+            name: steps
+            widget: list
+            summary: "{{num}} - {{title}}"
+            fields:
+              - label: "Numero"
+                name: num
+                widget: string
+              - label: "Titulo"
                 name: title
                 widget: string
-              - label: "Meta (ej: Packaging 2025)"
-                name: meta
+              - label: "Subtitulo"
+                name: sub
                 widget: string
-              - label: "Categoria"
-                name: cat
-                widget: select
-                options:
-                  - { label: "Packaging", value: "packaging" }
-                  - { label: "Diseno grafico", value: "diseno" }
-                  - { label: "Papeleria", value: "papeleria" }
-                  - { label: "Merchandising/Souvenir", value: "merchandising" }
-                  - { label: "Gigantografias", value: "gigantografia" }
-                  - { label: "Offset", value: "offset" }
-              - label: "Tamano en grilla"
-                name: size
-                widget: select
-                options:
-                  - { label: "Pequeno (1/4)", value: "span-3" }
-                  - { label: "Mediano (1/3)", value: "span-4" }
-                  - { label: "Grande (1/2)", value: "span-6" }
-                  - { label: "Grande ancho (1/2)", value: "span-6 wide" }
-                  - { label: "Extra grande (2/3)", value: "span-8" }
-                  - { label: "Extra grande ancho", value: "span-8 wide" }
-              - label: "Imagen del trabajo"
-                name: img
-                widget: image
-                required: false
+
+      - name: cta_final
+        label: "CTA Final - Banda de cierre"
+        file: content/cta-final.json
+        fields:
+          - label: "Eyebrow"
+            name: eyebrow
+            widget: string
+            default: "Empecemos"
+          - label: "Titulo"
+            name: title
+            widget: string
+            default: "Tenes un proyecto en mente?"
+          - label: "Subtitulo"
+            name: subtitle
+            widget: text
+            default: "Cotizacion en menos de 2 horas. Entrega en 48-72 hs habiles. Sin vueltas."
+
+  - name: servicios_textos
+    label: "Servicios - Textos"
+    files:
+      - name: servicios_home
+        label: "Servicios en el Home"
+        file: content/servicios-textos.json
+        fields:
+          - label: "Titulo de seccion"
+            name: sectionTitle
+            widget: string
+            default: "Todo lo que tu marca necesita."
+          - label: "Servicios"
+            name: items
+            widget: list
+            summary: "{{num}} - {{name}}"
+            fields:
+              - label: "Numero"
+                name: num
+                widget: string
+              - label: "Nombre del servicio"
+                name: name
+                widget: string
+              - label: "Tags (subtitulo)"
+                name: tag
+                widget: string
+              - label: "Badge (tiempo de entrega)"
+                name: badge
+                widget: string
 
   - name: servicios
-    label: "Servicios"
+    label: "Servicios - Imagenes"
     files:
       - name: imagenes
         label: "Imagenes de servicios"
@@ -117,6 +175,49 @@ collections:
                 widget: image
                 required: false
 
+  - name: trabajos
+    label: "Trabajos / Portfolio"
+    files:
+      - name: portfolio
+        label: "Proyectos del portfolio"
+        file: content/trabajos.json
+        fields:
+          - label: "Proyectos"
+            name: items
+            widget: list
+            summary: "{{title}}"
+            fields:
+              - label: "Titulo del proyecto"
+                name: title
+                widget: string
+              - label: "Meta (ej: Packaging 2025)"
+                name: meta
+                widget: string
+              - label: "Categoria"
+                name: cat
+                widget: select
+                options:
+                  - { label: "Packaging", value: "packaging" }
+                  - { label: "Diseno grafico", value: "diseno" }
+                  - { label: "Papeleria", value: "papeleria" }
+                  - { label: "Merchandising/Souvenir", value: "merchandising" }
+                  - { label: "Gigantografias", value: "gigantografia" }
+                  - { label: "Offset", value: "offset" }
+              - label: "Tamano en grilla"
+                name: size
+                widget: select
+                options:
+                  - { label: "Pequeno (1/4)", value: "span-3" }
+                  - { label: "Mediano (1/3)", value: "span-4" }
+                  - { label: "Grande (1/2)", value: "span-6" }
+                  - { label: "Grande ancho (1/2)", value: "span-6 wide" }
+                  - { label: "Extra grande (2/3)", value: "span-8" }
+                  - { label: "Extra grande ancho", value: "span-8 wide" }
+              - label: "Imagen del trabajo"
+                name: img
+                widget: image
+                required: false
+
   - name: testimonios
     label: "Testimonios"
     files:
@@ -165,11 +266,52 @@ collections:
             widget: image
             required: false
 
+  - name: seo
+    label: "SEO"
+    files:
+      - name: seo_paginas
+        label: "Titulos y descripciones"
+        file: content/seo.json
+        fields:
+          - label: "Meta titulo - Home"
+            name: titleHome
+            widget: string
+            default: "1000 Impresiones - Diseno e impresion en Buenos Aires"
+          - label: "Meta descripcion - Home"
+            name: descHome
+            widget: text
+            default: "Mas de 500 clientes. Cotizacion en 2 horas. Entrega en 48-72 hs habiles."
+          - label: "Meta titulo - Servicios"
+            name: titleServicios
+            widget: string
+            default: "Servicios - 1000 Impresiones"
+            required: false
+          - label: "Meta descripcion - Servicios"
+            name: descServicios
+            widget: text
+            default: "Impresion digital, diseno grafico, packaging, gigantografias y mas."
+            required: false
+          - label: "Meta titulo - Trabajos"
+            name: titleTrabajos
+            widget: string
+            default: "Trabajos - 1000 Impresiones"
+            required: false
+          - label: "Meta titulo - Nosotros"
+            name: titleNosotros
+            widget: string
+            default: "Nosotros - 1000 Impresiones"
+            required: false
+          - label: "Meta titulo - Contacto"
+            name: titleContacto
+            widget: string
+            default: "Contacto - 1000 Impresiones"
+            required: false
+
   - name: diseno
-    label: "Diseño Visual"
+    label: "Diseno Visual"
     files:
       - name: visual
-        label: "Colores, Logo y Tipografía"
+        label: "Colores, Logo y Tipografia"
         file: content/config-visual.json
         fields:
           - label: "Logo (modo claro)"
@@ -181,12 +323,10 @@ collections:
             name: logoDark
             widget: image
             required: false
-            hint: "Logo para cuando el usuario activa el modo oscuro."
           - label: "Color de acento principal"
             name: accentColor
             widget: color
             default: "#EC008C"
-            hint: "Color de botones, links y elementos destacados."
           - label: "Color cyan (barra CMYK)"
             name: cyanColor
             widget: color
@@ -199,12 +339,11 @@ collections:
             name: paperColor
             widget: color
             default: "#F4F1EA"
-            hint: "Color de fondo de toda la página."
           - label: "Color de texto"
             name: inkColor
             widget: color
             default: "#1a1815"
-          - label: "Tipografía de títulos"
+          - label: "Tipografia de titulos"
             name: fontDisplay
             widget: select
             default: "Space Grotesk"
@@ -213,7 +352,7 @@ collections:
               - { label: "Fraunces (serif elegante)", value: "Fraunces" }
               - { label: "Bricolage Grotesque (moderna)", value: "Bricolage Grotesque" }
               - { label: "Archivo (bold industrial)", value: "Archivo" }
-          - label: "Tipografía de cuerpo"
+          - label: "Tipografia de cuerpo"
             name: fontBody
             widget: select
             default: "DM Sans"
@@ -221,14 +360,13 @@ collections:
               - { label: "DM Sans (actual)", value: "DM Sans" }
               - { label: "Inter (tech limpia)", value: "Inter" }
               - { label: "IBM Plex Sans (formal)", value: "IBM Plex Sans" }
-          - label: "Ancho máximo del contenido (px)"
+          - label: "Ancho maximo del contenido (px)"
             name: containerWidth
             widget: number
             default: 1240
             value_type: int
             min: 900
             max: 1600
-            hint: "Ancho de las secciones del sitio. Default: 1240px."
           - label: "Redondez de bordes (px)"
             name: radiusBase
             widget: number
@@ -236,4 +374,3 @@ collections:
             value_type: int
             min: 0
             max: 40
-            hint: "Radio de bordes de tarjetas y botones. 0 = sin redondeo, 40 = muy redondeado."
