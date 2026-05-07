@@ -1,0 +1,47 @@
+{
+  "sectionTitle": "Todo lo que tu marca necesita.",
+  "items": [
+    {
+      "num": "01",
+      "name": "Impresión digital",
+      "tag": "Flyers · Folletos · Tarjetas · Afiches",
+      "badge": "Desde 24 hs"
+    },
+    {
+      "num": "02",
+      "name": "Diseño gráfico",
+      "tag": "Logos · Identidad visual · Branding",
+      "badge": "Desde 48 hs"
+    },
+    {
+      "num": "03",
+      "name": "Packaging",
+      "tag": "Etiquetas · Cajas · Troquelados",
+      "badge": "Desde 72 hs"
+    },
+    {
+      "num": "04",
+      "name": "Gigantografías",
+      "tag": "Banners · Vinilos · Carteles",
+      "badge": "Desde 48 hs"
+    },
+    {
+      "num": "05",
+      "name": "Merchandising / Souvenir",
+      "tag": "Remeras · Tazas · Bolsas · Libretas",
+      "badge": "Consultar stock"
+    },
+    {
+      "num": "06",
+      "name": "Offset & tiradas grandes",
+      "tag": "Revistas · Catálogos · Folletos",
+      "badge": "A convenir"
+    },
+    {
+      "num": "07",
+      "name": "Papelería creativa",
+      "tag": "Tarjetas · Invitaciones",
+      "badge": "Desde 48 hs"
+    }
+  ]
+}
