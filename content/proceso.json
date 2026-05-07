@@ -1,0 +1,24 @@
+{
+  "steps": [
+    {
+      "num": "01",
+      "title": "Nos contás",
+      "sub": "WhatsApp, email o formulario"
+    },
+    {
+      "num": "02",
+      "title": "Te cotizamos",
+      "sub": "En menos de 2 horas hábiles"
+    },
+    {
+      "num": "03",
+      "title": "Producimos",
+      "sub": "Con tu aprobación previa"
+    },
+    {
+      "num": "04",
+      "title": "Listo en 48-72 hs",
+      "sub": "Entrega o retiro en local"
+    }
+  ]
+}
