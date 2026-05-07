@@ -1,17 +1,11 @@
 {
   "items": [
-    { "cat": "packaging",    "title": "Cervecería Artesanal Norte", "meta": "Packaging · 2025",                "size": "span-6 wide", "img": "" },
-    { "cat": "diseno",       "title": "Estudio Almendra",           "meta": "Identidad · 2025",                "size": "span-3",      "img": "" },
-    { "cat": "papeleria",    "title": "Clínica Sonrisas",           "meta": "Papelería · 2024",                "size": "span-3",      "img": "" },
-    { "cat": "merchandising","title": "Agencia Deportiva Sur",      "meta": "Merchandising / Souvenir · 2024", "size": "span-4",      "img": "" },
-    { "cat": "diseno",       "title": "Restó Ñ",                    "meta": "Carta editorial · 2024",          "size": "span-4",      "img": "" },
-    { "cat": "gigantografia","title": "Feria Emprendedora",         "meta": "Gigantografías · 2024",           "size": "span-4",      "img": "" },
-    { "cat": "packaging",    "title": "Miel del Monte",             "meta": "Etiquetas · 2024",                "size": "span-4",      "img": "" },
-    { "cat": "offset",       "title": "Grupo Textil Sur · Catálogo","meta": "Offset · 2024",                   "size": "span-8 wide", "img": "" },
-    { "cat": "papeleria",    "title": "Boda Soler-Navarro",         "meta": "Invitaciones · 2024",             "size": "span-4",      "img": "" },
-    { "cat": "merchandising","title": "Kit bienvenida Koalinga",    "meta": "Merchandising / Souvenir · 2023", "size": "span-4",      "img": "" },
-    { "cat": "diseno",       "title": "Escuela Arrayanes",          "meta": "Identidad · 2023",                "size": "span-4",      "img": "" },
-    { "cat": "gigantografia","title": "Vinilado de local Arena",    "meta": "Viniles · 2023",                  "size": "span-6",      "img": "" },
-    { "cat": "packaging",    "title": "Té de las Sierras",          "meta": "Packaging · 2023",                "size": "span-6",      "img": "" }
+    {
+      "cat": "papeleria",
+      "size": "span-6",
+      "title": "Texturizado",
+      "img": "assets/uploads/gemini_generated_image_abl00mabl00mabl0.png",
+      "meta": "INVITACION TEXTURIZADA"
+    }
   ]
 }
