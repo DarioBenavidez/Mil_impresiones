@@ -1,5 +1,6 @@
 /* Imagenes adaptativas al tamano subido */
 
+/* Work cards */
 .work-thumb {
   position: relative;
   overflow: hidden;
@@ -8,32 +9,29 @@
   align-items: center;
   justify-content: center;
 }
-
 .work-thumb img {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
-  border-radius: 0;
 }
-
 .work-thumb:has(img) {
   min-height: unset;
   height: auto;
 }
 
-.service-img-wrap {
-  width: 100%;
-  border-radius: inherit;
-  overflow: hidden;
+/* Servicio: contenedor SVG/visual que recibe la foto del CMS */
+.service-detail-visual {
+  height: auto !important;
+  min-height: unset !important;
+}
+.service-detail-visual img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: unset !important;
+  display: block !important;
 }
 
-.service-img-wrap img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
+/* Foto del equipo en Nosotros */
 .team-photo-wrap img {
   width: 100%;
   height: auto;
@@ -41,6 +39,7 @@
   border-radius: inherit;
 }
 
+/* Avatar en testimonios */
 .tcard-avatar img {
   width: 100%;
   height: 100%;
