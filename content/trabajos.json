@@ -6,6 +6,13 @@
       "title": "Texturizado",
       "img": "assets/uploads/gemini_generated_image_abl00mabl00mabl0.png",
       "meta": "INVITACION TEXTURIZADA"
+    },
+    {
+      "title": "test",
+      "img": "assets/uploads/banner-bc.png",
+      "meta": "2026",
+      "cat": "gigantografia",
+      "size": "span-8"
     }
   ]
 }
