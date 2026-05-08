@@ -7,10 +7,8 @@
   <link rel="cms-config-url" type="application/x-yaml" href="/admin/config.yml">
 </head>
 <body>
+
   <script>
-    // After the OAuth popup sends the handshake, it redirects to Google.
-    // When Google returns to /api/callback, the callback signals here via BroadcastChannel.
-    // We relay the success message to Decap (origin check passes, no source check).
     function relayAuthMessage(msg) {
       window.dispatchEvent(new MessageEvent('message', {
         data: msg,
@@ -18,16 +16,12 @@
         source: window
       }));
     }
-
     if (window.BroadcastChannel) {
       var bc = new BroadcastChannel('decap-oauth');
       bc.onmessage = function(e) {
-        if (e.data && e.data.indexOf('authorization:github:') === 0) {
-          relayAuthMessage(e.data);
-        }
+        if (e.data && e.data.indexOf('authorization:github:') === 0) relayAuthMessage(e.data);
       };
     }
-
     window.addEventListener('storage', function(e) {
       if (e.key === 'decap-cms-oauth-result' && e.newValue) {
         relayAuthMessage(e.newValue);
@@ -35,6 +29,167 @@
       }
     });
   </script>
+
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    var C='#29ABE2',M='#E91E8C',Y='#c4a800',K='#1A1A1A',BG='#F4F1EA';
+    var wrap={fontFamily:"'Space Grotesk','DM Sans',sans-serif",background:BG,padding:'2rem',minHeight:'100vh',color:K};
+    var eyebrowSt={fontSize:'11px',fontWeight:'600',letterSpacing:'0.1em',color:'#888',textTransform:'uppercase',display:'block',marginBottom:'12px'};
+    var h2St={fontSize:'clamp(1.4rem,3vw,2.2rem)',fontWeight:'700',letterSpacing:'-0.02em',lineHeight:'1.15',margin:'0 0 1rem'};
+    var subSt={fontSize:'1rem',color:'#555',lineHeight:'1.55',maxWidth:'560px',margin:'0 0 1.5rem'};
+    var btnM={background:M,color:'#fff',padding:'11px 22px',borderRadius:'8px',fontWeight:'600',fontSize:'14px',display:'inline-flex',alignItems:'center',gap:'6px',cursor:'default'};
+    var btnG={background:'#25D366',color:'#fff',padding:'11px 22px',borderRadius:'8px',fontWeight:'600',fontSize:'14px',display:'inline-flex',alignItems:'center',gap:'6px',cursor:'default'};
+    var card={background:'#fff',borderRadius:'14px',padding:'1.25rem 1.5rem',border:'1px solid rgba(0,0,0,0.08)'};
+
+    var HeroPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var stats=d.stats||[{num:'+100',label:'Clientes'},{num:'5',label:'Años en el mercado'},{num:'+500',label:'Trabajos entregados'}];
+      return h('div',{style:wrap},h('div',{style:{maxWidth:'680px',margin:'0 auto'}},
+        h('span',{style:eyebrowSt},d.eyebrow||''),
+        h('h1',{style:{fontSize:'clamp(2rem,5vw,3.2rem)',fontWeight:'700',letterSpacing:'-0.025em',lineHeight:'1.1',margin:'0 0 1.25rem'}},
+          h('span',{style:{color:K}},'Impresiones para '),h('span',{style:{color:C}},'vos'),h('span',{style:{color:K}},','),h('br'),
+          h('span',{style:{color:K}},'para tu '),h('span',{style:{color:M}},'emprendimiento'),h('br'),
+          h('span',{style:{color:K}},'y para tu '),h('span',{style:{color:Y}},'empresa'),h('span',{style:{color:K}},'.')
+        ),
+        h('p',{style:subSt},d.subtitle||''),
+        h('div',{style:{display:'flex',gap:'10px',flexWrap:'wrap',marginBottom:'1rem'}},
+          h('div',{style:btnM},d.ctaPrimary||'Pedi tu cotizacion',h('span',{},'→')),
+          h('div',{style:btnG},'WhatsApp directo')
+        ),
+        h('div',{style:{display:'inline-flex',alignItems:'center',gap:'8px',background:'rgba(0,0,0,0.06)',borderRadius:'999px',padding:'6px 14px 6px 8px',marginBottom:'1.5rem'}},
+          h('span',{style:{background:C,borderRadius:'50%',width:'22px',height:'22px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'10px',color:'#fff'}},'🚛'),
+          h('span',{style:{fontSize:'12px',fontWeight:'500'}},d.shippingBadge||'Envio a todo el pais')
+        ),
+        h('div',{style:{display:'flex',gap:'2.5rem',paddingTop:'1.5rem',borderTop:'1px solid rgba(0,0,0,0.1)'}},
+          stats.map(function(s,i){return h('div',{key:i},h('div',{style:{fontSize:'2rem',fontWeight:'700',letterSpacing:'-0.03em'}},s.num),h('div',{style:{fontSize:'12px',color:'#888',marginTop:'2px'}},s.label));})
+        )
+      ));
+    }});
+
+    var ProcesoPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var steps=d.steps||[];
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        h('div',{style:{background:'rgba(0,0,0,0.04)',borderRadius:'14px',padding:'1.25rem',display:'flex',flexWrap:'wrap',gap:'4px'}},
+          steps.map(function(step,i){return h('div',{key:i,style:{flex:'1',minWidth:'130px',padding:'0.75rem',display:'flex',alignItems:'flex-start',gap:'10px',borderRadius:'8px'}},
+            h('span',{style:{fontFamily:'monospace',fontSize:'13px',fontWeight:'600',color:'#aaa',minWidth:'22px'}},step.num),
+            h('div',{},h('div',{style:{fontSize:'14px',fontWeight:'600',color:i===3?M:K,lineHeight:'1.2'}},step.title),h('div',{style:{fontSize:'12px',color:'#888',marginTop:'3px'}},step.sub))
+          );})
+        )
+      );
+    }});
+
+    var CtaFinalPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      return h('div',{style:{fontFamily:"'Space Grotesk',sans-serif",padding:'1.5rem'}},
+        h('div',{style:{background:K,padding:'3rem 2rem',borderRadius:'16px',textAlign:'center',position:'relative',overflow:'hidden',color:'#fff',minHeight:'240px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'12px'}},
+          h('div',{style:{position:'absolute',top:'-50px',left:'-50px',width:'150px',height:'150px',borderRadius:'50%',background:'rgba(41,171,226,0.2)'}}),
+          h('div',{style:{position:'absolute',bottom:'-40px',right:'-40px',width:'120px',height:'120px',borderRadius:'50%',background:'rgba(233,30,140,0.2)'}}),
+          h('span',{style:{fontSize:'10px',letterSpacing:'0.12em',color:'rgba(255,255,255,0.45)',textTransform:'uppercase',position:'relative',zIndex:1}},d.eyebrow||''),
+          h('h2',{style:{fontSize:'clamp(1.4rem,3vw,2.2rem)',fontWeight:'700',color:'#fff',margin:'0',position:'relative',zIndex:1}},d.title||''),
+          h('p',{style:{color:'rgba(255,255,255,0.65)',fontSize:'1rem',margin:'0',maxWidth:'480px',position:'relative',zIndex:1}},d.subtitle||''),
+          h('div',{style:{display:'flex',gap:'10px',justifyContent:'center',flexWrap:'wrap',position:'relative',zIndex:1,marginTop:'8px'}},
+            h('div',{style:btnM},'Pedi tu cotizacion →'),h('div',{style:btnG},'WhatsApp directo')
+          )
+        )
+      );
+    }});
+
+    var ServiciosTextosPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var items=d.items||[];
+      var rc=[M,C,Y,K,M,C,Y];
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        h('h2',{style:Object.assign({},h2St,{marginBottom:'1.25rem'})},d.sectionTitle||''),
+        h('div',{style:{borderTop:'1px solid rgba(0,0,0,0.08)'}},
+          items.map(function(item,i){return h('div',{key:i,style:{display:'grid',gridTemplateColumns:'44px 1fr auto',alignItems:'center',gap:'12px',padding:'14px 12px',borderBottom:'1px solid rgba(0,0,0,0.07)',borderLeft:'3px solid '+(rc[i]||M),background:'rgba(255,255,255,0.5)'}},
+            h('span',{style:{fontSize:'14px',color:'#bbb',fontWeight:'500',fontFamily:'monospace'}},item.num),
+            h('div',{},h('div',{style:{fontSize:'clamp(16px,2vw,22px)',fontWeight:'600',letterSpacing:'-0.02em',lineHeight:'1.2'}},item.name),h('div',{style:{fontSize:'13px',color:'#888',marginTop:'3px'}},item.tag)),
+            h('span',{style:{fontSize:'12px',padding:'5px 12px',borderRadius:'999px',border:'1px solid rgba(0,0,0,0.12)',color:'#666',whiteSpace:'nowrap'}},item.badge)
+          );})
+        )
+      );
+    }});
+
+    var ServiciosImagenesPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var getAsset=this.props.getAsset;
+      var services=[{key:'impresion',label:'01 Impresion digital'},{key:'diseno',label:'02 Diseno grafico'},{key:'packaging',label:'03 Packaging'},{key:'gigantografias',label:'04 Gigantografias'},{key:'merchandising',label:'05 Merchandising'},{key:'offset',label:'06 Offset'},{key:'papeleria',label:'07 Papeleria creativa'}];
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(175px, 1fr))',gap:'10px'}},
+          services.map(function(srv){
+            var imgVal=d[srv.key]&&d[srv.key].img;
+            var imgSrc=imgVal?getAsset(imgVal).toString():null;
+            return h('div',{key:srv.key,style:{borderRadius:'10px',overflow:'hidden',border:'1px solid rgba(0,0,0,0.09)',background:'#fff'}},
+              imgSrc?h('img',{src:imgSrc,style:{width:'100%',height:'auto',display:'block'}}):h('div',{style:{height:'110px',background:'rgba(0,0,0,0.05)',display:'flex',alignItems:'center',justifyContent:'center',color:'#ccc',fontSize:'11px'}},'Sin imagen'),
+              h('div',{style:{padding:'8px 10px',fontSize:'11px',fontWeight:'500',color:K,borderTop:'1px solid rgba(0,0,0,0.06)'}},srv.label)
+            );
+          })
+        )
+      );
+    }});
+
+    var PortfolioPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var items=d.items||[];
+      var getAsset=this.props.getAsset;
+      var pb=[M,K,Y,C,BG,M,K];
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(200px, 1fr))',gap:'10px'}},
+          items.map(function(item,i){
+            var imgVal=item.img;
+            var imgSrc=imgVal?getAsset(imgVal).toString():null;
+            return h('div',{key:i,style:{borderRadius:'10px',overflow:'hidden',position:'relative',border:'1px solid rgba(0,0,0,0.08)',background:'#fff'}},
+              imgSrc?h('img',{src:imgSrc,style:{width:'100%',height:'auto',display:'block'}}):h('div',{style:{height:'160px',background:pb[i%pb.length],display:'flex',alignItems:'center',justifyContent:'center',color:pb[i%pb.length]===Y?'#333':'#fff',fontSize:'12px',fontWeight:'600',padding:'8px',textAlign:'center'}},item.title||'Sin imagen'),
+              h('div',{style:{padding:'10px'}},h('div',{style:{fontSize:'10px',color:'#aaa',marginBottom:'2px'}},item.meta),h('div',{style:{fontSize:'13px',fontWeight:'600',letterSpacing:'-0.01em'}},item.title))
+            );
+          })
+        )
+      );
+    }});
+
+    var TestimoniosPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var items=d.items||[];
+      var getAsset=this.props.getAsset;
+      var ac={m:M,c:C,k:K};
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(240px, 1fr))',gap:'10px'}},
+          items.map(function(item,i){
+            var imgSrc=item.avatar?getAsset(item.avatar).toString():null;
+            var bg=ac[item.color]||M;
+            return h('div',{key:i,style:Object.assign({},card,{display:'flex',flexDirection:'column',gap:'10px'})},
+              h('div',{style:{display:'flex',gap:'2px'}},[0,1,2,3,4].map(function(j){return h('span',{key:j,style:{color:'#F5D800',fontSize:'12px'}},'★');})),
+              h('p',{style:{fontSize:'14px',lineHeight:'1.45',color:K,flex:'1',margin:'0'}},item.quote),
+              h('div',{style:{display:'flex',alignItems:'center',gap:'10px',paddingTop:'10px',borderTop:'1px solid rgba(0,0,0,0.07)'}},
+                imgSrc?h('img',{src:imgSrc,style:{width:'34px',height:'34px',borderRadius:'50%',objectFit:'cover',flexShrink:'0'}}):h('div',{style:{width:'34px',height:'34px',borderRadius:'50%',background:bg,display:'flex',alignItems:'center',justifyContent:'center',fontSize:'11px',fontWeight:'700',color:'#fff',flexShrink:'0'}},item.initials),
+                h('div',{},h('div',{style:{fontSize:'12px',fontWeight:'600'}},item.name),h('div',{style:{fontSize:'11px',color:'#999',marginTop:'1px'}},item.role))
+              )
+            );
+          })
+        )
+      );
+    }});
+
+    var NosotrosPreview=createClass({render:function(){
+      var d=this.props.entry.get('data').toJS();
+      var getAsset=this.props.getAsset;
+      var imgSrc=d.teamPhoto?getAsset(d.teamPhoto).toString():null;
+      return h('div',{style:Object.assign({},wrap,{padding:'1.5rem'})},
+        imgSrc?h('img',{src:imgSrc,style:{width:'100%',height:'auto',borderRadius:'14px',display:'block'}}):h('div',{style:{height:'280px',background:'rgba(0,0,0,0.05)',borderRadius:'14px',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',color:'#bbb',fontSize:'13px',gap:'8px'}},h('span',{style:{fontSize:'2rem'}},'📸'),h('span',{},'Subi la foto del equipo o taller'))
+      );
+    }});
+
+    CMS.registerPreviewTemplate('hero',HeroPreview);
+    CMS.registerPreviewTemplate('proceso',ProcesoPreview);
+    CMS.registerPreviewTemplate('cta_final',CtaFinalPreview);
+    CMS.registerPreviewTemplate('servicios_home',ServiciosTextosPreview);
+    CMS.registerPreviewTemplate('imagenes',ServiciosImagenesPreview);
+    CMS.registerPreviewTemplate('portfolio',PortfolioPreview);
+    CMS.registerPreviewTemplate('testimonios',TestimoniosPreview);
+    CMS.registerPreviewTemplate('equipo',NosotrosPreview);
+    CMS.registerPreviewStyle('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+  </script>
 </body>
 </html>
