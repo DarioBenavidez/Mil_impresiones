@@ -61,53 +61,43 @@
 <script src="chrome.js?v=2"></script>
 <script>
 (function(){
-  var cats = ['todos','packaging','diseno','papeleria','merchandising','gigantografia','offset'];
-  var catLabels = {
-    'todos':'Todos','packaging':'Packaging','diseno':'Diseño gráfico',
-    'papeleria':'Papelería','merchandising':'Merchandising / Souvenir',
-    'gigantografia':'Gigantografías','offset':'Offset'
-  };
-  var current = 'todos';
-  var allItems = [];
+  var current='todos';
+  var allItems=[];
+  var ph=['bg-m','bg-k','bg-y','bg-c','bg-paper'];
 
   function renderGrid(items){
-    var grid = document.getElementById('worksGrid');
-    if(!grid) return;
-    var filtered = current === 'todos' ? items : items.filter(function(i){ return i.cat === current; });
+    var grid=document.getElementById('worksGrid');
+    if(!grid)return;
+    var filtered=current==='todos'?items:items.filter(function(i){return i.cat===current;});
     if(!filtered.length){
-      grid.innerHTML = '<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1">No hay trabajos en esta categoría aún.</p>';
+      grid.innerHTML='<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1;font-size:14px">No hay trabajos en esta categoría aún.</p>';
       return;
     }
-    grid.innerHTML = filtered.map(function(item){
-      var sz = item.size || 'span-4';
-      var imgHTML = item.img
-        ? '<img src="'+item.img+'" alt="'+item.title+'" style="width:100%;height:auto;display:block;">'
-        : '<div style="height:240px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--fg-3);font-size:13px;">Sin imagen</div>';
-      return '<div class="work-card '+sz+' reveal"><div class="work-thumb">'+imgHTML+'</div>'
-        +'<div class="work-overlay-v3"><div class="work-meta">'+item.meta+'</div><div class="work-title">'+item.title+'</div></div></div>';
+    grid.innerHTML=filtered.map(function(item,i){
+      var sz=item.size||'span-4';
+      var imgHTML=item.img
+        ?'<img src="'+item.img+'" alt="'+item.title+'" style="width:100%;height:auto;display:block;">'
+        :'<div class="'+ph[i%ph.length]+'" style="height:280px;width:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;opacity:0.5">Sin imagen</div>';
+      // NO usamos clase 'reveal' para items dinámicos — ya son visibles al generarse
+      return '<div class="work-card '+sz+' is-visible" style="opacity:1;transform:none"><div class="work-thumb">'+imgHTML+'</div><div class="work-overlay-v3"><div class="work-meta">'+item.meta+'</div><div class="work-title">'+item.title+'</div></div></div>';
     }).join('');
   }
 
-  // Filtros de categoría
   document.querySelectorAll('.filter-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
-      current = btn.dataset.cat;
+      current=btn.dataset.cat;
       renderGrid(allItems);
     });
   });
 
-  // Cargar desde CMS
   fetch('content/trabajos.json')
-    .then(function(r){ return r.json(); })
+    .then(function(r){return r.json();})
+    .catch(function(){return{};})
     .then(function(data){
-      allItems = (data.items || []).filter(function(i){ return i.title; });
+      allItems=(data.items||[]).filter(function(i){return i.title;});
       renderGrid(allItems);
-    })
-    .catch(function(){
-      var grid = document.getElementById('worksGrid');
-      if(grid) grid.innerHTML = '<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1">No se pudieron cargar los trabajos.</p>';
     });
 })();
 </script>
