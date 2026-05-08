@@ -55,6 +55,23 @@
 .work-overlay-v3 .work-meta{font-size:12px;opacity:.75;font-family:var(--font-display)}
 .work-overlay-v3 .work-title{font-size:18px;font-weight:600;margin-top:2px;font-family:var(--font-display);letter-spacing:-.02em}
 @media(max-width:900px){.hero-cmyk{position:relative;top:auto;right:auto;transform:none;width:240px;height:240px;margin:var(--s6) auto 0;opacity:.75}.cmyk-circle{width:130px;height:130px}}
+
+/* ── Carrusel de trabajos ── */
+.carousel-wrap{position:relative;margin:0 calc(var(--s4)*-1)}
+.carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:var(--s4);padding:0 var(--s4) var(--s4);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.carousel-track::-webkit-scrollbar{display:none}
+.carousel-slide{scroll-snap-align:start;flex-shrink:0;width:calc(50% - var(--s4));border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;background:var(--bg-2)}
+.carousel-slide img{width:100%;height:auto;display:block;transition:transform .4s ease}
+.carousel-slide:hover img{transform:scale(1.03)}
+.carousel-slide .work-overlay-v3{opacity:1}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,0.12);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg);transition:background .2s,transform .2s;z-index:2}
+.carousel-btn:hover{background:var(--card);transform:translateY(-50%) scale(1.08)}
+.carousel-prev{left:0}
+.carousel-next{right:0}
+.carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:var(--s4)}
+.carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .25s,width .25s;cursor:pointer}
+.carousel-dot.active{background:var(--m);width:20px;border-radius:3px}
+@media(max-width:640px){.carousel-slide{width:82%}}
 </style>
 </head>
 <body data-page="home">
@@ -132,20 +149,36 @@
     </div>
   </section>
 
-  <section>
+    <section>
     <div class="container">
       <div class="section-head">
         <div>
           <span class="eyebrow reveal">Trabajos recientes</span>
           <h2 class="reveal reveal-delay-1" style="margin-top:var(--s3)">Lo que hacemos<br>habla por nosotros.</h2>
         </div>
-        <a href="trabajos.html" class="link reveal reveal-delay-2">Ver todos los trabajos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
-      </div>
-      <div class="works-grid" id="works-grid-home">
-        <!-- Se carga desde content/trabajos.json -->
+        <a href="trabajos.html" class="link reveal reveal-delay-2">
+          Ver todos los trabajos
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
       </div>
 
-  <section>
+      <!-- CARRUSEL -->
+      <div class="carousel-wrap reveal">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-placeholder" style="color:var(--fg-3);font-size:14px;padding:3rem 0;">Cargando trabajos...</div>
+        </div>
+        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="Siguiente">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </section>
+
+<section>
     <div class="container">
       <div class="cta-band reveal">
         <div class="bg-dot c"></div><div class="bg-dot m"></div>
