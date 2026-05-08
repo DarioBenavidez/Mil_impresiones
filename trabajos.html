@@ -60,65 +60,54 @@
 
 <script src="chrome.js?v=2"></script>
 <script>
-const WORKS = [
-  { cat: 'packaging',    title: 'Cervecería Artesanal Norte', meta: 'Packaging · 2025',               bg: 'bg-m',     size: 'span-6 wide', glyph: 'CN', img: 'https://loremflickr.com/800/600/beer,packaging,bottle?lock=101' },
-  { cat: 'diseno',       title: 'Estudio Almendra',           meta: 'Identidad · 2025',               bg: 'bg-k',     size: 'span-3',      glyph: 'AM', img: 'https://loremflickr.com/800/600/branding,logo,identity?lock=102' },
-  { cat: 'papeleria',    title: 'Clínica Sonrisas',           meta: 'Papelería · 2024',               bg: 'bg-y',     size: 'span-3',      glyph: 'CS', img: 'https://loremflickr.com/800/600/stationery,card,paper?lock=103' },
-  { cat: 'merchandising',title: 'Agencia Deportiva Sur',      meta: 'Merchandising / Souvenir · 2024',bg: 'bg-c',     size: 'span-4',      glyph: '01', img: 'https://loremflickr.com/800/600/merchandise,sport,tshirt?lock=104' },
-  { cat: 'diseno',       title: 'Restó Ñ',                    meta: 'Carta editorial · 2024',         bg: 'bg-paper', size: 'span-4',      glyph: 'Ñ',  img: 'https://loremflickr.com/800/600/menu,restaurant,design?lock=105' },
-  { cat: 'gigantografia',title: 'Feria Emprendedora',         meta: 'Gigantografías · 2024',          bg: 'bg-m',     size: 'span-4',      glyph: 'FE', img: 'https://loremflickr.com/800/600/banner,fair,event?lock=106' },
-  { cat: 'packaging',    title: 'Miel del Monte',             meta: 'Etiquetas · 2024',               bg: 'bg-y',     size: 'span-4',      glyph: 'M',  img: 'https://loremflickr.com/800/600/honey,jar,label?lock=107' },
-  { cat: 'offset',       title: 'Grupo Textil Sur · Catálogo',meta: 'Offset · 2024',                  bg: 'bg-k',     size: 'span-8 wide', glyph: 'TS', img: 'https://loremflickr.com/800/600/catalog,printing,magazine?lock=108' },
-  { cat: 'papeleria',    title: 'Boda Soler-Navarro',         meta: 'Invitaciones · 2024',            bg: 'bg-c',     size: 'span-4',      glyph: 'SN', img: 'https://loremflickr.com/800/600/wedding,invitation,card?lock=109' },
-  { cat: 'merchandising',title: 'Kit bienvenida Koalinga',    meta: 'Merchandising / Souvenir · 2023',bg: 'bg-m',     size: 'span-4',      glyph: 'KO', img: 'https://loremflickr.com/800/600/welcome,kit,gift?lock=110' },
-  { cat: 'diseno',       title: 'Escuela Arrayanes',          meta: 'Identidad · 2023',               bg: 'bg-y',     size: 'span-4',      glyph: 'EA', img: 'https://loremflickr.com/800/600/school,brand,identity?lock=111' },
-  { cat: 'gigantografia',title: 'Vinilado de local Arena',    meta: 'Viniles · 2023',                 bg: 'bg-c',     size: 'span-6',      glyph: 'AR', img: 'https://loremflickr.com/800/600/vinyl,storefront,signage?lock=112' },
-  { cat: 'packaging',    title: 'Té de las Sierras',          meta: 'Packaging · 2023',               bg: 'bg-paper', size: 'span-6',      glyph: 'TS', img: 'https://loremflickr.com/800/600/tea,packaging,box?lock=113' },
-];
+(function(){
+  var cats = ['todos','packaging','diseno','papeleria','merchandising','gigantografia','offset'];
+  var catLabels = {
+    'todos':'Todos','packaging':'Packaging','diseno':'Diseño gráfico',
+    'papeleria':'Papelería','merchandising':'Merchandising / Souvenir',
+    'gigantografia':'Gigantografías','offset':'Offset'
+  };
+  var current = 'todos';
+  var allItems = [];
 
-const getGlyphBgSVG = (bg) => {
-  const sw = bg === 'bg-y' || bg === 'bg-paper' ? '#111' : '#fff';
-  return `<svg width="55%" height="55%" viewBox="0 0 100 100" fill="none" opacity="0.2" style="position:absolute; top:10%; left:10%"><circle cx="30" cy="30" r="22" stroke="${sw}" stroke-width="1.5"/><circle cx="60" cy="55" r="22" stroke="${sw}" stroke-width="1.5"/></svg>`;
-};
+  function renderGrid(items){
+    var grid = document.getElementById('worksGrid');
+    if(!grid) return;
+    var filtered = current === 'todos' ? items : items.filter(function(i){ return i.cat === current; });
+    if(!filtered.length){
+      grid.innerHTML = '<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1">No hay trabajos en esta categoría aún.</p>';
+      return;
+    }
+    grid.innerHTML = filtered.map(function(item){
+      var sz = item.size || 'span-4';
+      var imgHTML = item.img
+        ? '<img src="'+item.img+'" alt="'+item.title+'" style="width:100%;height:auto;display:block;">'
+        : '<div style="height:240px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--fg-3);font-size:13px;">Sin imagen</div>';
+      return '<div class="work-card '+sz+' reveal"><div class="work-thumb">'+imgHTML+'</div>'
+        +'<div class="work-overlay-v3"><div class="work-meta">'+item.meta+'</div><div class="work-title">'+item.title+'</div></div></div>';
+    }).join('');
+  }
 
-const grid = document.getElementById('worksGrid');
-function render(filter) {
-  const items = filter === 'all' ? WORKS : WORKS.filter(w => w.cat === filter);
-  grid.innerHTML = items.map((w, i) => `
-    <div class="work-card ${w.size} reveal" data-cat="${w.cat}" style="transition-delay:${(i%4)*0.08}s">
-      <div class="work-thumb ${w.bg}">
-        ${w.img ? `<img src="${w.img}" alt="${w.title}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" loading="lazy">` : getGlyphBgSVG(w.bg) + `<span style="position:relative">${w.glyph}</span>`}
-      </div>
-      <div class="work-overlay">
-        <div>
-          <div class="work-meta">${w.meta}</div>
-          <div class="work-title">${w.title}</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  if (window.__reObserveReveal) window.__reObserveReveal();
-}
-let activeFilter = 'all';
-render('all');
-
-document.querySelectorAll('#filters .filter-chip').forEach(c => {
-  c.addEventListener('click', () => {
-    document.querySelectorAll('#filters .filter-chip').forEach(x => x.classList.remove('active'));
-    c.classList.add('active');
-    activeFilter = c.dataset.filter;
-    render(activeFilter);
+  // Filtros de categoría
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      current = btn.dataset.cat;
+      renderGrid(allItems);
+    });
   });
-});
 
-// Carga imágenes desde el CMS (content/trabajos.json)
-fetch('content/trabajos.json').then(r => r.json()).then(data => {
-  if (!data.items) return;
-  data.items.forEach((item, i) => {
-    if (item.img && WORKS[i]) WORKS[i].img = item.img;
-  });
-  render(activeFilter);
-}).catch(() => {});
+  // Cargar desde CMS
+  fetch('content/trabajos.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      allItems = (data.items || []).filter(function(i){ return i.title; });
+      renderGrid(allItems);
+    })
+    .catch(function(){
+      var grid = document.getElementById('worksGrid');
+      if(grid) grid.innerHTML = '<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1">No se pudieron cargar los trabajos.</p>';
+    });
+})();
 </script>
-</body>
-</html>
