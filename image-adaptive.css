@@ -47,3 +47,22 @@
   border-radius: 50%;
   display: block;
 }
+
+/* Carrusel: overlay siempre visible sobre la imagen al hacer hover */
+.carousel-slide {
+  position: relative;
+}
+.carousel-slide img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.carousel-slide .work-overlay-v3 {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
