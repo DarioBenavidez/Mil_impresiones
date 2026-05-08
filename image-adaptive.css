@@ -1,0 +1,50 @@
+/* Imagenes adaptativas al tamano subido */
+
+.work-thumb {
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.work-thumb:has(img) {
+  min-height: unset;
+  height: auto;
+}
+
+.service-img-wrap {
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.service-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.team-photo-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: inherit;
+}
+
+.tcard-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
