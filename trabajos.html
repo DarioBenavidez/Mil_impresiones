@@ -68,7 +68,7 @@
   function renderGrid(items){
     var grid=document.getElementById('worksGrid');
     if(!grid)return;
-    var filtered=current==='todos'?items:items.filter(function(i){return i.cat===current;});
+    var filtered=current==='all'?items:items.filter(function(i){return i.cat===current;});
     if(!filtered.length){
       grid.innerHTML='<p style="color:var(--fg-3);padding:2rem 0;grid-column:1/-1;font-size:14px">No hay trabajos en esta categoría aún.</p>';
       return;
@@ -83,11 +83,11 @@
     }).join('');
   }
 
-  document.querySelectorAll('.filter-btn').forEach(function(btn){
+  document.querySelectorAll('.filter-chip').forEach(function(btn){
     btn.addEventListener('click',function(){
       document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
-      current=btn.dataset.cat;
+      current=btn.dataset.filter;
       renderGrid(allItems);
     });
   });
