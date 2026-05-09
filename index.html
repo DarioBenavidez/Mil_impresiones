@@ -12,7 +12,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Bricolage+Grotesque:wght@400;500;600&family=Archivo:wght@400;500;600&family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="/image-adaptive.css">
 <style>
 .hero-sub-v3{margin-top:var(--s5);font-size:clamp(16px,1.4vw,20px);max-width:560px;color:var(--fg-2);line-height:1.5;display:flex;flex-direction:column;gap:var(--s3)}
 .btn-wa{background:#25D366;color:#fff;display:inline-flex;align-items:center;gap:var(--s2)}
@@ -62,9 +61,9 @@
 .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;gap:var(--s4);padding:0 var(--s4) var(--s4);scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .carousel-track::-webkit-scrollbar{display:none}
 .carousel-slide{scroll-snap-align:start;flex-shrink:0;width:calc(50% - var(--s4));border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;background:var(--bg-2)}
-.carousel-slide img{width:100%;height:auto;display:block;position:relative;z-index:1}
-.carousel-slide{transition:transform .4s ease}.carousel-slide:hover{transform:scale(1.01)}
-.carousel-slide .work-overlay-v3{opacity:1;position:absolute;z-index:3;bottom:0;left:0;right:0}
+.carousel-slide img{width:100%;height:auto;display:block;transition:transform .4s ease}
+.carousel-slide:hover img{transform:scale(1.03)}
+.carousel-slide .work-overlay-v3{opacity:1}
 .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,0.12);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg);transition:background .2s,transform .2s;z-index:2}
 .carousel-btn:hover{background:var(--card);transform:translateY(-50%) scale(1.08)}
 .carousel-prev{left:0}
