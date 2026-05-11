@@ -8,18 +8,25 @@
       "meta": "INVITACION TEXTURIZADA"
     },
     {
-      "title": "test",
+      "title": "Banner",
       "img": "assets/uploads/banner-bc.png",
       "meta": "2026",
       "cat": "gigantografia",
       "size": "span-8"
     },
     {
-      "title": "Yduf",
-      "meta": "2939",
+      "title": "Taza personalizada",
+      "meta": "2025",
       "cat": "merchandising",
       "size": "span-6",
       "img": "assets/uploads/taza-dana.png"
+    },
+    {
+      "title": "Vinilo para notebook",
+      "meta": "Vinilo",
+      "cat": "gigantografia",
+      "size": "span-6",
+      "img": "assets/uploads/notebook-despues-.jpg"
     }
   ]
 }
