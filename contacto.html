@@ -88,6 +88,31 @@
               <textarea name="mensaje" class="form-textarea" placeholder="Cantidad, medidas, fechas o lo que tengas en mente" required></textarea>
             </div>
 
+
+            <div class="form-group">
+              <label>Adjuntá una imagen de referencia <span style="font-size:12px;color:var(--fg-3);font-weight:400">(opcional)</span></label>
+              <div class="file-upload-area" id="fileUploadArea">
+                <input type="file" name="attachment" id="fileInput" accept="image/*,.pdf" style="display:none" aria-label="Adjuntar imagen">
+                <div class="file-upload-placeholder" id="fileUploadPlaceholder">
+                  <svg class="up-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg>
+                  <span class="up-label">Hacé clic o arrastrá una imagen</span>
+                  <span class="up-hint">JPG, PNG o PDF · Máx 5 MB</span>
+                </div>
+                <div class="file-preview-wrap" id="filePreviewWrap" style="display:none">
+                  <img id="filePreviewImg" src="" alt="" style="display:none">
+                  <div class="file-icon" id="fileIcon" style="display:none">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                  </div>
+                  <div class="file-preview-info">
+                    <div class="file-preview-name" id="filePreviewName"></div>
+                    <div class="file-preview-size" id="filePreviewSize"></div>
+                  </div>
+                  <button type="button" class="file-remove-btn" id="fileRemoveBtn" aria-label="Quitar archivo">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
             <!-- Toggle WhatsApp / Email -->
             <div class="form-group">
               <label>¿Cómo preferís que te contactemos?</label>
@@ -150,6 +175,22 @@
     background: var(--accent);
     color: #fff;
   }
+
+/* File upload area */
+.file-upload-area{border:1.5px dashed var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;background:var(--bg-2)}
+.file-upload-area:hover,.file-upload-area.dragover{border-color:var(--m);background:color-mix(in srgb,var(--m) 6%,var(--bg-2))}
+.file-upload-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.up-icon{color:var(--fg-3)}
+.up-label{font-size:14px;font-weight:500;color:var(--fg-2)}
+.up-hint{font-size:12px;color:var(--fg-3)}
+.file-preview-wrap{display:flex;align-items:center;gap:12px;text-align:left}
+.file-preview-wrap img{width:56px;height:56px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.file-preview-wrap .file-icon{width:56px;height:56px;background:var(--bg);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--m);flex-shrink:0}
+.file-preview-info{flex:1;min-width:0}
+.file-preview-name{font-size:13px;font-weight:500;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-preview-size{font-size:11px;color:var(--fg-3);margin-top:2px}
+.file-remove-btn{background:none;border:1px solid var(--border);border-radius:50%;width:28px;height:28px;cursor:pointer;color:var(--fg-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s,color .2s}
+.file-remove-btn:hover{border-color:#ef4444;color:#ef4444}
 </style>
 
 <script src="chrome.js?v=2"></script>
@@ -207,13 +248,13 @@
     btn.innerHTML = 'Enviando...';
     btn.disabled = true;
 
-    const data = Object.fromEntries(new FormData(this));
+    const formData = new FormData(this);
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Accept': 'application/json' },
+        body: formData
       });
       const json = await res.json();
       if (json.success) {
@@ -229,6 +270,46 @@
       setTimeout(() => { btn.innerHTML = originalHTML; btn.style.background = ''; btn.disabled = false; }, 3000);
     }
   });
+
+  // File upload interaction
+  (function(){
+    var area=document.getElementById('fileUploadArea');
+    var input=document.getElementById('fileInput');
+    var ph=document.getElementById('fileUploadPlaceholder');
+    var pw=document.getElementById('filePreviewWrap');
+    var pi=document.getElementById('filePreviewImg');
+    var fi=document.getElementById('fileIcon');
+    var pn=document.getElementById('filePreviewName');
+    var ps=document.getElementById('filePreviewSize');
+    var rb=document.getElementById('fileRemoveBtn');
+    if(!area)return;
+
+    function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return (b/1024).toFixed(1)+' KB';return (b/1048576).toFixed(1)+' MB';}
+
+    function showPreview(file){
+      ph.style.display='none'; pw.style.display='flex';
+      pn.textContent=file.name; ps.textContent=fmtSize(file.size);
+      if(file.type.startsWith('image/')){
+        var r=new FileReader();
+        r.onload=function(e){pi.src=e.target.result;pi.style.display='block';fi.style.display='none';};
+        r.readAsDataURL(file);
+      } else {pi.style.display='none';fi.style.display='flex';}
+    }
+
+    function clearFile(){input.value='';ph.style.display='flex';pw.style.display='none';pi.src='';area.classList.remove('dragover');}
+
+    area.addEventListener('click',function(e){if(e.target===rb||rb.contains(e.target))return;input.click();});
+    input.addEventListener('change',function(){if(this.files[0])showPreview(this.files[0]);});
+    rb.addEventListener('click',function(e){e.stopPropagation();clearFile();});
+    area.addEventListener('dragover',function(e){e.preventDefault();area.classList.add('dragover');});
+    area.addEventListener('dragleave',function(){area.classList.remove('dragover');});
+    area.addEventListener('drop',function(e){
+      e.preventDefault();area.classList.remove('dragover');
+      var file=e.dataTransfer.files[0];
+      if(file){var dt=new DataTransfer();dt.items.add(file);input.files=dt.files;showPreview(file);}
+    });
+  })();
+
 </script>
 </body>
 </html>
