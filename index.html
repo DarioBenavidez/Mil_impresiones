@@ -10,24 +10,14 @@
 <link rel="apple-touch-icon" href="assets/favicon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Bricolage+Grotesque:wght@400;500;600&family=Archivo:wght@400;500;600&family=Jost:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
 .hero-sub-v3{margin-top:var(--s5);font-size:clamp(16px,1.4vw,20px);max-width:560px;color:var(--fg-2);line-height:1.5;display:flex;flex-direction:column;gap:var(--s3)}
 .btn-wa{background:#25D366;color:#fff;display:inline-flex;align-items:center;gap:var(--s2)}
 .btn-wa:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 28px -8px rgba(37,211,102,0.5)}
-.process-strip{background:var(--bg-2);border-radius:var(--radius-lg);padding:var(--s5) var(--s6);display:flex;align-items:center;gap:0;overflow:hidden}
-.ps-step{flex:1;display:flex;align-items:center;gap:var(--s3);padding:var(--s3) var(--s4);border-radius:var(--radius-sm);transition:background 0.2s}
-.ps-step:hover{background:var(--bg)}
-.ps-num{font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:.05em;color:var(--fg-3);min-width:28px}
-.ps-body{display:flex;flex-direction:column;gap:3px}
-.ps-title{font-family:var(--font-display);font-size:16px;font-weight:600;letter-spacing:-.01em}
-.ps-sub{font-size:13px;color:var(--fg-3);line-height:1.3}
-.ps-sep{color:var(--border);flex-shrink:0;padding:0 var(--s2);font-size:18px}
-@media(max-width:860px){.process-strip{flex-wrap:wrap;gap:var(--s2)}.ps-sep{display:none}.ps-step{flex:1 1 40%}}
-@media(max-width:500px){.ps-step{flex:1 1 100%}}
 .services-list{border-top:1px solid var(--border)}
-.service-row{display:grid;grid-template-columns:48px 1fr auto auto;align-items:center;gap:var(--s4);padding:var(--s5) var(--s4);border-bottom:1px solid var(--border);border-left:3px solid transparent;text-decoration:none;color:inherit;transition:background .3s ease,border-color .3s ease,padding-left .35s cubic-bezier(.2,.9,.3,1)}
+.service-row{display:grid;grid-template-columns:48px 56px 1fr auto auto;align-items:center;gap:var(--s4);padding:var(--s5) var(--s4);border-bottom:1px solid var(--border);border-left:3px solid transparent;text-decoration:none;color:inherit;transition:background .3s ease,border-color .3s ease,padding-left .35s cubic-bezier(.2,.9,.3,1)}
 .service-row:hover{background:color-mix(in srgb,var(--row-color,var(--m)) 14%,var(--bg));border-left-color:var(--row-color,var(--m));padding-left:var(--s6)}
 .sr-num{font-family:var(--font-display);font-size:16px;color:var(--fg-3);font-weight:500;letter-spacing:.04em;transition:color .3s ease}
 .service-row:hover .sr-num{color:var(--row-color,var(--m))}
@@ -38,7 +28,7 @@
 .service-row:hover .sr-badge{border-color:var(--row-color,var(--m));color:var(--row-color,var(--m));background:color-mix(in srgb,var(--row-color,var(--m)) 8%,transparent)}
 .sr-arrow{color:var(--fg-3);transition:transform .25s cubic-bezier(.2,.9,.3,1),color .2s;display:flex}
 .service-row:hover .sr-arrow{transform:translateX(4px);color:var(--row-color,var(--m))}
-@media(max-width:600px){.service-row{grid-template-columns:36px 1fr 20px}.sr-badge{display:none}}
+@media(max-width:600px){.service-row{grid-template-columns:36px 44px 1fr 20px}.sr-badge{display:none}}
 .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
 .tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:var(--s6);display:flex;flex-direction:column;gap:var(--s4);transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s}
 .tcard:hover{transform:translateY(-3px);box-shadow:0 16px 40px -16px rgba(0,0,0,.12)}
@@ -54,7 +44,6 @@
 .work-overlay-v3{position:absolute;bottom:0;left:0;right:0;padding:var(--s4) var(--s5);background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,0) 100%);color:#fff}
 .work-overlay-v3 .work-meta{font-size:12px;opacity:.75;font-family:var(--font-display)}
 .work-overlay-v3 .work-title{font-size:18px;font-weight:600;margin-top:2px;font-family:var(--font-display);letter-spacing:-.02em}
-@media(max-width:900px){.hero-cmyk{position:relative;top:auto;right:auto;transform:none;width:240px;height:240px;margin:var(--s6) auto 0;opacity:.75}.cmyk-circle{width:130px;height:130px}}
 
 /* ── Carrusel de trabajos ── */
 .carousel-wrap{position:relative;margin:0 calc(var(--s4)*-1)}
@@ -62,12 +51,7 @@
 .carousel-track::-webkit-scrollbar{display:none}
 .carousel-slide{scroll-snap-align:start;flex-shrink:0;width:calc(50% - var(--s4));border-radius:var(--radius);overflow:hidden;position:relative;cursor:pointer;background:var(--bg-2)}
 .carousel-slide img{width:100%;height:auto;display:block}
-
 .carousel-slide .work-overlay-v3{opacity:1}
-.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,0.12);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--fg);transition:background .2s,transform .2s;z-index:2}
-.carousel-btn:hover{background:var(--card);transform:translateY(-50%) scale(1.08)}
-.carousel-prev{left:0}
-.carousel-next{right:0}
 .carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:var(--s4)}
 .carousel-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .25s,width .25s;cursor:pointer}
 .carousel-dot.active{background:var(--m);width:20px;border-radius:3px}
@@ -83,12 +67,15 @@
         <div class="cmyk-circle cmyk-c"></div>
         <div class="cmyk-circle cmyk-m"></div>
         <div class="cmyk-circle cmyk-y"></div>
+        <span class="cmyk-label-c">C</span>
+        <span class="cmyk-label-m">M</span>
+        <span class="cmyk-label-y">Y</span>
       </div>
       <div class="hero-eyebrow-row reveal">
         <span class="eyebrow" id="hero-eyebrow">Diseño · Impresión · Acompañamiento · Desde 2020</span>
       </div>
       <h1 class="hero-title reveal reveal-delay-1">
-        <span class="ink-k">Impresiones para </span><span class="ink-c">vos</span><span class="ink-k">,</span><br>
+        <span class="ink-k">Impresiones para </span><span class="ink-c ink-italic">vos</span><span class="ink-k">,</span><br>
         <span class="ink-k">para tu </span><span class="ink-m">emprendimiento</span><br>
         <span class="ink-k">y para tu </span><span class="ink-y">empresa</span><span class="ink-k">.</span>
       </h1>
@@ -116,14 +103,27 @@
 
   <section style="padding-top:0;padding-bottom:var(--s7)">
     <div class="container">
-      <div class="process-strip reveal">
-        <div class="ps-step" data-step="0"><span class="ps-num">01</span><div class="ps-body"><span class="ps-title">Nos contás</span><span class="ps-sub">WhatsApp, email o formulario</span></div></div>
-        <span class="ps-sep">›</span>
-        <div class="ps-step" data-step="1"><span class="ps-num">02</span><div class="ps-body"><span class="ps-title">Te cotizamos</span><span class="ps-sub">En menos de 2 horas hábiles</span></div></div>
-        <span class="ps-sep">›</span>
-        <div class="ps-step" data-step="2"><span class="ps-num">03</span><div class="ps-body"><span class="ps-title">Producimos</span><span class="ps-sub">Con tu aprobación previa</span></div></div>
-        <span class="ps-sep">›</span>
-        <div class="ps-step" data-step="3"><span class="ps-num">04</span><div class="ps-body"><span class="ps-title" style="color:var(--m)">Listo en 48-72 hs</span><span class="ps-sub">Entrega o retiro en local</span></div></div>
+      <div class="process-v2 reveal" id="processV2">
+        <div class="pv2-step c" data-step="0">
+          <div class="pv2-dot">01</div>
+          <span class="pv2-title">Nos contás</span>
+          <span class="pv2-sub">WhatsApp, email o formulario</span>
+        </div>
+        <div class="pv2-step m" data-step="1">
+          <div class="pv2-dot">02</div>
+          <span class="pv2-title">Te cotizamos</span>
+          <span class="pv2-sub">En menos de 2 horas hábiles</span>
+        </div>
+        <div class="pv2-step y" data-step="2">
+          <div class="pv2-dot">03</div>
+          <span class="pv2-title">Producimos</span>
+          <span class="pv2-sub">Con tu aprobación previa</span>
+        </div>
+        <div class="pv2-step k" data-step="3">
+          <div class="pv2-dot">04</div>
+          <span class="pv2-title">Listo en 48-72 hs</span>
+          <span class="pv2-sub">Entrega o retiro en local</span>
+        </div>
       </div>
     </div>
   </section>
@@ -138,13 +138,55 @@
         <a href="servicios.html" class="link reveal reveal-delay-2">Ver todos los servicios <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
       <div class="services-list">
-        <a href="servicios.html#impresion" class="service-row reveal" style="--row-color:var(--m)" data-service="0"><span class="sr-num">01</span><div class="sr-body"><span class="sr-name">Impresión digital</span><span class="sr-tag">Flyers · Folletos · Tarjetas · Afiches</span></div><span class="sr-badge">Desde 24 hs</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#diseno" class="service-row reveal" style="--row-color:var(--c)" data-service="1"><span class="sr-num">02</span><div class="sr-body"><span class="sr-name">Diseño gráfico</span><span class="sr-tag">Logos · Identidad visual · Branding</span></div><span class="sr-badge">Desde 48 hs</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#packaging" class="service-row reveal" style="--row-color:var(--y)" data-service="2"><span class="sr-num">03</span><div class="sr-body"><span class="sr-name">Packaging</span><span class="sr-tag">Etiquetas · Cajas · Troquelados</span></div><span class="sr-badge">Desde 72 hs</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#gigantografias" class="service-row reveal" style="--row-color:var(--k)" data-service="3"><span class="sr-num">04</span><div class="sr-body"><span class="sr-name">Gigantografías</span><span class="sr-tag">Banners · Vinilos · Carteles</span></div><span class="sr-badge">Desde 48 hs</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#merchandising" class="service-row reveal" style="--row-color:var(--m)" data-service="4"><span class="sr-num">05</span><div class="sr-body"><span class="sr-name">Merchandising / Souvenir</span><span class="sr-tag">Remeras · Tazas · Bolsas · Libretas</span></div><span class="sr-badge">Consultar stock</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#offset" class="service-row reveal" style="--row-color:var(--c)" data-service="5"><span class="sr-num">06</span><div class="sr-body"><span class="sr-name">Offset &amp; tiradas grandes</span><span class="sr-tag">Revistas · Catálogos · Folletos</span></div><span class="sr-badge">A convenir</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
-        <a href="servicios.html#papeleria" class="service-row reveal" style="--row-color:var(--y)" data-service="6"><span class="sr-num">07</span><div class="sr-body"><span class="sr-name">Papelería creativa</span><span class="sr-tag">Tarjetas · Invitaciones</span></div><span class="sr-badge">Desde 48 hs</span><span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span></a>
+        <a href="servicios.html#impresion" class="service-row reveal" style="--row-color:var(--m)" data-service="0">
+          <span class="sr-num">01</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><rect x="8" y="10" width="26" height="34" rx="1"/><rect x="14" y="6" width="26" height="34" rx="1" fill="var(--bg)"/><line x1="20" y1="16" x2="34" y2="16"/><line x1="20" y1="22" x2="34" y2="22"/><line x1="20" y1="28" x2="30" y2="28"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Impresión digital</span><span class="sr-tag">Flyers · Folletos · Tarjetas · Afiches</span></div>
+          <span class="sr-badge">Desde 24 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#diseno" class="service-row reveal" style="--row-color:var(--c)" data-service="1">
+          <span class="sr-num">02</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><circle cx="16" cy="16" r="8"/><circle cx="32" cy="32" r="8"/><path d="M16 24v8M24 16h8"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Diseño gráfico</span><span class="sr-tag">Logos · Identidad visual · Branding</span></div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#packaging" class="service-row reveal" style="--row-color:var(--y)" data-service="2">
+          <span class="sr-num">03</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><path d="M24 6 L40 14 L40 34 L24 42 L8 34 L8 14 Z"/><path d="M8 14 L24 22 L40 14"/><path d="M24 22 L24 42"/><path d="M16 10 L32 18" stroke-dasharray="2 2"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Packaging</span><span class="sr-tag">Etiquetas · Cajas · Troquelados</span></div>
+          <span class="sr-badge">Desde 72 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#gigantografias" class="service-row reveal" style="--row-color:var(--k)" data-service="3">
+          <span class="sr-num">04</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="10" width="36" height="22" rx="1"/><line x1="12" y1="32" x2="12" y2="42"/><line x1="36" y1="32" x2="36" y2="42"/><line x1="14" y1="18" x2="34" y2="18"/><line x1="14" y1="24" x2="28" y2="24"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Gigantografías</span><span class="sr-tag">Banners · Vinilos · Carteles</span></div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#merchandising" class="service-row reveal" style="--row-color:var(--m)" data-service="4">
+          <span class="sr-num">05</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><path d="M14 12 L18 8 L30 8 L34 12 L40 16 L36 22 L34 20 L34 40 L14 40 L14 20 L12 22 L8 16 Z"/><path d="M18 8 C18 12, 30 12, 30 8"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Merchandising / Souvenir</span><span class="sr-tag">Remeras · Tazas · Bolsas · Libretas</span></div>
+          <span class="sr-badge">Consultar stock</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#offset" class="service-row reveal" style="--row-color:var(--c)" data-service="5">
+          <span class="sr-num">06</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><rect x="8" y="8" width="28" height="36" rx="1"/><line x1="14" y1="16" x2="30" y2="16"/><line x1="14" y1="22" x2="30" y2="22"/><line x1="14" y1="28" x2="26" y2="28"/><path d="M36 12 L42 14 L42 42 L36 40"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Offset &amp; tiradas grandes</span><span class="sr-tag">Revistas · Catálogos · Folletos</span></div>
+          <span class="sr-badge">A convenir</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
+        <a href="servicios.html#papeleria" class="service-row reveal" style="--row-color:var(--y)" data-service="6">
+          <span class="sr-num">07</span>
+          <span class="sr-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-linecap="round"><rect x="10" y="14" width="24" height="30" rx="1" transform="rotate(-6 22 29)"/><rect x="14" y="10" width="24" height="30" rx="1" fill="var(--bg)"/><circle cx="26" cy="22" r="2.5"/><line x1="20" y1="30" x2="32" y2="30"/></svg></span>
+          <div class="sr-body"><span class="sr-name">Papelería creativa</span><span class="sr-tag">Tarjetas · Invitaciones</span></div>
+          <span class="sr-badge">Desde 48 hs</span>
+          <span class="sr-arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </a>
       </div>
     </div>
   </section>
@@ -162,10 +204,24 @@
         </a>
       </div>
 
+      <!-- Filtros del carrusel -->
+      <div class="carousel-filters reveal">
+        <button class="carousel-filter active" data-filter="all">Todos</button>
+        <button class="carousel-filter m" data-filter="impresion">Impresión</button>
+        <button class="carousel-filter c" data-filter="diseno">Diseño</button>
+        <button class="carousel-filter y" data-filter="packaging">Packaging</button>
+        <button class="carousel-filter k" data-filter="gigantografias">Gigantografías</button>
+      </div>
+
       <!-- CARRUSEL -->
       <div class="carousel-wrap reveal">
         <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-placeholder" style="color:var(--fg-3);font-size:14px;padding:3rem 0;">Cargando trabajos...</div>
+          <div class="carousel-loading">
+            <div class="carousel-loading-slide c">Cargando trabajos</div>
+            <div class="carousel-loading-slide m">Cargando trabajos</div>
+            <div class="carousel-loading-slide y">Cargando trabajos</div>
+            <div class="carousel-loading-slide k">Cargando trabajos</div>
+          </div>
         </div>
         <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="Anterior">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -216,7 +272,7 @@
     setText('hero-cta-label',home.ctaPrimary);
     setText('hero-shipping',home.shippingBadge);
     if(home.stats&&home.stats.length){document.querySelectorAll('[data-stat]').forEach(function(el){var i=parseInt(el.dataset.stat);if(home.stats[i]){var n=el.querySelector('.num'),l=el.querySelector('.label');if(n)n.textContent=home.stats[i].num;if(l)l.textContent=home.stats[i].label;}});}
-    if(proceso.steps&&proceso.steps.length){document.querySelectorAll('[data-step]').forEach(function(el){var i=parseInt(el.dataset.step);if(proceso.steps[i]){var t=el.querySelector('.ps-title'),s=el.querySelector('.ps-sub');if(t)t.textContent=proceso.steps[i].title;if(s)s.textContent=proceso.steps[i].sub;}});}
+    if(proceso.steps&&proceso.steps.length){document.querySelectorAll('[data-step]').forEach(function(el){var i=parseInt(el.dataset.step);if(proceso.steps[i]){var t=el.querySelector('.pv2-title'),s=el.querySelector('.pv2-sub');if(t)t.textContent=proceso.steps[i].title;if(s)s.textContent=proceso.steps[i].sub;}});}
     setText('servicios-title',serviciosTextos.sectionTitle);
     if(serviciosTextos.items&&serviciosTextos.items.length){document.querySelectorAll('[data-service]').forEach(function(el){var i=parseInt(el.dataset.service);if(serviciosTextos.items[i]){var item=serviciosTextos.items[i],n=el.querySelector('.sr-name'),t=el.querySelector('.sr-tag'),b=el.querySelector('.sr-badge');if(n)n.textContent=item.name;if(t)t.textContent=item.tag;if(b)b.textContent=item.badge;}});}
     setText('cta-eyebrow',ctaFinal.eyebrow);
@@ -226,62 +282,109 @@
   });
 })();
 
-  // ── Carrusel de trabajos ──
+  // ── Process v2 in-view (animate connector line) ──
+  (function(){
+    var pv2 = document.getElementById('processV2');
+    if(!pv2) return;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ pv2.classList.add('in-view'); io.disconnect(); } });
+      }, { threshold: 0.4 });
+      io.observe(pv2);
+    } else {
+      pv2.classList.add('in-view');
+    }
+  })();
+
+  // ── Carrusel de trabajos (con filtros) ──
   (function(){
     var track=document.getElementById('carouselTrack');
     var dotsWrap=document.getElementById('carouselDots');
     var prevBtn=document.getElementById('carouselPrev');
     var nextBtn=document.getElementById('carouselNext');
+    var filterBtns=document.querySelectorAll('.carousel-filter');
     if(!track)return;
     var current=0;
-    var total=0;
+    var allItems=[];
+    var items=[];
     var autoTimer=null;
+    var currentFilter='all';
     var ph=['bg-m','bg-k','bg-y','bg-c','bg-paper'];
+
+    function render(){
+      if(!items.length){
+        track.innerHTML='<div class="carousel-loading"><div class="carousel-loading-slide c">Próximamente</div><div class="carousel-loading-slide m">Próximamente</div><div class="carousel-loading-slide y">Próximamente</div><div class="carousel-loading-slide k">Próximamente</div></div>';
+        if(prevBtn)prevBtn.style.display='none';
+        if(nextBtn)nextBtn.style.display='none';
+        if(dotsWrap)dotsWrap.innerHTML='';
+        return;
+      }
+      if(prevBtn)prevBtn.style.display='';
+      if(nextBtn)nextBtn.style.display='';
+      track.innerHTML=items.map(function(item,i){
+        var imgHTML=item.img
+          ?'<img src="'+item.img+'" alt="'+item.title+'" style="width:100%;height:auto;display:block;">'
+          :'<div class="'+ph[i%ph.length]+'" style="height:280px;width:100%"></div>';
+        return '<div class="carousel-slide"><a href="trabajos.html" style="display:block;text-decoration:none;color:inherit">'+imgHTML+'<div class="work-overlay-v3"><div class="work-meta">'+(item.meta||'')+'</div><div class="work-title">'+item.title+'</div></div></a></div>';
+      }).join('');
+      if(dotsWrap){
+        dotsWrap.innerHTML=items.map(function(_,i){
+          return'<div class="carousel-dot'+(i===0?' active':'')+'" data-i="'+i+'"></div>';
+        }).join('');
+        dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d){
+          d.onclick=function(){goTo(parseInt(d.dataset.i));};
+        });
+      }
+      current=0;
+    }
+
+    function goTo(i){
+      current=Math.max(0,Math.min(i,items.length-1));
+      var slides=track.querySelectorAll('.carousel-slide');
+      if(slides[current])track.scrollTo({left:slides[current].offsetLeft-track.offsetLeft,behavior:'smooth'});
+      if(dotsWrap)dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d,j){d.classList.toggle('active',j===current);});
+    }
+    function next(){goTo(current===items.length-1?0:current+1);}
+    function prev(){goTo(current===0?items.length-1:current-1);}
+    function startAuto(){stopAuto();if(items.length>1)autoTimer=setInterval(next,4000);}
+    function stopAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null;}}
+
+    function applyFilter(filter){
+      currentFilter=filter;
+      if(filter==='all'){
+        items=allItems.slice();
+      } else {
+        items=allItems.filter(function(it){
+          var hay=((it.meta||'')+' '+(it.title||'')+' '+(it.category||'')+' '+(it.tag||'')).toLowerCase();
+          return hay.indexOf(filter.toLowerCase())!==-1;
+        });
+      }
+      render();
+      startAuto();
+    }
+
+    if(filterBtns&&filterBtns.length){
+      filterBtns.forEach(function(b){
+        b.addEventListener('click',function(){
+          filterBtns.forEach(function(x){x.classList.remove('active');});
+          b.classList.add('active');
+          applyFilter(b.dataset.filter||'all');
+        });
+      });
+    }
 
     fetch('content/trabajos.json')
       .then(function(r){return r.json();})
       .catch(function(){return{};})
       .then(function(data){
-        var items=(data.items||[]).filter(function(i){return i.title;});
-        if(!items.length){
-          track.innerHTML='<p style="color:var(--fg-3);padding:2rem 0;font-size:14px">Próximamente.</p>';
-          if(prevBtn)prevBtn.style.display='none';
-          if(nextBtn)nextBtn.style.display='none';
-          return;
-        }
-        total=items.length;
-        track.innerHTML=items.map(function(item,i){
-          var imgHTML=item.img
-            ?'<img src="'+item.img+'" alt="'+item.title+'" style="width:100%;height:auto;display:block;">'
-            :'<div class="'+ph[i%ph.length]+'" style="height:280px;width:100%"></div>';
-          return '<div class="carousel-slide"><a href="trabajos.html" style="display:block;text-decoration:none;color:inherit">'+imgHTML+'<div class="work-overlay-v3"><div class="work-meta">'+item.meta+'</div><div class="work-title">'+item.title+'</div></div></a></div>';
-        }).join('');
-
-        if(dotsWrap){
-          dotsWrap.innerHTML=items.map(function(_,i){
-            return'<div class="carousel-dot'+(i===0?' active':'')+'" data-i="'+i+'"></div>';
-          }).join('');
-          dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d){
-            d.onclick=function(){goTo(parseInt(d.dataset.i));};
-          });
-        }
-
-        function goTo(i){
-          current=Math.max(0,Math.min(i,total-1));
-          var slides=track.querySelectorAll('.carousel-slide');
-          if(slides[current])track.scrollTo({left:slides[current].offsetLeft-track.offsetLeft,behavior:'smooth'});
-          if(dotsWrap)dotsWrap.querySelectorAll('.carousel-dot').forEach(function(d,j){d.classList.toggle('active',j===current);});
-        }
-        function next(){goTo(current===total-1?0:current+1);}
-        function prev(){goTo(current===0?total-1:current-1);}
-        function startAuto(){autoTimer=setInterval(next,4000);}
-        function stopAuto(){clearInterval(autoTimer);}
-
+        allItems=(data.items||[]).filter(function(i){return i.title;});
+        items=allItems.slice();
+        render();
         if(prevBtn){prevBtn.onclick=function(){stopAuto();prev();startAuto();};}
         if(nextBtn){nextBtn.onclick=function(){stopAuto();next();startAuto();};}
         track.addEventListener('touchstart',function(){stopAuto();},{passive:true});
         track.addEventListener('touchend',function(){startAuto();},{passive:true});
-        if(total>1)startAuto();
+        startAuto();
     });
   })();
 
