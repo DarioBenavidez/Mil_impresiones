@@ -251,31 +251,7 @@
     const formData = new FormData(this);
 
     try {
-      // Si hay archivo adjunto, subirlo primero y reemplazarlo por URL
-      const fileInput = document.getElementById('fileInput');
-      const file = fileInput && fileInput.files && fileInput.files[0];
-      if (file) {
-        btn.innerHTML = 'Subiendo imagen...';
-        const imgForm = new FormData();
-        imgForm.append('file', file);
-        let imgUrl = '';
-        try {
-          const imgRes = await fetch('https://0x0.st', { method: 'POST', body: imgForm });
-          if (imgRes.ok) {
-            imgUrl = (await imgRes.text()).trim();
-          }
-        } catch(_) {}
-        // Quitar el archivo del FormData y agregar la URL como texto
-        formData.delete('attachment');
-        if (imgUrl) {
-          formData.set('imagen_referencia', imgUrl);
-        }
-        btn.innerHTML = 'Enviando...';
-      } else {
-        formData.delete('attachment');
-      }
-
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://formsubmit.co/ajax/ventas@milimpresiones.com', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: formData
@@ -286,7 +262,7 @@
         btn.style.background = '#22c55e';
         setTimeout(() => { this.reset(); btn.innerHTML = originalHTML; btn.style.background = ''; btn.disabled = false; }, 4000);
       } else {
-        throw new Error(json.message);
+        throw new Error(json.message || 'Error');
       }
     } catch(err) {
       btn.innerHTML = 'Error al enviar · Intentá de nuevo';
