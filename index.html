@@ -346,7 +346,35 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════
+    <!-- ══════════════════════════════════════════════════════
+       TRABAJOS RECIENTES
+  ══════════════════════════════════════════════════════ -->
+  <section class="products-section" style="padding-top:0">
+    <div class="container">
+      <div class="products-header">
+        <div>
+          <div class="eyebrow ink-dot c">Portfolio</div>
+          <h2 class="products-title">Trabajos <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">recientes</em></h2>
+          <p class="products-subtitle">Algunos de los proyectos que materializamos</p>
+        </div>
+        <a href="/trabajos" style="font-family:var(--font-display);font-size:14px;color:var(--c);font-weight:600;text-decoration:none;white-space:nowrap">Ver todos →</a>
+      </div>
+      <div class="carousel-wrap reveal">
+        <div class="carousel-track" id="trabajosTrack">
+          <div class="carousel-loading">
+            <div class="carousel-loading-slide c">Próximamente</div>
+            <div class="carousel-loading-slide m">Próximamente</div>
+            <div class="carousel-loading-slide y">Próximamente</div>
+            <div class="carousel-loading-slide k">Próximamente</div>
+          </div>
+        </div>
+        <button class="carousel-btn carousel-prev" id="trabajosPrev" aria-label="Anterior"></button>
+        <button class="carousel-btn carousel-next" id="trabajosNext" aria-label="Siguiente"></button>
+      </div>
+    </div>
+  </section>
+
+<!-- ══════════════════════════════════════════════════════
        TRUST BAND — Cómo funciona (pasos 01-04)
   ══════════════════════════════════════════════════════ -->
   <section class="trust-band">
@@ -405,7 +433,7 @@
 
 </main>
 
-<script src="chrome.js?v=3"></script>
+<script src="chrome.js?v=4"></script>
 <script>
 // ── HERO CAROUSEL ─────────────────────────────────────────────────────────────
 (function(){
@@ -483,7 +511,7 @@ function renderProducts(products){
       + '<span class="price-unit-label">' + p.unit + '</span>'
       + '</div>'
       + '<div class="product-ctas">'
-      + '<a href="' + buyUrl + '" class="btn-buy-card">🛒 Pedir ahora</a>'
+      + '<button class="btn-buy-card" onclick="Cart.add(' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/"/g,\'&quot;\') + ')">🛒 Agregar al carrito</button>'
       + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
       + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
       + 'Consultar</a>'
@@ -499,13 +527,20 @@ function renderProducts(products){
   }, 50);
 }
 
-// Load products from JSON
+// Render default products IMMEDIATELY (sync) — fix loading delay
+allProducts = getDefaultProducts();
+renderProducts(allProducts);
+
+// Then fetch real data and update silently
 fetch('content/productos.json')
-  .then(function(r){ return r.json(); })
-  .catch(function(){ return { products: getDefaultProducts() }; })
+  .then(function(r){ return r.ok ? r.json() : null; })
+  .catch(function(){ return null; })
   .then(function(data){
-    allProducts = data.products || getDefaultProducts();
-    renderProducts(allProducts);
+    if (data && data.products && data.products.length) {
+      allProducts = data.products;
+      var activeFilter = document.querySelector('#categoryList .category-chip.active');
+      filterProducts(activeFilter ? (activeFilter.dataset.cat || 'all') : 'all');
+    }
   });
 
 function getDefaultProducts(){
@@ -551,6 +586,51 @@ function getDefaultProducts(){
     var sel = document.getElementById('serviceSelect') || document.querySelector('select[name="service"]');
     var msg = document.getElementById('messageInput') || document.querySelector('textarea[name="message"]');
     if(msg) msg.value = 'Me interesa: ' + prod + '.\n\nDetalles de mi proyecto:\n';
+  }
+})();
+
+// Cart add helper for product grid
+function addToCart(p) {
+  if (!p) return;
+  Cart.add({
+    id: p.id || p.name,
+    name: p.name,
+    price: p.price,
+    unit: p.unit,
+    color: p.color || 'm',
+    icon: p.icon || '📦'
+  });
+}
+
+// ── TRABAJOS CAROUSEL ─────────────────────────────────────────────────────
+(function(){
+  var track = document.getElementById('trabajosTrack');
+  var prev  = document.getElementById('trabajosPrev');
+  var next  = document.getElementById('trabajosNext');
+  if (!track) return;
+  var current = 0;
+  var items = [];
+  var colors = ['m','c','y','k'];
+
+  fetch('content/trabajos.json')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .catch(function(){ return null; })
+    .then(function(data){
+      items = data && data.items ? data.items.filter(function(i){ return i.title; }) : [];
+      if (!items.length) { track.innerHTML = '<p style="padding:2rem;color:var(--fg-3);text-align:center">Portfolio próximamente.</p>'; return; }
+      track.innerHTML = items.map(function(item, i){
+        var imgHtml = item.img
+          ? '<img src="' + item.img + '" alt="' + item.title + '" style="width:100%;height:auto;display:block">'
+          : '<div class="carousel-loading-slide ' + colors[i % 4] + '" style="min-height:220px">' + (item.title.split(' ')[0]) + '</div>';
+        return '<div class="carousel-slide"><a href="/trabajos" style="display:block;text-decoration:none;color:inherit">' + imgHtml + '<div class="work-overlay-v3"><div class="work-meta">' + (item.meta||'') + '</div><div class="work-title">' + item.title + '</div></a></div>';
+      }).join('');
+      if (prev) prev.addEventListener('click', function(){ current = current === 0 ? items.length-1 : current-1; goTo(current); });
+      if (next) next.addEventListener('click', function(){ current = (current+1) % items.length; goTo(current); });
+    });
+
+  function goTo(i){
+    var slides = track.querySelectorAll('.carousel-slide');
+    if (slides[i]) track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
 })();
 </script>
