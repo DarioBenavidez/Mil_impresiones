@@ -343,7 +343,7 @@
         return;
       }
       searchResults.innerHTML = results.slice(0, 6).map(function(p) {
-        var url = '/shop?cat=' + (p.cat || 'impresion');
+        var url = '/shop?cat=' + (p.cat || 'impresion') + '&q=' + encodeURIComponent(p.name);
         return '<a class="sr-item" href="' + url + '">'
           + '<span class="sr-dot" style="background:var(--' + (p.color||'m') + ')"></span>'
           + '<span class="sr-name">' + p.name + '</span>'
@@ -391,3 +391,4 @@
     .then(function (cfg) { init(cfg); });
 
 })();
+
