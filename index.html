@@ -308,10 +308,8 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════
-       CATEGORY STRIP
-  ══════════════════════════════════════════════════════ -->
-  <section class="category-strip">
+  <!-- CATEGORY STRIP — hidden per user request -->
+  <section class="category-strip" style="display:none">
     <div class="container">
       <div class="category-list" id="categoryList">
         <a class="category-chip active" data-cat="all">Todos los productos</a>
@@ -335,7 +333,7 @@
           <h2 class="products-title">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">materializamos</em> para vos</h2>
           <p class="products-subtitle">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
         </div>
-        <a href="/servicios" style="font-family:var(--font-display);font-size:14px;color:var(--m);font-weight:600;text-decoration:none;white-space:nowrap">Ver todos →</a>
+
       </div>
       <div class="products-grid" id="productsGrid">
         <!-- Skeletons while loading -->
@@ -346,7 +344,36 @@
     </div>
   </section>
 
-    <!-- ══════════════════════════════════════════════════════
+  
+  <!-- ══════════════════════════════════════════════════════
+       CATÁLOGO COMPLETO
+  ══════════════════════════════════════════════════════ -->
+  <section class="products-section" id="catalogSection" style="padding-top:0;border-top:1px solid var(--border)">
+    <div class="container">
+      <div class="products-header" style="margin-bottom:var(--s5)">
+        <div>
+          <div class="eyebrow ink-dot k">Catálogo</div>
+          <h2 class="products-title">Todos los productos</h2>
+          <p class="products-subtitle">Seleccioná, agregá al carrito y coordinamos juntos</p>
+        </div>
+        <div style="display:flex;gap:var(--s2);flex-wrap:wrap" id="catalogFilters">
+          <button class="cat-filter-btn active" data-cat="all">Todos</button>
+          <button class="cat-filter-btn" data-cat="impresion">Impresión</button>
+          <button class="cat-filter-btn" data-cat="packaging">Packaging</button>
+          <button class="cat-filter-btn" data-cat="giganto">Gigantografías</button>
+          <button class="cat-filter-btn" data-cat="diseno">Diseño</button>
+          <button class="cat-filter-btn" data-cat="merch">Merch</button>
+        </div>
+      </div>
+      <div class="products-grid" id="catalogGrid"></div>
+    </div>
+  </section>
+
+  <style>
+  .cat-filter-btn{font-family:var(--font-display);font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);background:var(--bg);color:var(--fg-2);cursor:pointer;transition:all .2s}
+  .cat-filter-btn.active,.cat-filter-btn:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  </style>
+  <!-- ══════════════════════════════════════════════════════
        TRABAJOS RECIENTES
   ══════════════════════════════════════════════════════ -->
   <section class="products-section" style="padding-top:0">
@@ -529,7 +556,7 @@ function renderProducts(products){
 
 // Render default products IMMEDIATELY (sync) — fix loading delay
 allProducts = getDefaultProducts();
-renderProducts(allProducts);
+renderProducts(allProducts.slice(0, 3));
 
 // Then fetch real data and update silently
 fetch('content/productos.json')
@@ -538,8 +565,8 @@ fetch('content/productos.json')
   .then(function(data){
     if (data && data.products && data.products.length) {
       allProducts = data.products;
-      var activeFilter = document.querySelector('#categoryList .category-chip.active');
-      filterProducts(activeFilter ? (activeFilter.dataset.cat || 'all') : 'all');
+      // Always show only first 3 in ofertas
+      renderProducts(allProducts.slice(0, 3));
     }
   });
 
@@ -633,6 +660,60 @@ function addToCart(p) {
     if (slides[i]) track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
 })();
+
+// ── CATÁLOGO COMPLETO ─────────────────────────────────────────────────────────
+(function(){
+  var allCatalogProducts = [];
+  var catalogGrid = document.getElementById('catalogGrid');
+  if (!catalogGrid) return;
+
+  function renderCatalog(products) {
+    if (!products.length) {
+      catalogGrid.innerHTML = '<p style="color:var(--fg-3);grid-column:1/-1;padding:2rem 0;text-align:center">No hay productos en esta categoría todavía.</p>';
+      return;
+    }
+    catalogGrid.innerHTML = products.map(function(p) {
+      var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden darme más información y precio?');
+      return '<div class="product-card ' + (p.color||'m') + '-card reveal">'
+        + '<div class="product-thumb"><span class="product-thumb-inner">' + (p.icon||'📦') + '</span>'
+        + (p.badge ? '<span class="product-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span>' : '')
+        + '</div>'
+        + '<div class="product-body">'
+        + '<span class="product-category">' + (p.category||'') + '</span>'
+        + '<span class="product-name">' + p.name + '</span>'
+        + '<p class="product-desc">' + (p.desc||'') + '</p>'
+        + '<div class="product-specs">' + (p.specs||[]).map(function(s){ return '<span class="spec-chip">'+s+'</span>'; }).join('') + '</div>'
+        + '<div class="product-price-block"><span class="price-from-label">Desde</span><span class="price-amount">$' + (p.price||0).toLocaleString('es-AR') + '</span><span class="price-unit-label">' + (p.unit||'') + '</span></div>'
+        + '<div class="product-ctas">'
+        + '<button class="btn-buy-card" onclick="Cart.add({id:'' + (p.id||p.name) + '',name:'' + p.name.replace(/'/g,"\'") + '',price:' + (p.price||0) + ',unit:'' + (p.unit||'') + '',color:'' + (p.color||'m') + '',icon:'' + (p.icon||'📦') + ''})">🛒 Agregar al carrito</button>'
+        + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
+        + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
+        + 'Consultar</a></div>'
+        + '<span class="product-delivery">⏱ ' + (p.delivery||'Consultar') + '</span>'
+        + '</div></div>';
+    }).join('');
+    if (window.__reObserveReveal) window.__reObserveReveal();
+  }
+
+  // Load and render
+  fetch('/content/productos.json')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .catch(function(){ return null; })
+    .then(function(d){ allCatalogProducts = d && d.products ? d.products : []; renderCatalog(allCatalogProducts); });
+
+  // Filters
+  var filterBtns = document.querySelectorAll('#catalogFilters .cat-filter-btn');
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var cat = btn.dataset.cat;
+      var filtered = cat === 'all' ? allCatalogProducts : allCatalogProducts.filter(function(p){ return p.cat === cat; });
+      renderCatalog(filtered);
+    });
+  });
+})();
+
 </script>
 </body>
 </html>
