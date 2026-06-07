@@ -1,8 +1,8 @@
-// chrome.js v4 — nav 3 ítems, carrito sin login, light mode permanente
+// chrome.js v5 — cart drawer, producto detail links, light mode permanente
 (function () {
   const CURRENT = document.body.dataset.page || 'home';
 
-  // ─── CART ENGINE (localStorage, sin login) ───────────────────────────────
+  // ─── CART ENGINE (localStorage) ──────────────────────────────────────────
   window.Cart = {
     KEY: 'mili_cart',
     get: function () {
@@ -11,6 +11,7 @@
     save: function (items) {
       localStorage.setItem(this.KEY, JSON.stringify(items));
       this.updateBadge();
+      this.updateDrawer();
     },
     add: function (product) {
       var items = this.get();
@@ -28,7 +29,7 @@
       if (item) { item.qty = Math.max(0, qty); }
       this.save(items.filter(function (i) { return i.qty > 0; }));
     },
-    clear: function () { localStorage.removeItem(this.KEY); this.updateBadge(); },
+    clear: function () { localStorage.removeItem(this.KEY); this.updateBadge(); this.updateDrawer(); },
     count: function () { return this.get().reduce(function (s, i) { return s + i.qty; }, 0); },
     total: function () { return this.get().reduce(function (s, i) { return s + i.price * i.qty; }, 0); },
     updateBadge: function () {
@@ -38,26 +39,101 @@
         b.style.display = n > 0 ? 'flex' : 'none';
       });
     },
+    updateDrawer: function () {
+      var drawer = document.getElementById('cartDrawer');
+      if (drawer) renderCartDrawerContent();
+    },
     showToast: function (name) {
       var old = document.getElementById('cartToast');
       if (old) old.remove();
       var t = document.createElement('div');
       t.id = 'cartToast';
       t.className = 'cart-toast';
-      t.innerHTML = '✓ <b>' + name + '</b> agregado al carrito &nbsp;<a href="/carrito">Ver carrito →</a>';
+      t.innerHTML = '✓ <b>' + name + '</b> agregado &nbsp;<button onclick="Cart.openDrawer()" style="background:none;border:none;cursor:pointer;color:var(--m);font-weight:600;font-family:inherit;font-size:inherit;padding:0">Ver carrito →</button>';
       document.body.appendChild(t);
       setTimeout(function () { t.classList.add('show'); }, 10);
       setTimeout(function () { t.classList.remove('show'); setTimeout(function () { t.remove(); }, 300); }, 3500);
+    },
+    openDrawer: function () {
+      var overlay = document.getElementById('cartOverlay');
+      var drawer = document.getElementById('cartDrawer');
+      if (overlay && drawer) {
+        renderCartDrawerContent();
+        overlay.classList.add('open');
+        drawer.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    },
+    closeDrawer: function () {
+      var overlay = document.getElementById('cartOverlay');
+      var drawer = document.getElementById('cartDrawer');
+      if (overlay && drawer) {
+        overlay.classList.remove('open');
+        drawer.classList.remove('open');
+        document.body.style.overflow = '';
+      }
     }
   };
+
+  function renderCartDrawerContent() {
+    var body = document.getElementById('cartDrawerBody');
+    var footer = document.getElementById('cartDrawerFooter');
+    if (!body) return;
+    var items = Cart.get();
+    if (!items.length) {
+      body.innerHTML = '<div class="drawer-empty"><div class="drawer-empty-icon">🛒</div><p>Tu carrito está vacío.</p><a href="/shop" class="btn btn-primary" style="margin-top:16px;display:inline-flex" onclick="Cart.closeDrawer()">Ver productos</a></div>';
+      if (footer) footer.style.display = 'none';
+      return;
+    }
+    if (footer) footer.style.display = 'flex';
+    body.innerHTML = items.map(function (item, idx) {
+      var thumbBg = {m:'linear-gradient(135deg,#EC008C,#BB006F)',c:'linear-gradient(135deg,#00AEEF,#0088CC)',y:'linear-gradient(135deg,#F5D800,#D4B800)',k:'linear-gradient(135deg,#333,#111)'}[item.color||'m'] || 'linear-gradient(135deg,#EC008C,#BB006F)';
+      return '<div class="drawer-item" data-id="' + item.id + '">'
+        + '<div class="drawer-item-thumb" style="background:' + thumbBg + '">' + (item.icon || '📦') + '</div>'
+        + '<div class="drawer-item-info">'
+        + '<span class="drawer-item-name">' + item.name + '</span>'
+        + '<span class="drawer-item-unit">' + item.unit + '</span>'
+        + '<div class="drawer-qty-row">'
+        + '<div class="drawer-qty">'
+        + '<button class="drawer-qty-btn" data-action="dec" data-idx="' + idx + '">−</button>'
+        + '<span class="drawer-qty-num">' + item.qty + '</span>'
+        + '<button class="drawer-qty-btn" data-action="inc" data-idx="' + idx + '">+</button>'
+        + '</div>'
+        + '<span class="drawer-item-price">$' + (item.price * item.qty).toLocaleString('es-AR') + '</span>'
+        + '</div>'
+        + '</div>'
+        + '<button class="drawer-item-remove" data-id="' + item.id + '">✕</button>'
+        + '</div>';
+    }).join('');
+
+    // Total
+    var totalEl = document.getElementById('cartDrawerTotal');
+    if (totalEl) totalEl.textContent = '$' + Cart.total().toLocaleString('es-AR');
+
+    // Qty buttons
+    body.querySelectorAll('.drawer-qty-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var items2 = Cart.get();
+        var i = parseInt(btn.dataset.idx);
+        if (btn.dataset.action === 'inc') { items2[i].qty++; }
+        else { items2[i].qty = Math.max(0, items2[i].qty - 1); }
+        Cart.save(items2.filter(function (x) { return x.qty > 0; }));
+      });
+    });
+
+    // Remove buttons
+    body.querySelectorAll('.drawer-item-remove').forEach(function (btn) {
+      btn.addEventListener('click', function () { Cart.remove(btn.dataset.id); });
+    });
+  }
 
   // ─── LOGO ────────────────────────────────────────────────────────────────
   const logoMark = (lightSrc) => `
     <picture class="logo-mark" aria-hidden="true">
-      <img src="${lightSrc || 'assets/logo-icon-tight.png'}" alt="" height="30">
+      <img src="${lightSrc || '/assets/logo-icon-tight.png'}" alt="" height="30">
     </picture>`;
 
-  // ─── NAV (3 ítems: Tienda dropdown | Nosotros & Contacto | Carrito) ──────
+  // ─── NAV ─────────────────────────────────────────────────────────────────
   const buildNav = (cfg) => `
   <nav class="nav" id="nav">
     <div class="nav-inner">
@@ -82,11 +158,11 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><rect x="3" y="17" width="8" height="4" rx="1"/></svg>
                   Impresión Digital
                 </span>
-                <a href="/?cat=impresion&sub=flyers">Flyers y volantes</a>
-                <a href="/?cat=impresion&sub=tarjetas">Tarjetas personales</a>
-                <a href="/?cat=impresion&sub=folletos">Folletos y trípticos</a>
-                <a href="/?cat=impresion&sub=afiches">Afiches y carteles</a>
-                <a href="/?cat=impresion&sub=sobres">Sobres y papelería</a>
+                <a href="/shop?cat=impresion">Flyers y volantes</a>
+                <a href="/shop?cat=impresion">Tarjetas personales</a>
+                <a href="/shop?cat=impresion">Folletos y trípticos</a>
+                <a href="/shop?cat=impresion">Afiches y carteles</a>
+                <a href="/shop?cat=impresion">Sobres y papelería</a>
               </div>
 
               <div class="dropdown-col">
@@ -94,11 +170,9 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
                   Diseño Gráfico
                 </span>
-                <a href="/?cat=diseno&sub=logo">Logo y marca</a>
-                <a href="/?cat=diseno&sub=logotipo">Logotipo tipográfico</a>
-                <a href="/?cat=diseno&sub=tarjetas-digitales">Tarjetas virtuales</a>
-                <a href="/?cat=diseno&sub=invitaciones">Invitaciones digitales</a>
-                <a href="/?cat=diseno&sub=social">Diseño para redes</a>
+                <a href="/shop?cat=diseno">Logo y marca</a>
+                <a href="/shop?cat=diseno">Identidad visual</a>
+                <a href="/shop?cat=diseno">Diseño para redes</a>
               </div>
 
               <div class="dropdown-col">
@@ -106,10 +180,9 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
                   Packaging
                 </span>
-                <a href="/?cat=packaging&sub=etiquetas">Etiquetas autoadhesivas</a>
-                <a href="/?cat=packaging&sub=cajas">Cajas troqueladas</a>
-                <a href="/?cat=packaging&sub=bolsas">Bolsas con logo</a>
-                <a href="/?cat=packaging&sub=stickers">Stickers y sellos</a>
+                <a href="/shop?cat=packaging">Etiquetas autoadhesivas</a>
+                <a href="/shop?cat=packaging">Cajas troqueladas</a>
+                <a href="/shop?cat=packaging">Bolsas con logo</a>
               </div>
 
               <div class="dropdown-col">
@@ -117,21 +190,16 @@
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                   Más categorías
                 </span>
-                <a href="/?cat=giganto">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                  Gigantografías
-                </a>
-                <a href="/?cat=giganto&sub=banners">· Banners y lonas</a>
-                <a href="/?cat=giganto&sub=vinilos">· Vinilos y adhesivos</a>
-                <a href="/?cat=merch">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-                  Merchandising
-                </a>
-                <a href="/?cat=merch&sub=tazas">· Tazas y mates</a>
+                <a href="/shop?cat=giganto">Gigantografías</a>
+                <a href="/shop?cat=giganto">Banners y lonas</a>
+                <a href="/shop?cat=merch">Merchandising</a>
+                <a href="/shop?cat=merch">Tazas y libretas</a>
               </div>
 
             </div>
-
+            <div class="dropdown-footer">
+              <a href="/shop">Ver toda la tienda →</a>
+            </div>
           </div>
         </div>
 
@@ -150,11 +218,11 @@
       </div>
 
       <div class="nav-actions">
-        <!-- CARRITO -->
-        <a href="/carrito" class="nav-cart-btn" aria-label="Carrito de compras" id="navCartBtn">
+        <!-- CARRITO (abre drawer) -->
+        <button class="nav-cart-btn" aria-label="Carrito de compras" id="navCartBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <span class="cart-badge" id="cartBadge" style="display:none">0</span>
-        </a>
+        </button>
 
         <!-- COTIZACIÓN -->
         <a href="/contacto" class="btn btn-primary btn-pill">Pedí tu cotización</a>
@@ -168,14 +236,42 @@
     </div>
   </nav>`;
 
-  // ─── FOOTER ──────────────────────────────────────────────────────────────
+  // ─── CART DRAWER HTML ─────────────────────────────────────────────────────
+  const cartDrawerHTML = `
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Carrito de compras">
+    <div class="cart-drawer-header">
+      <span class="cart-drawer-title">Tu carrito</span>
+      <button class="cart-drawer-close" id="cartDrawerClose" aria-label="Cerrar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-drawer-body" id="cartDrawerBody"></div>
+    <div class="cart-drawer-footer" id="cartDrawerFooter" style="display:none">
+      <div class="drawer-total-row">
+        <span class="drawer-total-label">Total estimado</span>
+        <span class="drawer-total-amount" id="cartDrawerTotal">$0</span>
+      </div>
+      <p class="drawer-total-note">* Precio orientativo. Se confirma por WhatsApp.</p>
+      <a href="/carrito" class="drawer-checkout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Ir al checkout
+      </a>
+      <button class="drawer-wa-btn" id="drawerWaBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Consultar por WhatsApp
+      </button>
+    </div>
+  </div>`;
+
+  // ─── FOOTER ───────────────────────────────────────────────────────────────
   const footerHTML = `
   <footer class="footer">
     <div class="footer-inner">
       <div class="cmyk-bar" style="margin-bottom:var(--s7)"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="assets/logo-icon-dark.png" alt="1000 Impresiones" style="height:48px;width:auto;margin-bottom:var(--s4)">
+          <img src="/assets/logo-icon-dark.png" alt="1000 Impresiones" style="height:48px;width:auto;margin-bottom:var(--s4)">
           <p>Diseñamos, producimos y acompañamos.</p>
           <p style="color:#ffffff66;font-size:13px;line-height:1.6;margin-top:var(--s4)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -187,11 +283,11 @@
         <div class="footer-col">
           <h4>Tienda</h4>
           <ul>
-            <li><a href="/?cat=impresion">Impresión Digital</a></li>
-            <li><a href="/?cat=diseno">Diseño Gráfico</a></li>
-            <li><a href="/?cat=packaging">Packaging</a></li>
-            <li><a href="/?cat=giganto">Gigantografías</a></li>
-            <li><a href="/?cat=merch">Merchandising</a></li>
+            <li><a href="/shop?cat=impresion">Impresión Digital</a></li>
+            <li><a href="/shop?cat=diseno">Diseño Gráfico</a></li>
+            <li><a href="/shop?cat=packaging">Packaging</a></li>
+            <li><a href="/shop?cat=giganto">Gigantografías</a></li>
+            <li><a href="/shop?cat=merch">Merchandising</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -236,27 +332,45 @@
   function init(cfg) {
     cfg = cfg || {};
 
-    // FORCE light mode permanently — no dark mode
     document.documentElement.dataset.theme = 'light';
     document.documentElement.style.colorScheme = 'light';
 
-    // Apply font/color config if present
     if (cfg.fontDisplay) document.documentElement.style.setProperty('--font-display', `'${cfg.fontDisplay}', ui-sans-serif, system-ui, sans-serif`);
     if (cfg.fontBody)    document.documentElement.style.setProperty('--font-body',    `'${cfg.fontBody}', ui-sans-serif, system-ui, sans-serif`);
 
-    // Inject nav + footer + wa
+    // Inject nav + cart drawer + footer + wa
     document.body.insertAdjacentHTML('afterbegin', buildNav(cfg));
+    document.body.insertAdjacentHTML('beforeend', cartDrawerHTML);
     document.body.insertAdjacentHTML('beforeend', footerHTML);
     document.body.insertAdjacentHTML('beforeend', waHTML);
 
     // Init cart badge
     Cart.updateBadge();
 
-    // Nav scroll state
+    // ── NAV SCROLL ──
     var nav = document.getElementById('nav');
     var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 8); };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    // ── CART DRAWER ──
+    var cartBtn    = document.getElementById('navCartBtn');
+    var cartClose  = document.getElementById('cartDrawerClose');
+    var cartOverlay= document.getElementById('cartOverlay');
+    var drawerWaBtn= document.getElementById('drawerWaBtn');
+
+    if (cartBtn) cartBtn.addEventListener('click', function () { Cart.openDrawer(); });
+    if (cartClose) cartClose.addEventListener('click', function () { Cart.closeDrawer(); });
+    if (cartOverlay) cartOverlay.addEventListener('click', function () { Cart.closeDrawer(); });
+    if (drawerWaBtn) {
+      drawerWaBtn.addEventListener('click', function () {
+        var items = Cart.get();
+        var msg = 'Hola! Quiero consultar sobre mi pedido:\n\n'
+          + items.map(function(i){ return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price*i.qty).toLocaleString('es-AR'); }).join('\n')
+          + '\n\nTotal: $' + Cart.total().toLocaleString('es-AR');
+        window.open('https://wa.me/5491136365889?text=' + encodeURIComponent(msg), '_blank');
+      });
+    }
 
     // ── TIENDA DROPDOWN ──
     var tiendaItem = document.getElementById('navTienda');
@@ -281,7 +395,6 @@
           tiendaItem.querySelector('svg').style.transform = '';
         }, 180);
       });
-      // Click on mobile
       tiendaItem.querySelector('.nav-link').addEventListener('click', function (e) {
         if (window.innerWidth < 860) {
           e.preventDefault();
@@ -292,25 +405,25 @@
 
     // ── MOBILE DRAWER ──
     var mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    var drawer = document.createElement('div');
-    drawer.className = 'mobile-drawer';
-    drawer.innerHTML = [
-      { href: '/',          label: 'Tienda',              key: 'home'     },
-      { href: '/?cat=impresion', label: '· Impresión Digital', key: ''   },
-      { href: '/?cat=diseno',    label: '· Diseño Gráfico',    key: ''   },
-      { href: '/?cat=packaging', label: '· Packaging',          key: ''  },
-      { href: '/?cat=giganto',   label: '· Gigantografías',     key: ''  },
-      { href: '/?cat=merch',     label: '· Merchandising',      key: ''  },
-      { href: '/nosotros',  label: 'Nosotros & Contacto', key: 'nosotros' },
-      { href: '/carrito',   label: '🛒 Carrito',          key: 'carrito'  },
+    var mobileDrawer = document.createElement('div');
+    mobileDrawer.className = 'mobile-drawer';
+    mobileDrawer.innerHTML = [
+      { href: '/',               label: 'Tienda',              key: 'home'     },
+      { href: '/shop?cat=impresion', label: '· Impresión',     key: ''         },
+      { href: '/shop?cat=diseno',    label: '· Diseño',        key: ''         },
+      { href: '/shop?cat=packaging', label: '· Packaging',     key: ''         },
+      { href: '/shop?cat=giganto',   label: '· Gigantografías',key: ''         },
+      { href: '/shop?cat=merch',     label: '· Merchandising', key: ''         },
+      { href: '/nosotros',       label: 'Nosotros & Contacto', key: 'nosotros' },
+      { href: '/carrito',        label: '🛒 Carrito',          key: 'carrito'  },
     ].map(function (l) {
       var sub = l.label.startsWith('·');
       return '<a href="' + l.href + '" class="' + (sub ? 'drawer-sub' : '') + (l.key === CURRENT ? ' active' : '') + '">' + l.label + '</a>';
     }).join('');
-    document.body.appendChild(drawer);
+    document.body.appendChild(mobileDrawer);
 
-    var toggleDrawer = function (open) {
-      drawer.classList.toggle('open', open);
+    var toggleMobileDrawer = function (open) {
+      mobileDrawer.classList.toggle('open', open);
       document.body.style.overflow = open ? 'hidden' : '';
       if (mobileMenuBtn) {
         mobileMenuBtn.querySelector('svg').innerHTML = open
@@ -319,10 +432,9 @@
       }
     };
     if (mobileMenuBtn) {
-      mobileMenuBtn.addEventListener('click', function () { toggleDrawer(!drawer.classList.contains('open')); });
-      drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { toggleDrawer(false); }); });
+      mobileMenuBtn.addEventListener('click', function () { toggleMobileDrawer(!mobileDrawer.classList.contains('open')); });
+      mobileDrawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { toggleMobileDrawer(false); }); });
     }
-
 
     // ── SEARCH ──
     var searchInput   = document.getElementById('navSearchInput');
@@ -343,8 +455,7 @@
         return;
       }
       searchResults.innerHTML = results.slice(0, 6).map(function(p) {
-        var url = '/shop?cat=' + (p.cat || 'impresion') + '&q=' + encodeURIComponent(p.name);
-        return '<a class="sr-item" href="' + url + '">'
+        return '<a class="sr-item" href="/shop/producto?id=' + encodeURIComponent(p.id || p.name) + '">'
           + '<span class="sr-dot" style="background:var(--' + (p.color||'m') + ')"></span>'
           + '<span class="sr-name">' + p.name + '</span>'
           + '<span class="sr-price">$' + (p.price||0).toLocaleString('es-AR') + '</span>'
@@ -391,4 +502,3 @@
     .then(function (cfg) { init(cfg); });
 
 })();
-

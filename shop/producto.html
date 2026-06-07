@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Producto · 1000 Impresiones</title>
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.producto-page { padding: var(--s6) 0 var(--s10); }
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 13px; color: var(--fg-3);
+  display: flex; align-items: center; gap: 6px;
+  flex-wrap: wrap; margin-bottom: var(--s6);
+}
+.breadcrumb a { color: var(--fg-2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--fg); }
+.breadcrumb span { color: var(--fg-3); }
+
+/* Main layout */
+.producto-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s8);
+  align-items: start;
+}
+@media(max-width:860px) { .producto-layout { grid-template-columns: 1fr; gap: var(--s6); } }
+
+/* Visual */
+.producto-visual {
+  position: sticky;
+  top: 90px;
+}
+.producto-img-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.producto-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.producto-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 80px; font-weight: 700;
+  opacity: .2; letter-spacing: -.04em;
+  color: #fff;
+}
+.visual-m { background: linear-gradient(135deg,#EC008C,#BB006F); }
+.visual-c { background: linear-gradient(135deg,#00AEEF,#0088CC); }
+.visual-y { background: linear-gradient(135deg,#F5D800,#D4B800); }
+.visual-k { background: linear-gradient(135deg,#333,#111); }
+
+.producto-badge-wrap { margin-top: var(--s4); display: flex; gap: var(--s2); flex-wrap: wrap; }
+
+/* Info */
+.producto-info {}
+.producto-cat {
+  font-family: var(--font-display); font-size: 12px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3);
+  display: block; margin-bottom: var(--s3);
+}
+.producto-name {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 700; letter-spacing: -.035em;
+  color: var(--fg); line-height: 1.05;
+  margin-bottom: var(--s4);
+}
+.producto-desc {
+  font-size: 16px; color: var(--fg-2);
+  line-height: 1.6; margin-bottom: var(--s5);
+  max-width: 520px;
+}
+
+/* Specs */
+.producto-specs {
+  display: flex; gap: var(--s2); flex-wrap: wrap;
+  margin-bottom: var(--s5);
+}
+.producto-spec {
+  font-family: var(--font-display); font-size: 12px;
+  padding: 5px 12px; border-radius: 6px;
+  background: var(--bg-2); color: var(--fg-2);
+  border: 1px solid var(--border);
+}
+
+/* Price */
+.producto-price-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--s5);
+  margin-bottom: var(--s5);
+}
+.precio-label { font-size: 12px; color: var(--fg-3); margin-bottom: 4px; }
+.precio-amount {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 700; letter-spacing: -.04em;
+  color: var(--fg); line-height: 1;
+}
+.precio-unit { font-size: 14px; color: var(--fg-3); margin-left: 6px; }
+.precio-delivery {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: var(--s3);
+  font-family: var(--font-display); font-size: 13px;
+  color: var(--c); font-weight: 600;
+}
+
+/* Quantity */
+.qty-section {
+  display: flex; align-items: center; gap: var(--s4);
+  margin-bottom: var(--s4);
+}
+.qty-label { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--fg-2); }
+.qty-ctrl {
+  display: flex; align-items: center;
+  border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden;
+}
+.qty-btn-p {
+  width: 40px; height: 40px;
+  background: var(--bg-2); border: none;
+  font-size: 20px; cursor: pointer; color: var(--fg);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.qty-btn-p:hover { background: var(--border); }
+.qty-num {
+  width: 48px; text-align: center;
+  font-family: var(--font-display); font-size: 16px; font-weight: 600;
+  background: transparent; border: none; color: var(--fg);
+}
+
+/* Action buttons */
+.producto-ctas { display: flex; flex-direction: column; gap: var(--s3); }
+.btn-add-cart {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+  padding: 16px 24px; border-radius: var(--radius-sm);
+  background: var(--m); color: #fff; border: none; cursor: pointer;
+  transition: background .2s, transform .15s;
+  text-decoration: none;
+}
+.btn-add-cart:hover { background: #c4007a; transform: translateY(-1px); }
+.btn-add-cart.c-accent { background: var(--c); }
+.btn-add-cart.c-accent:hover { background: #0093cc; }
+.btn-add-cart.k-accent { background: var(--k); color: var(--bg); }
+.btn-add-cart.k-accent:hover { background: #333; }
+
+.btn-wa-prod {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-display); font-size: 15px; font-weight: 600;
+  padding: 14px 24px; border-radius: var(--radius-sm);
+  background: #25D366; color: #fff;
+  text-decoration: none; transition: background .2s, transform .15s;
+}
+.btn-wa-prod:hover { background: #20b85a; transform: translateY(-1px); }
+
+/* Trust chips below buttons */
+.trust-chips {
+  display: flex; gap: var(--s3); flex-wrap: wrap;
+  margin-top: var(--s4); padding-top: var(--s4);
+  border-top: 1px solid var(--border);
+}
+.trust-chip {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--fg-3);
+  font-family: var(--font-display);
+}
+
+/* Related */
+.related-section { padding-top: var(--s8); border-top: 1px solid var(--border); margin-top: var(--s8); }
+.related-title {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  letter-spacing: -.02em; margin-bottom: var(--s5);
+}
+.related-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s4);
+}
+@media(max-width:860px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:480px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+
+.rcard {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+  background: var(--card);
+}
+.rcard:hover { transform: translateY(-3px); box-shadow: 0 12px 32px -12px rgba(0,0,0,.12); }
+.rcard-thumb {
+  height: 120px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.rcard-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.rcard-thumb-ph {
+  font-family: var(--font-display); font-size: 32px; font-weight: 700;
+  opacity: .2; color: #fff;
+}
+.rcard.m-card .rcard-thumb { background: linear-gradient(135deg,#EC008C,#BB006F); }
+.rcard.c-card .rcard-thumb { background: linear-gradient(135deg,#00AEEF,#0088CC); }
+.rcard.y-card .rcard-thumb { background: linear-gradient(135deg,#F5D800,#D4B800); }
+.rcard.k-card .rcard-thumb { background: linear-gradient(135deg,#333,#111); }
+.rcard-body { padding: var(--s3); }
+.rcard-name { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--fg); }
+.rcard-price { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--fg-2); margin-top: 3px; }
+
+/* Loading / error */
+.page-loading { padding: var(--s10); text-align: center; color: var(--fg-3); font-size: 16px; }
+</style>
+</head>
+<body data-page="producto">
+<main>
+  <div class="producto-page">
+    <div class="container">
+      <div id="pageContent">
+        <div class="page-loading">Cargando producto...</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="/chrome.js?v=5"></script>
+<script>
+(function() {
+  var params = new URLSearchParams(location.search);
+  var productId = params.get('id') || '';
+  var qty = 1;
+  var product = null;
+  var allProducts = [];
+
+  function renderNotFound() {
+    document.getElementById('pageContent').innerHTML =
+      '<div class="page-loading">Producto no encontrado. <a href="/shop" style="color:var(--m);font-weight:600">Volver a la tienda →</a></div>';
+  }
+
+  function getAccentClass(color) {
+    if (color === 'c') return 'c-accent';
+    if (color === 'k') return 'k-accent';
+    return '';
+  }
+
+  function renderProduct(p) {
+    var accentClass = getAccentClass(p.color || 'm');
+    var visualClass = 'visual-' + (p.color || 'm');
+    var thumbHtml = p.img
+      ? '<img src="' + p.img + '" alt="' + p.name + '">'
+      : '<div class="producto-img-placeholder">' + (p.icon || '📦') + '</div>';
+
+    var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
+
+    document.title = p.name + ' · 1000 Impresiones';
+
+    document.getElementById('pageContent').innerHTML = [
+      '<nav class="breadcrumb">',
+        '<a href="/">Inicio</a><span>›</span>',
+        '<a href="/shop">Tienda</a><span>›</span>',
+        '<a href="/shop?cat=' + p.cat + '">' + (p.category || p.cat) + '</a><span>›</span>',
+        '<span>' + p.name + '</span>',
+      '</nav>',
+
+      '<div class="producto-layout">',
+
+        // Visual
+        '<div class="producto-visual">',
+          '<div class="producto-img-wrap ' + visualClass + '">' + thumbHtml + '</div>',
+          (p.badge ? '<div class="producto-badge-wrap"><span class="pcard-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span></div>' : ''),
+        '</div>',
+
+        // Info
+        '<div class="producto-info">',
+          '<span class="producto-cat">' + (p.category || '') + '</span>',
+          '<h1 class="producto-name">' + p.name + '</h1>',
+          '<p class="producto-desc">' + (p.desc || '') + '</p>',
+
+          '<div class="producto-specs">',
+            (p.specs || []).map(function(s) { return '<span class="producto-spec">' + s + '</span>'; }).join(''),
+          '</div>',
+
+          '<div class="producto-price-box">',
+            '<div class="precio-label">Precio desde</div>',
+            '<div>',
+              '<span class="precio-amount">$' + (p.price || 0).toLocaleString('es-AR') + '</span>',
+              '<span class="precio-unit">' + (p.unit || '') + '</span>',
+            '</div>',
+            '<div class="precio-delivery">',
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+              (p.delivery || 'Consultar'),
+            '</div>',
+          '</div>',
+
+          '<div class="qty-section">',
+            '<span class="qty-label">Cantidad:</span>',
+            '<div class="qty-ctrl">',
+              '<button class="qty-btn-p" id="qtyDec">−</button>',
+              '<span class="qty-num" id="qtyNum">1</span>',
+              '<button class="qty-btn-p" id="qtyInc">+</button>',
+            '</div>',
+          '</div>',
+
+          '<div class="producto-ctas">',
+            '<button class="btn-add-cart ' + accentClass + '" id="btnAddCart">',
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+              'Agregar al carrito',
+            '</button>',
+            '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-prod" target="_blank">',
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>',
+              'Consultar por WhatsApp',
+            '</a>',
+          '</div>',
+
+          '<div class="trust-chips">',
+            '<span class="trust-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="var(--c)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Compra segura</span>',
+            '<span class="trust-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="var(--m)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Cotización en 2 hs</span>',
+            '<span class="trust-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="var(--y-ink)"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Envío a todo el país</span>',
+          '</div>',
+        '</div>',
+
+      '</div>',
+
+      // Related
+      '<div class="related-section" id="relatedSection">',
+        '<h2 class="related-title">Otros productos</h2>',
+        '<div class="related-grid" id="relatedGrid"></div>',
+      '</div>',
+    ].join('');
+
+    // Qty controls
+    document.getElementById('qtyInc').addEventListener('click', function() {
+      qty = Math.min(qty + 1, 99);
+      document.getElementById('qtyNum').textContent = qty;
+    });
+    document.getElementById('qtyDec').addEventListener('click', function() {
+      qty = Math.max(qty - 1, 1);
+      document.getElementById('qtyNum').textContent = qty;
+    });
+
+    // Add to cart
+    document.getElementById('btnAddCart').addEventListener('click', function() {
+      for (var i = 0; i < qty; i++) {
+        Cart.add({ id: p.id || p.name, name: p.name, price: p.price, unit: p.unit, color: p.color || 'm', icon: p.icon || '📦' });
+      }
+    });
+
+    // Related products
+    var related = allProducts.filter(function(r) { return r.id !== p.id; }).slice(0, 4);
+    var rGrid = document.getElementById('relatedGrid');
+    if (rGrid) {
+      rGrid.innerHTML = related.map(function(r) {
+        var rThumb = r.img
+          ? '<img src="' + r.img + '" alt="' + r.name + '" loading="lazy">'
+          : '<div class="rcard-thumb-ph">' + (r.icon || '📦') + '</div>';
+        return '<a href="/shop/producto?id=' + encodeURIComponent(r.id) + '" class="rcard ' + (r.color||'m') + '-card">'
+          + '<div class="rcard-thumb">' + rThumb + '</div>'
+          + '<div class="rcard-body">'
+          + '<div class="rcard-name">' + r.name + '</div>'
+          + '<div class="rcard-price">Desde $' + (r.price||0).toLocaleString('es-AR') + '</div>'
+          + '</div></a>';
+      }).join('');
+    }
+  }
+
+  fetch('/content/productos.json')
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
+    .catch(function() { return null; })
+    .then(function(d) {
+      if (!d || !d.products) { renderNotFound(); return; }
+      allProducts = d.products;
+      product = allProducts.find(function(p) { return p.id === productId; });
+      if (!product) { renderNotFound(); return; }
+      renderProduct(product);
+    });
+})();
+</script>
+</body>
+</html>
