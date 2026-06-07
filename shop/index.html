@@ -106,6 +106,7 @@
   var params   = new URLSearchParams(location.search);
   var activeCat = params.get('cat') || 'all';
   var activeSub = params.get('sub') || '';
+  var activeQ   = (params.get('q') || '').toLowerCase().trim();
 
   var CAT_META = {
     all:      { title:'Todos los productos',    desc:'Todo lo que materializamos para vos.',                 color:'fg-3' },
@@ -170,12 +171,18 @@
 
   // Load
   fetch('/content/productos.json')
-    .then(function(r){ return r.ok ? r.json() : {products:[]}; })
-    .catch(function(){ return {products:[]}; })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject('HTTP ' + r.status); })
+    .catch(function(err){
+      countEl.textContent = '—';
+      shopGrid.innerHTML = '<p style="color:var(--fg-3);grid-column:1/-1;padding:3rem 0;text-align:center;font-size:15px">No pudimos cargar los productos.<br>Escribinos por <a href="https://wa.me/5491136365889" style="color:var(--m)">WhatsApp</a> y te cotizamos.</p>';
+      return null;
+    })
     .then(function(d){
+      if (!d) return;
       var all = d.products || [];
       allProducts = activeCat === 'all' ? all : all.filter(function(p){ return p.cat === activeCat; });
       if (activeSub) allProducts = allProducts.filter(function(p){ return (p.sub||'') === activeSub || (p.id||'').includes(activeSub); });
+      if (activeQ)   allProducts = allProducts.filter(function(p){ return (p.name||'').toLowerCase().includes(activeQ) || (p.id||'').toLowerCase().includes(activeQ) || (p.desc||'').toLowerCase().includes(activeQ); });
       render(allProducts);
     });
 })();
