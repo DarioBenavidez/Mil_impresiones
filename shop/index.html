@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="shopTitle">Tienda · 1000 Impresiones</title>
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<style>
+.shop-page{padding:var(--s6) 0 var(--s10)}
+.shop-breadcrumb{font-size:13px;color:var(--fg-3);margin-bottom:var(--s5);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.shop-breadcrumb a{color:var(--fg-2);text-decoration:none}.shop-breadcrumb a:hover{color:var(--m)}
+.shop-breadcrumb span{color:var(--fg-3)}
+.shop-header{margin-bottom:var(--s6)}
+.shop-header h1{font-family:var(--font-display);font-size:clamp(24px,3.5vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--fg)}
+.shop-header p{color:var(--fg-2);font-size:15px;margin-top:var(--s2)}
+.shop-layout{display:grid;grid-template-columns:220px 1fr;gap:var(--s7);align-items:start}
+@media(max-width:860px){.shop-layout{grid-template-columns:1fr}}
+/* Sidebar */
+.shop-sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:var(--s5);position:sticky;top:90px}
+.sidebar-title{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:var(--s4)}
+.sidebar-cats{display:flex;flex-direction:column;gap:2px}
+.sidebar-cat{font-size:14px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--fg-2);transition:all .15s;display:flex;align-items:center;gap:8px}
+.sidebar-cat:hover,.sidebar-cat.active{background:var(--bg-2);color:var(--fg);font-weight:600}
+.sidebar-cat .cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+@media(max-width:860px){.shop-sidebar{display:none}}
+/* Sort bar */
+.shop-sort{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s5);flex-wrap:wrap;gap:var(--s3)}
+.shop-count{font-size:14px;color:var(--fg-3)}
+.sort-select{font-family:var(--font-display);font-size:13px;padding:7px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);color:var(--fg)}
+</style>
+</head>
+<body data-page="shop">
+<main>
+<div class="shop-page">
+  <div class="container">
+
+    <nav class="shop-breadcrumb" id="shopBreadcrumb">
+      <a href="/">Inicio</a>
+      <span>›</span>
+      <a href="/">Tienda</a>
+      <span>›</span>
+      <span id="breadcrumbCat">Todos los productos</span>
+    </nav>
+
+    <div class="shop-layout">
+
+      <!-- Sidebar -->
+      <aside class="shop-sidebar">
+        <p class="sidebar-title">Categorías</p>
+        <div class="sidebar-cats">
+          <a href="/shop" class="sidebar-cat" data-cat="all">
+            <span class="cat-dot" style="background:var(--fg-3)"></span>Todos
+          </a>
+          <a href="/shop?cat=impresion" class="sidebar-cat" data-cat="impresion">
+            <span class="cat-dot" style="background:var(--c)"></span>Impresión Digital
+          </a>
+          <a href="/shop?cat=diseno" class="sidebar-cat" data-cat="diseno">
+            <span class="cat-dot" style="background:var(--m)"></span>Diseño Gráfico
+          </a>
+          <a href="/shop?cat=packaging" class="sidebar-cat" data-cat="packaging">
+            <span class="cat-dot" style="background:var(--y)"></span>Packaging
+          </a>
+          <a href="/shop?cat=giganto" class="sidebar-cat" data-cat="giganto">
+            <span class="cat-dot" style="background:var(--k)"></span>Gigantografías
+          </a>
+          <a href="/shop?cat=merch" class="sidebar-cat" data-cat="merch">
+            <span class="cat-dot" style="background:#888"></span>Merchandising
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div>
+        <div class="shop-header">
+          <h1 id="shopCatTitle">Todos los productos</h1>
+          <p id="shopCatDesc">Seleccioná, consultá por WhatsApp o agregá al carrito.</p>
+        </div>
+
+        <div class="shop-sort">
+          <span class="shop-count" id="shopCount">Cargando...</span>
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Ordenar por: Relevancia</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+          </select>
+        </div>
+
+        <div class="products-grid" id="shopGrid">
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+          <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</main>
+<script src="/chrome.js?v=4"></script>
+<script>
+(function(){
+  var params   = new URLSearchParams(location.search);
+  var activeCat = params.get('cat') || 'all';
+  var activeSub = params.get('sub') || '';
+
+  var CAT_META = {
+    all:      { title:'Todos los productos',    desc:'Todo lo que materializamos para vos.',                 color:'fg-3' },
+    impresion:{ title:'Impresión Digital',       desc:'Flyers, tarjetas, folletos, afiches y más.',           color:'c'    },
+    diseno:   { title:'Diseño Gráfico',          desc:'Logos, identidad visual, tarjetas digitales y más.',   color:'m'    },
+    packaging:{ title:'Packaging',              desc:'Etiquetas, cajas, bolsas y stickers.',                 color:'y'    },
+    giganto:  { title:'Gigantografías',          desc:'Banners, lonas, vinilos y carteles de gran formato.',  color:'k'    },
+    merch:    { title:'Merchandising',           desc:'Tazas, mates, libretas y objetos con tu marca.',       color:'fg-2' },
+  };
+
+  var meta = CAT_META[activeCat] || CAT_META.all;
+  document.getElementById('shopCatTitle').textContent = meta.title;
+  document.getElementById('shopCatDesc').textContent  = meta.desc;
+  document.getElementById('breadcrumbCat').textContent = meta.title;
+  document.title = meta.title + ' · 1000 Impresiones';
+
+  // Active sidebar
+  document.querySelectorAll('.sidebar-cat').forEach(function(a){
+    a.classList.toggle('active', a.dataset.cat === activeCat);
+  });
+
+  var allProducts = [];
+  var shopGrid = document.getElementById('shopGrid');
+  var countEl  = document.getElementById('shopCount');
+
+  function render(products) {
+    countEl.textContent = products.length + ' producto' + (products.length !== 1 ? 's' : '');
+    if (!products.length) {
+      shopGrid.innerHTML = '<p style="color:var(--fg-3);grid-column:1/-1;padding:3rem 0;text-align:center;font-size:15px">No hay productos en esta categoría todavía.<br>Escribinos por WhatsApp y te cotizamos.</p>';
+      return;
+    }
+    shopGrid.innerHTML = products.map(function(p){
+      var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
+      return '<div class="product-card ' + (p.color||'m') + '-card">'
+        + '<div class="product-thumb"><span class="product-thumb-inner">' + (p.icon||'📦') + '</span>'
+        + (p.badge ? '<span class="product-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span>' : '')
+        + '</div>'
+        + '<div class="product-body">'
+        + '<span class="product-category">' + (p.category||'') + '</span>'
+        + '<span class="product-name">' + p.name + '</span>'
+        + '<p class="product-desc">' + (p.desc||'') + '</p>'
+        + '<div class="product-specs">' + (p.specs||[]).map(function(s){ return '<span class="spec-chip">'+s+'</span>'; }).join('') + '</div>'
+        + '<div class="product-price-block"><span class="price-from-label">Desde</span><span class="price-amount">$' + (p.price||0).toLocaleString('es-AR') + '</span><span class="price-unit-label">' + (p.unit||'') + '</span></div>'
+        + '<div class="product-ctas">'
+        + '<button class="btn-buy-card" onclick="Cart.add({id:'' + (p.id||p.name) + '',name:'' + p.name.replace(/'/g,"\'") + '',price:' + (p.price||0) + ',unit:'' + (p.unit||'') + '',color:'' + (p.color||'m') + '',icon:'' + (p.icon||'📦') + ''})">🛒 Agregar al carrito</button>'
+        + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
+        + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
+        + 'Consultar</a></div>'
+        + '<span class="product-delivery">⏱ ' + (p.delivery||'Consultar') + '</span>'
+        + '</div></div>';
+    }).join('');
+  }
+
+  // Sort
+  document.getElementById('sortSelect').addEventListener('change', function(){
+    var val = this.value;
+    var sorted = allProducts.slice();
+    if (val === 'price-asc')  sorted.sort(function(a,b){ return a.price - b.price; });
+    if (val === 'price-desc') sorted.sort(function(a,b){ return b.price - a.price; });
+    render(sorted);
+  });
+
+  // Load
+  fetch('/content/productos.json')
+    .then(function(r){ return r.ok ? r.json() : {products:[]}; })
+    .catch(function(){ return {products:[]}; })
+    .then(function(d){
+      var all = d.products || [];
+      allProducts = activeCat === 'all' ? all : all.filter(function(p){ return p.cat === activeCat; });
+      if (activeSub) allProducts = allProducts.filter(function(p){ return (p.sub||'') === activeSub || (p.id||'').includes(activeSub); });
+      render(allProducts);
+    });
+})();
+</script>
+</body>
+</html>
