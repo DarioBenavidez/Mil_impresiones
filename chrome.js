@@ -131,9 +131,7 @@
               </div>
 
             </div>
-            <div class="dropdown-footer">
-              <a href="/servicios">Ver todos los servicios →</a>
-            </div>
+
           </div>
         </div>
 
