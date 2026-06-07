@@ -127,8 +127,7 @@
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:4px"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
                   Merchandising
                 </a>
-                <a href="/?cat=merch&sub=remeras">· Remeras y ropa</a>
-                <a href="/?cat=merch&sub=tazas">· Tazas y objetos</a>
+                <a href="/?cat=merch&sub=tazas">· Tazas y mates</a>
               </div>
 
             </div>
@@ -144,6 +143,13 @@
         </a>
 
       </div><!-- /nav-links -->
+
+      <!-- SEARCH BAR -->
+      <div class="nav-search" id="navSearch">
+        <svg class="nav-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="nav-search-input" id="navSearchInput" placeholder="Buscar productos..." autocomplete="off" aria-label="Buscar productos">
+        <div class="nav-search-results" id="navSearchResults"></div>
+      </div>
 
       <div class="nav-actions">
         <!-- CARRITO -->
@@ -317,6 +323,55 @@
     if (mobileMenuBtn) {
       mobileMenuBtn.addEventListener('click', function () { toggleDrawer(!drawer.classList.contains('open')); });
       drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { toggleDrawer(false); }); });
+    }
+
+
+    // ── SEARCH ──
+    var searchInput   = document.getElementById('navSearchInput');
+    var searchResults = document.getElementById('navSearchResults');
+    var searchData    = null;
+
+    function loadSearchData(cb) {
+      if (searchData) { cb(searchData); return; }
+      fetch('/content/productos.json').then(function(r){ return r.ok ? r.json() : null; })
+        .catch(function(){ return null; })
+        .then(function(d){ searchData = d && d.products ? d.products : []; cb(searchData); });
+    }
+
+    function renderSearchResults(results) {
+      if (!results.length) {
+        searchResults.innerHTML = '<div class="sr-empty">Sin resultados</div>';
+        searchResults.classList.add('open');
+        return;
+      }
+      searchResults.innerHTML = results.slice(0, 6).map(function(p) {
+        var url = '/shop?cat=' + (p.cat || 'impresion');
+        return '<a class="sr-item" href="' + url + '">'
+          + '<span class="sr-dot" style="background:var(--' + (p.color||'m') + ')"></span>'
+          + '<span class="sr-name">' + p.name + '</span>'
+          + '<span class="sr-price">$' + (p.price||0).toLocaleString('es-AR') + '</span>'
+          + '</a>';
+      }).join('');
+      searchResults.classList.add('open');
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('focus', function() { loadSearchData(function(){}); });
+      searchInput.addEventListener('input', function() {
+        var q = searchInput.value.trim().toLowerCase();
+        if (!q) { searchResults.classList.remove('open'); return; }
+        loadSearchData(function(data) {
+          var res = data.filter(function(p) {
+            return p.name.toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q) || (p.cat||'').toLowerCase().includes(q);
+          });
+          renderSearchResults(res);
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!document.getElementById('navSearch').contains(e.target)) {
+          searchResults.classList.remove('open');
+        }
+      });
     }
 
     // ── SCROLL REVEAL ──
