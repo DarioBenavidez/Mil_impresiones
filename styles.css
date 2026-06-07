@@ -1725,3 +1725,5 @@ html { color-scheme: light !important; }
 .sr-price{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--m)}
 .sr-empty{padding:14px;text-align:center;font-size:14px;color:var(--fg-3)}
 @media(max-width:860px){.nav-search{display:none}}
+
+.hero-shop>.container{display:flex;flex-direction:column;justify-content:stretch;min-height:480px}
