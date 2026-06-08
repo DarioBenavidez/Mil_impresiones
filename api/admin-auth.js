@@ -4,7 +4,7 @@
 
 import { createHash } from 'crypto';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { password } = req.body || {};
@@ -15,11 +15,12 @@ export default function handler(req, res) {
   }
 
   if (!password || password !== adminPassword) {
+    await new Promise(r => setTimeout(r, 1000));
     return res.status(401).json({ error: 'Contraseña incorrecta' });
   }
 
-  // Token = hash(password) — simple, sin expiración
   const token = createHash('sha256').update(adminPassword + 'mili2026').digest('hex');
+  const expires = Date.now() + 8 * 60 * 60 * 1000;
 
-  return res.status(200).json({ token });
+  return res.status(200).json({ token, expires });
 }

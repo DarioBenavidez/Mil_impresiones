@@ -546,7 +546,12 @@ img{max-width:100%;display:block}
 
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────────
-var TOKEN = sessionStorage.getItem('admin_token') || '';
+var TOKEN = localStorage.getItem('admin_token') || '';
+var TOKEN_EXPIRES = parseInt(localStorage.getItem('admin_token_exp') || '0');
+var LOCKOUT_KEY = 'admin_lockout';
+var ATTEMPTS_KEY = 'admin_attempts';
+var MAX_ATTEMPTS = 5;
+var LOCKOUT_MS = 30 * 60 * 1000;
 var productos = [];
 var trabajos = [];
 var testimonios = [];
@@ -562,7 +567,22 @@ function showApp() {
   loadAllData();
 }
 
-if (TOKEN) showApp();
+function isLocked() {
+  var until = parseInt(localStorage.getItem(LOCKOUT_KEY) || '0');
+  return Date.now() < until;
+}
+
+function lockoutRemaining() {
+  var until = parseInt(localStorage.getItem(LOCKOUT_KEY) || '0');
+  return Math.ceil((until - Date.now()) / 60000);
+}
+
+if (TOKEN && Date.now() < TOKEN_EXPIRES) {
+  showApp();
+} else {
+  localStorage.removeItem('admin_token');
+  localStorage.removeItem('admin_token_exp');
+}
 
 document.getElementById('loginBtn').addEventListener('click', doLogin);
 document.getElementById('loginPass').addEventListener('keydown', function(e) {
@@ -570,8 +590,20 @@ document.getElementById('loginPass').addEventListener('keydown', function(e) {
 });
 
 function doLogin() {
+  var errEl = document.getElementById('loginErr');
+  errEl.style.display = 'none';
+
+  if (isLocked()) {
+    errEl.textContent = 'Demasiados intentos. Esperá ' + lockoutRemaining() + ' minutos.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   var pass = document.getElementById('loginPass').value;
-  document.getElementById('loginErr').style.display = 'none';
+  var btn = document.getElementById('loginBtn');
+  btn.textContent = 'Verificando...';
+  btn.disabled = true;
+
   fetch('/api/admin-auth', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -579,22 +611,37 @@ function doLogin() {
   })
   .then(function(r) { return r.json(); })
   .then(function(d) {
+    btn.textContent = 'Ingresar'; btn.disabled = false;
     if (d.token) {
+      localStorage.removeItem(ATTEMPTS_KEY);
+      localStorage.removeItem(LOCKOUT_KEY);
       TOKEN = d.token;
-      sessionStorage.setItem('admin_token', TOKEN);
+      localStorage.setItem('admin_token', TOKEN);
+      localStorage.setItem('admin_token_exp', d.expires || (Date.now() + 8 * 3600000));
       showApp();
     } else {
-      document.getElementById('loginErr').style.display = 'block';
+      var attempts = parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0') + 1;
+      localStorage.setItem(ATTEMPTS_KEY, attempts);
+      if (attempts >= MAX_ATTEMPTS) {
+        localStorage.setItem(LOCKOUT_KEY, Date.now() + LOCKOUT_MS);
+        localStorage.removeItem(ATTEMPTS_KEY);
+        errEl.textContent = 'Demasiados intentos. Bloqueado por 30 minutos.';
+      } else {
+        errEl.textContent = 'Contraseña incorrecta. Intentos restantes: ' + (MAX_ATTEMPTS - attempts);
+      }
+      errEl.style.display = 'block';
     }
   })
   .catch(function() {
-    // Fallback local para desarrollo sin backend
-    document.getElementById('loginErr').style.display = 'block';
+    btn.textContent = 'Ingresar'; btn.disabled = false;
+    errEl.textContent = 'Error de conexión. Intentá de nuevo.';
+    errEl.style.display = 'block';
   });
 }
 
 document.getElementById('logoutBtn').addEventListener('click', function() {
-  sessionStorage.removeItem('admin_token');
+  localStorage.removeItem('admin_token');
+  localStorage.removeItem('admin_token_exp');
   location.reload();
 });
 
