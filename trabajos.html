@@ -58,7 +58,7 @@
   </section>
 </main>
 
-<script src="chrome.js?v=2"></script>
+<script src="/chrome.js?v=5"></script>
 <script>
 (function(){
   var current='all';
@@ -85,14 +85,14 @@
 
   document.querySelectorAll('.filter-chip').forEach(function(btn){
     btn.addEventListener('click',function(){
-      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+      document.querySelectorAll('.filter-chip').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
       current=btn.dataset.filter;
       renderGrid(allItems);
     });
   });
 
-  fetch('content/trabajos.json')
+  fetch('/content/trabajos.json')
     .then(function(r){return r.json();})
     .catch(function(){return{};})
     .then(function(data){
