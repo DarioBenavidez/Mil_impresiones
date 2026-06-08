@@ -150,15 +150,13 @@ img{max-width:100%;display:block}
 .spec-input:focus{outline:none;border-color:var(--m)}
 .spec-add-btn{padding:8px 14px;background:var(--fg);color:var(--bg);border-radius:8px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 
-/* ── FOCAL POINT PICKER ── */
-.banner-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.banner-opt-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
-.banner-opt-label{font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
-.focal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:fit-content}
-.focal-btn{width:36px;height:36px;border-radius:8px;border:2px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:10px}
-.focal-btn:hover{border-color:var(--m)}
-.focal-btn.active{background:var(--m);border-color:var(--m);color:#fff}
-.height-options{display:flex;gap:8px;flex-wrap:wrap}
+/* ── BANNER CONTROLS ── */
+.banner-current{cursor:grab;user-select:none}
+.banner-current.dragging{cursor:grabbing}
+.banner-drag-hint{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.6);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;pointer-events:none;letter-spacing:.01em}
+.banner-controls{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.banner-size-info{display:none;font-size:12px;color:var(--fg3);padding:5px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--border);margin-bottom:12px}
+.height-options{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .height-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
 .height-btn:hover{border-color:var(--m)}
 .height-btn.active{background:var(--m);border-color:var(--m);color:#fff}
@@ -378,31 +376,17 @@ img{max-width:100%;display:block}
         <div class="banner-current" id="bannerHomePreview">
           <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
         </div>
-        <div class="banner-options">
-          <div class="banner-opt-group">
-            <div class="banner-opt-label">Posición del foco</div>
-            <div class="focal-grid" id="homeFocalGrid">
-              <button class="focal-btn" data-pos="top left">↖</button>
-              <button class="focal-btn" data-pos="top center">↑</button>
-              <button class="focal-btn" data-pos="top right">↗</button>
-              <button class="focal-btn" data-pos="center left">←</button>
-              <button class="focal-btn active" data-pos="center center">✦</button>
-              <button class="focal-btn" data-pos="center right">→</button>
-              <button class="focal-btn" data-pos="bottom left">↙</button>
-              <button class="focal-btn" data-pos="bottom center">↓</button>
-              <button class="focal-btn" data-pos="bottom right">↘</button>
-            </div>
+        <p style="font-size:12px;color:var(--fg3);margin:-8px 0 10px">Arrastrá la imagen para reposicionarla</p>
+        <div class="banner-controls">
+          <span style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em">Altura</span>
+          <div class="height-options">
+            <button class="height-btn" data-h="360">Chico<br><span style="font-size:10px;color:var(--fg3)">360px</span></button>
+            <button class="height-btn active" data-h="520">Mediano<br><span style="font-size:10px;color:var(--fg3)">520px</span></button>
+            <button class="height-btn" data-h="680">Grande<br><span style="font-size:10px;color:var(--fg3)">680px</span></button>
           </div>
-          <div class="banner-opt-group">
-            <div class="banner-opt-label">Altura del banner</div>
-            <div class="height-options">
-              <button class="height-btn" data-h="360">Chico<br><span style="font-size:10px;color:var(--fg3)">360px</span></button>
-              <button class="height-btn active" data-h="520">Mediano<br><span style="font-size:10px;color:var(--fg3)">520px</span></button>
-              <button class="height-btn" data-h="680">Grande<br><span style="font-size:10px;color:var(--fg3)">680px</span></button>
-            </div>
-            <button class="btn-primary" style="margin-top:14px;font-size:13px" id="saveHomeBannerConfig">Guardar cambios</button>
-          </div>
+          <button class="btn-primary" style="margin-left:auto;font-size:13px" id="saveHomeBannerConfig">Guardar cambios</button>
         </div>
+        <div class="banner-size-info" id="homeSizeInfo"></div>
         <div class="upload-zone" id="bannerHomeUploadZone">
           <input type="file" id="bannerHomeFileInput" accept="image/*">
           <div class="upload-icon">🏠</div>
@@ -423,31 +407,17 @@ img{max-width:100%;display:block}
         <div class="banner-current" id="bannerPreview">
           <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
         </div>
-        <div class="banner-options">
-          <div class="banner-opt-group">
-            <div class="banner-opt-label">Posición del foco</div>
-            <div class="focal-grid" id="shopFocalGrid">
-              <button class="focal-btn" data-pos="top left">↖</button>
-              <button class="focal-btn" data-pos="top center">↑</button>
-              <button class="focal-btn" data-pos="top right">↗</button>
-              <button class="focal-btn" data-pos="center left">←</button>
-              <button class="focal-btn active" data-pos="center center">✦</button>
-              <button class="focal-btn" data-pos="center right">→</button>
-              <button class="focal-btn" data-pos="bottom left">↙</button>
-              <button class="focal-btn" data-pos="bottom center">↓</button>
-              <button class="focal-btn" data-pos="bottom right">↘</button>
-            </div>
+        <p style="font-size:12px;color:var(--fg3);margin:-8px 0 10px">Arrastrá la imagen para reposicionarla</p>
+        <div class="banner-controls">
+          <span style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em">Altura</span>
+          <div class="height-options">
+            <button class="height-btn" data-h="280">Chico<br><span style="font-size:10px;color:var(--fg3)">280px</span></button>
+            <button class="height-btn active" data-h="420">Mediano<br><span style="font-size:10px;color:var(--fg3)">420px</span></button>
+            <button class="height-btn" data-h="580">Grande<br><span style="font-size:10px;color:var(--fg3)">580px</span></button>
           </div>
-          <div class="banner-opt-group">
-            <div class="banner-opt-label">Altura del banner</div>
-            <div class="height-options">
-              <button class="height-btn" data-h="280">Chico<br><span style="font-size:10px;color:var(--fg3)">280px</span></button>
-              <button class="height-btn active" data-h="420">Mediano<br><span style="font-size:10px;color:var(--fg3)">420px</span></button>
-              <button class="height-btn" data-h="580">Grande<br><span style="font-size:10px;color:var(--fg3)">580px</span></button>
-            </div>
-            <button class="btn-primary" style="margin-top:14px;font-size:13px" id="saveShopBannerConfig">Guardar cambios</button>
-          </div>
+          <button class="btn-primary" style="margin-left:auto;font-size:13px" id="saveShopBannerConfig">Guardar cambios</button>
         </div>
+        <div class="banner-size-info" id="shopSizeInfo"></div>
         <div class="upload-zone" id="bannerUploadZone">
           <input type="file" id="bannerFileInput" accept="image/*">
           <div class="upload-icon">🖼️</div>
@@ -781,12 +751,7 @@ function loadAllData() {
       renderTestimonios();
     }).catch(function() { testimonios = []; renderTestimonios(); });
 
-  // Banners actuales (se cargan via IIFE al inicializar cada panel)
-  var bannerPreview = document.getElementById('bannerPreview');
-  var img = document.createElement('img');
-  img.src = '/assets/uploads/banner-bc.png?t=' + Date.now();
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.onload = function() { bannerPreview.innerHTML = ''; bannerPreview.appendChild(img); bannerPreview.innerHTML += '<span class="banner-badge">Imagen actual</span>'; };
+  // Banners se cargan con setBannerHomePreview / setBannerShopPreview al init
 }
 
 // ── SAVE TO GITHUB ─────────────────────────────────────────────────────────
@@ -964,33 +929,14 @@ function deleteProduct(i) {
 var visualConfig = {};
 fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
   visualConfig = cfg;
-  // Restaurar posición y altura guardadas
-  setActiveFocal('homeFocalGrid', cfg.bannerHomePosition || 'center center');
   setActiveHeight(document.querySelectorAll('#panel-banner-home .height-btn'), cfg.bannerHomeHeight || '520');
-  setActiveFocal('shopFocalGrid', cfg.bannerShopPosition || 'center center');
   setActiveHeight(document.querySelectorAll('#panel-banner .height-btn'), cfg.bannerShopHeight || '420');
 });
 
-function setActiveFocal(gridId, pos) {
-  document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(b) {
-    b.classList.toggle('active', b.dataset.pos === pos);
-  });
-}
 function setActiveHeight(btns, h) {
   btns.forEach(function(b) { b.classList.toggle('active', b.dataset.h === String(h)); });
 }
-function bindFocalGrid(gridId) {
-  document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');
-      // Preview en tiempo real
-      var previewId = gridId === 'homeFocalGrid' ? 'bannerHomePreview' : 'bannerPreview';
-      var img = document.querySelector('#' + previewId + ' img');
-      if (img) img.style.objectPosition = btn.dataset.pos;
-    });
-  });
-}
+
 function bindHeightBtns(selector) {
   document.querySelectorAll(selector + ' .height-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -999,8 +945,6 @@ function bindHeightBtns(selector) {
     });
   });
 }
-bindFocalGrid('homeFocalGrid');
-bindFocalGrid('shopFocalGrid');
 bindHeightBtns('#panel-banner-home');
 bindHeightBtns('#panel-banner');
 
@@ -1009,8 +953,67 @@ function saveVisualConfig(extra) {
   return saveToGithub('content/config-visual.json', visualConfig);
 }
 
+// Drag-to-reposition en la preview del banner
+function initBannerDrag(previewId, configKey) {
+  var container = document.getElementById(previewId);
+  var dragging = false, startX, startY, startPosX, startPosY;
+
+  function parsePos(str) {
+    var kw = {left:0,center:50,right:100,top:0,bottom:100};
+    var p = (str || '50% 50%').split(' ');
+    var x = kw.hasOwnProperty(p[0]) ? kw[p[0]] : (parseFloat(p[0]) || 50);
+    var y = kw.hasOwnProperty(p[1]) ? kw[p[1]] : (parseFloat(p[1]) || 50);
+    return {x:x, y:y};
+  }
+
+  function applyDrag(clientX, clientY) {
+    var img = container.querySelector('img');
+    if (!img) return;
+    var dx = (clientX - startX) / container.offsetWidth * 100;
+    var dy = (clientY - startY) / container.offsetHeight * 100;
+    var newX = Math.max(0, Math.min(100, startPosX - dx));
+    var newY = Math.max(0, Math.min(100, startPosY - dy));
+    img.style.objectPosition = newX + '% ' + newY + '%';
+    if (configKey === 'home') visualConfig.bannerHomePosition = newX + '% ' + newY + '%';
+    else visualConfig.bannerShopPosition = newX + '% ' + newY + '%';
+  }
+
+  function startDrag(clientX, clientY) {
+    var img = container.querySelector('img');
+    if (!img) return false;
+    dragging = true;
+    startX = clientX; startY = clientY;
+    var curPos = img.style.objectPosition ||
+      (configKey === 'home' ? visualConfig.bannerHomePosition : visualConfig.bannerShopPosition) || '50% 50%';
+    var p = parsePos(curPos);
+    startPosX = p.x; startPosY = p.y;
+    container.classList.add('dragging');
+    return true;
+  }
+
+  container.addEventListener('mousedown', function(e) { if (startDrag(e.clientX, e.clientY)) e.preventDefault(); });
+  container.addEventListener('touchstart', function(e) {
+    if (e.touches[0] && startDrag(e.touches[0].clientX, e.touches[0].clientY)) e.preventDefault();
+  }, {passive:false});
+
+  document.addEventListener('mousemove', function(e) { if (dragging) applyDrag(e.clientX, e.clientY); });
+  document.addEventListener('touchmove', function(e) { if (dragging && e.touches[0]) applyDrag(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+
+  document.addEventListener('mouseup', function() { if (dragging) { dragging = false; container.classList.remove('dragging'); } });
+  document.addEventListener('touchend', function() { dragging = false; container.classList.remove('dragging'); });
+}
+
+initBannerDrag('bannerHomePreview', 'home');
+initBannerDrag('bannerPreview', 'shop');
+
+function showBannerSize(sizeElId, uploadSubEl, w, h) {
+  var el = document.getElementById(sizeElId);
+  if (el) { el.textContent = 'Tamaño de la imagen: ' + w + ' × ' + h + ' px'; el.style.display = 'block'; }
+  if (uploadSubEl) uploadSubEl.textContent = 'JPG, PNG o WEBP · Tamaño actual: ' + w + '×' + h + ' px';
+}
+
 document.getElementById('saveHomeBannerConfig').addEventListener('click', function() {
-  var pos = document.querySelector('#homeFocalGrid .focal-btn.active').dataset.pos;
+  var pos = visualConfig.bannerHomePosition || '50% 50%';
   var h   = document.querySelector('#panel-banner-home .height-btn.active').dataset.h;
   saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h })
     .then(function(){ showToast('Configuración guardada'); })
@@ -1018,7 +1021,7 @@ document.getElementById('saveHomeBannerConfig').addEventListener('click', functi
 });
 
 document.getElementById('saveShopBannerConfig').addEventListener('click', function() {
-  var pos = document.querySelector('#shopFocalGrid .focal-btn.active').dataset.pos;
+  var pos = visualConfig.bannerShopPosition || '50% 50%';
   var h   = document.querySelector('#panel-banner .height-btn.active').dataset.h;
   saveVisualConfig({ bannerShopPosition: pos, bannerShopHeight: h })
     .then(function(){ showToast('Configuración guardada'); })
@@ -1026,18 +1029,29 @@ document.getElementById('saveShopBannerConfig').addEventListener('click', functi
 });
 
 // ── BANNER HOME ────────────────────────────────────────────────────────────
-(function() {
+function setBannerHomePreview(src, badgeText) {
   var preview = document.getElementById('bannerHomePreview');
-  var img = document.createElement('img');
-  img.src = '/assets/uploads/banner-home.png?t=' + Date.now();
+  var img = new Image();
   img.style.cssText = 'width:100%;height:100%;object-fit:cover';
   img.onload = function() {
     preview.innerHTML = '';
     preview.appendChild(img);
-    preview.innerHTML += '<span class="banner-badge">Imagen actual</span>';
-    var pos = visualConfig.bannerHomePosition || 'center center';
-    img.style.objectPosition = pos;
+    var badge = document.createElement('span');
+    badge.className = 'banner-badge';
+    badge.textContent = badgeText || 'Imagen actual';
+    preview.appendChild(badge);
+    var hint = document.createElement('span');
+    hint.className = 'banner-drag-hint';
+    hint.textContent = 'Arrastrá para reposicionar';
+    preview.appendChild(hint);
+    img.style.objectPosition = visualConfig.bannerHomePosition || '50% 50%';
+    showBannerSize('homeSizeInfo', document.querySelector('#bannerHomeUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
   };
+  img.src = src;
+}
+setBannerHomePreview('/assets/uploads/banner-home.png?t=' + Date.now());
+
+(function() {
   var zone = document.getElementById('bannerHomeUploadZone');
   zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
   zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });
@@ -1055,8 +1069,7 @@ function uploadBannerHome(file) {
     uploadToGithub('banner-home.png', ev.target.result)
       .then(function(r) {
         bar.style.width = '100%';
-        var preview = document.getElementById('bannerHomePreview');
-        preview.innerHTML = '<img src="' + (r.path || '/assets/uploads/banner-home.png') + '?t=' + Date.now() + '" style="width:100%;height:100%;object-fit:cover"><span class="banner-badge">✓ Actualizado</span>';
+        setBannerHomePreview((r.path || '/assets/uploads/banner-home.png') + '?t=' + Date.now(), '✓ Actualizado');
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
         showToast('Banner de inicio actualizado');
       })
@@ -1066,6 +1079,28 @@ function uploadBannerHome(file) {
 }
 
 // ── BANNER TIENDA ───────────────────────────────────────────────────────────
+function setBannerShopPreview(src, badgeText) {
+  var preview = document.getElementById('bannerPreview');
+  var img = new Image();
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  img.onload = function() {
+    preview.innerHTML = '';
+    preview.appendChild(img);
+    var badge = document.createElement('span');
+    badge.className = 'banner-badge';
+    badge.textContent = badgeText || 'Imagen actual';
+    preview.appendChild(badge);
+    var hint = document.createElement('span');
+    hint.className = 'banner-drag-hint';
+    hint.textContent = 'Arrastrá para reposicionar';
+    preview.appendChild(hint);
+    img.style.objectPosition = visualConfig.bannerShopPosition || '50% 50%';
+    showBannerSize('shopSizeInfo', document.querySelector('#bannerUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
+  };
+  img.src = src;
+}
+setBannerShopPreview('/assets/uploads/banner-bc.png?t=' + Date.now());
+
 var bannerZone = document.getElementById('bannerUploadZone');
 bannerZone.addEventListener('dragover', function(e) { e.preventDefault(); bannerZone.classList.add('drag'); });
 bannerZone.addEventListener('dragleave', function() { bannerZone.classList.remove('drag'); });
@@ -1082,8 +1117,7 @@ function uploadBanner(file) {
     uploadToGithub('banner-bc.png', ev.target.result)
       .then(function(r) {
         bar.style.width = '100%';
-        var preview = document.getElementById('bannerPreview');
-        preview.innerHTML = '<img src="' + (r.path || '/assets/uploads/banner-bc.png') + '?t=' + Date.now() + '" style="width:100%;height:100%;object-fit:cover"><span class="banner-badge">✓ Actualizado</span>';
+        setBannerShopPreview((r.path || '/assets/uploads/banner-bc.png') + '?t=' + Date.now(), '✓ Actualizado');
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
         showToast('Banner actualizado y publicado');
       })
