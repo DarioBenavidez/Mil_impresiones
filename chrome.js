@@ -146,7 +146,7 @@
 
         <!-- TIENDA con dropdown -->
         <div class="nav-item has-dropdown" id="navTienda">
-          <a href="/" class="nav-link${CURRENT === 'home' ? ' active' : ''}" data-link="home">
+          <a href="/shop" class="nav-link${CURRENT === 'shop' ? ' active' : ''}" data-link="shop">
             Tienda
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-left:4px;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
           </a>
@@ -408,7 +408,7 @@
     var mobileDrawer = document.createElement('div');
     mobileDrawer.className = 'mobile-drawer';
     mobileDrawer.innerHTML = [
-      { href: '/',               label: 'Tienda',              key: 'home'     },
+      { href: '/shop',            label: 'Tienda',              key: 'shop'     },
       { href: '/shop?cat=impresion', label: '· Impresión',     key: ''         },
       { href: '/shop?cat=diseno',    label: '· Diseño',        key: ''         },
       { href: '/shop?cat=packaging', label: '· Packaging',     key: ''         },
