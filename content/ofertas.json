@@ -3,13 +3,13 @@
   "vence": "",
   "items": [
     {
-      "id": "oferta-1780930264179",
+      "id": "oferta-1780930662415",
       "title": "DIseño personalizado",
       "desc": "impresiones",
       "originalPrice": 2200,
       "salePrice": 2000,
       "color": "m",
-      "active": true,
+      "active": false,
       "img": "/assets/uploads/logo-png_mesa-de-trabajo-1.png"
     }
   ]
