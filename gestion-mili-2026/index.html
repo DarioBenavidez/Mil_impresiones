@@ -252,6 +252,10 @@ img{max-width:100%;display:block}
           Inicio
         </div>
         <span class="nav-section-label">Tienda</span>
+        <div class="nav-item" data-panel="banner-home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Banner de inicio
+        </div>
         <div class="nav-item" data-panel="productos">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           Productos
@@ -350,7 +354,27 @@ img{max-width:100%;display:block}
         <div class="products-admin-grid" id="productsGrid"></div>
       </div>
 
-      <!-- BANNER -->
+      <!-- BANNER HOME -->
+      <div class="panel" id="panel-banner-home">
+        <div class="section-header">
+          <div>
+            <h2>Banner de inicio</h2>
+            <p>La foto grande que se muestra al tope de la página principal</p>
+          </div>
+        </div>
+        <div class="banner-current" id="bannerHomePreview">
+          <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
+        </div>
+        <div class="upload-zone" id="bannerHomeUploadZone">
+          <input type="file" id="bannerHomeFileInput" accept="image/*">
+          <div class="upload-icon">🏠</div>
+          <div class="upload-label">Arrastrá tu foto acá, o hacé clic para elegirla</div>
+          <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×520 px</div>
+          <div class="upload-progress" id="bannerHomeProgress"><div class="upload-progress-bar" id="bannerHomeProgressBar"></div></div>
+        </div>
+      </div>
+
+      <!-- BANNER TIENDA -->
       <div class="panel" id="panel-banner">
         <div class="section-header">
           <div>
@@ -649,6 +673,7 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
 var panelTitles = {
   dashboard: ['Inicio', 'Panel principal'],
   productos: ['Productos', 'Gestión del catálogo de la tienda'],
+  'banner-home': ['Banner de inicio', 'Foto que aparece al tope de la página principal'],
   banner: ['Banner de tienda', 'Foto promocional que aparece al tope de la tienda'],
   portfolio: ['Portfolio / Trabajos', 'Fotos de trabajos realizados'],
   testimonios: ['Testimonios', 'Comentarios de clientes']
@@ -693,7 +718,7 @@ function loadAllData() {
       renderTestimonios();
     }).catch(function() { testimonios = []; renderTestimonios(); });
 
-  // Banner actual
+  // Banners actuales (se cargan via IIFE al inicializar cada panel)
   var bannerPreview = document.getElementById('bannerPreview');
   var img = document.createElement('img');
   img.src = '/assets/uploads/banner-bc.png?t=' + Date.now();
@@ -872,7 +897,42 @@ function deleteProduct(i) {
     .catch(function() { showToast('Error al eliminar', 'error'); });
 }
 
-// ── BANNER ─────────────────────────────────────────────────────────────────
+// ── BANNER HOME ────────────────────────────────────────────────────────────
+(function() {
+  var preview = document.getElementById('bannerHomePreview');
+  var img = document.createElement('img');
+  img.src = '/assets/uploads/banner-home.png?t=' + Date.now();
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  img.onload = function() { preview.innerHTML = ''; preview.appendChild(img); preview.innerHTML += '<span class="banner-badge">Imagen actual</span>'; };
+
+  var zone = document.getElementById('bannerHomeUploadZone');
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });
+  zone.addEventListener('drop', function(e) { e.preventDefault(); zone.classList.remove('drag'); var f = e.dataTransfer.files[0]; if (f) uploadBannerHome(f); });
+  document.getElementById('bannerHomeFileInput').addEventListener('change', function(e) { if (e.target.files[0]) uploadBannerHome(e.target.files[0]); });
+})();
+
+function uploadBannerHome(file) {
+  var progress = document.getElementById('bannerHomeProgress');
+  var bar = document.getElementById('bannerHomeProgressBar');
+  progress.style.display = 'block'; bar.style.width = '30%';
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    bar.style.width = '60%';
+    uploadToGithub('banner-home.png', ev.target.result)
+      .then(function(r) {
+        bar.style.width = '100%';
+        var preview = document.getElementById('bannerHomePreview');
+        preview.innerHTML = '<img src="' + (r.path || '/assets/uploads/banner-home.png') + '?t=' + Date.now() + '" style="width:100%;height:100%;object-fit:cover"><span class="banner-badge">✓ Actualizado</span>';
+        setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
+        showToast('Banner de inicio actualizado');
+      })
+      .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── BANNER TIENDA ───────────────────────────────────────────────────────────
 var bannerZone = document.getElementById('bannerUploadZone');
 bannerZone.addEventListener('dragover', function(e) { e.preventDefault(); bannerZone.classList.add('drag'); });
 bannerZone.addEventListener('dragleave', function() { bannerZone.classList.remove('drag'); });

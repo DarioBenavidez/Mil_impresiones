@@ -12,51 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ── HERO SHOP ─────────────────────────────────────────────────────────────── */
-.hero-shop{position:relative;overflow:hidden;background:var(--k);min-height:520px;display:flex;align-items:stretch}
-.hero-carousel{position:relative;width:100%;display:flex;align-items:stretch;overflow:hidden;min-height:520px}
-.hero-slide{position:absolute;inset:0;display:flex;align-items:center;padding:var(--s8) 0;opacity:0;transform:translateX(40px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}
-.hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.hero-slide.exit{opacity:0;transform:translateX(-40px)}
-.hero-slide-inner{display:grid;grid-template-columns:1fr 1fr;gap:var(--s8);align-items:center;width:100%}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;border-radius:999px;margin-bottom:var(--s4)}
-.hero-title-shop{font-family:var(--font-display);font-size:clamp(32px,4.5vw,64px);font-weight:700;line-height:.95;letter-spacing:-.04em;color:#fff;margin-bottom:var(--s4)}
-.hero-title-shop .accent{font-family:'Fraunces',serif;font-style:italic;font-weight:400}
-.hero-price-block{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s5)}
-.hero-price-from{font-family:var(--font-display);font-size:13px;color:#888;font-weight:500}
-.hero-price-val{font-family:var(--font-display);font-size:clamp(28px,3.5vw,44px);font-weight:700;color:#fff}
-.hero-price-unit{font-family:var(--font-display);font-size:12px;color:#888}
-.hero-ctas-shop{display:flex;gap:var(--s3);flex-wrap:wrap}
-.btn-buy{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:15px;font-weight:600;padding:14px 24px;border-radius:var(--radius-sm);background:var(--m);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;letter-spacing:-.01em}
-.btn-buy:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(236,0,140,.45)}
-.btn-consult{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:14px;font-weight:500;padding:13px 20px;border-radius:var(--radius-sm);background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25);cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s}
-.btn-consult:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.07)}
-.hero-visual{display:flex;align-items:center;justify-content:center;position:relative;height:360px}
-/* CMYK Roseta en hero */
-.hero-cmyk-shop{position:relative;width:320px;height:320px;pointer-events:none;animation:cmyk-rot 60s linear infinite}
-.cmyk-c-s,.cmyk-m-s,.cmyk-y-s{position:absolute;width:210px;height:210px;border-radius:50%;mix-blend-mode:multiply;opacity:.9}
-[data-theme="dark"] .cmyk-c-s,[data-theme="dark"] .cmyk-m-s,[data-theme="dark"] .cmyk-y-s{mix-blend-mode:normal;opacity:.35}
-.cmyk-c-s{background:var(--c);top:20px;left:50%;transform:translateX(-50%);animation:breathe-c 9s ease-in-out infinite}
-.cmyk-m-s{background:var(--m);bottom:20px;left:20px;animation:breathe-m 11s ease-in-out infinite}
-.cmyk-y-s{background:var(--y);bottom:20px;right:20px;animation:breathe-y 8s ease-in-out infinite}
-.hero-slide-label{position:absolute;top:16px;right:16px;font-family:var(--font-display);font-size:10px;font-weight:600;letter-spacing:.14em;color:rgba(255,255,255,.3);text-transform:uppercase}
-@keyframes cmyk-rot{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-@keyframes breathe-c{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-52%) scale(1.04)}}
-@keyframes breathe-m{0%,100%{transform:scale(1)}50%{transform:scale(1.05) translate(5px,-5px)}}
-@keyframes breathe-y{0%,100%{transform:scale(1)}50%{transform:scale(1.06) translate(-5px,-5px)}}
-/* Carousel dots */
-.carousel-nav{position:absolute;bottom:var(--s5);left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
-.carousel-dot-shop{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .25s,width .25s}
-.carousel-dot-shop.active{background:#fff;width:22px;border-radius:4px}
-/* Slide backgrounds */
-.slide-bg-1{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%)}
-.slide-bg-2{background:linear-gradient(135deg,#0d1a26 0%,#0a1520 100%)}
-.slide-bg-3{background:linear-gradient(135deg,#1a0a14 0%,#1a0d16 100%)}
-@media(max-width:860px){
-  .hero-slide-inner{grid-template-columns:1fr;gap:var(--s5);padding-bottom:var(--s7)}
-  .hero-visual{display:none}
-  .hero-shop{min-height:420px}
-}
+/* ── HERO HOME ── */
+.hero-home{width:100%;height:520px;overflow:hidden;display:block;line-height:0;background:var(--k)}
+.hero-home img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+@media(max-width:600px){.hero-home{height:260px}}
 
 /* ── CATEGORY STRIP ────────────────────────────────────────────────────────── */
 .category-strip{background:var(--bg);border-bottom:1px solid var(--border);padding:var(--s4) 0;overflow-x:auto;scrollbar-width:none}
@@ -147,130 +106,9 @@
 <body data-page="home">
 <main>
 
-  <!-- ══════════════════════════════════════════════════════
-       HERO CAROUSEL
-  ══════════════════════════════════════════════════════ -->
-  <section class="hero-shop">
-    <div class="container" style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column">
-    <div class="hero-carousel" id="heroCarousel">
-
-      <!-- Slide 1: Pack Emprendedor -->
-      <div class="hero-slide slide-bg-1 active" data-slide="0">
-        <div class="hero-slide-inner">
-          <div class="hero-content">
-            <span class="hero-badge" style="background:rgba(236,0,140,.18);color:var(--m)">⭐ Más vendido</span>
-            <h1 class="hero-title-shop">
-              Pack<br><span class="accent">Emprendedor</span>
-            </h1>
-            <p style="color:#AAA;font-size:15px;max-width:420px;line-height:1.5;margin-bottom:var(--s5)">
-              Tarjetas personales + Flyers A5 + Folleto A4. Todo lo que tu marca necesita para presentarse.
-            </p>
-            <div class="hero-price-block">
-              <span class="hero-price-from">Desde</span>
-              <span class="hero-price-val" id="hero-price-0">$45.000</span>
-              <span class="hero-price-unit">el pack completo</span>
-            </div>
-            <div class="hero-ctas-shop">
-              <a href="/contacto?producto=Pack+Emprendedor&accion=comprar" class="btn-buy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                Pedí tu pack
-              </a>
-              <a href="https://wa.me/5491136365889?text=Hola!%20Me%20interesa%20el%20Pack%20Emprendedor.%20%C2%BFPueden%20darme%20m%C3%A1s%20info?" class="btn-consult" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-                Consultar con un experto
-              </a>
-            </div>
-          </div>
-          <div class="hero-visual">
-            <div class="hero-cmyk-shop" aria-hidden="true">
-              <div class="cmyk-c-s"></div>
-              <div class="cmyk-m-s"></div>
-              <div class="cmyk-y-s"></div>
-            </div>
-          </div>
-        </div>
-        <span class="hero-slide-label">01 / 03</span>
-      </div>
-
-      <!-- Slide 2: Banners 24hs -->
-      <div class="hero-slide slide-bg-2" data-slide="1">
-        <div class="hero-slide-inner">
-          <div class="hero-content">
-            <span class="hero-badge" style="background:rgba(0,174,239,.18);color:var(--c)">⚡ Entrega rápida</span>
-            <h1 class="hero-title-shop">
-              <span class="accent">Banners</span><br>en 24 hs
-            </h1>
-            <p style="color:#AAA;font-size:15px;max-width:420px;line-height:1.5;margin-bottom:var(--s5)">
-              Gigantografías y banners para eventos, locales y stands. Lona, mesh o vinilo. Entrega en 24 hs hábiles.
-            </p>
-            <div class="hero-price-block">
-              <span class="hero-price-from">Desde</span>
-              <span class="hero-price-val" id="hero-price-1">$18.000</span>
-              <span class="hero-price-unit">por m²</span>
-            </div>
-            <div class="hero-ctas-shop">
-              <a href="/contacto?producto=Banner+Gigantografia&accion=comprar" class="btn-buy" style="background:var(--c)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                Pedir ahora
-              </a>
-              <a href="https://wa.me/5491136365889?text=Hola!%20Necesito%20un%20banner%2F%20gigantograf%C3%ADa.%20%C2%BFPueden%20cotizarme?" class="btn-consult" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-                Consultar medidas
-              </a>
-            </div>
-          </div>
-          <div class="hero-visual">
-            <div class="hero-cmyk-shop" aria-hidden="true">
-              <div class="cmyk-c-s"></div>
-              <div class="cmyk-m-s"></div>
-              <div class="cmyk-y-s"></div>
-            </div>
-          </div>
-        </div>
-        <span class="hero-slide-label">02 / 03</span>
-      </div>
-
-      <!-- Slide 3: Etiquetas -->
-      <div class="hero-slide slide-bg-3" data-slide="2">
-        <div class="hero-slide-inner">
-          <div class="hero-content">
-            <span class="hero-badge" style="background:rgba(245,216,0,.18);color:var(--y)">✦ Novedad</span>
-            <h1 class="hero-title-shop">
-              <span class="accent">Etiquetas</span><br>para tu producto
-            </h1>
-            <p style="color:#AAA;font-size:15px;max-width:420px;line-height:1.5;margin-bottom:var(--s5)">
-              Autoadhesivas, troqueladas o en rollo. Para packaging, producto y marca personal. Diseño incluido.
-            </p>
-            <div class="hero-price-block">
-              <span class="hero-price-from">Desde</span>
-              <span class="hero-price-val" id="hero-price-2">$22.000</span>
-              <span class="hero-price-unit">× 1000 u.</span>
-            </div>
-            <div class="hero-ctas-shop">
-              <a href="/contacto?producto=Etiquetas+Autoadhesivas&accion=comprar" class="btn-buy" style="background:var(--k);color:var(--y)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                Pedir etiquetas
-              </a>
-              <a href="https://wa.me/5491136365889?text=Hola!%20Me%20interesan%20las%20etiquetas%20autoadhesivas.%20%C2%BFPueden%20cotizarme?" class="btn-consult" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-                Ver opciones
-              </a>
-            </div>
-          </div>
-          <div class="hero-visual">
-            <div class="hero-cmyk-shop" aria-hidden="true">
-              <div class="cmyk-c-s"></div>
-              <div class="cmyk-m-s"></div>
-              <div class="cmyk-y-s"></div>
-            </div>
-          </div>
-        </div>
-        <span class="hero-slide-label">03 / 03</span>
-      </div>
-
-    </div><!-- /hero-carousel -->
-    </div><!-- /container -->
-    <div class="carousel-nav" id="heroNav"></div>
+  <!-- HERO: foto promocional — cambiable desde el admin (Banner de inicio) -->
+  <section class="hero-home">
+    <img src="/assets/uploads/banner-home.png" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
   </section>
 
   <!-- ══════════════════════════════════════════════════════
@@ -462,35 +300,6 @@
 
 <script src="chrome.js?v=5"></script>
 <script>
-// ── HERO CAROUSEL ─────────────────────────────────────────────────────────────
-(function(){
-  var slides = document.querySelectorAll('.hero-slide');
-  var nav = document.getElementById('heroNav');
-  var current = 0;
-  var timer;
-
-  // Build dots
-  slides.forEach(function(_,i){
-    var d = document.createElement('div');
-    d.className = 'carousel-dot-shop' + (i===0?' active':'');
-    d.addEventListener('click', function(){ goTo(i); resetTimer(); });
-    nav.appendChild(d);
-  });
-
-  function goTo(idx){
-    slides[current].classList.add('exit');
-    slides[current].classList.remove('active');
-    setTimeout(function(){ slides[current].classList.remove('exit'); }, 600);
-    current = idx;
-    slides[current].classList.add('active');
-    document.querySelectorAll('.carousel-dot-shop').forEach(function(d,i){
-      d.classList.toggle('active', i===current);
-    });
-  }
-  function next(){ goTo((current+1)%slides.length); }
-  function resetTimer(){ clearInterval(timer); timer = setInterval(next, 5000); }
-  resetTimer();
-})();
 
 // ── CATEGORY FILTER ───────────────────────────────────────────────────────────
 (function(){
