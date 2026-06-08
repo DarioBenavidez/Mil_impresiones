@@ -14,7 +14,7 @@
 <style>
 /* ── HERO SHOP ─────────────────────────────────────────────────────────────── */
 .hero-shop{position:relative;overflow:hidden;background:var(--k);min-height:520px;display:flex;align-items:stretch}
-.hero-carousel{position:relative;width:100%;display:flex;align-items:stretch;overflow:hidden}
+.hero-carousel{position:relative;width:100%;display:flex;align-items:stretch;overflow:hidden;min-height:520px}
 .hero-slide{position:absolute;inset:0;display:flex;align-items:center;padding:var(--s8) 0;opacity:0;transform:translateX(40px);transition:opacity .55s cubic-bezier(.4,0,.2,1),transform .55s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:0}
 .hero-slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
 .hero-slide.exit{opacity:0;transform:translateX(-40px)}
@@ -151,7 +151,7 @@
        HERO CAROUSEL
   ══════════════════════════════════════════════════════ -->
   <section class="hero-shop">
-    <div class="container" style="position:relative;z-index:2">
+    <div class="container" style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column">
     <div class="hero-carousel" id="heroCarousel">
 
       <!-- Slide 1: Pack Emprendedor -->
