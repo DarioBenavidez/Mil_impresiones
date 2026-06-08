@@ -228,10 +228,17 @@
 <body data-page="shop">
 <main>
 
-  <!-- Hero: solo imagen promocional — reemplazar /assets/uploads/banner-bc.png por tu foto -->
-  <section class="shop-hero">
-    <img src="/assets/uploads/banner-bc.png" alt="Mil Impresiones" class="shop-hero-img">
+  <section class="shop-hero" id="shopHero">
+    <img src="/assets/uploads/banner-bc.png" id="shopHeroImg" alt="Mil Impresiones" class="shop-hero-img">
   </section>
+  <script>
+  fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+    var s = document.getElementById('shopHero');
+    var i = document.getElementById('shopHeroImg');
+    if(cfg.bannerShopHeight) s.style.height = cfg.bannerShopHeight + 'px';
+    if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
+  });
+  </script>
 
   <!-- Filter strip -->
   <div class="filter-strip" id="filterStrip">

@@ -107,9 +107,17 @@
 <main>
 
   <!-- HERO: foto promocional — cambiable desde el admin (Banner de inicio) -->
-  <section class="hero-home">
-    <img src="/assets/uploads/banner-home.png" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
+  <section class="hero-home" id="heroHome">
+    <img src="/assets/uploads/banner-home.png" id="heroHomeImg" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
   </section>
+  <script>
+  fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+    var s = document.getElementById('heroHome');
+    var i = document.getElementById('heroHomeImg');
+    if(cfg.bannerHomeHeight) s.style.height = cfg.bannerHomeHeight + 'px';
+    if(cfg.bannerHomePosition) i.style.objectPosition = cfg.bannerHomePosition;
+  });
+  </script>
 
   <!-- ══════════════════════════════════════════════════════
        WHY US

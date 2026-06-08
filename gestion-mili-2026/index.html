@@ -150,6 +150,19 @@ img{max-width:100%;display:block}
 .spec-input:focus{outline:none;border-color:var(--m)}
 .spec-add-btn{padding:8px 14px;background:var(--fg);color:var(--bg);border-radius:8px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
 
+/* ── FOCAL POINT PICKER ── */
+.banner-options{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.banner-opt-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.banner-opt-label{font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.focal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:fit-content}
+.focal-btn{width:36px;height:36px;border-radius:8px;border:2px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:10px}
+.focal-btn:hover{border-color:var(--m)}
+.focal-btn.active{background:var(--m);border-color:var(--m);color:#fff}
+.height-options{display:flex;gap:8px;flex-wrap:wrap}
+.height-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.height-btn:hover{border-color:var(--m)}
+.height-btn.active{background:var(--m);border-color:var(--m);color:#fff}
+
 /* ── UPLOAD ZONE ── */
 .upload-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:32px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--m);background:rgba(236,0,140,.04)}
@@ -365,6 +378,31 @@ img{max-width:100%;display:block}
         <div class="banner-current" id="bannerHomePreview">
           <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
         </div>
+        <div class="banner-options">
+          <div class="banner-opt-group">
+            <div class="banner-opt-label">Posición del foco</div>
+            <div class="focal-grid" id="homeFocalGrid">
+              <button class="focal-btn" data-pos="top left">↖</button>
+              <button class="focal-btn" data-pos="top center">↑</button>
+              <button class="focal-btn" data-pos="top right">↗</button>
+              <button class="focal-btn" data-pos="center left">←</button>
+              <button class="focal-btn active" data-pos="center center">✦</button>
+              <button class="focal-btn" data-pos="center right">→</button>
+              <button class="focal-btn" data-pos="bottom left">↙</button>
+              <button class="focal-btn" data-pos="bottom center">↓</button>
+              <button class="focal-btn" data-pos="bottom right">↘</button>
+            </div>
+          </div>
+          <div class="banner-opt-group">
+            <div class="banner-opt-label">Altura del banner</div>
+            <div class="height-options">
+              <button class="height-btn" data-h="360">Chico<br><span style="font-size:10px;color:var(--fg3)">360px</span></button>
+              <button class="height-btn active" data-h="520">Mediano<br><span style="font-size:10px;color:var(--fg3)">520px</span></button>
+              <button class="height-btn" data-h="680">Grande<br><span style="font-size:10px;color:var(--fg3)">680px</span></button>
+            </div>
+            <button class="btn-primary" style="margin-top:14px;font-size:13px" id="saveHomeBannerConfig">Guardar cambios</button>
+          </div>
+        </div>
         <div class="upload-zone" id="bannerHomeUploadZone">
           <input type="file" id="bannerHomeFileInput" accept="image/*">
           <div class="upload-icon">🏠</div>
@@ -385,11 +423,36 @@ img{max-width:100%;display:block}
         <div class="banner-current" id="bannerPreview">
           <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
         </div>
+        <div class="banner-options">
+          <div class="banner-opt-group">
+            <div class="banner-opt-label">Posición del foco</div>
+            <div class="focal-grid" id="shopFocalGrid">
+              <button class="focal-btn" data-pos="top left">↖</button>
+              <button class="focal-btn" data-pos="top center">↑</button>
+              <button class="focal-btn" data-pos="top right">↗</button>
+              <button class="focal-btn" data-pos="center left">←</button>
+              <button class="focal-btn active" data-pos="center center">✦</button>
+              <button class="focal-btn" data-pos="center right">→</button>
+              <button class="focal-btn" data-pos="bottom left">↙</button>
+              <button class="focal-btn" data-pos="bottom center">↓</button>
+              <button class="focal-btn" data-pos="bottom right">↘</button>
+            </div>
+          </div>
+          <div class="banner-opt-group">
+            <div class="banner-opt-label">Altura del banner</div>
+            <div class="height-options">
+              <button class="height-btn" data-h="280">Chico<br><span style="font-size:10px;color:var(--fg3)">280px</span></button>
+              <button class="height-btn active" data-h="420">Mediano<br><span style="font-size:10px;color:var(--fg3)">420px</span></button>
+              <button class="height-btn" data-h="580">Grande<br><span style="font-size:10px;color:var(--fg3)">580px</span></button>
+            </div>
+            <button class="btn-primary" style="margin-top:14px;font-size:13px" id="saveShopBannerConfig">Guardar cambios</button>
+          </div>
+        </div>
         <div class="upload-zone" id="bannerUploadZone">
           <input type="file" id="bannerFileInput" accept="image/*">
           <div class="upload-icon">🖼️</div>
           <div class="upload-label">Arrastrá tu foto acá, o hacé clic para elegirla</div>
-          <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×600 px</div>
+          <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×420 px</div>
           <div class="upload-progress" id="bannerProgress"><div class="upload-progress-bar" id="bannerProgressBar"></div></div>
         </div>
       </div>
@@ -897,14 +960,84 @@ function deleteProduct(i) {
     .catch(function() { showToast('Error al eliminar', 'error'); });
 }
 
+// ── BANNER CONFIG (posición + altura) ──────────────────────────────────────
+var visualConfig = {};
+fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+  visualConfig = cfg;
+  // Restaurar posición y altura guardadas
+  setActiveFocal('homeFocalGrid', cfg.bannerHomePosition || 'center center');
+  setActiveHeight(document.querySelectorAll('#panel-banner-home .height-btn'), cfg.bannerHomeHeight || '520');
+  setActiveFocal('shopFocalGrid', cfg.bannerShopPosition || 'center center');
+  setActiveHeight(document.querySelectorAll('#panel-banner .height-btn'), cfg.bannerShopHeight || '420');
+});
+
+function setActiveFocal(gridId, pos) {
+  document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.pos === pos);
+  });
+}
+function setActiveHeight(btns, h) {
+  btns.forEach(function(b) { b.classList.toggle('active', b.dataset.h === String(h)); });
+}
+function bindFocalGrid(gridId) {
+  document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#' + gridId + ' .focal-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      // Preview en tiempo real
+      var previewId = gridId === 'homeFocalGrid' ? 'bannerHomePreview' : 'bannerPreview';
+      var img = document.querySelector('#' + previewId + ' img');
+      if (img) img.style.objectPosition = btn.dataset.pos;
+    });
+  });
+}
+function bindHeightBtns(selector) {
+  document.querySelectorAll(selector + ' .height-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll(selector + ' .height-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+    });
+  });
+}
+bindFocalGrid('homeFocalGrid');
+bindFocalGrid('shopFocalGrid');
+bindHeightBtns('#panel-banner-home');
+bindHeightBtns('#panel-banner');
+
+function saveVisualConfig(extra) {
+  Object.assign(visualConfig, extra);
+  return saveToGithub('content/config-visual.json', visualConfig);
+}
+
+document.getElementById('saveHomeBannerConfig').addEventListener('click', function() {
+  var pos = document.querySelector('#homeFocalGrid .focal-btn.active').dataset.pos;
+  var h   = document.querySelector('#panel-banner-home .height-btn.active').dataset.h;
+  saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h })
+    .then(function(){ showToast('Configuración guardada'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
+});
+
+document.getElementById('saveShopBannerConfig').addEventListener('click', function() {
+  var pos = document.querySelector('#shopFocalGrid .focal-btn.active').dataset.pos;
+  var h   = document.querySelector('#panel-banner .height-btn.active').dataset.h;
+  saveVisualConfig({ bannerShopPosition: pos, bannerShopHeight: h })
+    .then(function(){ showToast('Configuración guardada'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
+});
+
 // ── BANNER HOME ────────────────────────────────────────────────────────────
 (function() {
   var preview = document.getElementById('bannerHomePreview');
   var img = document.createElement('img');
   img.src = '/assets/uploads/banner-home.png?t=' + Date.now();
   img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.onload = function() { preview.innerHTML = ''; preview.appendChild(img); preview.innerHTML += '<span class="banner-badge">Imagen actual</span>'; };
-
+  img.onload = function() {
+    preview.innerHTML = '';
+    preview.appendChild(img);
+    preview.innerHTML += '<span class="banner-badge">Imagen actual</span>';
+    var pos = visualConfig.bannerHomePosition || 'center center';
+    img.style.objectPosition = pos;
+  };
   var zone = document.getElementById('bannerHomeUploadZone');
   zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
   zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });

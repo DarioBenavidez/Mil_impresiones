@@ -9,5 +9,9 @@
   "fontDisplay": "Space Grotesk",
   "paperColor": "#f8f8fa",
   "accentColor": "#EC008C",
-  "inkColor": "#1a1815"
+  "inkColor": "#1a1815",
+  "bannerHomePosition": "center center",
+  "bannerHomeHeight": "520",
+  "bannerShopPosition": "center center",
+  "bannerShopHeight": "420"
 }
