@@ -1,5 +1,16 @@
 {
   "titulo": "🔥 Ofertas del día",
   "vence": "",
-  "items": []
+  "items": [
+    {
+      "id": "oferta-1780968962940",
+      "title": "test",
+      "desc": "tyest",
+      "originalPrice": 2000,
+      "salePrice": 1800,
+      "color": "m",
+      "active": true,
+      "img": null
+    }
+  ]
 }
