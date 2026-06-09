@@ -225,12 +225,12 @@
   .carousel-wrap{position:relative;overflow:hidden;border-radius:var(--radius)}
   .carousel-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:var(--s4)}
   .carousel-track::-webkit-scrollbar{display:none}
-  .carousel-slide{flex:0 0 calc(50% - var(--s2));scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;position:relative}
-  .carousel-slide img{width:100%;height:280px;object-fit:cover;display:block}
+  .carousel-slide{flex:0 0 calc(33.333% - var(--s3));scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;position:relative;aspect-ratio:1}
+  .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
   .work-overlay-v3{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 100%);color:#fff}
   .work-overlay-v3 .work-meta{font-size:11px;opacity:.8;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.08em}
   .work-overlay-v3 .work-title{font-size:16px;font-weight:600;font-family:var(--font-display);margin-top:2px}
-  @media(max-width:700px){.carousel-slide{flex:0 0 80%}.carousel-slide img{height:200px}}
+  @media(max-width:700px){.carousel-slide{flex:0 0 70%}}
   </style>
   <!-- ══════════════════════════════════════════════════════
        TRABAJOS RECIENTES

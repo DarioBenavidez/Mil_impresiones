@@ -1214,7 +1214,7 @@ function renderPortfolio() {
       + '<div class="portfolio-item-overlay"><button class="portfolio-del-btn" onclick="deletePortfolioItem(' + i + ')">🗑 Eliminar</button></div>'
       + '</div>';
   }).join('')
-  + '<div class="portfolio-add"><input type="file" accept="image/*" multiple onchange="uploadPortfolioItems(this.files)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar fotos</div>';
+  + '<div class="portfolio-add"><input type="file" accept="image/*" multiple onchange="uploadPortfolioItems(this.files)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar fotos<span style="font-size:10px;opacity:.6;margin-top:2px">800×800 px recomendado</span></div>';
 }
 
 function uploadPortfolioItems(files) {
