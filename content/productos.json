@@ -239,12 +239,12 @@
       "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?"
     },
     {
-      "id": "roll-up",
+      "id": "roll-up-80200-cm",
       "name": "Roll-Up 80×200 cm",
       "cat": "giganto",
       "category": "Gigantografías",
       "color": "k",
-      "icon": "RU",
+      "icon": "RO",
       "img": "/assets/uploads/banner-bc.png",
       "badge": null,
       "badgeType": null,
@@ -257,7 +257,8 @@
       "price": 42000,
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa el Roll-Up 80x200. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "logo-marca",
