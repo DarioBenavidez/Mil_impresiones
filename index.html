@@ -379,7 +379,7 @@ allProducts = getDefaultProducts();
 renderProducts(allProducts.slice(0, 3));
 
 // Then fetch real data and update silently
-fetch('content/productos.json')
+fetch('/content/productos.json')
   .then(function(r){ return r.ok ? r.json() : null; })
   .catch(function(){ return null; })
   .then(function(data){
