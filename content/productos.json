@@ -9,7 +9,7 @@
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "m",
-      "icon": "TA",
+      "icon": "TC",
       "img": "/assets/uploads/papeleria.png",
       "badge": "Más pedido",
       "badgeType": "hot",
@@ -23,8 +23,7 @@
       "price": 15000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
-      "oferta": true
+      "whatsapp": "Me interesan las Tarjetas Personales. ¿Pueden cotizarme 500 unidades?"
     },
     {
       "id": "flyers-a5",
@@ -54,7 +53,7 @@
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "m",
-      "icon": "PE",
+      "icon": "PA",
       "img": "/assets/uploads/gemini_generated_image_abl00mabl00mabl0.png",
       "badge": "⭐ Top",
       "badgeType": "hot",
@@ -67,7 +66,8 @@
       "price": 45000,
       "unit": "el pack",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesa el Pack Emprendedor. ¿Pueden darme más información?"
+      "whatsapp": "Me interesa \"Pack Emprendedor\". ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "folleto-triptico",
