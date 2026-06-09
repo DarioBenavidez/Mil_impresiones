@@ -279,10 +279,6 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           Textos del inicio
         </div>
-        <div class="nav-item" data-panel="ofertas">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Ofertas del día
-        </div>
         <span class="nav-section-label">Contenido</span>
         <div class="nav-item" data-panel="portfolio">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -467,32 +463,6 @@ img{max-width:100%;display:block}
         </div>
       </div>
 
-      <!-- OFERTAS -->
-      <div class="panel" id="panel-ofertas">
-        <div class="section-header">
-          <div>
-            <h2>Ofertas del día</h2>
-            <p>Promociones especiales que aparecen en la página principal</p>
-          </div>
-          <button class="btn-primary" onclick="openOfertaModal(null)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Nueva oferta
-          </button>
-        </div>
-        <div class="field-row" style="max-width:600px;margin-bottom:20px">
-          <div class="field">
-            <label>Título de la sección</label>
-            <input type="text" id="ofertasTitulo" placeholder="🔥 Ofertas del día">
-          </div>
-          <div class="field">
-            <label>Válida hasta (fecha)</label>
-            <input type="date" id="ofertasVence">
-          </div>
-        </div>
-        <div id="ofertasGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px"></div>
-        <button class="btn-primary" onclick="saveOfertas()" style="margin-top:8px">Guardar y publicar ofertas</button>
-      </div>
-
       <!-- PORTFOLIO -->
       <div class="panel" id="panel-portfolio">
         <div class="section-header">
@@ -616,70 +586,6 @@ img{max-width:100%;display:block}
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeProductModal()">Cancelar</button>
       <button class="btn-primary" id="saveProductBtn" onclick="saveProduct()">Guardar producto</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL OFERTA -->
-<div class="modal-overlay" id="ofertaModal">
-  <div class="modal" style="max-width:520px">
-    <div class="modal-header">
-      <span class="modal-title" id="ofertaModalTitle">Nueva oferta</span>
-      <button class="modal-close" onclick="closeOfertaModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="field">
-        <label>Foto del producto (opcional)</label>
-        <div class="upload-zone" id="ofertaImgZone" style="padding:16px">
-          <input type="file" id="ofertaImgInput" accept="image/*">
-          <div class="upload-icon" style="font-size:24px">🏷️</div>
-          <div class="upload-label" style="font-size:13px">Arrastrá o elegí una foto</div>
-          <div class="upload-sub">JPG, PNG · Máx 5MB</div>
-          <div class="upload-preview" id="ofertaImgPreview"><img id="ofertaImgPreviewImg" src="" alt=""></div>
-        </div>
-      </div>
-      <div class="field">
-        <label>Título de la oferta <span style="color:var(--m)">*</span></label>
-        <input type="text" id="oTitle" placeholder="Ej: Tarjetas x500 — Precio especial">
-      </div>
-      <div class="field">
-        <label>Descripción corta</label>
-        <input type="text" id="oDesc" placeholder="Ej: Tarjetas personales 300g doble faz">
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Precio original ($)</label>
-          <input type="number" id="oOriginalPrice" placeholder="25000">
-        </div>
-        <div class="field">
-          <label>Precio oferta ($) <span style="color:var(--m)">*</span></label>
-          <input type="number" id="oSalePrice" placeholder="18000">
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label>Color de tarjeta</label>
-          <select id="oColor">
-            <option value="m">Magenta (rosa)</option>
-            <option value="c">Cyan (azul)</option>
-            <option value="y">Yellow (amarillo)</option>
-            <option value="k">Black (negro)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>¿Activa?</label>
-          <select id="oActive">
-            <option value="1">Sí, mostrar en la web</option>
-            <option value="0">No, ocultar</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeOfertaModal()">Cancelar</button>
-      <button class="btn-primary" onclick="saveOfertaItem()">Guardar oferta</button>
     </div>
   </div>
 </div>
@@ -882,8 +788,6 @@ function loadAllData() {
       document.getElementById('dashTestiCount').textContent = testimonios.length;
       renderTestimonios();
     }).catch(function() { testimonios = []; renderTestimonios(); });
-
-  loadOfertas();
 
   // Banners se cargan con setBannerHomePreview / setBannerShopPreview al init
 }
@@ -1386,122 +1290,6 @@ function deleteTesti(i) {
   saveToGithub('content/testimonios.json', { items: testimonios })
     .then(function() { renderTestimonios(); document.getElementById('dashTestiCount').textContent = testimonios.length; showToast('Testimonio eliminado'); })
     .catch(function() { showToast('Error al eliminar', 'error'); });
-}
-
-// ── OFERTAS ────────────────────────────────────────────────────────────────
-var ofertas = [];
-var currentOfertaIdx = null;
-var currentOfertaImg = null;
-
-function loadOfertas() {
-  fetch('/content/ofertas.json').then(function(r){return r.json();}).catch(function(){return{items:[]};}).then(function(d){
-    ofertas = d.items || [];
-    if (d.titulo) document.getElementById('ofertasTitulo').value = d.titulo;
-    if (d.vence) document.getElementById('ofertasVence').value = d.vence;
-    renderOfertas();
-  });
-}
-
-function renderOfertas() {
-  var grid = document.getElementById('ofertasGrid');
-  var colorMap = {m:'linear-gradient(135deg,#EC008C,#BB006F)',c:'linear-gradient(135deg,#00AEEF,#0088CC)',y:'linear-gradient(135deg,#F5D800,#D4B800)',k:'linear-gradient(135deg,#333,#111)'};
-  if (!ofertas.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--fg3);font-size:14px">No hay ofertas todavía. Hacé clic en "Nueva oferta" para agregar una.</div>';
-    return;
-  }
-  grid.innerHTML = ofertas.map(function(o, i) {
-    var bg = colorMap[o.color||'m'];
-    var disc = o.originalPrice && o.salePrice ? Math.round((1 - o.salePrice/o.originalPrice)*100) : 0;
-    var thumb = o.img ? '<img src="'+o.img+'" style="width:100%;height:100%;object-fit:cover">' : '<div style="width:100%;height:100%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;opacity:.2;color:#fff">%</div>';
-    return '<div class="prod-card-admin" style="opacity:'+(o.active?'1':'.5')+'">'
-      +'<div class="prod-thumb-admin" style="background:'+bg+'">'+thumb+(disc?'<div style="position:absolute;top:8px;left:8px;background:#EC008C;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px">-'+disc+'%</div>':'')+'</div>'
-      +'<div class="prod-card-body-admin">'
-      +'<div class="prod-cat-admin">'+(o.active?'✅ Activa':'🔴 Inactiva')+'</div>'
-      +'<div class="prod-name-admin">'+o.title+'</div>'
-      +(o.originalPrice?'<div style="font-size:12px;color:var(--fg3);text-decoration:line-through">$'+Number(o.originalPrice).toLocaleString('es-AR')+'</div>':'')
-      +(o.salePrice?'<div class="prod-price-admin">$'+Number(o.salePrice).toLocaleString('es-AR')+'</div>':'')
-      +'<div class="prod-actions-admin">'
-      +'<button class="prod-edit-btn" onclick="openOfertaModal('+i+')">✏️ Editar</button>'
-      +'<button class="prod-del-btn" onclick="deleteOferta('+i+')">🗑</button>'
-      +'</div></div></div>';
-  }).join('');
-}
-
-function openOfertaModal(idx) {
-  currentOfertaIdx = idx;
-  currentOfertaImg = null;
-  var o = idx !== null ? ofertas[idx] : null;
-  document.getElementById('ofertaModalTitle').textContent = o ? 'Editar oferta' : 'Nueva oferta';
-  document.getElementById('oTitle').value = o ? o.title : '';
-  document.getElementById('oDesc').value = o ? (o.desc || '') : '';
-  document.getElementById('oOriginalPrice').value = o ? (o.originalPrice || '') : '';
-  document.getElementById('oSalePrice').value = o ? (o.salePrice || '') : '';
-  document.getElementById('oColor').value = o ? (o.color || 'm') : 'm';
-  document.getElementById('oActive').value = o ? (o.active ? '1' : '0') : '1';
-  var prev = document.getElementById('ofertaImgPreview');
-  var prevImg = document.getElementById('ofertaImgPreviewImg');
-  if (o && o.img) { prevImg.src = o.img; prev.style.display = 'block'; currentOfertaImg = o.img; }
-  else { prev.style.display = 'none'; prevImg.src = ''; }
-  document.getElementById('ofertaModal').classList.add('open');
-}
-function closeOfertaModal() { document.getElementById('ofertaModal').classList.remove('open'); }
-
-document.getElementById('ofertaImgInput').addEventListener('change', function(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    document.getElementById('ofertaImgPreviewImg').src = ev.target.result;
-    document.getElementById('ofertaImgPreview').style.display = 'block';
-    currentOfertaImg = { base64: ev.target.result, filename: file.name };
-  };
-  reader.readAsDataURL(file);
-});
-
-function saveOfertaItem() {
-  var title = document.getElementById('oTitle').value.trim();
-  var salePrice = parseInt(document.getElementById('oSalePrice').value) || 0;
-  if (!title || !salePrice) { showToast('Título y precio oferta son obligatorios', 'error'); return; }
-
-  function doSave(imgPath) {
-    var oferta = {
-      id: 'oferta-' + Date.now(),
-      title: title,
-      desc: document.getElementById('oDesc').value.trim(),
-      originalPrice: parseInt(document.getElementById('oOriginalPrice').value) || null,
-      salePrice: salePrice,
-      color: document.getElementById('oColor').value,
-      active: document.getElementById('oActive').value === '1',
-      img: imgPath || null
-    };
-    if (currentOfertaIdx !== null) { ofertas[currentOfertaIdx] = oferta; }
-    else { ofertas.push(oferta); }
-    closeOfertaModal();
-    renderOfertas();
-  }
-
-  if (currentOfertaImg && typeof currentOfertaImg === 'object') {
-    uploadToGithub(currentOfertaImg.filename, currentOfertaImg.base64)
-      .then(function(r) { doSave(r.path || null); })
-      .catch(function() { doSave(null); });
-  } else {
-    doSave(typeof currentOfertaImg === 'string' ? currentOfertaImg : null);
-  }
-}
-
-function deleteOferta(i) {
-  if (!confirm('¿Eliminar la oferta "' + ofertas[i].title + '"?')) return;
-  ofertas.splice(i, 1);
-  renderOfertas();
-}
-
-function saveOfertas() {
-  var titulo = document.getElementById('ofertasTitulo').value.trim();
-  var vence = document.getElementById('ofertasVence').value;
-  var data = { titulo: titulo || '🔥 Ofertas del día', vence: vence || '', items: ofertas };
-  saveToGithub('content/ofertas.json', data)
-    .then(function(){ showToast('Ofertas publicadas en la web'); })
-    .catch(function(){ showToast('Error al guardar', 'error'); });
 }
 
 // ── CLOSE MODALS ON CLICK OUTSIDE ─────────────────────────────────────────
