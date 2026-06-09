@@ -832,7 +832,7 @@ function renderProducts() {
       ? '<img src="' + p.img + '" style="width:100%;height:100%;object-fit:cover" loading="lazy">'
       : '<div class="prod-thumb-ph">' + (p.icon || 'MI') + '</div>';
     return '<div class="prod-card-admin">'
-      + '<div class="prod-thumb-admin" style="background:' + bg + '">' + thumb + '</div>'
+      + '<div class="prod-thumb-admin" style="background:' + bg + '">' + thumb + (p.oferta ? '<div style="position:absolute;top:8px;right:8px;background:#EC008C;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px">🔥 Oferta</div>' : '') + '</div>'
       + '<div class="prod-card-body-admin">'
       + '<div class="prod-cat-admin">' + (p.category || '') + '</div>'
       + '<div class="prod-name-admin">' + p.name + '</div>'
@@ -908,31 +908,41 @@ function saveProduct() {
   var price = parseInt(document.getElementById('pPrice').value) || 0;
   if (!name || !price) { showToast('Nombre y precio son obligatorios', 'error'); return; }
 
+  // Capturar todos los valores del form ANTES de cualquier operación async
+  var formData = {
+    cat: document.getElementById('pCat').value,
+    color: document.getElementById('pColor').value,
+    badge: document.getElementById('pBadge').value.trim(),
+    badgeType: document.getElementById('pBadgeType').value,
+    desc: document.getElementById('pDesc').value.trim(),
+    unit: document.getElementById('pUnit').value.trim(),
+    delivery: document.getElementById('pDelivery').value.trim(),
+    oferta: document.getElementById('pOferta').checked
+  };
+
   var btn = document.getElementById('saveProductBtn');
   btn.textContent = 'Guardando...';
   btn.disabled = true;
 
   function doSave(imgPath) {
-    var cat = document.getElementById('pCat').value;
     var catLabels = { impresion:'Impresión Digital', packaging:'Packaging', giganto:'Gigantografías', diseno:'Diseño Gráfico', merch:'Merchandising' };
-    var badge = document.getElementById('pBadge').value.trim();
     var prod = {
       id: name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
       name: name,
-      cat: cat,
-      category: catLabels[cat] || cat,
-      color: document.getElementById('pColor').value,
+      cat: formData.cat,
+      category: catLabels[formData.cat] || formData.cat,
+      color: formData.color,
       icon: name.slice(0, 2).toUpperCase(),
       img: imgPath || null,
-      badge: badge || null,
-      badgeType: badge ? document.getElementById('pBadgeType').value : null,
-      desc: document.getElementById('pDesc').value.trim(),
+      badge: formData.badge || null,
+      badgeType: formData.badge ? formData.badgeType : null,
+      desc: formData.desc,
       specs: currentProductSpecs,
       price: price,
-      unit: document.getElementById('pUnit').value.trim(),
-      delivery: document.getElementById('pDelivery').value.trim(),
+      unit: formData.unit,
+      delivery: formData.delivery,
       whatsapp: 'Me interesa "' + name + '". ¿Pueden cotizarme?',
-      oferta: document.getElementById('pOferta').checked
+      oferta: formData.oferta
     };
     if (currentProductIdx !== null) { productos[currentProductIdx] = prod; }
     else { productos.push(prod); }
