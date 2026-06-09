@@ -1,7 +1,7 @@
 {
   "updated": "2026-06",
   "currency": "ARS",
-  "note": "Actualizar precios en este archivo. Los cambios se reflejan en el sitio automáticamente.",
+  "note": "Actualizar precios en este archivo.",
   "products": [
     {
       "id": "tarjetas-personales",
@@ -9,16 +9,22 @@
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "m",
-      "icon": "TC",
+      "icon": "TA",
       "img": "/assets/uploads/papeleria.png",
       "badge": "Más pedido",
       "badgeType": "hot",
       "desc": "Tarjetas 9×5 cm, full color doble faz. Papel ilustración 300g. La presentación que te representa. Acabado brillante o mate disponible.",
-      "specs": ["300g", "9×5 cm", "Doble faz", "Laminado opcional"],
+      "specs": [
+        "300g",
+        "9×5 cm",
+        "Doble faz",
+        "Laminado opcional"
+      ],
       "price": 15000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan las Tarjetas Personales. ¿Pueden cotizarme 500 unidades?"
+      "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "flyers-a5",
@@ -31,7 +37,12 @@
       "badge": "24 hs",
       "badgeType": "fast",
       "desc": "Flyers A5 (148×210 mm), full color doble faz. Papel ilustración 150g. Ideal para eventos, promociones y lanzamientos.",
-      "specs": ["150g", "A5", "Doble faz", "1000 unidades"],
+      "specs": [
+        "150g",
+        "A5",
+        "Doble faz",
+        "1000 unidades"
+      ],
       "price": 28000,
       "unit": "× 1000 u.",
       "delivery": "Listo en 24 hs",
@@ -48,7 +59,11 @@
       "badge": "⭐ Top",
       "badgeType": "hot",
       "desc": "Tarjetas x500 + Flyers A5 x500 + Folleto A4 x100. Todo lo que tu marca necesita para salir al mercado. Diseño incluido.",
-      "specs": ["3 productos", "Diseño incluido", "Entrega única"],
+      "specs": [
+        "3 productos",
+        "Diseño incluido",
+        "Entrega única"
+      ],
       "price": 45000,
       "unit": "el pack",
       "delivery": "Listo en 72 hs",
@@ -65,7 +80,12 @@
       "badge": null,
       "badgeType": null,
       "desc": "Folleto tríptico A4 full color, papel ilustración 150g. Presentación profesional para tu empresa o producto. 6 caras aprovechables.",
-      "specs": ["150g", "A4 tríptico", "Full color", "Doble faz"],
+      "specs": [
+        "150g",
+        "A4 tríptico",
+        "Full color",
+        "Doble faz"
+      ],
       "price": 32000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
@@ -82,7 +102,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Afiches A3 (420×297 mm) full color, papel ilustración 150g o 200g. Ideal para locales, eventos y campañas publicitarias.",
-      "specs": ["150g o 200g", "A3", "Full color"],
+      "specs": [
+        "150g o 200g",
+        "A3",
+        "Full color"
+      ],
       "price": 12000,
       "unit": "× 100 u.",
       "delivery": "Listo en 48 hs",
@@ -99,7 +123,11 @@
       "badge": "Nuevo",
       "badgeType": "new",
       "desc": "Sobres de carta o americanos con tu logo e identidad visual. Papel obra 90g. Ideales para correspondencia corporativa.",
-      "specs": ["Carta o americano", "Logo incluido", "90g"],
+      "specs": [
+        "Carta o americano",
+        "Logo incluido",
+        "90g"
+      ],
       "price": 18000,
       "unit": "× 500 u.",
       "delivery": "Listo en 72 hs",
@@ -116,7 +144,11 @@
       "badge": "Nuevo",
       "badgeType": "new",
       "desc": "Etiquetas en rollo o troqueladas. Autoadhesivas para frascos, cajas, bolsas y más. Acabado brillante o mate. Impresión UV disponible.",
-      "specs": ["Troquelado libre", "Brillo o mate", "Impermeable"],
+      "specs": [
+        "Troquelado libre",
+        "Brillo o mate",
+        "Impermeable"
+      ],
       "price": 22000,
       "unit": "× 1000 u.",
       "delivery": "Listo en 72 hs",
@@ -133,7 +165,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Cajas troqueladas a medida para tu producto. Cartón microcanal o cartulina. Impresión full color + barniz UV. Armado incluido.",
-      "specs": ["A medida", "Cartulina o microcanal", "Barniz UV"],
+      "specs": [
+        "A medida",
+        "Cartulina o microcanal",
+        "Barniz UV"
+      ],
       "price": 35000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
@@ -150,7 +186,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Bolsas de papel kraft o plastificadas con manija. Logo impreso a color. Ideales para locales, regalos y eventos.",
-      "specs": ["Kraft o plastificada", "Varios tamaños", "Manija incluida"],
+      "specs": [
+        "Kraft o plastificada",
+        "Varios tamaños",
+        "Manija incluida"
+      ],
       "price": 28000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
@@ -167,7 +207,11 @@
       "badge": "⚡ Rápido",
       "badgeType": "fast",
       "desc": "Banner de lona exterior con tanza y ojales. Resistente al agua y al sol. Impresión a alta definición. Ideal para locales, eventos y ferias.",
-      "specs": ["Lona 510g", "Ojales incluidos", "Exterior"],
+      "specs": [
+        "Lona 510g",
+        "Ojales incluidos",
+        "Exterior"
+      ],
       "price": 18000,
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
@@ -184,7 +228,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Vinilos adhesivos para vidrieras, paredes y vehículos. Fácil aplicación, durable hasta 5 años en exterior. Corte de precisión incluido.",
-      "specs": ["Interior o exterior", "5 años durabilidad", "Corte incluido"],
+      "specs": [
+        "Interior o exterior",
+        "5 años durabilidad",
+        "Corte incluido"
+      ],
       "price": 8500,
       "unit": "por m²",
       "delivery": "Listo en 48 hs",
@@ -201,7 +249,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Banner roll-up retráctil completo: estructura de aluminio + impresión de alta calidad + bolso de transporte. Listo para usar.",
-      "specs": ["80×200 cm", "Estructura aluminio", "Bolso incluido"],
+      "specs": [
+        "80×200 cm",
+        "Estructura aluminio",
+        "Bolso incluido"
+      ],
       "price": 42000,
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
@@ -218,7 +270,12 @@
       "badge": null,
       "badgeType": null,
       "desc": "Logo profesional con 3 propuestas iniciales, 3 rondas de revisión, entrega en PNG, JPG, SVG y PDF. Manual de uso básico incluido.",
-      "specs": ["3 propuestas", "3 revisiones", "Todos los formatos", "Manual incluido"],
+      "specs": [
+        "3 propuestas",
+        "3 revisiones",
+        "Todos los formatos",
+        "Manual incluido"
+      ],
       "price": 55000,
       "unit": "por proyecto",
       "delivery": "Listo en 5 días hábiles",
@@ -235,7 +292,11 @@
       "badge": "Premium",
       "badgeType": "hot",
       "desc": "Logo + paleta de colores + tipografías + papelería básica (tarjeta, sobre, hoja membretada). Manual de marca completo. Ideal para emprendimientos.",
-      "specs": ["Logo completo", "Papelería incluida", "Manual de marca"],
+      "specs": [
+        "Logo completo",
+        "Papelería incluida",
+        "Manual de marca"
+      ],
       "price": 120000,
       "unit": "por proyecto",
       "delivery": "Listo en 10 días hábiles",
@@ -252,7 +313,11 @@
       "badge": "Nuevo",
       "badgeType": "new",
       "desc": "Tazas blancas de cerámica con tu diseño impreso en sublimación. Alta durabilidad. Ideales para regalos corporativos y souvenirs.",
-      "specs": ["Cerámica 325ml", "Sublimación", "Apta lavavajillas"],
+      "specs": [
+        "Cerámica 325ml",
+        "Sublimación",
+        "Apta lavavajillas"
+      ],
       "price": 8500,
       "unit": "por unidad",
       "delivery": "Listo en 72 hs",
@@ -269,7 +334,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Libretas A5 tapa dura con tu logo o diseño. 80 hojas rayadas o lisas. Ideales para regalos corporativos, eventos y brand lovers.",
-      "specs": ["A5 tapa dura", "80 hojas", "Logo incluido"],
+      "specs": [
+        "A5 tapa dura",
+        "80 hojas",
+        "Logo incluido"
+      ],
       "price": 12000,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
@@ -286,7 +355,11 @@
       "badge": null,
       "badgeType": null,
       "desc": "Kit personalizable: taza + libreta + lapicera + tarjeta. Empaque premium con tu marca. Ideal para regalos corporativos y eventos.",
-      "specs": ["4 productos", "Empaque incluido", "Personalizable"],
+      "specs": [
+        "4 productos",
+        "Empaque incluido",
+        "Personalizable"
+      ],
       "price": 32000,
       "unit": "por kit",
       "delivery": "Listo en 5 días",
