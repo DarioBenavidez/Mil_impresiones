@@ -26,12 +26,12 @@
       "whatsapp": "Me interesan las Tarjetas Personales. ¿Pueden cotizarme 500 unidades?"
     },
     {
-      "id": "flyers-a5",
+      "id": "flyers-a5-full-color",
       "name": "Flyers A5 Full Color",
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "c",
-      "icon": "FLY",
+      "icon": "FL",
       "img": "/assets/uploads/volantes-vamos-baby.png",
       "badge": "24 hs",
       "badgeType": "fast",
@@ -45,7 +45,8 @@
       "price": 28000,
       "unit": "× 1000 u.",
       "delivery": "Listo en 24 hs",
-      "whatsapp": "Me interesan los Flyers A5. ¿Pueden cotizarme 1000 unidades?"
+      "whatsapp": "Me interesa \"Flyers A5 Full Color\". ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "pack-emprendedor",
