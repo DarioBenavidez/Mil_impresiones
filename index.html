@@ -116,6 +116,9 @@
     var i = document.getElementById('heroHomeImg');
     if(cfg.bannerHomeHeight) s.style.height = cfg.bannerHomeHeight + 'px';
     if(cfg.bannerHomePosition) i.style.objectPosition = cfg.bannerHomePosition;
+    if(cfg.productsLabel) document.getElementById('productsLabel').textContent = cfg.productsLabel;
+    if(cfg.productsTitle) document.getElementById('productsTitle').textContent = cfg.productsTitle;
+    if(cfg.productsSubtitle) document.getElementById('productsSubtitle').textContent = cfg.productsSubtitle;
   });
   </script>
 
@@ -212,9 +215,9 @@
     <div class="container">
       <div class="products-header">
         <div>
-          <div class="eyebrow ink-dot m">Ofertas del día</div>
-          <h2 class="products-title">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">materializamos</em> para vos</h2>
-          <p class="products-subtitle">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
+          <div class="eyebrow ink-dot m" id="productsLabel">Ofertas del día</div>
+          <h2 class="products-title" id="productsTitle">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">materializamos</em> para vos</h2>
+          <p class="products-subtitle" id="productsSubtitle">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
         </div>
 
       </div>

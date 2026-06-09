@@ -13,5 +13,8 @@
   "bannerHomePosition": "48.734973376102644% 30.714285714285722%",
   "bannerHomeHeight": "360",
   "bannerShopPosition": "49.32249322493225% 31.071428571428573%",
-  "bannerShopHeight": "280"
+  "bannerShopHeight": "280",
+  "productsLabel": "Ofertas del día",
+  "productsTitle": "Lo que materializamos para vos",
+  "productsSubtitle": "Precios actualizados · IVA incluido · Entrega en Buenos Aires"
 }
