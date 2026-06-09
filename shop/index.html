@@ -16,7 +16,9 @@
 /* Hero: solo imagen */
 .shop-hero {
   width: 100%;
-  height: 420px;
+  height: 29vw;
+  min-height: 180px;
+  max-height: 600px;
   overflow: hidden;
   display: block;
   line-height: 0;
@@ -28,7 +30,7 @@
   object-position: center;
   display: block;
 }
-@media(max-width:600px) { .shop-hero { height: 240px; } }
+@media(max-width:600px) { .shop-hero { height: 48vw; min-height: unset; max-height: none; } }
 
 /* Filter strip */
 .filter-strip {
@@ -235,7 +237,7 @@
   fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
     var s = document.getElementById('shopHero');
     var i = document.getElementById('shopHeroImg');
-    if(cfg.bannerShopHeight) s.style.height = cfg.bannerShopHeight + 'px';
+    if(cfg.bannerShopHeight) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
     if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
   });
   </script>
