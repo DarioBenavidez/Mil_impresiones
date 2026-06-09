@@ -578,6 +578,11 @@ img{max-width:100%;display:block}
           </select>
         </div>
       </div>
+      <label style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#FDE4F1;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color .15s" id="ofertaLabel">
+        <input type="checkbox" id="pOferta" style="width:18px;height:18px;accent-color:var(--m);cursor:pointer">
+        <span style="font-size:14px;font-weight:600;color:var(--m)">🔥 Agregar a Ofertas del día</span>
+        <span style="font-size:12px;color:#c4007a;margin-left:auto">Aparece en la página principal</span>
+      </label>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeProductModal()">Cancelar</button>
@@ -855,6 +860,7 @@ function openProductModal(idx) {
   document.getElementById('pBadge').value = p ? (p.badge || '') : '';
   document.getElementById('pBadgeType').value = p ? (p.badgeType || 'hot') : 'hot';
   document.getElementById('pColor').value = p ? (p.color || 'm') : 'm';
+  document.getElementById('pOferta').checked = p ? !!p.oferta : false;
   // Preview imagen existente
   var prev = document.getElementById('prodImgPreview');
   var prevImg = document.getElementById('prodImgPreviewImg');
@@ -925,7 +931,8 @@ function saveProduct() {
       price: price,
       unit: document.getElementById('pUnit').value.trim(),
       delivery: document.getElementById('pDelivery').value.trim(),
-      whatsapp: 'Me interesa "' + name + '". ¿Pueden cotizarme?'
+      whatsapp: 'Me interesa "' + name + '". ¿Pueden cotizarme?',
+      oferta: document.getElementById('pOferta').checked
     };
     if (currentProductIdx !== null) { productos[currentProductIdx] = prod; }
     else { productos.push(prod); }

@@ -385,8 +385,8 @@ fetch('/content/productos.json')
   .then(function(data){
     if (data && data.products && data.products.length) {
       allProducts = data.products;
-      // Always show only first 3 in ofertas
-      renderProducts(allProducts.slice(0, 3));
+      var ofertas = allProducts.filter(function(p){ return p.oferta; });
+      renderProducts(ofertas.length ? ofertas : allProducts.slice(0, 3));
     }
   });
 
