@@ -635,6 +635,56 @@ img{max-width:100%;display:block}
   </div>
 </div>
 
+<!-- PORTFOLIO MODAL -->
+<div class="modal-overlay" id="portfolioModal">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <span class="modal-title" id="portfolioModalTitle">Nuevo trabajo</span>
+      <button class="modal-close" onclick="closePortfolioModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Foto del trabajo <span style="color:var(--m)">*</span></label>
+        <div class="upload-zone" id="portImgZone" style="padding:20px">
+          <input type="file" id="portImgInput" accept="image/*" onchange="portImgPreviewChange(this)">
+          <div class="upload-icon" style="font-size:28px">📷</div>
+          <div class="upload-label" style="font-size:13px">Arrastrá o elegí una foto</div>
+          <div class="upload-sub">JPG, PNG · 800×800 px recomendado</div>
+          <div class="upload-preview" id="portImgPreview"><img id="portImgPreviewImg" src="" alt="" style="height:180px;object-fit:cover"></div>
+          <div class="upload-progress" id="portImgProgress"><div class="upload-progress-bar" id="portImgProgressBar"></div></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Título del trabajo <span style="color:var(--m)">*</span></label>
+        <input type="text" id="portTitle" placeholder="Ej: Tarjetas corporativas, Packaging botella...">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Categoría</label>
+          <select id="portCat">
+            <option value="impresion">Impresión Digital</option>
+            <option value="packaging">Packaging</option>
+            <option value="gigantografia">Gigantografías</option>
+            <option value="diseno">Diseño Gráfico</option>
+            <option value="merchandising">Merchandising</option>
+            <option value="general">General</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Descripción corta</label>
+          <input type="text" id="portMeta" placeholder="Ej: Cliente: Marca XYZ">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closePortfolioModal()">Cancelar</button>
+      <button class="btn-primary" id="savePortfolioBtn" onclick="savePortfolioItem()">Guardar trabajo</button>
+    </div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -1209,12 +1259,15 @@ function renderPortfolio() {
     var thumb = item.img
       ? '<img src="' + item.img + '" style="width:100%;height:100%;object-fit:cover">'
       : '<div style="width:100%;height:100%;background:' + (colors[item.cat] || 'var(--m)') + ';display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:rgba(255,255,255,.25)">' + (item.title || 'MI').slice(0,2).toUpperCase() + '</div>';
-    return '<div class="portfolio-item">' + thumb
+    return '<div class="portfolio-item" onclick="openPortfolioModal(' + i + ')" style="cursor:pointer">' + thumb
       + '<div class="portfolio-meta">' + (item.title || '') + '</div>'
-      + '<div class="portfolio-item-overlay"><button class="portfolio-del-btn" onclick="deletePortfolioItem(' + i + ')">🗑 Eliminar</button></div>'
+      + '<div class="portfolio-item-overlay">'
+      + '<button class="portfolio-del-btn" style="background:rgba(255,255,255,.9);color:#111;margin-right:6px" onclick="event.stopPropagation();openPortfolioModal(' + i + ')">✏️ Editar</button>'
+      + '<button class="portfolio-del-btn" onclick="event.stopPropagation();deletePortfolioItem(' + i + ')">🗑 Eliminar</button>'
+      + '</div>'
       + '</div>';
   }).join('')
-  + '<div class="portfolio-add"><input type="file" accept="image/*" multiple onchange="uploadPortfolioItems(this.files)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar fotos<span style="font-size:10px;opacity:.6;margin-top:2px">800×800 px recomendado</span></div>';
+  + '<div class="portfolio-add" onclick="openPortfolioModal(null)" style="cursor:pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Agregar trabajo<span style="font-size:10px;opacity:.6;margin-top:2px">800×800 px recomendado</span></div>';
 }
 
 function uploadPortfolioItems(files) {
@@ -1241,6 +1294,91 @@ function uploadPortfolioItems(files) {
         showToast('✓ Fotos agregadas al portfolio');
       }).catch(function() { showToast('Error al guardar', 'error'); });
   });
+}
+
+var editingPortfolioIdx = null;
+
+function openPortfolioModal(i) {
+  editingPortfolioIdx = i;
+  var isNew = i === null;
+  var item = isNew ? {} : trabajos[i];
+  document.getElementById('portfolioModalTitle').textContent = isNew ? 'Nuevo trabajo' : 'Editar trabajo';
+  document.getElementById('portTitle').value = item.title || '';
+  document.getElementById('portCat').value = item.cat || 'general';
+  document.getElementById('portMeta').value = item.meta || '';
+  document.getElementById('portImgInput').value = '';
+  var preview = document.getElementById('portImgPreview');
+  var previewImg = document.getElementById('portImgPreviewImg');
+  if (item.img) { previewImg.src = item.img; preview.style.display = 'block'; }
+  else { preview.style.display = 'none'; previewImg.src = ''; }
+  document.getElementById('portImgProgress').style.display = 'none';
+  var btn = document.getElementById('savePortfolioBtn');
+  btn.disabled = false; btn.textContent = 'Guardar trabajo';
+  document.getElementById('portfolioModal').classList.add('open');
+}
+
+function closePortfolioModal() {
+  document.getElementById('portfolioModal').classList.remove('open');
+}
+
+function portImgPreviewChange(input) {
+  if (!input.files || !input.files[0]) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var preview = document.getElementById('portImgPreview');
+    document.getElementById('portImgPreviewImg').src = ev.target.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function savePortfolioItem() {
+  var title = document.getElementById('portTitle').value.trim();
+  if (!title) { showToast('El título es obligatorio', 'error'); return; }
+  var formData = {
+    title: title,
+    cat: document.getElementById('portCat').value,
+    meta: document.getElementById('portMeta').value.trim()
+  };
+  var btn = document.getElementById('savePortfolioBtn');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+
+  function doSave(imgPath) {
+    var item = {
+      title: formData.title,
+      cat: formData.cat,
+      meta: formData.meta,
+      img: imgPath !== undefined ? imgPath : (editingPortfolioIdx !== null ? trabajos[editingPortfolioIdx].img : null),
+      size: 'span-4'
+    };
+    if (editingPortfolioIdx !== null) { trabajos[editingPortfolioIdx] = item; }
+    else { trabajos.push(item); }
+    saveToGithub('content/trabajos.json', { items: trabajos })
+      .then(function() {
+        renderPortfolio();
+        document.getElementById('dashPortfolioCount').textContent = trabajos.length;
+        closePortfolioModal();
+        showToast('✓ Trabajo guardado');
+      })
+      .catch(function() { showToast('Error al guardar', 'error'); btn.disabled = false; btn.textContent = 'Guardar trabajo'; });
+  }
+
+  var fileInput = document.getElementById('portImgInput');
+  if (fileInput.files && fileInput.files[0]) {
+    var file = fileInput.files[0];
+    var prog = document.getElementById('portImgProgress');
+    var bar = document.getElementById('portImgProgressBar');
+    prog.style.display = 'block'; bar.style.width = '60%';
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      uploadToGithub(file.name, ev.target.result)
+        .then(function(r) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; }, 400); doSave(r.path); })
+        .catch(function() { showToast('Error al subir imagen', 'error'); btn.disabled = false; btn.textContent = 'Guardar trabajo'; });
+    };
+    reader.readAsDataURL(file);
+  } else {
+    doSave(undefined);
+  }
 }
 
 function deletePortfolioItem(i) {
