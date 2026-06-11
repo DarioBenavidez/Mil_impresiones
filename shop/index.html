@@ -237,7 +237,7 @@
   fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
     var s = document.getElementById('shopHero');
     var i = document.getElementById('shopHeroImg');
-    if(cfg.bannerShopHeight) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
+    if(cfg.bannerShopHeight && window.innerWidth > 600) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
     if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
     if(cfg.shopCols) document.documentElement.style.setProperty('--shop-cols', cfg.shopCols);
     if(cfg.shopThumbH) document.documentElement.style.setProperty('--shop-thumb-h', cfg.shopThumbH + 'px');
