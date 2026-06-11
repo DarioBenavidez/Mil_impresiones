@@ -1,0 +1,27 @@
+{
+  "iconSize": 24,
+  "labelSize": 13,
+  "subSize": 12,
+  "items": [
+    {
+      "icon": "⚡",
+      "label": "Cotización en 2 hs",
+      "sub": "Respuesta rápida garantizada"
+    },
+    {
+      "icon": "📦",
+      "label": "Entrega 48-72 hs",
+      "sub": "O retiro en el local"
+    },
+    {
+      "icon": "🚀",
+      "label": "Envío a todo el país",
+      "sub": "OCA · Andreani"
+    },
+    {
+      "icon": "💬",
+      "label": "Asesoramiento real",
+      "sub": "Te acompañamos en cada paso"
+    }
+  ]
+}
