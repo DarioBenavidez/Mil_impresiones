@@ -92,12 +92,34 @@
 .why-label{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--fg);margin-bottom:2px}
 .why-sub{font-size:12px;color:var(--fg-3)}
 
-/* ── OFERTAS DARK SECTION ──────────────────────────────────────────────────── */
-.ofertas-dark-section{background:linear-gradient(135deg,#1a0010 0%,#111118 50%,#0a0a18 100%);position:relative;overflow:hidden}
-.ofertas-dark-section::before{content:'';position:absolute;top:-40%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(236,0,140,.18) 0%,transparent 70%);pointer-events:none}
-.ofertas-dark-section::after{content:'';position:absolute;bottom:-20%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(0,174,239,.12) 0%,transparent 70%);pointer-events:none}
-.ofertas-dark-section .skeleton-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
-.ofertas-dark-section .skeleton-thumb,.ofertas-dark-section .skeleton-line{background:linear-gradient(90deg,rgba(255,255,255,.08) 25%,rgba(255,255,255,.14) 50%,rgba(255,255,255,.08) 75%);background-size:200% 100%}
+/* ── OFERTAS SECTION — variante "floating card" ─────────────────────────────── */
+.ofertas-dark-section{
+  background:linear-gradient(135deg,#EC008C 0%,#8B004F 55%,#3D0022 100%);
+  border-radius:28px;
+  margin:0 clamp(12px,3vw,48px) var(--s7);
+  padding:var(--s8) 0;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 32px 80px -20px rgba(236,0,140,.45);
+}
+.ofertas-dark-section::before{
+  content:'OFERTAS';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--font-display);
+  font-size:clamp(80px,16vw,200px);
+  font-weight:900;
+  letter-spacing:-.05em;
+  color:rgba(255,255,255,.06);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+  line-height:1;
+}
+.ofertas-dark-section .skeleton-card{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.1)}
+.ofertas-dark-section .skeleton-thumb,.ofertas-dark-section .skeleton-line{background:linear-gradient(90deg,rgba(255,255,255,.1) 25%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.1) 75%);background-size:200% 100%}
+@media(max-width:600px){.ofertas-dark-section{border-radius:18px;margin:0 12px var(--s6)}}
 
 /* ── LOADING SKELETONS ─────────────────────────────────────────────────────── */
 .skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
