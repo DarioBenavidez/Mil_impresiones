@@ -9,7 +9,7 @@
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "m",
-      "icon": "TC",
+      "icon": "TA",
       "img": "/assets/uploads/papeleria.png",
       "badge": "Más pedido",
       "badgeType": "hot",
@@ -23,7 +23,8 @@
       "price": 15000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan las Tarjetas Personales. ¿Pueden cotizarme 500 unidades?"
+      "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "flyers-a5-full-color",
