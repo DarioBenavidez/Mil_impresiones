@@ -446,31 +446,57 @@ img{max-width:100%;display:block}
           <div class="upload-progress" id="bannerProgress"><div class="upload-progress-bar" id="bannerProgressBar"></div></div>
         </div>
 
-        <!-- DISTRIBUCIÓN -->
+        <!-- DISTRIBUCIÓN Y CARDS -->
         <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-            <div>
-              <div style="font-size:14px;font-weight:700;letter-spacing:-.01em">Distribución de productos</div>
-              <div style="font-size:12px;color:var(--fg3);margin-top:2px">Cantidad de columnas en el grid de la tienda</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:18px">Productos de la tienda</div>
+
+          <!-- Columnas -->
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:4px">Columnas de productos</div>
+            <div style="font-size:12px;color:var(--fg3);margin-bottom:12px">Cantidad de tarjetas por fila</div>
+            <div class="height-options" id="shopColsOptions">
+              <button class="height-btn" data-cols="2" style="min-width:80px">
+                <svg width="36" height="22" viewBox="0 0 36 22" fill="none" style="display:block;margin:0 auto 3px"><rect x="1" y="1" width="15" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="20" y="1" width="15" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+                2 cols</button>
+              <button class="height-btn" data-cols="3" style="min-width:80px">
+                <svg width="46" height="22" viewBox="0 0 46 22" fill="none" style="display:block;margin:0 auto 3px"><rect x="1" y="1" width="12" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="17" y="1" width="12" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="33" y="1" width="12" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+                3 cols</button>
+              <button class="height-btn active" data-cols="4" style="min-width:80px">
+                <svg width="54" height="22" viewBox="0 0 54 22" fill="none" style="display:block;margin:0 auto 3px"><rect x="1" y="1" width="10" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="15" y="1" width="10" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="29" y="1" width="10" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="43" y="1" width="10" height="20" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+                4 cols</button>
             </div>
           </div>
-          <div class="height-options" id="shopColsOptions" style="margin-bottom:20px">
-            <button class="height-btn" data-cols="2" style="min-width:90px">
-              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="20" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
-              2 columnas<br><span style="font-size:10px;color:var(--fg3)">Tarjetas grandes</span>
-            </button>
-            <button class="height-btn" data-cols="3" style="min-width:90px">
-              <svg width="46" height="28" viewBox="0 0 46 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="17" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="33" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
-              3 columnas<br><span style="font-size:10px;color:var(--fg3)">Equilibrado</span>
-            </button>
-            <button class="height-btn active" data-cols="4" style="min-width:90px">
-              <svg width="54" height="28" viewBox="0 0 54 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="15" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="29" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="43" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
-              4 columnas<br><span style="font-size:10px;color:var(--fg3)">Más productos</span>
-            </button>
+
+          <!-- Altura imagen card -->
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:4px">Altura de imagen en card</div>
+            <div style="font-size:12px;color:var(--fg3);margin-bottom:12px">Tamaño de la foto de cada producto</div>
+            <div class="height-options" id="shopThumbOptions">
+              <button class="height-btn" data-thumb="140">Chico<br><span style="font-size:10px;color:var(--fg3)">140px</span></button>
+              <button class="height-btn active" data-thumb="200">Normal<br><span style="font-size:10px;color:var(--fg3)">200px</span></button>
+              <button class="height-btn" data-thumb="280">Grande<br><span style="font-size:10px;color:var(--fg3)">280px</span></button>
+            </div>
           </div>
-          <button class="btn-primary" style="font-size:13px" id="saveShopLayout">
+
+          <!-- Fondo de página -->
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:4px">Color de fondo de la tienda</div>
+            <div style="font-size:12px;color:var(--fg3);margin-bottom:12px">Color del área detrás de los productos</div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <input type="color" id="shopBgColor" value="#F4F1EA" style="width:52px;height:40px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onclick="document.getElementById('shopBgColor').value='#F4F1EA';updateShopBgPreview()" style="padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#F4F1EA;font-size:12px;cursor:pointer">Crema</button>
+                <button onclick="document.getElementById('shopBgColor').value='#FFFFFF';updateShopBgPreview()" style="padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#FFFFFF;font-size:12px;cursor:pointer">Blanco</button>
+                <button onclick="document.getElementById('shopBgColor').value='#F0F0F0';updateShopBgPreview()" style="padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#F0F0F0;font-size:12px;cursor:pointer">Gris claro</button>
+                <button onclick="document.getElementById('shopBgColor').value='#111111';updateShopBgPreview()" style="padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#111111;color:#fff;font-size:12px;cursor:pointer">Negro</button>
+              </div>
+              <div id="shopBgPreview" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:#F4F1EA;flex-shrink:0"></div>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="saveShopLayout">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            Guardar distribución
+            Guardar configuración de tienda
           </button>
         </div>
       </div>
@@ -1351,6 +1377,17 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
       b.classList.toggle('active', b.dataset.cols === String(cfg.shopCols));
     });
   }
+  // Altura thumb tienda
+  if (cfg.shopThumbH) {
+    document.querySelectorAll('#shopThumbOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.thumb === String(cfg.shopThumbH));
+    });
+  }
+  // Fondo tienda
+  if (cfg.shopBgColor) {
+    document.getElementById('shopBgColor').value = cfg.shopBgColor;
+    document.getElementById('shopBgPreview').style.background = cfg.shopBgColor;
+  }
   // Textos del inicio
   if (cfg.productsLabel) { document.getElementById('cfgProductsLabel').value = cfg.productsLabel; document.getElementById('prevLabel').textContent = cfg.productsLabel; }
   if (cfg.productsTitle) { document.getElementById('cfgProductsTitle').value = cfg.productsTitle; document.getElementById('prevTitle').textContent = cfg.productsTitle; }
@@ -1480,11 +1517,28 @@ document.querySelectorAll('#shopColsOptions .height-btn').forEach(function(btn) 
   });
 });
 
+// Altura thumb tienda
+document.querySelectorAll('#shopThumbOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#shopThumbOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+// Preview fondo tienda en vivo
+function updateShopBgPreview() {
+  document.getElementById('shopBgPreview').style.background = document.getElementById('shopBgColor').value;
+}
+document.getElementById('shopBgColor').addEventListener('input', updateShopBgPreview);
+
 document.getElementById('saveShopLayout').addEventListener('click', function() {
-  var activeBtn = document.querySelector('#shopColsOptions .height-btn.active');
-  var cols = activeBtn ? activeBtn.dataset.cols : '4';
-  saveVisualConfig({ shopCols: cols })
-    .then(function(){ showToast('Distribución guardada'); })
+  var colsBtn   = document.querySelector('#shopColsOptions .height-btn.active');
+  var thumbBtn  = document.querySelector('#shopThumbOptions .height-btn.active');
+  var cols      = colsBtn  ? colsBtn.dataset.cols  : '4';
+  var thumbH    = thumbBtn ? parseInt(thumbBtn.dataset.thumb) : 200;
+  var bgColor   = document.getElementById('shopBgColor').value;
+  saveVisualConfig({ shopCols: cols, shopThumbH: thumbH, shopBgColor: bgColor })
+    .then(function(){ showToast('Tienda actualizada'); })
     .catch(function(){ showToast('Error al guardar', 'error'); });
 });
 

@@ -120,7 +120,7 @@
 .pcard:hover { transform: translateY(-4px); box-shadow: 0 20px 48px -16px rgba(0,0,0,.14); }
 
 .pcard-thumb {
-  height: 200px;
+  height: var(--shop-thumb-h, 200px);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -243,6 +243,8 @@
       var g = document.getElementById('shopGrid');
       if(g) g.style.gridTemplateColumns = 'repeat(' + cfg.shopCols + ', 1fr)';
     }
+    if(cfg.shopThumbH) document.documentElement.style.setProperty('--shop-thumb-h', cfg.shopThumbH + 'px');
+    if(cfg.shopBgColor) document.querySelector('.shop-page').style.background = cfg.shopBgColor;
   });
   </script>
 
