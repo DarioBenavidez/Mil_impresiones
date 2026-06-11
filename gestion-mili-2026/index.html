@@ -437,6 +437,34 @@ img{max-width:100%;display:block}
           <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×420 px</div>
           <div class="upload-progress" id="bannerProgress"><div class="upload-progress-bar" id="bannerProgressBar"></div></div>
         </div>
+
+        <!-- DISTRIBUCIÓN -->
+        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+            <div>
+              <div style="font-size:14px;font-weight:700;letter-spacing:-.01em">Distribución de productos</div>
+              <div style="font-size:12px;color:var(--fg3);margin-top:2px">Cantidad de columnas en el grid de la tienda</div>
+            </div>
+          </div>
+          <div class="height-options" id="shopColsOptions" style="margin-bottom:20px">
+            <button class="height-btn" data-cols="2" style="min-width:90px">
+              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="20" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              2 columnas<br><span style="font-size:10px;color:var(--fg3)">Tarjetas grandes</span>
+            </button>
+            <button class="height-btn" data-cols="3" style="min-width:90px">
+              <svg width="46" height="28" viewBox="0 0 46 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="17" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="33" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              3 columnas<br><span style="font-size:10px;color:var(--fg3)">Equilibrado</span>
+            </button>
+            <button class="height-btn active" data-cols="4" style="min-width:90px">
+              <svg width="54" height="28" viewBox="0 0 54 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="15" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="29" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="43" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              4 columnas<br><span style="font-size:10px;color:var(--fg3)">Más productos</span>
+            </button>
+          </div>
+          <button class="btn-primary" style="font-size:13px" id="saveShopLayout">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar distribución
+          </button>
+        </div>
       </div>
 
       <!-- TEXTOS DEL INICIO -->
@@ -1178,6 +1206,12 @@ fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(f
   visualConfig = cfg;
   setActiveHeight(document.querySelectorAll('#panel-banner-home .height-btn'), cfg.bannerHomeHeight || '520');
   setActiveHeight(document.querySelectorAll('#panel-banner .height-btn'), cfg.bannerShopHeight || '420');
+  // Columnas tienda
+  if (cfg.shopCols) {
+    document.querySelectorAll('#shopColsOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cols === String(cfg.shopCols));
+    });
+  }
   // Textos del inicio
   if (cfg.productsLabel) { document.getElementById('cfgProductsLabel').value = cfg.productsLabel; document.getElementById('prevLabel').textContent = cfg.productsLabel; }
   if (cfg.productsTitle) { document.getElementById('cfgProductsTitle').value = cfg.productsTitle; document.getElementById('prevTitle').textContent = cfg.productsTitle; }
@@ -1296,6 +1330,22 @@ document.getElementById('saveShopBannerConfig').addEventListener('click', functi
   var h   = document.querySelector('#panel-banner .height-btn.active').dataset.h;
   saveVisualConfig({ bannerShopPosition: pos, bannerShopHeight: h })
     .then(function(){ showToast('Configuración guardada'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
+});
+
+// Columnas de tienda
+document.querySelectorAll('#shopColsOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#shopColsOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+document.getElementById('saveShopLayout').addEventListener('click', function() {
+  var activeBtn = document.querySelector('#shopColsOptions .height-btn.active');
+  var cols = activeBtn ? activeBtn.dataset.cols : '4';
+  saveVisualConfig({ shopCols: cols })
+    .then(function(){ showToast('Distribución guardada'); })
     .catch(function(){ showToast('Error al guardar', 'error'); });
 });
 

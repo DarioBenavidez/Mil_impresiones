@@ -234,11 +234,15 @@
     <img src="/assets/uploads/banner-bc.png" id="shopHeroImg" alt="Mil Impresiones" class="shop-hero-img">
   </section>
   <script>
-  fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+  fetch('/content/config-visual.json?v=' + Date.now()).then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
     var s = document.getElementById('shopHero');
     var i = document.getElementById('shopHeroImg');
     if(cfg.bannerShopHeight) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
     if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
+    if(cfg.shopCols) {
+      var g = document.getElementById('shopGrid');
+      if(g) g.style.gridTemplateColumns = 'repeat(' + cfg.shopCols + ', 1fr)';
+    }
   });
   </script>
 
