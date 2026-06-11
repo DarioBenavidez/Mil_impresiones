@@ -122,7 +122,7 @@
 @media(max-width:600px){.ofertas-dark-section{border-radius:18px;margin:0 12px var(--s6)}}
 /* Cards compactas dentro de ofertas */
 .ofertas-dark-section .products-grid{gap:var(--s3)}
-.ofertas-dark-section .product-thumb{height:110px}
+.ofertas-dark-section .product-thumb{height:var(--ofertas-thumb-h,110px)}
 .ofertas-dark-section .product-desc{display:none}
 .ofertas-dark-section .product-specs{display:none}
 .ofertas-dark-section .product-delivery{display:none}
@@ -186,6 +186,18 @@
     if(cfg.productsLabel) document.getElementById('productsLabel').textContent = cfg.productsLabel;
     if(cfg.productsTitle) document.getElementById('productsTitle').textContent = cfg.productsTitle;
     if(cfg.productsSubtitle) document.getElementById('productsSubtitle').textContent = cfg.productsSubtitle;
+    // Ofertas del día
+    var sec = document.getElementById('ofertasSection');
+    if(sec) {
+      if(cfg.ofertasBg1 || cfg.ofertasBg2)
+        sec.style.background = 'linear-gradient(135deg,' + (cfg.ofertasBg1||'#003D5C') + ' 0%,' + (cfg.ofertasBg2||'#001220') + ' 100%)';
+      if(cfg.ofertasCols) {
+        var grid = document.getElementById('productsGrid');
+        if(grid) grid.style.gridTemplateColumns = 'repeat(' + cfg.ofertasCols + ',1fr)';
+      }
+      if(cfg.ofertasThumbH)
+        document.documentElement.style.setProperty('--ofertas-thumb-h', cfg.ofertasThumbH + 'px');
+    }
   });
   </script>
 

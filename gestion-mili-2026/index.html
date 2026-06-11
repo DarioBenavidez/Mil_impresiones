@@ -275,6 +275,10 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Banner de tienda
         </div>
+        <div class="nav-item" data-panel="ofertas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Ofertas del día
+        </div>
         <div class="nav-item" data-panel="why-us">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           Franja de beneficios
@@ -464,6 +468,73 @@ img{max-width:100%;display:block}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
             Guardar distribución
           </button>
+        </div>
+      </div>
+
+      <!-- OFERTAS DEL DÍA -->
+      <div class="panel" id="panel-ofertas">
+        <div class="section-header">
+          <div>
+            <h2>Ofertas del día</h2>
+            <p>Fondo, distribución, tamaño de cards y productos destacados</p>
+          </div>
+          <button class="btn-primary" onclick="saveOfertasConfig()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+
+        <!-- Preview -->
+        <div id="ofertasPreview" style="border-radius:16px;padding:20px 24px;margin-bottom:24px;background:linear-gradient(135deg,#003D5C 0%,#001220 100%);min-height:80px;display:flex;align-items:center;gap:16px;transition:background .3s">
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--m);text-transform:uppercase;margin-bottom:4px">🔥 OFERTAS DEL DÍA</div>
+            <div style="font-size:18px;font-weight:700;color:#fff;line-height:1.2" id="ofertasPreviewTitle">Lo que materializamos para vos</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:3px">Vista previa del fondo</div>
+          </div>
+        </div>
+
+        <!-- FONDO -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px">🎨 Fondo</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+              Color 1 (arriba-izquierda)
+              <input type="color" id="ofBg1" value="#003D5C" oninput="updateOfertasPreview()" style="display:block;margin-top:6px;width:100%;height:44px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
+            </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+              Color 2 (abajo-derecha)
+              <input type="color" id="ofBg2" value="#001220" oninput="updateOfertasPreview()" style="display:block;margin-top:6px;width:100%;height:44px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
+            </label>
+          </div>
+        </div>
+
+        <!-- DISTRIBUCIÓN Y TAMAÑO -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px">📐 Distribución y tamaño</div>
+          <div style="font-size:12px;font-weight:600;color:var(--fg3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Columnas</div>
+          <div class="height-options" id="ofertasColsOptions" style="margin-bottom:18px">
+            <button class="height-btn" data-cols="2" style="min-width:80px">2 cols<br><span style="font-size:10px;color:var(--fg3)">Grande</span></button>
+            <button class="height-btn active" data-cols="3" style="min-width:80px">3 cols<br><span style="font-size:10px;color:var(--fg3)">Normal</span></button>
+            <button class="height-btn" data-cols="4" style="min-width:80px">4 cols<br><span style="font-size:10px;color:var(--fg3)">Compacto</span></button>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:var(--fg3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Altura de imagen en card</div>
+          <div class="height-options" id="ofertasThumbOptions">
+            <button class="height-btn" data-thumb="70">Mini<br><span style="font-size:10px;color:var(--fg3)">70px</span></button>
+            <button class="height-btn active" data-thumb="110">Normal<br><span style="font-size:10px;color:var(--fg3)">110px</span></button>
+            <button class="height-btn" data-thumb="160">Grande<br><span style="font-size:10px;color:var(--fg3)">160px</span></button>
+          </div>
+        </div>
+
+        <!-- PRODUCTOS EN OFERTA -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:14px;font-weight:700">🔥 Productos en oferta</div>
+            <span style="font-size:12px;color:var(--fg3)">Los marcados aparecen en la sección</span>
+          </div>
+          <div id="ofertasProductList" style="display:flex;flex-direction:column;gap:6px">
+            <div style="color:var(--fg3);font-size:13px;padding:16px 0;text-align:center">Cargando productos...</div>
+          </div>
+          <p style="font-size:11px;color:var(--fg3);margin-top:10px">Si ninguno está marcado, se muestran los primeros 3 del catálogo.</p>
         </div>
       </div>
 
@@ -1842,6 +1913,111 @@ function saveMenuCats() {
 // ── CLOSE MODALS ON CLICK OUTSIDE ─────────────────────────────────────────
 document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
   overlay.addEventListener('click', function(e) { if (e.target === overlay) { overlay.classList.remove('open'); } });
+});
+
+// ── OFERTAS DEL DÍA ────────────────────────────────────────────────────────
+function updateOfertasPreview() {
+  var bg1 = document.getElementById('ofBg1').value;
+  var bg2 = document.getElementById('ofBg2').value;
+  document.getElementById('ofertasPreview').style.background =
+    'linear-gradient(135deg,' + bg1 + ' 0%,' + bg2 + ' 100%)';
+}
+
+function renderOfertasProductList() {
+  var container = document.getElementById('ofertasProductList');
+  if (!container) return;
+  if (!productos.length) {
+    container.innerHTML = '<div style="color:var(--fg3);font-size:13px;padding:12px 0;text-align:center">No hay productos en el catálogo todavía.</div>';
+    return;
+  }
+  container.innerHTML = productos.map(function(p, i) {
+    var checked = p.oferta ? 'checked' : '';
+    var colorMap = { m:'#EC008C', c:'#00AEEF', y:'#C9A800', k:'#333' };
+    var dot = colorMap[p.color || 'm'] || '#EC008C';
+    return '<label style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;cursor:pointer;border:1.5px solid var(--border);transition:border-color .15s,background .15s" '
+      + 'onmouseover="this.style.borderColor=\'var(--m)\'" onmouseout="if(!this.querySelector(\'input\').checked)this.style.borderColor=\'var(--border)\';else this.style.borderColor=\'var(--m)\'">'
+      + '<input type="checkbox" data-idx="' + i + '" ' + checked + ' style="width:17px;height:17px;accent-color:var(--m);cursor:pointer;flex-shrink:0" onchange="toggleOferta(this)">'
+      + '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';flex-shrink:0"></span>'
+      + '<span style="flex:1;font-size:13px;font-weight:600">' + p.name + '</span>'
+      + '<span style="font-size:12px;color:var(--fg3)">' + (p.category || p.cat || '') + '</span>'
+      + (p.oferta ? '<span style="font-size:10px;font-weight:700;color:var(--m);background:#FDE4F1;padding:2px 8px;border-radius:4px">OFERTA</span>' : '')
+      + '</label>';
+  }).join('');
+}
+
+function toggleOferta(checkbox) {
+  var idx = parseInt(checkbox.dataset.idx);
+  if (isNaN(idx) || !productos[idx]) return;
+  productos[idx].oferta = checkbox.checked;
+  var label = checkbox.closest('label');
+  if (label) {
+    label.style.borderColor = checkbox.checked ? 'var(--m)' : 'var(--border)';
+    var badge = label.querySelector('span[style*="OFERTA"]') || label.querySelector('.oferta-badge');
+    if (checkbox.checked && !badge) {
+      var b = document.createElement('span');
+      b.style.cssText = 'font-size:10px;font-weight:700;color:var(--m);background:#FDE4F1;padding:2px 8px;border-radius:4px';
+      b.textContent = 'OFERTA';
+      label.appendChild(b);
+    } else if (!checkbox.checked && badge) {
+      badge.remove();
+    }
+  }
+}
+
+function saveOfertasConfig() {
+  var bg1 = document.getElementById('ofBg1').value;
+  var bg2 = document.getElementById('ofBg2').value;
+  var activeColBtn   = document.querySelector('#ofertasColsOptions .height-btn.active');
+  var activeThumbBtn = document.querySelector('#ofertasThumbOptions .height-btn.active');
+  var cols  = activeColBtn  ? activeColBtn.dataset.cols  : '3';
+  var thumb = activeThumbBtn ? activeThumbBtn.dataset.thumb : '110';
+
+  var cfgSave = saveVisualConfig({ ofertasBg1: bg1, ofertasBg2: bg2, ofertasCols: cols, ofertasThumbH: thumb });
+  var prodSave = saveToGithub('content/productos.json', {
+    updated: new Date().toISOString().slice(0,7),
+    currency: 'ARS',
+    note: 'Actualizar precios en este archivo.',
+    products: productos
+  });
+
+  Promise.all([cfgSave, prodSave])
+    .then(function() { showToast('Ofertas guardadas'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
+}
+
+// Bind columnas y thumb buttons para ofertas
+document.querySelectorAll('#ofertasColsOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#ofertasColsOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+document.querySelectorAll('#ofertasThumbOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#ofertasThumbOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+// Cuando se abre el panel de ofertas, renderiza la lista de productos
+document.querySelector('.nav-item[data-panel="ofertas"]').addEventListener('click', function() {
+  renderOfertasProductList();
+});
+
+// Cargar config guardada de ofertas al iniciar
+fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+  if (cfg.ofertasBg1) { document.getElementById('ofBg1').value = cfg.ofertasBg1; updateOfertasPreview(); }
+  if (cfg.ofertasBg2) { document.getElementById('ofBg2').value = cfg.ofertasBg2; updateOfertasPreview(); }
+  if (cfg.ofertasCols) {
+    document.querySelectorAll('#ofertasColsOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cols === String(cfg.ofertasCols));
+    });
+  }
+  if (cfg.ofertasThumbH) {
+    document.querySelectorAll('#ofertasThumbOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.thumb === String(cfg.ofertasThumbH));
+    });
+  }
 });
 </script>
 </body>
