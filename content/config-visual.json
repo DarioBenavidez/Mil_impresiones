@@ -21,5 +21,7 @@
   "ofertasBg1": "#101010",
   "ofertasBg2": "#ec2b8c",
   "ofertasCols": "3",
-  "ofertasThumbH": "110"
+  "ofertasThumbH": "110",
+  "catalogCols": "4",
+  "catalogThumbH": "180"
 }
