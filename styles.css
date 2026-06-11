@@ -243,24 +243,12 @@ section { padding: var(--s7) 0; position: relative; }
   z-index: 200;
   background: var(--bg);
   flex-direction: column;
-  padding: 80px var(--s6) var(--s6);
-  gap: var(--s2);
-  align-items: flex-start;
+  padding-top: 80px;
+  padding-bottom: var(--s6);
+  align-items: stretch;
   overflow-y: auto;
 }
 .mobile-drawer.open { display: flex; }
-.mobile-drawer a {
-  font-size: 30px;
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--fg);
-  text-decoration: none;
-  padding: var(--s3) 0;
-  width: 100%;
-  border-bottom: 1px solid var(--border);
-}
-.mobile-drawer a:last-child { border-bottom: 0; }
 .mobile-drawer a.active { color: var(--accent); }
 
 /* ============ Buttons ============ */
@@ -1735,9 +1723,11 @@ html { color-scheme: light !important; }
 /* ── MOBILE DRAWER acordeón de categorías ────────────────────────────────── */
 .drawer-main-link {
   display: block;
-  padding: 15px 20px;
-  font-size: 15px;
-  font-weight: 600;
+  padding: 16px 24px;
+  font-size: 17px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.02em;
   color: var(--fg);
   border-bottom: 1px solid var(--border);
   text-decoration: none;
@@ -1753,15 +1743,16 @@ html { color-scheme: light !important; }
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 16px;
-  font-size: 14px;
+  padding: 14px 16px 14px 24px;
+  font-size: 15px;
+  font-family: var(--font-display);
   font-weight: 500;
   color: var(--fg);
   text-decoration: none;
 }
-.drawer-acc-icon { font-size: 18px; line-height: 1; }
+.drawer-acc-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .drawer-acc-toggle {
-  padding: 0 16px;
+  padding: 0 18px;
   background: none;
   border: none;
   border-left: 1px solid var(--border);
@@ -1770,20 +1761,23 @@ html { color-scheme: light !important; }
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  min-width: 52px;
+  justify-content: center;
 }
 .drawer-acc-toggle:active { background: var(--border); }
-.drawer-acc-toggle svg { transition: transform .2s ease; }
+.drawer-acc-toggle svg { transition: transform .22s ease; }
 .drawer-acc-row.open .drawer-acc-toggle svg { transform: rotate(180deg); }
 .drawer-acc-subs {
   max-height: 0;
   overflow: hidden;
   transition: max-height .28s ease;
-  background: var(--bg-2, #f5f1e8);
+  background: color-mix(in srgb, var(--bg) 60%, var(--border) 40%);
 }
 .drawer-acc-sub {
   display: block;
-  padding: 11px 20px 11px 50px;
+  padding: 12px 20px 12px 56px;
   font-size: 13px;
+  font-family: var(--font-body);
   color: var(--fg-2);
   text-decoration: none;
   border-bottom: 1px solid var(--border);

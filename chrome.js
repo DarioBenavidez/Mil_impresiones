@@ -506,7 +506,8 @@
           if (s) s.style.maxHeight = '0';
         });
         row.classList.toggle('open', opening);
-        if (subs) subs.style.maxHeight = opening ? subs.scrollHeight + 'px' : '0';
+        // Usar 400px fijo: evita el bug de scrollHeight=0 cuando el contenedor no tiene ancho aún
+        if (subs) subs.style.maxHeight = opening ? '400px' : '0';
       });
     });
 
