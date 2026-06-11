@@ -92,6 +92,13 @@
 .why-label{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--fg);margin-bottom:2px}
 .why-sub{font-size:12px;color:var(--fg-3)}
 
+/* ── OFERTAS DARK SECTION ──────────────────────────────────────────────────── */
+.ofertas-dark-section{background:linear-gradient(135deg,#1a0010 0%,#111118 50%,#0a0a18 100%);position:relative;overflow:hidden}
+.ofertas-dark-section::before{content:'';position:absolute;top:-40%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(236,0,140,.18) 0%,transparent 70%);pointer-events:none}
+.ofertas-dark-section::after{content:'';position:absolute;bottom:-20%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(0,174,239,.12) 0%,transparent 70%);pointer-events:none}
+.ofertas-dark-section .skeleton-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}
+.ofertas-dark-section .skeleton-thumb,.ofertas-dark-section .skeleton-line{background:linear-gradient(90deg,rgba(255,255,255,.08) 25%,rgba(255,255,255,.14) 50%,rgba(255,255,255,.08) 75%);background-size:200% 100%}
+
 /* ── LOADING SKELETONS ─────────────────────────────────────────────────────── */
 .skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .skeleton-thumb{height:180px;background:linear-gradient(90deg,var(--bg-2) 25%,var(--bg) 50%,var(--bg-2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
@@ -174,15 +181,14 @@
   <!-- ══════════════════════════════════════════════════════
        OFERTAS DEL DÍA
   ══════════════════════════════════════════════════════ -->
-  <section class="products-section">
+  <section class="products-section ofertas-dark-section" id="ofertasSection">
     <div class="container">
       <div class="products-header">
         <div>
-          <div class="eyebrow ink-dot m" id="productsLabel">Ofertas del día</div>
-          <h2 class="products-title" id="productsTitle">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">materializamos</em> para vos</h2>
-          <p class="products-subtitle" id="productsSubtitle">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
+          <div class="eyebrow" id="productsLabel" style="color:var(--m);justify-content:flex-start;gap:6px">🔥 <span>OFERTAS DEL DÍA</span></div>
+          <h2 class="products-title" id="productsTitle" style="color:#fff">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400">materializamos</em> para vos</h2>
+          <p class="products-subtitle" id="productsSubtitle" style="color:rgba(255,255,255,.5)">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
         </div>
-
       </div>
       <div class="products-grid" id="productsGrid">
         <!-- Skeletons while loading -->
