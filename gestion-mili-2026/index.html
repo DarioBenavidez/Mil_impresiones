@@ -479,7 +479,7 @@ img{max-width:100%;display:block}
           </div>
 
           <!-- Fondo de página -->
-          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px">
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px">
             <div style="font-size:13px;font-weight:700;margin-bottom:4px">Color de fondo de la tienda</div>
             <div style="font-size:12px;color:var(--fg3);margin-bottom:12px">Color del área detrás de los productos</div>
             <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
@@ -491,6 +491,50 @@ img{max-width:100%;display:block}
                 <button onclick="document.getElementById('shopBgColor').value='#111111';updateShopBgPreview()" style="padding:6px 12px;border-radius:6px;border:1.5px solid var(--border);background:#111111;color:#fff;font-size:12px;cursor:pointer">Negro</button>
               </div>
               <div id="shopBgPreview" style="width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:#F4F1EA;flex-shrink:0"></div>
+            </div>
+          </div>
+
+          <!-- Espaciado -->
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:4px">Espaciado</div>
+            <div style="font-size:12px;color:var(--fg3);margin-bottom:16px">Espacios entre secciones y cards</div>
+
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <!-- Espacio superior -->
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <label style="font-size:12px;color:var(--fg2)">Espacio superior (bajo filtros)</label>
+                  <span style="font-size:12px;font-weight:600" id="shopPagePtVal">48px</span>
+                </div>
+                <input type="range" id="shopPagePt" min="0" max="96" step="4" value="48"
+                  style="width:100%;accent-color:var(--accent)"
+                  oninput="document.getElementById('shopPagePtVal').textContent=this.value+'px'">
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fg3);margin-top:2px"><span>Sin espacio</span><span>Mucho</span></div>
+              </div>
+
+              <!-- Espacio antes del conteo -->
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <label style="font-size:12px;color:var(--fg2)">Espacio antes de "N productos"</label>
+                  <span style="font-size:12px;font-weight:600" id="shopBarPtVal">32px</span>
+                </div>
+                <input type="range" id="shopBarPt" min="0" max="64" step="4" value="32"
+                  style="width:100%;accent-color:var(--accent)"
+                  oninput="document.getElementById('shopBarPtVal').textContent=this.value+'px'">
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fg3);margin-top:2px"><span>Sin espacio</span><span>Mucho</span></div>
+              </div>
+
+              <!-- Separación entre cards -->
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <label style="font-size:12px;color:var(--fg2)">Separación entre cards</label>
+                  <span style="font-size:12px;font-weight:600" id="shopGridGapVal">16px</span>
+                </div>
+                <input type="range" id="shopGridGap" min="4" max="40" step="4" value="16"
+                  style="width:100%;accent-color:var(--accent)"
+                  oninput="document.getElementById('shopGridGapVal').textContent=this.value+'px'">
+                <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--fg3);margin-top:2px"><span>Juntas</span><span>Separadas</span></div>
+              </div>
             </div>
           </div>
 
@@ -1388,6 +1432,10 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
     document.getElementById('shopBgColor').value = cfg.shopBgColor;
     document.getElementById('shopBgPreview').style.background = cfg.shopBgColor;
   }
+  // Espaciado tienda
+  if (cfg.shopPagePt != null) { document.getElementById('shopPagePt').value = cfg.shopPagePt; document.getElementById('shopPagePtVal').textContent = cfg.shopPagePt + 'px'; }
+  if (cfg.shopBarPt  != null) { document.getElementById('shopBarPt').value  = cfg.shopBarPt;  document.getElementById('shopBarPtVal').textContent  = cfg.shopBarPt  + 'px'; }
+  if (cfg.shopGridGap!= null) { document.getElementById('shopGridGap').value= cfg.shopGridGap; document.getElementById('shopGridGapVal').textContent= cfg.shopGridGap + 'px'; }
   // Textos del inicio
   if (cfg.productsLabel) { document.getElementById('cfgProductsLabel').value = cfg.productsLabel; document.getElementById('prevLabel').textContent = cfg.productsLabel; }
   if (cfg.productsTitle) { document.getElementById('cfgProductsTitle').value = cfg.productsTitle; document.getElementById('prevTitle').textContent = cfg.productsTitle; }
@@ -1537,7 +1585,10 @@ document.getElementById('saveShopLayout').addEventListener('click', function() {
   var cols      = colsBtn  ? colsBtn.dataset.cols  : '4';
   var thumbH    = thumbBtn ? parseInt(thumbBtn.dataset.thumb) : 200;
   var bgColor   = document.getElementById('shopBgColor').value;
-  saveVisualConfig({ shopCols: cols, shopThumbH: thumbH, shopBgColor: bgColor })
+  var pagePt    = parseInt(document.getElementById('shopPagePt').value);
+  var barPt     = parseInt(document.getElementById('shopBarPt').value);
+  var gridGap   = parseInt(document.getElementById('shopGridGap').value);
+  saveVisualConfig({ shopCols: cols, shopThumbH: thumbH, shopBgColor: bgColor, shopPagePt: pagePt, shopBarPt: barPt, shopGridGap: gridGap })
     .then(function(){ showToast('Tienda actualizada'); })
     .catch(function(){ showToast('Error al guardar', 'error'); });
 });

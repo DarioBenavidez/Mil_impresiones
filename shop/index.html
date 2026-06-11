@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/styles.css">
 <style>
 /* ── SHOP PAGE ── */
-.shop-page { padding: var(--s7) 0 var(--s10); }
+.shop-page { padding: var(--shop-page-pt, 48px) 0 var(--shop-page-pb, 128px); }
 
 /* Hero: solo imagen */
 .shop-hero {
@@ -79,7 +79,7 @@
   margin-bottom: var(--s5);
   flex-wrap: wrap;
   gap: var(--s3);
-  padding-top: var(--s6);
+  padding-top: var(--shop-bar-pt, 32px);
 }
 .shop-bar-count { font-size: 14px; color: var(--fg-3); }
 .sort-select {
@@ -98,7 +98,7 @@
 .shop-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--s4);
+  gap: var(--shop-grid-gap, 16px);
 }
 @media(max-width:1100px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
 @media(max-width:760px)  { .shop-grid { grid-template-columns: 1fr 1fr; } }
@@ -245,6 +245,9 @@
     }
     if(cfg.shopThumbH) document.documentElement.style.setProperty('--shop-thumb-h', cfg.shopThumbH + 'px');
     if(cfg.shopBgColor) document.querySelector('.shop-page').style.background = cfg.shopBgColor;
+    if(cfg.shopPagePt != null) document.documentElement.style.setProperty('--shop-page-pt', cfg.shopPagePt + 'px');
+    if(cfg.shopBarPt  != null) document.documentElement.style.setProperty('--shop-bar-pt',  cfg.shopBarPt  + 'px');
+    if(cfg.shopGridGap!= null) document.documentElement.style.setProperty('--shop-grid-gap', cfg.shopGridGap + 'px');
   });
   </script>
 
