@@ -275,6 +275,18 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Banner de tienda
         </div>
+        <div class="nav-item" data-panel="why-us">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          Franja de beneficios
+        </div>
+        <div class="nav-item" data-panel="ticker">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 7 13 17 8 12 1 19"/><polyline points="17 7 23 7 23 13"/></svg>
+          Ticker / Barra
+        </div>
+        <div class="nav-item" data-panel="menu-cats">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Menú / Categorías
+        </div>
         <span class="nav-section-label">Contenido</span>
         <div class="nav-item" data-panel="portfolio">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -457,6 +469,132 @@ img{max-width:100%;display:block}
           </div>
           <button class="btn-primary" style="align-self:flex-start" onclick="saveTextosInicio()">Guardar y publicar</button>
         </div>
+      </div>
+
+      <!-- FRANJA DE BENEFICIOS / WHY-US -->
+      <div class="panel" id="panel-why-us">
+        <div class="section-header">
+          <div>
+            <h2>Franja de beneficios</h2>
+            <p>Los íconos con texto que aparecen debajo del banner principal</p>
+          </div>
+          <button class="btn-primary" onclick="saveWhyUs()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+
+        <!-- Tamaños -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Tamaño ícono
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <input type="range" id="whyIconSize" min="16" max="48" value="24" oninput="document.getElementById('whyIconSizeVal').textContent=this.value+'px'">
+              <span id="whyIconSizeVal" style="font-size:12px;color:var(--fg3);width:36px">24px</span>
+            </div>
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Tamaño título
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <input type="range" id="whyLabelSize" min="10" max="22" value="13" oninput="document.getElementById('whyLabelSizeVal').textContent=this.value+'px'">
+              <span id="whyLabelSizeVal" style="font-size:12px;color:var(--fg3);width:36px">13px</span>
+            </div>
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Tamaño subtítulo
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <input type="range" id="whySubSize" min="10" max="18" value="12" oninput="document.getElementById('whySubSizeVal').textContent=this.value+'px'">
+              <span id="whySubSizeVal" style="font-size:12px;color:var(--fg3);width:36px">12px</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Items -->
+        <div style="font-size:13px;font-weight:600;color:var(--fg2);margin-bottom:8px">Items</div>
+        <div id="whyUsEditor" style="display:flex;flex-direction:column;gap:8px"></div>
+        <button onclick="addWhyItem()" style="margin-top:8px;background:none;border:2px dashed var(--border2);color:var(--fg2);border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:600;width:100%;transition:border-color .15s,color .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--fg2)'">
+          + Agregar item
+        </button>
+      </div>
+
+      <!-- TICKER / BARRA -->
+      <div class="panel" id="panel-ticker">
+        <div class="section-header">
+          <div>
+            <h2>Ticker / Barra</h2>
+            <p>Barra de desplazamiento que aparece en la página principal</p>
+          </div>
+          <button class="btn-primary" onclick="saveTicker()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+
+        <!-- Preview -->
+        <div id="tickerPreview" style="overflow:hidden;border-radius:10px;margin-bottom:24px;padding:11px 0;background:#1a1815;display:flex;gap:0;align-items:center;user-select:none">
+          <div id="tickerPreviewTrack" style="display:flex;gap:0;align-items:center;white-space:nowrap;overflow:hidden;padding:0 16px"></div>
+        </div>
+
+        <!-- Colores y velocidad -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;margin-bottom:24px">
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Color de fondo
+            <input type="color" id="tickerBgColor" value="#1a1815" oninput="updateTickerPreview()" style="display:block;margin-top:6px;width:100%;height:40px;border:1px solid var(--border2);border-radius:8px;cursor:pointer;background:none">
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Color de texto
+            <input type="color" id="tickerTextColor" value="#ffffff" oninput="updateTickerPreview()" style="display:block;margin-top:6px;width:100%;height:40px;border:1px solid var(--border2);border-radius:8px;cursor:pointer;background:none">
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Color del punto •
+            <input type="color" id="tickerDotColor" value="#EC008C" oninput="updateTickerPreview()" style="display:block;margin-top:6px;width:100%;height:40px;border:1px solid var(--border2);border-radius:8px;cursor:pointer;background:none">
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Tamaño de texto
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <input type="range" id="tickerFontSize" min="10" max="20" value="13" oninput="document.getElementById('tickerFontSizeVal').textContent=this.value+'px';updateTickerPreview()" style="flex:1">
+              <span id="tickerFontSizeVal" style="font-size:12px;color:var(--fg3);width:32px">13px</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Velocidad -->
+        <div style="margin-bottom:24px">
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Velocidad (duración de vuelta completa)
+            <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+              <span style="font-size:12px;color:var(--fg3)">Rápido</span>
+              <input type="range" id="tickerSpeed" min="10" max="80" value="32" oninput="document.getElementById('tickerSpeedVal').textContent=this.value+'s';updateTickerPreview()" style="flex:1">
+              <span style="font-size:12px;color:var(--fg3)">Lento</span>
+              <span id="tickerSpeedVal" style="font-size:12px;color:var(--fg3);width:28px">32s</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Items -->
+        <div style="font-size:13px;font-weight:600;color:var(--fg2);margin-bottom:8px">Textos de la barra</div>
+        <div id="tickerItemsEditor" style="display:flex;flex-direction:column;gap:6px"></div>
+        <button onclick="addTickerItem()" style="margin-top:8px;background:none;border:2px dashed var(--border2);color:var(--fg2);border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:600;width:100%;transition:border-color .15s,color .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--fg2)'">
+          + Agregar texto
+        </button>
+      </div>
+
+      <!-- MENÚ / CATEGORÍAS -->
+      <div class="panel" id="panel-menu-cats">
+        <div class="section-header">
+          <div>
+            <h2>Menú / Categorías</h2>
+            <p>Editá las categorías y sub-categorías del menú de navegación</p>
+          </div>
+          <button class="btn-primary" onclick="saveMenuCats()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+        <div id="menuCatsEditor" style="display:flex;flex-direction:column;gap:12px"></div>
+        <button onclick="addMenuCat()" style="margin-top:8px;background:none;border:2px dashed var(--border2);color:var(--fg2);border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:600;width:100%;transition:border-color .15s,color .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--fg2)'">
+          + Agregar categoría
+        </button>
       </div>
 
       <!-- PORTFOLIO -->
@@ -798,6 +936,9 @@ var panelTitles = {
   banner: ['Banner de tienda', 'Foto promocional que aparece al tope de la tienda'],
   'textos-inicio': ['Textos del inicio', 'Editar los títulos de la sección de productos'],
   ofertas: ['Ofertas del día', 'Promociones especiales visibles en la página principal'],
+  'why-us': ['Franja de beneficios', 'Íconos con texto debajo del banner principal'],
+  ticker: ['Ticker / Barra', 'Barra de desplazamiento de la página principal'],
+  'menu-cats': ['Menú / Categorías', 'Categorías y sub-categorías del menú de navegación'],
   portfolio: ['Portfolio / Trabajos', 'Fotos de trabajos realizados'],
   testimonios: ['Testimonios', 'Comentarios de clientes']
 };
@@ -840,6 +981,10 @@ function loadAllData() {
       document.getElementById('dashTestiCount').textContent = testimonios.length;
       renderTestimonios();
     }).catch(function() { testimonios = []; renderTestimonios(); });
+
+  loadMenuCats();
+  loadTicker();
+  loadWhyUs();
 
   // Banners se cargan con setBannerHomePreview / setBannerShopPreview al init
 }
@@ -1442,6 +1587,206 @@ function deleteTesti(i) {
   saveToGithub('content/testimonios.json', { items: testimonios })
     .then(function() { renderTestimonios(); document.getElementById('dashTestiCount').textContent = testimonios.length; showToast('Testimonio eliminado'); })
     .catch(function() { showToast('Error al eliminar', 'error'); });
+}
+
+// ── FRANJA DE BENEFICIOS / WHY-US ─────────────────────────────────────────
+var whyUsData = { iconSize: 24, labelSize: 13, subSize: 12, items: [] };
+
+function loadWhyUs() {
+  fetch('/content/why-us.json').then(function(r) { return r.json(); })
+    .then(function(d) {
+      whyUsData = d;
+      document.getElementById('whyIconSize').value  = d.iconSize  || 24;
+      document.getElementById('whyIconSizeVal').textContent  = (d.iconSize  || 24) + 'px';
+      document.getElementById('whyLabelSize').value = d.labelSize || 13;
+      document.getElementById('whyLabelSizeVal').textContent = (d.labelSize || 13) + 'px';
+      document.getElementById('whySubSize').value   = d.subSize   || 12;
+      document.getElementById('whySubSizeVal').textContent   = (d.subSize   || 12) + 'px';
+      renderWhyUs();
+    }).catch(function() { renderWhyUs(); });
+}
+
+function renderWhyUs() {
+  var el = document.getElementById('whyUsEditor');
+  if (!el) return;
+  el.innerHTML = (whyUsData.items || []).map(function(item, i) {
+    return '<div style="display:grid;grid-template-columns:52px 1fr 1fr auto auto;gap:8px;align-items:center;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 12px">'
+      + '<input type="text" value="' + item.icon + '" placeholder="ícono" style="text-align:center;font-size:20px;border:1px solid var(--border2);border-radius:6px;padding:6px;background:var(--bg);width:100%" oninput="whyUsData.items[' + i + '].icon=this.value">'
+      + '<input type="text" value="' + item.label.replace(/"/g,'&quot;') + '" placeholder="Título" style="border:1px solid var(--border2);border-radius:6px;padding:8px 10px;background:var(--bg);font-weight:600;font-size:13px" oninput="whyUsData.items[' + i + '].label=this.value">'
+      + '<input type="text" value="' + item.sub.replace(/"/g,'&quot;') + '" placeholder="Subtítulo" style="border:1px solid var(--border2);border-radius:6px;padding:8px 10px;background:var(--bg);font-size:12px;color:var(--fg3)" oninput="whyUsData.items[' + i + '].sub=this.value">'
+      + '<button onclick="moveWhyItem(' + i + ',-1)" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="Subir">↑</button>'
+      + '<button onclick="deleteWhyItem(' + i + ')" style="background:none;border:1px solid #e55;border-radius:6px;width:30px;height:30px;cursor:pointer;color:#e55">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+function addWhyItem() {
+  whyUsData.items.push({ icon: '⭐', label: 'Nuevo beneficio', sub: 'Descripción breve' });
+  renderWhyUs();
+}
+
+function deleteWhyItem(i) {
+  whyUsData.items.splice(i, 1);
+  renderWhyUs();
+}
+
+function moveWhyItem(i, dir) {
+  var ni = i + dir;
+  if (ni < 0 || ni >= whyUsData.items.length) return;
+  var tmp = whyUsData.items[i]; whyUsData.items[i] = whyUsData.items[ni]; whyUsData.items[ni] = tmp;
+  renderWhyUs();
+}
+
+function saveWhyUs() {
+  whyUsData.iconSize  = parseInt(document.getElementById('whyIconSize').value);
+  whyUsData.labelSize = parseInt(document.getElementById('whyLabelSize').value);
+  whyUsData.subSize   = parseInt(document.getElementById('whySubSize').value);
+  saveToGithub('content/why-us.json', whyUsData)
+    .then(function() { showToast('Franja guardada correctamente'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
+}
+
+// ── TICKER / BARRA ─────────────────────────────────────────────────────────
+var tickerData = { items: [], bgColor: '#1a1815', textColor: '#ffffff', dotColor: '#EC008C', speed: 32, fontSize: 13 };
+
+function loadTicker() {
+  fetch('/content/ticker.json').then(function(r) { return r.json(); })
+    .then(function(d) {
+      tickerData = d;
+      document.getElementById('tickerBgColor').value = d.bgColor || '#1a1815';
+      document.getElementById('tickerTextColor').value = d.textColor || '#ffffff';
+      document.getElementById('tickerDotColor').value = d.dotColor || '#EC008C';
+      document.getElementById('tickerSpeed').value = d.speed || 32;
+      document.getElementById('tickerSpeedVal').textContent = (d.speed || 32) + 's';
+      document.getElementById('tickerFontSize').value = d.fontSize || 13;
+      document.getElementById('tickerFontSizeVal').textContent = (d.fontSize || 13) + 'px';
+      renderTickerItems();
+      updateTickerPreview();
+    }).catch(function() { renderTickerItems(); updateTickerPreview(); });
+}
+
+function renderTickerItems() {
+  var el = document.getElementById('tickerItemsEditor');
+  if (!el) return;
+  el.innerHTML = (tickerData.items || []).map(function(item, i) {
+    return '<div style="display:flex;gap:6px;align-items:center">'
+      + '<input type="text" value="' + item.replace(/"/g,'&quot;') + '" style="flex:1;border:1px solid var(--border2);border-radius:6px;padding:8px 10px;background:var(--bg);font-size:13px" oninput="tickerData.items[' + i + ']=this.value;updateTickerPreview()">'
+      + '<button onclick="deleteTickerItem(' + i + ')" style="background:none;border:1px solid #e55;border-radius:6px;width:30px;height:30px;cursor:pointer;color:#e55;flex-shrink:0">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+function addTickerItem() {
+  tickerData.items.push('Nuevo texto');
+  renderTickerItems();
+  updateTickerPreview();
+}
+
+function deleteTickerItem(i) {
+  tickerData.items.splice(i, 1);
+  renderTickerItems();
+  updateTickerPreview();
+}
+
+function updateTickerPreview() {
+  var bg   = document.getElementById('tickerBgColor').value;
+  var txt  = document.getElementById('tickerTextColor').value;
+  var dot  = document.getElementById('tickerDotColor').value;
+  var fs   = document.getElementById('tickerFontSize').value;
+  var wrap = document.getElementById('tickerPreview');
+  var track = document.getElementById('tickerPreviewTrack');
+  if (!wrap || !track) return;
+  wrap.style.background = bg;
+  track.innerHTML = (tickerData.items || []).map(function(item) {
+    return '<span style="font-size:' + fs + 'px;font-weight:600;color:' + txt + ';padding:0 20px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap">'
+      + '<span style="width:5px;height:5px;border-radius:50%;background:' + dot + ';display:inline-block;flex-shrink:0"></span>'
+      + item + '</span>';
+  }).join('');
+}
+
+function saveTicker() {
+  tickerData.bgColor   = document.getElementById('tickerBgColor').value;
+  tickerData.textColor = document.getElementById('tickerTextColor').value;
+  tickerData.dotColor  = document.getElementById('tickerDotColor').value;
+  tickerData.speed     = parseInt(document.getElementById('tickerSpeed').value);
+  tickerData.fontSize  = parseInt(document.getElementById('tickerFontSize').value);
+  saveToGithub('content/ticker.json', tickerData)
+    .then(function() { showToast('Ticker guardado correctamente'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
+}
+
+// ── MENÚ / CATEGORÍAS ─────────────────────────────────────────────────────
+var menuCats = [];
+
+function loadMenuCats() {
+  fetch('/content/menu-categorias.json').then(function(r) { return r.json(); })
+    .then(function(d) { menuCats = d.categories || []; renderMenuCats(); })
+    .catch(function() { menuCats = []; renderMenuCats(); });
+}
+
+function renderMenuCats() {
+  var editor = document.getElementById('menuCatsEditor');
+  if (!editor) return;
+  if (!menuCats.length) {
+    editor.innerHTML = '<p style="color:var(--fg3);text-align:center;padding:24px">No hay categorías. Agregá una.</p>';
+    return;
+  }
+  editor.innerHTML = menuCats.map(function(cat, ci) {
+    return '<div class="menu-cat-card" data-ci="' + ci + '" style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">'
+      + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">'
+      + '<input type="text" value="' + cat.icon + '" placeholder="ícono" style="width:52px;text-align:center;font-size:20px;border:1px solid var(--border2);border-radius:8px;padding:6px;background:var(--bg)" oninput="menuCats[' + ci + '].icon=this.value">'
+      + '<input type="text" value="' + cat.label + '" placeholder="Nombre" style="flex:1;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-weight:600" oninput="menuCats[' + ci + '].label=this.value">'
+      + '<input type="text" value="' + cat.key + '" placeholder="clave" style="width:110px;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:12px;color:var(--fg3)" title="Clave de filtro (ej: impresion)" oninput="menuCats[' + ci + '].key=this.value">'
+      + '<button onclick="moveMenuCat(' + ci + ',-1)" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="Subir">↑</button>'
+      + '<button onclick="moveMenuCat(' + ci + ',1)" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="Bajar">↓</button>'
+      + '<button onclick="deleteMenuCat(' + ci + ')" style="background:none;border:1px solid #e55;border-radius:6px;width:30px;height:30px;cursor:pointer;color:#e55;font-size:14px" title="Eliminar">✕</button>'
+      + '</div>'
+      + '<div style="display:flex;flex-direction:column;gap:6px;padding-left:4px">'
+      + '<div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3);margin-bottom:2px">Sub-categorías</div>'
+      + cat.subs.map(function(sub, si) {
+          return '<div style="display:flex;gap:6px;align-items:center">'
+            + '<input type="text" value="' + sub.replace(/"/g,'&quot;') + '" style="flex:1;border:1px solid var(--border2);border-radius:6px;padding:6px 10px;background:var(--bg);font-size:13px" oninput="menuCats[' + ci + '].subs[' + si + ']=this.value">'
+            + '<button onclick="deleteMenuSub(' + ci + ',' + si + ')" style="background:none;border:1px solid #e55;border-radius:6px;width:28px;height:28px;cursor:pointer;color:#e55;flex-shrink:0">✕</button>'
+            + '</div>';
+        }).join('')
+      + '<button onclick="addMenuSub(' + ci + ')" style="background:none;border:1px dashed var(--border2);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:12px;color:var(--fg3);margin-top:2px;text-align:left">+ Agregar sub-categoría</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function addMenuCat() {
+  menuCats.push({ key: 'nueva-cat', icon: '📌', label: 'Nueva Categoría', subs: [] });
+  renderMenuCats();
+}
+
+function deleteMenuCat(ci) {
+  if (!confirm('¿Eliminar la categoría "' + menuCats[ci].label + '"?')) return;
+  menuCats.splice(ci, 1);
+  renderMenuCats();
+}
+
+function moveMenuCat(ci, dir) {
+  var ni = ci + dir;
+  if (ni < 0 || ni >= menuCats.length) return;
+  var tmp = menuCats[ci]; menuCats[ci] = menuCats[ni]; menuCats[ni] = tmp;
+  renderMenuCats();
+}
+
+function addMenuSub(ci) {
+  menuCats[ci].subs.push('');
+  renderMenuCats();
+}
+
+function deleteMenuSub(ci, si) {
+  menuCats[ci].subs.splice(si, 1);
+  renderMenuCats();
+}
+
+function saveMenuCats() {
+  saveToGithub('content/menu-categorias.json', { categories: menuCats })
+    .then(function() { showToast('Menú guardado correctamente'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
 }
 
 // ── CLOSE MODALS ON CLICK OUTSIDE ─────────────────────────────────────────

@@ -1,0 +1,76 @@
+{
+  "categories": [
+    {
+      "key": "impresion",
+      "icon": "🖨️",
+      "label": "Impresión Digital",
+      "subs": [
+        "Folletos y flyers",
+        "Tarjetas de presentación",
+        "Afiches y carteles",
+        "Brochures / Dípticos",
+        "Catálogos"
+      ]
+    },
+    {
+      "key": "packaging",
+      "icon": "📦",
+      "label": "Packaging",
+      "subs": [
+        "Cajas personalizadas",
+        "Bolsas de papel",
+        "Etiquetas y stickers",
+        "Packaging kraft",
+        "Blísters / Displays"
+      ]
+    },
+    {
+      "key": "giganto",
+      "icon": "🖼️",
+      "label": "Gigantografías",
+      "subs": [
+        "Lonas vinílicas",
+        "Banners enrollables",
+        "Backdrops / Fondos",
+        "Viniles adhesivos",
+        "Mesh / Microperforado"
+      ]
+    },
+    {
+      "key": "diseno",
+      "icon": "✏️",
+      "label": "Diseño Gráfico",
+      "subs": [
+        "Identidad de marca",
+        "Logo y branding",
+        "Diseño de packaging",
+        "Piezas para redes sociales",
+        "Material de impresión"
+      ]
+    },
+    {
+      "key": "merch",
+      "icon": "🎁",
+      "label": "Merchandising",
+      "subs": [
+        "Tazas personalizadas",
+        "Remeras / Indumentaria",
+        "Lapiceras y bolígrafos",
+        "Libretas y cuadernos",
+        "Bolsas ecológicas"
+      ]
+    },
+    {
+      "key": "papeleria",
+      "icon": "📝",
+      "label": "Papelería Creativa",
+      "subs": [
+        "Cuadernos personalizados",
+        "Agendas",
+        "Calendarios",
+        "Blocks y anotadores",
+        "Tarjetas especiales"
+      ]
+    }
+  ]
+}

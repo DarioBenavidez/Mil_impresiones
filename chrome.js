@@ -150,16 +150,9 @@
             Tienda
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-left:4px;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
           </a>
-          <div class="nav-dropdown" id="tiendaDropdown" style="width:220px">
-            <a href="/shop?cat=impresion" class="simple-drop-link">🖨️ Impresión Digital</a>
-            <a href="/shop?cat=packaging" class="simple-drop-link">📦 Packaging</a>
-            <a href="/shop?cat=giganto" class="simple-drop-link">🖼️ Gigantografías</a>
-            <a href="/shop?cat=diseno" class="simple-drop-link">✏️ Diseño Gráfico</a>
-            <a href="/shop?cat=merch" class="simple-drop-link">🎁 Merchandising</a>
-            <a href="/shop?cat=papeleria" class="simple-drop-link">📝 Papelería Creativa</a>
-            <div class="dropdown-footer" style="margin-top:var(--s3);padding-top:var(--s3)">
-              <a href="/shop">Ver toda la tienda →</a>
-            </div>
+          <div class="nav-dropdown mega-menu" id="tiendaDropdown">
+            <div class="mega-left" id="megaLeft"></div>
+            <div class="mega-right" id="megaRight"></div>
           </div>
         </div>
 
@@ -232,7 +225,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <img src="/assets/logo-icon-dark.png" alt="1000 Impresiones" style="height:48px;width:auto;margin-bottom:var(--s4)">
-          <p>Diseñamos, producimos y acompañamos.</p>
+          <p>Soluciones creativas en diseño e impresión.</p>
           <p style="color:#ffffff66;font-size:13px;line-height:1.6;margin-top:var(--s4)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Ana María Janer 345, C1437 CABA<br>
@@ -361,6 +354,8 @@
           dropdown.classList.toggle('open');
         }
       });
+
+      bindMegaHover();
     }
 
     // ── MOBILE DRAWER ──
@@ -455,10 +450,53 @@
     };
   }
 
+  // ── MEGA MENU BUILDER ──────────────────────────────────────────────────────
+  var CHEV = '<svg class="mega-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>';
+
+  function buildMegaMenu(categories) {
+    var left  = document.getElementById('megaLeft');
+    var right = document.getElementById('megaRight');
+    if (!left || !right) return;
+    left.innerHTML = categories.map(function(cat, i) {
+      return '<a class="mega-cat-row' + (i === 0 ? ' active' : '') + '" data-panel="panel-' + cat.key + '" href="/shop?cat=' + cat.key + '">'
+        + '<span class="mega-cat-icon">' + cat.icon + '</span>'
+        + '<span class="mega-cat-label">' + cat.label + '</span>'
+        + CHEV + '</a>';
+    }).join('') + '<div class="mega-footer-link"><a href="/shop">Ver toda la tienda →</a></div>';
+    right.innerHTML = categories.map(function(cat, i) {
+      return '<div class="mega-panel' + (i === 0 ? ' active' : '') + '" id="panel-' + cat.key + '">'
+        + '<a href="/shop?cat=' + cat.key + '" class="mega-panel-title">' + cat.label + ' →</a>'
+        + (cat.subs || []).map(function(sub) {
+            return '<a href="/shop?cat=' + cat.key + '" class="mega-sub">' + sub + '</a>';
+          }).join('')
+        + '</div>';
+    }).join('');
+    bindMegaHover();
+  }
+
+  function bindMegaHover() {
+    var dd = document.getElementById('tiendaDropdown');
+    if (!dd) return;
+    dd.querySelectorAll('.mega-cat-row').forEach(function(row) {
+      row.addEventListener('mouseenter', function() {
+        dd.querySelectorAll('.mega-cat-row').forEach(function(r) { r.classList.remove('active'); });
+        dd.querySelectorAll('.mega-panel').forEach(function(p) { p.classList.remove('active'); });
+        row.classList.add('active');
+        var panel = document.getElementById(row.dataset.panel);
+        if (panel) panel.classList.add('active');
+      });
+    });
+  }
+
   // Bootstrap
-  fetch('/content/config-visual.json')
-    .then(function (r) { return r.ok ? r.json() : {}; })
-    .catch(function () { return {}; })
-    .then(function (cfg) { init(cfg); });
+  Promise.all([
+    fetch('/content/config-visual.json').then(function(r) { return r.ok ? r.json() : {}; }).catch(function() { return {}; }),
+    fetch('/content/menu-categorias.json?v=' + Date.now()).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
+  ]).then(function(results) {
+    init(results[0]);
+    if (results[1] && results[1].categories) {
+      buildMegaMenu(results[1].categories);
+    }
+  });
 
 })();
