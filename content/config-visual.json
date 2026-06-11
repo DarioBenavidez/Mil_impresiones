@@ -17,5 +17,9 @@
   "productsLabel": "Ofertas del día",
   "productsTitle": "Lo que materializamos para vos",
   "productsSubtitle": "Precios actualizados · IVA incluido · Entrega en Buenos Aires",
-  "shopCols": "3"
+  "shopCols": "3",
+  "ofertasBg1": "#101010",
+  "ofertasBg2": "#ec2b8c",
+  "ofertasCols": "3",
+  "ofertasThumbH": "110"
 }
