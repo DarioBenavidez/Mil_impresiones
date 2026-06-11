@@ -139,16 +139,12 @@
 .ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--m);flex-shrink:0}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ── STATS ─────────────────────────────────────────────────────────────────── */
-.stats-section{background:var(--fg);padding:var(--s7) 0}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
-.stat-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:var(--s5) var(--s4);border-right:1px solid rgba(255,255,255,.1)}
-.stat-item:last-child{border-right:none}
-.stat-val{display:flex;align-items:baseline;gap:4px}
-.stat-num{font-family:var(--font-display);font-size:clamp(38px,5vw,64px);font-weight:800;letter-spacing:-.05em;color:#fff;line-height:1}
-.stat-suffix{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;color:var(--m)}
-.stat-label{font-family:var(--font-display);font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;text-align:center}
-@media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.stat-item:nth-child(odd){border-right:1px solid rgba(255,255,255,.08)}}
+/* ── MANIFIESTO ────────────────────────────────────────────────────────────── */
+.manifiesto-section{background:var(--fg);padding:var(--s9) 0;position:relative;overflow:hidden;text-align:center}
+.manifiesto-section::before{content:'"';position:absolute;top:-0.1em;left:50%;transform:translateX(-50%);font-family:'Fraunces',serif;font-size:clamp(200px,30vw,380px);font-weight:900;color:rgba(255,255,255,.04);line-height:1;pointer-events:none;user-select:none}
+.manifiesto-quote{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(22px,3.5vw,46px);font-weight:600;color:#fff;line-height:1.35;letter-spacing:-.01em;max-width:780px;margin:0 auto;position:relative;z-index:1}
+.manifiesto-quote em{font-style:normal;color:var(--m)}
+.manifiesto-attr{font-family:var(--font-display);font-size:13px;font-weight:500;color:rgba(255,255,255,.35);margin-top:var(--s5);letter-spacing:.1em;text-transform:uppercase;position:relative;z-index:1}
 
 /* ── CATEGORY CARDS ────────────────────────────────────────────────────────── */
 .cat-cards-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:var(--s6)}
@@ -325,28 +321,15 @@
   @media(max-width:700px){.carousel-slide{flex:0 0 70%}}
   </style>
   <!-- ══════════════════════════════════════════════════════
-       STATS
+       MANIFIESTO
   ══════════════════════════════════════════════════════ -->
-  <section class="stats-section">
+  <section class="manifiesto-section">
     <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-val"><span class="stat-num" data-target="1000">0</span><span class="stat-suffix">+</span></div>
-          <div class="stat-label">Trabajos realizados</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val"><span class="stat-num" data-target="5">0</span><span class="stat-suffix"> años</span></div>
-          <div class="stat-label">De experiencia</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val"><span class="stat-num" data-target="48">0</span><span class="stat-suffix"> hs</span></div>
-          <div class="stat-label">Entrega promedio</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val"><span class="stat-num" data-target="100">0</span><span class="stat-suffix">%</span></div>
-          <div class="stat-label">Diseño incluido</div>
-        </div>
-      </div>
+      <p class="manifiesto-quote">
+        Cada proyecto que sale de acá tiene nombre, tiene historia,
+        tiene la marca de alguien que se animó a <em>empezar.</em>
+      </p>
+      <p class="manifiesto-attr">— Mil Impresiones</p>
     </div>
   </section>
 
@@ -607,35 +590,6 @@ function addToCart(p) {
     var slides = track.querySelectorAll('.carousel-slide');
     if (slides[i]) track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
-})();
-
-// ── STATS COUNTER ─────────────────────────────────────────────────────────────
-(function(){
-  var done = false;
-  function runCounters() {
-    if (done) return;
-    done = true;
-    document.querySelectorAll('.stat-num').forEach(function(el) {
-      var target = parseInt(el.dataset.target);
-      var duration = 1400;
-      var start = null;
-      function step(ts) {
-        if (!start) start = ts;
-        var progress = Math.min((ts - start) / duration, 1);
-        var ease = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.floor(ease * target).toLocaleString('es-AR');
-        if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = target.toLocaleString('es-AR');
-      }
-      requestAnimationFrame(step);
-    });
-  }
-  var section = document.querySelector('.stats-section');
-  if (!section) return;
-  var obs = new IntersectionObserver(function(entries) {
-    if (entries[0].isIntersecting) { runCounters(); obs.disconnect(); }
-  }, { threshold: 0.3 });
-  obs.observe(section);
 })();
 
 // ── CATÁLOGO COMPLETO ─────────────────────────────────────────────────────────
