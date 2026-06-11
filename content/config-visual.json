@@ -11,7 +11,6 @@
   "accentColor": "#EC008C",
   "inkColor": "#1a1815",
   "bannerHomePosition": "65.80541971326164% 6.785714285714285%",
-  "bannerHomeHeight": "360",
   "bannerShopPosition": "50.2688% 0%",
   "bannerShopHeight": "420",
   "productsLabel": "Ofertas del día",
@@ -28,5 +27,6 @@
   "shopBgColor": "#f4f1ea",
   "shopPagePt": 0,
   "shopBarPt": 0,
-  "shopGridGap": 8
+  "shopGridGap": 8,
+  "bannerHomeMobileH": 40
 }
