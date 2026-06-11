@@ -635,8 +635,10 @@ fetch('/api/content?file=why-us.json')
     if (!d || !d.items || !d.items.length) return;
     var strip = document.getElementById('whyUsStrip');
     if (!strip) return;
+    var pV = (d.paddingV || 24) + 'px';
+    var pH = (d.paddingH || 16) + 'px';
     strip.innerHTML = d.items.map(function(it) {
-      return '<div class="why-item">'
+      return '<div class="why-item" style="padding:' + pV + ' ' + pH + '">'
         + '<div class="why-icon" style="font-size:' + (d.iconSize||24) + 'px">' + it.icon + '</div>'
         + '<div class="why-label" style="font-size:' + (d.labelSize||13) + 'px">' + it.label + '</div>'
         + '<div class="why-sub" style="font-size:' + (d.subSize||12) + 'px">' + it.sub + '</div>'

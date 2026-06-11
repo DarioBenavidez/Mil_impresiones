@@ -583,8 +583,8 @@ img{max-width:100%;display:block}
           </button>
         </div>
 
-        <!-- Tamaños -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">
+        <!-- Tamaños y espaciado -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">
           <label style="font-size:13px;font-weight:600;color:var(--fg2)">
             Tamaño ícono
             <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
@@ -604,6 +604,26 @@ img{max-width:100%;display:block}
             <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
               <input type="range" id="whySubSize" min="10" max="18" value="12" oninput="document.getElementById('whySubSizeVal').textContent=this.value+'px'">
               <span id="whySubSizeVal" style="font-size:12px;color:var(--fg3);width:36px">12px</span>
+            </div>
+          </label>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Espacio vertical (arriba/abajo de cada item)
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:var(--fg3)">Mínimo</span>
+              <input type="range" id="whyPaddingV" min="8" max="60" value="24" oninput="document.getElementById('whyPaddingVVal').textContent=this.value+'px'">
+              <span style="font-size:11px;color:var(--fg3)">Máximo</span>
+              <span id="whyPaddingVVal" style="font-size:12px;color:var(--fg3);width:36px;flex-shrink:0">24px</span>
+            </div>
+          </label>
+          <label style="font-size:13px;font-weight:600;color:var(--fg2)">
+            Espacio horizontal (izquierda/derecha de cada item)
+            <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+              <span style="font-size:11px;color:var(--fg3)">Mínimo</span>
+              <input type="range" id="whyPaddingH" min="4" max="48" value="16" oninput="document.getElementById('whyPaddingHVal').textContent=this.value+'px'">
+              <span style="font-size:11px;color:var(--fg3)">Máximo</span>
+              <span id="whyPaddingHVal" style="font-size:12px;color:var(--fg3);width:36px;flex-shrink:0">16px</span>
             </div>
           </label>
         </div>
@@ -1723,6 +1743,10 @@ function loadWhyUs() {
       document.getElementById('whyLabelSizeVal').textContent = (d.labelSize || 13) + 'px';
       document.getElementById('whySubSize').value   = d.subSize   || 12;
       document.getElementById('whySubSizeVal').textContent   = (d.subSize   || 12) + 'px';
+      document.getElementById('whyPaddingV').value  = d.paddingV  || 24;
+      document.getElementById('whyPaddingVVal').textContent  = (d.paddingV  || 24) + 'px';
+      document.getElementById('whyPaddingH').value  = d.paddingH  || 16;
+      document.getElementById('whyPaddingHVal').textContent  = (d.paddingH  || 16) + 'px';
       renderWhyUs();
     }).catch(function() { renderWhyUs(); });
 }
@@ -1762,6 +1786,8 @@ function saveWhyUs() {
   whyUsData.iconSize  = parseInt(document.getElementById('whyIconSize').value);
   whyUsData.labelSize = parseInt(document.getElementById('whyLabelSize').value);
   whyUsData.subSize   = parseInt(document.getElementById('whySubSize').value);
+  whyUsData.paddingV  = parseInt(document.getElementById('whyPaddingV').value);
+  whyUsData.paddingH  = parseInt(document.getElementById('whyPaddingH').value);
   saveToGithub('content/why-us.json', whyUsData)
     .then(function() { showToast('Franja guardada correctamente'); })
     .catch(function() { showToast('Error al guardar', 'error'); });
