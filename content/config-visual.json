@@ -23,5 +23,7 @@
   "ofertasCols": "3",
   "ofertasThumbH": "110",
   "catalogCols": "4",
-  "catalogThumbH": "240"
+  "catalogThumbH": "240",
+  "shopThumbH": 200,
+  "shopBgColor": "#111111"
 }
