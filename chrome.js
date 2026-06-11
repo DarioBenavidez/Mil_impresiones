@@ -488,10 +488,10 @@
     });
   }
 
-  // Bootstrap
+  // Bootstrap — lee directo de GitHub via /api/content (sin delay de redeploy)
   Promise.all([
-    fetch('/content/config-visual.json').then(function(r) { return r.ok ? r.json() : {}; }).catch(function() { return {}; }),
-    fetch('/content/menu-categorias.json?v=' + Date.now()).then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
+    fetch('/api/content?file=config-visual.json').then(function(r) { return r.ok ? r.json() : {}; }).catch(function() { return {}; }),
+    fetch('/api/content?file=menu-categorias.json').then(function(r) { return r.ok ? r.json() : null; }).catch(function() { return null; })
   ]).then(function(results) {
     init(results[0]);
     if (results[1] && results[1].categories) {

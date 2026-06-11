@@ -177,7 +177,7 @@
     <img src="/assets/uploads/banner-home.png" id="heroHomeImg" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
   </section>
   <script>
-  fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+  fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
     var s = document.getElementById('heroHome');
     var i = document.getElementById('heroHomeImg');
     if(cfg.bannerHomeHeight) s.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
@@ -615,7 +615,7 @@ function addToCart(p) {
 })();
 
 // ── WHY-US DINÁMICO ───────────────────────────────────────────────────────
-fetch('/content/why-us.json?v=' + Date.now())
+fetch('/api/content?file=why-us.json')
   .then(function(r){ return r.ok ? r.json() : null; })
   .catch(function(){ return null; })
   .then(function(d) {
@@ -632,7 +632,7 @@ fetch('/content/why-us.json?v=' + Date.now())
   });
 
 // ── TICKER DINÁMICO ────────────────────────────────────────────────────────
-fetch('/content/ticker.json?v=' + Date.now())
+fetch('/api/content?file=ticker.json')
   .then(function(r){ return r.ok ? r.json() : null; })
   .catch(function(){ return null; })
   .then(function(t) {

@@ -1202,7 +1202,7 @@ function deleteProduct(i) {
 
 // ── BANNER CONFIG (posición + altura) ──────────────────────────────────────
 var visualConfig = {};
-fetch('/content/config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
   visualConfig = cfg;
   setActiveHeight(document.querySelectorAll('#panel-banner-home .height-btn'), cfg.bannerHomeHeight || '520');
   setActiveHeight(document.querySelectorAll('#panel-banner .height-btn'), cfg.bannerShopHeight || '420');
@@ -1643,7 +1643,7 @@ function deleteTesti(i) {
 var whyUsData = { iconSize: 24, labelSize: 13, subSize: 12, items: [] };
 
 function loadWhyUs() {
-  fetch('/content/why-us.json').then(function(r) { return r.json(); })
+  fetch('/api/content?file=why-us.json').then(function(r) { return r.json(); })
     .then(function(d) {
       whyUsData = d;
       document.getElementById('whyIconSize').value  = d.iconSize  || 24;
@@ -1700,7 +1700,7 @@ function saveWhyUs() {
 var tickerData = { items: [], bgColor: '#1a1815', textColor: '#ffffff', dotColor: '#EC008C', speed: 32, fontSize: 13 };
 
 function loadTicker() {
-  fetch('/content/ticker.json').then(function(r) { return r.json(); })
+  fetch('/api/content?file=ticker.json').then(function(r) { return r.json(); })
     .then(function(d) {
       tickerData = d;
       document.getElementById('tickerBgColor').value = d.bgColor || '#1a1815';
@@ -1769,7 +1769,7 @@ function saveTicker() {
 var menuCats = [];
 
 function loadMenuCats() {
-  fetch('/content/menu-categorias.json').then(function(r) { return r.json(); })
+  fetch('/api/content?file=menu-categorias.json').then(function(r) { return r.json(); })
     .then(function(d) { menuCats = d.categories || []; renderMenuCats(); })
     .catch(function() { menuCats = []; renderMenuCats(); });
 }
