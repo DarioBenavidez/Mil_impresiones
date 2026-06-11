@@ -367,24 +367,6 @@
       "unit": "por kit",
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa el Kit de Souvenirs. ¿Pueden cotizarme?"
-    },
-    {
-      "id": "test",
-      "name": "test",
-      "cat": "papeleria",
-      "category": "papeleria",
-      "color": "m",
-      "icon": "TE",
-      "img": "/assets/uploads/1600x600-portada.png",
-      "badge": null,
-      "badgeType": null,
-      "desc": "test",
-      "specs": [],
-      "price": 333,
-      "unit": "33",
-      "delivery": "24",
-      "whatsapp": "Me interesa \"test\". ¿Pueden cotizarme?",
-      "oferta": false
     }
   ]
 }
