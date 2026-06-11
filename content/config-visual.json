@@ -26,7 +26,7 @@
   "catalogThumbH": "240",
   "shopThumbH": 200,
   "shopBgColor": "#f4f1ea",
-  "shopPagePt": 8,
-  "shopBarPt": 4,
+  "shopPagePt": 0,
+  "shopBarPt": 0,
   "shopGridGap": 32
 }
