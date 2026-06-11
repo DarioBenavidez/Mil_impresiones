@@ -1770,13 +1770,15 @@ html { color-scheme: light !important; }
 .drawer-acc-subs {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .28s ease;
-  background: color-mix(in srgb, var(--bg) 60%, var(--border) 40%);
+  transition: max-height .3s ease;
+  background: #edeae2;
 }
+.drawer-acc-subs.open { max-height: 1000px; }
 .drawer-acc-sub {
   display: block;
   padding: 12px 20px 12px 56px;
-  font-size: 13px;
+  font-size: 14px;
+  line-height: 1.3;
   font-family: var(--font-body);
   color: var(--fg-2);
   text-decoration: none;

@@ -503,11 +503,10 @@
         drawer.querySelectorAll('.drawer-acc-row.open').forEach(function(r) {
           r.classList.remove('open');
           var s = document.getElementById('mob-subs-' + r.dataset.key);
-          if (s) s.style.maxHeight = '0';
+          if (s) s.classList.remove('open');
         });
         row.classList.toggle('open', opening);
-        // Usar 400px fijo: evita el bug de scrollHeight=0 cuando el contenedor no tiene ancho aún
-        if (subs) subs.style.maxHeight = opening ? '400px' : '0';
+        if (subs) subs.classList.toggle('open', opening);
       });
     });
 
