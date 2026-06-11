@@ -2283,7 +2283,8 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
 });
 
 // ── PHONE PREVIEW ────────────────────────────────────────────────────────────
-(function() {
+// setTimeout 0: el HTML del panel está después del </script>, se necesita diferir
+setTimeout(function() {
   var panel   = document.getElementById('phonePreviewPanel');
   var overlay = document.getElementById('phoneOverlay');
   var iframe  = document.getElementById('phoneIframe');
@@ -2313,7 +2314,7 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
       iframe.src = tab.dataset.href;
     });
   });
-})();
+}, 0);
 </script>
 
 <!-- PHONE PREVIEW PANEL -->
