@@ -131,6 +131,37 @@
 .ofertas-dark-section .price-amount{font-size:20px}
 .ofertas-dark-section .product-ctas{margin-top:var(--s2)}
 
+/* ── TICKER ────────────────────────────────────────────────────────────────── */
+.ticker-wrap{background:var(--fg);overflow:hidden;padding:11px 0;user-select:none}
+.ticker-track{display:flex;align-items:center;width:max-content;animation:ticker 32s linear infinite;gap:0}
+.ticker-wrap:hover .ticker-track{animation-play-state:paused}
+.ticker-item{font-family:var(--font-display);font-size:13px;font-weight:600;color:#fff;white-space:nowrap;padding:0 20px;display:flex;align-items:center;gap:8px}
+.ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--m);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── STATS ─────────────────────────────────────────────────────────────────── */
+.stats-section{background:var(--fg);padding:var(--s7) 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.stat-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:var(--s5) var(--s4);border-right:1px solid rgba(255,255,255,.1)}
+.stat-item:last-child{border-right:none}
+.stat-val{display:flex;align-items:baseline;gap:4px}
+.stat-num{font-family:var(--font-display);font-size:clamp(38px,5vw,64px);font-weight:800;letter-spacing:-.05em;color:#fff;line-height:1}
+.stat-suffix{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;color:var(--m)}
+.stat-label{font-family:var(--font-display);font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;text-align:center}
+@media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.stat-item:nth-child(odd){border-right:1px solid rgba(255,255,255,.08)}}
+
+/* ── CATEGORY CARDS ────────────────────────────────────────────────────────── */
+.cat-cards-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:var(--s6)}
+.cat-card{border:none;border-radius:14px;padding:16px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .15s;position:relative;overflow:hidden}
+.cat-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px -8px rgba(0,0,0,.3)}
+.cat-card.active{transform:translateY(-3px);box-shadow:0 12px 28px -8px rgba(0,0,0,.3)}
+.cat-card:not(.active){opacity:.8}
+.cat-card:hover,.cat-card.active{opacity:1}
+.cat-card-icon{font-size:24px;line-height:1}
+.cat-card-name{font-family:var(--font-display);font-size:11px;font-weight:700;color:#fff;letter-spacing:.02em;text-align:center;line-height:1.2}
+@media(max-width:860px){.cat-cards-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:480px){.cat-cards-grid{grid-template-columns:repeat(3,1fr)}}
+
 /* ── LOADING SKELETONS ─────────────────────────────────────────────────────── */
 .skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .skeleton-thumb{height:180px;background:linear-gradient(90deg,var(--bg-2) 25%,var(--bg) 50%,var(--bg-2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
@@ -196,6 +227,28 @@
     </div>
   </section>
 
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="ticker-dot"></span>Impresión digital</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Entrega en 48 hs</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Diseño incluido</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Packaging a medida</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Envío a todo el país</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Gigantografías</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Merchandising</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Papelería creativa</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Impresión digital</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Entrega en 48 hs</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Diseño incluido</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Packaging a medida</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Envío a todo el país</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Gigantografías</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Merchandising</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Papelería creativa</span>
+    </div>
+  </div>
+
   <!-- CATEGORY STRIP — hidden per user request -->
   <section class="category-strip" style="display:none">
     <div class="container">
@@ -243,14 +296,14 @@
           <h2 class="products-title">Todos los productos</h2>
           <p class="products-subtitle">Seleccioná, agregá al carrito y coordinamos juntos</p>
         </div>
-        <div style="display:flex;gap:var(--s2);flex-wrap:wrap" id="catalogFilters">
-          <button class="cat-filter-btn active" data-cat="all">Todos</button>
-          <button class="cat-filter-btn" data-cat="impresion">Impresión</button>
-          <button class="cat-filter-btn" data-cat="packaging">Packaging</button>
-          <button class="cat-filter-btn" data-cat="giganto">Gigantografías</button>
-          <button class="cat-filter-btn" data-cat="diseno">Diseño</button>
-          <button class="cat-filter-btn" data-cat="merch">Merch</button>
-          <button class="cat-filter-btn" data-cat="papeleria">Papelería</button>
+        <div class="cat-cards-grid" id="catalogFilters">
+          <button class="cat-card active" data-cat="all" style="background:linear-gradient(135deg,#333,#111)"><span class="cat-card-icon">🛍️</span><span class="cat-card-name">Todos</span></button>
+          <button class="cat-card" data-cat="impresion" style="background:linear-gradient(135deg,#00AEEF,#006FA8)"><span class="cat-card-icon">🖨️</span><span class="cat-card-name">Impresión</span></button>
+          <button class="cat-card" data-cat="packaging" style="background:linear-gradient(135deg,#F5D800,#C9A800)"><span class="cat-card-icon">📦</span><span class="cat-card-name" style="color:#1a1815">Packaging</span></button>
+          <button class="cat-card" data-cat="giganto" style="background:linear-gradient(135deg,#444,#1a1a1a)"><span class="cat-card-icon">🖼️</span><span class="cat-card-name">Giganto</span></button>
+          <button class="cat-card" data-cat="diseno" style="background:linear-gradient(135deg,#EC008C,#8B004F)"><span class="cat-card-icon">✏️</span><span class="cat-card-name">Diseño</span></button>
+          <button class="cat-card" data-cat="merch" style="background:linear-gradient(135deg,#7C3AED,#4C1D95)"><span class="cat-card-icon">🎁</span><span class="cat-card-name">Merch</span></button>
+          <button class="cat-card" data-cat="papeleria" style="background:linear-gradient(135deg,#059669,#064E3B)"><span class="cat-card-icon">📝</span><span class="cat-card-name">Papelería</span></button>
         </div>
       </div>
       <div class="products-grid" id="catalogGrid"></div>
@@ -271,6 +324,32 @@
   .work-overlay-v3 .work-title{font-size:16px;font-weight:600;font-family:var(--font-display);margin-top:2px}
   @media(max-width:700px){.carousel-slide{flex:0 0 70%}}
   </style>
+  <!-- ══════════════════════════════════════════════════════
+       STATS
+  ══════════════════════════════════════════════════════ -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-val"><span class="stat-num" data-target="1000">0</span><span class="stat-suffix">+</span></div>
+          <div class="stat-label">Trabajos realizados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val"><span class="stat-num" data-target="5">0</span><span class="stat-suffix"> años</span></div>
+          <div class="stat-label">De experiencia</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val"><span class="stat-num" data-target="48">0</span><span class="stat-suffix"> hs</span></div>
+          <div class="stat-label">Entrega promedio</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val"><span class="stat-num" data-target="100">0</span><span class="stat-suffix">%</span></div>
+          <div class="stat-label">Diseño incluido</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════════════════════════════════════════════════
        TRABAJOS RECIENTES
   ══════════════════════════════════════════════════════ -->
@@ -528,6 +607,35 @@ function addToCart(p) {
     var slides = track.querySelectorAll('.carousel-slide');
     if (slides[i]) track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
   }
+})();
+
+// ── STATS COUNTER ─────────────────────────────────────────────────────────────
+(function(){
+  var done = false;
+  function runCounters() {
+    if (done) return;
+    done = true;
+    document.querySelectorAll('.stat-num').forEach(function(el) {
+      var target = parseInt(el.dataset.target);
+      var duration = 1400;
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var ease = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(ease * target).toLocaleString('es-AR');
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = target.toLocaleString('es-AR');
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  var section = document.querySelector('.stats-section');
+  if (!section) return;
+  var obs = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { runCounters(); obs.disconnect(); }
+  }, { threshold: 0.3 });
+  obs.observe(section);
 })();
 
 // ── CATÁLOGO COMPLETO ─────────────────────────────────────────────────────────
