@@ -23,5 +23,7 @@
       "label": "Asesoramiento real",
       "sub": "Te acompañamos en cada paso"
     }
-  ]
+  ],
+  "paddingV": 14,
+  "paddingH": 10
 }
