@@ -1694,6 +1694,8 @@ html { color-scheme: light !important; }
 .dropdown-footer { margin-top: var(--s4); padding-top: var(--s4); border-top: 1px solid var(--border); text-align: center; }
 .dropdown-footer a { font-family: var(--font-display); font-size: 13px; color: var(--m); text-decoration: none; font-weight: 600; }
 .dropdown-footer a:hover { text-decoration: underline; }
+.simple-drop-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--fg); text-decoration: none; padding: 9px 10px; border-radius: 8px; transition: background .15s, color .15s; }
+.simple-drop-link:hover { background: var(--bg-2); color: var(--m); }
 
 /* ── CART TOAST ───────────────────────────────────────────────────────────── */
 .cart-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--fg); color: var(--bg); padding: 14px 20px; border-radius: var(--radius-sm); font-family: var(--font-display); font-size: 14px; z-index: 9999; box-shadow: 0 8px 32px rgba(0,0,0,.2); transition: transform .3s cubic-bezier(.2,.9,.3,1); white-space: nowrap; }

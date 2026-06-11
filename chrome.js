@@ -150,54 +150,14 @@
             Tienda
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="margin-left:4px;transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>
           </a>
-          <div class="nav-dropdown" id="tiendaDropdown">
-            <div class="dropdown-grid">
-
-              <div class="dropdown-col">
-                <span class="dropdown-heading">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="8" height="10" rx="1"/><rect x="13" y="3" width="8" height="6" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><rect x="3" y="17" width="8" height="4" rx="1"/></svg>
-                  Impresión Digital
-                </span>
-                <a href="/shop?cat=impresion">Flyers y volantes</a>
-                <a href="/shop?cat=impresion">Tarjetas personales</a>
-                <a href="/shop?cat=impresion">Folletos y trípticos</a>
-                <a href="/shop?cat=impresion">Afiches y carteles</a>
-                <a href="/shop?cat=impresion">Sobres y papelería</a>
-              </div>
-
-              <div class="dropdown-col">
-                <span class="dropdown-heading">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                  Diseño Gráfico
-                </span>
-                <a href="/shop?cat=diseno">Logo y marca</a>
-                <a href="/shop?cat=diseno">Identidad visual</a>
-                <a href="/shop?cat=diseno">Diseño para redes</a>
-              </div>
-
-              <div class="dropdown-col">
-                <span class="dropdown-heading">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
-                  Packaging
-                </span>
-                <a href="/shop?cat=packaging">Etiquetas autoadhesivas</a>
-                <a href="/shop?cat=packaging">Cajas troqueladas</a>
-                <a href="/shop?cat=packaging">Bolsas con logo</a>
-              </div>
-
-              <div class="dropdown-col">
-                <span class="dropdown-heading">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                  Más categorías
-                </span>
-                <a href="/shop?cat=giganto">Gigantografías</a>
-                <a href="/shop?cat=giganto">Banners y lonas</a>
-                <a href="/shop?cat=merch">Merchandising</a>
-                <a href="/shop?cat=merch">Tazas y libretas</a>
-              </div>
-
-            </div>
-            <div class="dropdown-footer">
+          <div class="nav-dropdown" id="tiendaDropdown" style="width:220px">
+            <a href="/shop?cat=impresion" class="simple-drop-link">🖨️ Impresión Digital</a>
+            <a href="/shop?cat=packaging" class="simple-drop-link">📦 Packaging</a>
+            <a href="/shop?cat=giganto" class="simple-drop-link">🖼️ Gigantografías</a>
+            <a href="/shop?cat=diseno" class="simple-drop-link">✏️ Diseño Gráfico</a>
+            <a href="/shop?cat=merch" class="simple-drop-link">🎁 Merchandising</a>
+            <a href="/shop?cat=papeleria" class="simple-drop-link">📝 Papelería Creativa</a>
+            <div class="dropdown-footer" style="margin-top:var(--s3);padding-top:var(--s3)">
               <a href="/shop">Ver toda la tienda →</a>
             </div>
           </div>
