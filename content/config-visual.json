@@ -16,5 +16,9 @@
   "bannerShopHeight": "280",
   "productsLabel": "Ofertas del día",
   "productsTitle": "Lo que materializamos para vos",
-  "productsSubtitle": "Precios actualizados · IVA incluido · Entrega en Buenos Aires"
+  "productsSubtitle": "Precios actualizados · IVA incluido · Entrega en Buenos Aires",
+  "ofertasBg1": "#003d5c",
+  "ofertasBg2": "#ec2b8c",
+  "ofertasCols": "3",
+  "ofertasThumbH": "110"
 }
