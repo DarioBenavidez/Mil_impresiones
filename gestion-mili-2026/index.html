@@ -279,6 +279,10 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           Ofertas del día
         </div>
+        <div class="nav-item" data-panel="catalogo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Catálogo (inicio)
+        </div>
         <div class="nav-item" data-panel="why-us">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           Franja de beneficios
@@ -535,6 +539,49 @@ img{max-width:100%;display:block}
             <div style="color:var(--fg3);font-size:13px;padding:16px 0;text-align:center">Cargando productos...</div>
           </div>
           <p style="font-size:11px;color:var(--fg3);margin-top:10px">Si ninguno está marcado, se muestran los primeros 3 del catálogo.</p>
+        </div>
+      </div>
+
+      <!-- CATÁLOGO INICIO -->
+      <div class="panel" id="panel-catalogo">
+        <div class="section-header">
+          <div>
+            <h2>Catálogo (inicio)</h2>
+            <p>Distribución de los productos del catálogo en la página principal</p>
+          </div>
+          <button class="btn-primary" onclick="saveCatalogoConfig()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Columnas de productos</div>
+          <div style="font-size:13px;color:var(--fg3);margin-bottom:14px">Cantidad de tarjetas por fila en la sección "Todos los productos"</div>
+          <div class="height-options" id="catalogoColsOptions">
+            <button class="height-btn" data-cols="2" style="min-width:90px">
+              <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="20" y="1" width="15" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              2 columnas<br><span style="font-size:10px;color:var(--fg3)">Tarjetas grandes</span>
+            </button>
+            <button class="height-btn active" data-cols="3" style="min-width:90px">
+              <svg width="46" height="28" viewBox="0 0 46 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="17" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="33" y="1" width="12" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              3 columnas<br><span style="font-size:10px;color:var(--fg3)">Equilibrado</span>
+            </button>
+            <button class="height-btn" data-cols="4" style="min-width:90px">
+              <svg width="54" height="28" viewBox="0 0 54 28" fill="none" style="display:block;margin:0 auto 4px"><rect x="1" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="15" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="29" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/><rect x="43" y="1" width="10" height="26" rx="2" fill="var(--border)" stroke="var(--fg2)" stroke-width="1.5"/></svg>
+              4 columnas<br><span style="font-size:10px;color:var(--fg3)">Compacto</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Altura de imagen en card</div>
+          <div style="font-size:13px;color:var(--fg3);margin-bottom:14px">Tamaño de la foto de cada producto en el catálogo</div>
+          <div class="height-options" id="catalogoThumbOptions">
+            <button class="height-btn" data-thumb="140">Chico<br><span style="font-size:10px;color:var(--fg3)">140px</span></button>
+            <button class="height-btn active" data-thumb="180">Normal<br><span style="font-size:10px;color:var(--fg3)">180px</span></button>
+            <button class="height-btn" data-thumb="240">Grande<br><span style="font-size:10px;color:var(--fg3)">240px</span></button>
+          </div>
         </div>
       </div>
 
@@ -1055,6 +1102,7 @@ var panelTitles = {
   banner: ['Banner de tienda', 'Foto promocional que aparece al tope de la tienda'],
   'textos-inicio': ['Textos del inicio', 'Editar los títulos de la sección de productos'],
   ofertas: ['Ofertas del día', 'Promociones especiales visibles en la página principal'],
+  catalogo: ['Catálogo (inicio)', 'Distribución del catálogo completo en la página principal'],
   'why-us': ['Franja de beneficios', 'Íconos con texto debajo del banner principal'],
   ticker: ['Ticker / Barra', 'Barra de desplazamiento de la página principal'],
   'menu-cats': ['Menú / Categorías', 'Categorías y sub-categorías del menú de navegación'],
@@ -1935,6 +1983,44 @@ function saveMenuCats() {
     .then(function() { showToast('Menú guardado correctamente'); })
     .catch(function() { showToast('Error al guardar', 'error'); });
 }
+
+// ── CATÁLOGO INICIO ────────────────────────────────────────────────────────
+document.querySelectorAll('#catalogoColsOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#catalogoColsOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+document.querySelectorAll('#catalogoThumbOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#catalogoThumbOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+function saveCatalogoConfig() {
+  var activeCol   = document.querySelector('#catalogoColsOptions .height-btn.active');
+  var activeThumb = document.querySelector('#catalogoThumbOptions .height-btn.active');
+  saveVisualConfig({
+    catalogCols:  activeCol   ? activeCol.dataset.cols   : '3',
+    catalogThumbH: activeThumb ? activeThumb.dataset.thumb : '180'
+  }).then(function() { showToast('Catálogo guardado'); })
+    .catch(function() { showToast('Error al guardar', 'error'); });
+}
+
+// Cargar estado guardado del catálogo
+fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
+  if (cfg.catalogCols) {
+    document.querySelectorAll('#catalogoColsOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cols === String(cfg.catalogCols));
+    });
+  }
+  if (cfg.catalogThumbH) {
+    document.querySelectorAll('#catalogoThumbOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.thumb === String(cfg.catalogThumbH));
+    });
+  }
+});
 
 // ── CLOSE MODALS ON CLICK OUTSIDE ─────────────────────────────────────────
 document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
