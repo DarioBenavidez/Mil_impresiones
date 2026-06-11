@@ -451,6 +451,21 @@ img{max-width:100%;display:block}
           </div>
           <button class="btn-primary" style="margin-left:auto;font-size:13px" id="saveHomeBannerConfig">Guardar cambios</button>
         </div>
+
+        <!-- Altura móvil -->
+        <div style="margin-top:20px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em">Altura en celular</span>
+          </div>
+          <div class="height-options" id="homeMobileHOptions">
+            <button class="height-btn" data-mob="40">Chico<br><span style="font-size:10px;color:var(--fg3)">40vw</span></button>
+            <button class="height-btn active" data-mob="55">Mediano<br><span style="font-size:10px;color:var(--fg3)">55vw</span></button>
+            <button class="height-btn" data-mob="70">Grande<br><span style="font-size:10px;color:var(--fg3)">70vw</span></button>
+            <button class="height-btn" data-mob="85">Muy grande<br><span style="font-size:10px;color:var(--fg3)">85vw</span></button>
+          </div>
+        </div>
+
         <div class="banner-size-info" id="homeSizeInfo"></div>
         <div class="upload-zone" id="bannerHomeUploadZone">
           <input type="file" id="bannerHomeFileInput" accept="image/*">
@@ -1460,6 +1475,12 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
   visualConfig = cfg;
   setActiveHeight(document.querySelectorAll('#panel-banner-home .height-btn'), cfg.bannerHomeHeight || '520');
   setActiveHeight(document.querySelectorAll('#panel-banner .height-btn'), cfg.bannerShopHeight || '420');
+  // Altura móvil banner inicio
+  if (cfg.bannerHomeMobileH) {
+    document.querySelectorAll('#homeMobileHOptions .height-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.mob === String(cfg.bannerHomeMobileH));
+    });
+  }
   // Columnas tienda
   if (cfg.shopCols) {
     document.querySelectorAll('#shopColsOptions .height-btn').forEach(function(b) {
@@ -1587,11 +1608,20 @@ function showBannerSize(sizeElId, uploadSubEl, w, h) {
 }
 
 document.getElementById('saveHomeBannerConfig').addEventListener('click', function() {
-  var pos = visualConfig.bannerHomePosition || '50% 50%';
-  var h   = document.querySelector('#panel-banner-home .height-btn.active').dataset.h;
-  saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h })
+  var pos    = visualConfig.bannerHomePosition || '50% 50%';
+  var h      = document.querySelector('#panel-banner-home .height-btn.active').dataset.h;
+  var mobBtn = document.querySelector('#homeMobileHOptions .height-btn.active');
+  var mobH   = mobBtn ? parseInt(mobBtn.dataset.mob) : 55;
+  saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h, bannerHomeMobileH: mobH })
     .then(function(){ showToast('Configuración guardada'); })
     .catch(function(){ showToast('Error al guardar', 'error'); });
+});
+
+document.querySelectorAll('#homeMobileHOptions .height-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#homeMobileHOptions .height-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
 });
 
 document.getElementById('saveShopBannerConfig').addEventListener('click', function() {
