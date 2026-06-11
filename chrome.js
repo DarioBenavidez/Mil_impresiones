@@ -475,7 +475,11 @@
     var toggle = drawer._toggle;
     var CHEVDOWN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
 
-    var html = '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Tienda</a>';
+    var html = '<div class="drawer-close-row">'
+      + '<button class="drawer-close-btn" aria-label="Cerrar menú">'
+      + '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+      + '</button></div>'
+      + '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Tienda</a>';
     categories.forEach(function(cat) {
       html += '<div class="drawer-acc-row" data-key="' + cat.key + '">'
         + '<a href="/shop?cat=' + cat.key + '" class="drawer-acc-link"><span class="drawer-acc-icon">' + cat.icon + '</span>' + cat.label + '</a>'
@@ -509,6 +513,9 @@
         if (subs) subs.classList.toggle('open', opening);
       });
     });
+
+    var closeBtn = drawer.querySelector('.drawer-close-btn');
+    if (closeBtn && toggle) closeBtn.addEventListener('click', function() { toggle(false); });
 
     if (toggle) {
       drawer.querySelectorAll('a').forEach(function(a) {
