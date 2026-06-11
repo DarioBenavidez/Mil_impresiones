@@ -25,5 +25,8 @@
   "catalogCols": "4",
   "catalogThumbH": "240",
   "shopThumbH": 200,
-  "shopBgColor": "#f4f1ea"
+  "shopBgColor": "#f4f1ea",
+  "shopPagePt": 48,
+  "shopBarPt": 32,
+  "shopGridGap": 32
 }
