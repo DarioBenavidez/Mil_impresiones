@@ -225,6 +225,47 @@ img{max-width:100%;display:block}
   .portfolio-grid{grid-template-columns:repeat(3,1fr)}
   .testis-grid{grid-template-columns:1fr}
 }
+
+/* ── PHONE PREVIEW PANEL ────────────────────────────────────────────────── */
+.sidebar-phone-btn{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:9px;font-size:13px;color:rgba(255,255,255,.6);transition:all .15s;width:100%;text-align:left;margin-bottom:4px}
+.sidebar-phone-btn:hover{background:rgba(255,255,255,.09);color:#fff}
+.sidebar-phone-btn.active{background:rgba(99,202,255,.15);color:#63caff}
+
+.phone-overlay{position:fixed;inset:0;z-index:498;background:rgba(0,0,0,.45);display:none}
+.phone-overlay.open{display:block}
+
+.phone-preview-panel{
+  position:fixed;right:0;top:0;bottom:0;width:480px;z-index:499;
+  background:#1a1a1e;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  box-shadow:-8px 0 48px rgba(0,0,0,.5);
+}
+.phone-preview-panel.open{transform:translateX(0)}
+
+.pp-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.09);flex-shrink:0;
+}
+.pp-title{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase}
+.pp-tabs{display:flex;gap:4px;background:rgba(255,255,255,.07);border-radius:10px;padding:3px}
+.pp-tab{padding:6px 14px;border-radius:7px;font-size:13px;font-weight:600;color:rgba(255,255,255,.45);background:none;border:none;cursor:pointer;transition:all .15s}
+.pp-tab.active{background:#fff;color:#111}
+.pp-tab:hover:not(.active){color:rgba(255,255,255,.75)}
+.pp-actions{display:flex;gap:6px}
+.pp-action-btn{width:34px;height:34px;border-radius:8px;font-size:15px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.09);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.pp-action-btn:hover{background:rgba(255,255,255,.18);color:#fff}
+
+.phone-wrap{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 12px;overflow:hidden}
+.phone-shell{
+  position:relative;width:390px;height:760px;
+  border-radius:50px;border:10px solid #2c2c2e;overflow:hidden;
+  box-shadow:0 0 0 2px #111,0 28px 72px rgba(0,0,0,.7);
+  transform:scale(0.83);transform-origin:top center;flex-shrink:0;
+}
+.phone-shell-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:108px;height:26px;background:#2c2c2e;border-radius:0 0 18px 18px;z-index:10;pointer-events:none}
+#phoneIframe{width:390px;height:844px;border:none;display:block;background:#fff}
+
+.pp-footer{padding:10px 16px;text-align:center;font-size:11px;color:rgba(255,255,255,.25);border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;line-height:1.4}
 </style>
 </head>
 <body>
@@ -306,6 +347,10 @@ img{max-width:100%;display:block}
         </div>
       </nav>
       <div class="sidebar-footer">
+        <button class="sidebar-phone-btn" id="togglePhonePreview">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          Vista móvil
+        </button>
         <a href="/" target="_blank" class="sidebar-visit">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Ver tienda
@@ -2236,6 +2281,67 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
     });
   }
 });
+
+// ── PHONE PREVIEW ────────────────────────────────────────────────────────────
+(function() {
+  var panel   = document.getElementById('phonePreviewPanel');
+  var overlay = document.getElementById('phoneOverlay');
+  var iframe  = document.getElementById('phoneIframe');
+  var btn     = document.getElementById('togglePhonePreview');
+  if (!panel || !btn) return;
+
+  function togglePreview(open) {
+    panel.classList.toggle('open', open);
+    overlay.classList.toggle('open', open);
+    btn.classList.toggle('active', open);
+  }
+
+  btn.addEventListener('click', function() {
+    togglePreview(!panel.classList.contains('open'));
+  });
+  overlay.addEventListener('click', function() { togglePreview(false); });
+  document.getElementById('closePhone').addEventListener('click', function() { togglePreview(false); });
+
+  document.getElementById('reloadPhone').addEventListener('click', function() {
+    iframe.src = iframe.src;
+  });
+
+  document.querySelectorAll('.pp-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.pp-tab').forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      iframe.src = tab.dataset.href;
+    });
+  });
+})();
 </script>
+
+<!-- PHONE PREVIEW PANEL -->
+<div class="phone-overlay" id="phoneOverlay"></div>
+<div class="phone-preview-panel" id="phonePreviewPanel">
+  <div class="pp-header">
+    <span class="pp-title">📱 Vista móvil</span>
+    <div class="pp-tabs">
+      <button class="pp-tab active" data-href="/">Inicio</button>
+      <button class="pp-tab" data-href="/shop">Tienda</button>
+      <button class="pp-tab" data-href="/nosotros">Nosotros</button>
+    </div>
+    <div class="pp-actions">
+      <button class="pp-action-btn" id="reloadPhone" title="Recargar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+      </button>
+      <button class="pp-action-btn" id="closePhone" title="Cerrar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="phone-wrap">
+    <div class="phone-shell">
+      <div class="phone-shell-notch"></div>
+      <iframe id="phoneIframe" src="/" scrolling="yes"></iframe>
+    </div>
+  </div>
+  <div class="pp-footer">Guardá los cambios y tocá ↺ para ver cómo quedan en el celular</div>
+</div>
 </body>
 </html>
