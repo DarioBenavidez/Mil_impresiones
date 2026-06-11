@@ -97,12 +97,12 @@
 /* Products grid */
 .shop-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(var(--shop-cols, 4), 1fr);
   gap: var(--shop-grid-gap, 16px);
 }
-@media(max-width:1100px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
-@media(max-width:760px)  { .shop-grid { grid-template-columns: 1fr 1fr; } }
-@media(max-width:480px)  { .shop-grid { grid-template-columns: 1fr; } }
+@media(max-width:1100px) { .shop-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+@media(max-width:760px)  { .shop-grid { grid-template-columns: 1fr 1fr !important; } }
+@media(max-width:480px)  { .shop-grid { grid-template-columns: 1fr !important; } }
 
 /* Product card v2 */
 .pcard {
@@ -239,10 +239,7 @@
     var i = document.getElementById('shopHeroImg');
     if(cfg.bannerShopHeight) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
     if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
-    if(cfg.shopCols) {
-      var g = document.getElementById('shopGrid');
-      if(g) g.style.gridTemplateColumns = 'repeat(' + cfg.shopCols + ', 1fr)';
-    }
+    if(cfg.shopCols) document.documentElement.style.setProperty('--shop-cols', cfg.shopCols);
     if(cfg.shopThumbH) document.documentElement.style.setProperty('--shop-thumb-h', cfg.shopThumbH + 'px');
     if(cfg.shopBgColor) document.querySelector('.shop-page').style.background = cfg.shopBgColor;
     if(cfg.shopPagePt != null) document.documentElement.style.setProperty('--shop-page-pt', cfg.shopPagePt + 'px');

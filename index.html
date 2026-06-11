@@ -34,8 +34,10 @@
 .products-title{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--fg)}
 .products-subtitle{font-size:14px;color:var(--fg-3);margin-top:4px}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
-@media(max-width:900px){.products-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:580px){.products-grid{grid-template-columns:1fr}}
+#productsGrid{grid-template-columns:repeat(var(--ofertas-cols,3),1fr)}
+#catalogGrid{grid-template-columns:repeat(var(--catalog-cols,3),1fr)}
+@media(max-width:900px){.products-grid{grid-template-columns:1fr 1fr !important}}
+@media(max-width:580px){.products-grid{grid-template-columns:1fr !important}}
 
 /* ── PRODUCT CARD ──────────────────────────────────────────────────────────── */
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s;position:relative}
@@ -187,23 +189,15 @@
     if(cfg.productsTitle) document.getElementById('productsTitle').textContent = cfg.productsTitle;
     if(cfg.productsSubtitle) document.getElementById('productsSubtitle').textContent = cfg.productsSubtitle;
     // Catálogo completo
-    if(cfg.catalogCols) {
-      var cg = document.getElementById('catalogGrid');
-      if(cg) cg.style.gridTemplateColumns = 'repeat(' + cfg.catalogCols + ',1fr)';
-    }
-    if(cfg.catalogThumbH)
-      document.documentElement.style.setProperty('--catalog-thumb-h', cfg.catalogThumbH + 'px');
+    if(cfg.catalogCols) document.documentElement.style.setProperty('--catalog-cols', cfg.catalogCols);
+    if(cfg.catalogThumbH) document.documentElement.style.setProperty('--catalog-thumb-h', cfg.catalogThumbH + 'px');
     // Ofertas del día
     var sec = document.getElementById('ofertasSection');
     if(sec) {
       if(cfg.ofertasBg1 || cfg.ofertasBg2)
         sec.style.background = 'linear-gradient(135deg,' + (cfg.ofertasBg1||'#003D5C') + ' 0%,' + (cfg.ofertasBg2||'#001220') + ' 100%)';
-      if(cfg.ofertasCols) {
-        var grid = document.getElementById('productsGrid');
-        if(grid) grid.style.gridTemplateColumns = 'repeat(' + cfg.ofertasCols + ',1fr)';
-      }
-      if(cfg.ofertasThumbH)
-        document.documentElement.style.setProperty('--ofertas-thumb-h', cfg.ofertasThumbH + 'px');
+      if(cfg.ofertasCols) document.documentElement.style.setProperty('--ofertas-cols', cfg.ofertasCols);
+      if(cfg.ofertasThumbH) document.documentElement.style.setProperty('--ofertas-thumb-h', cfg.ofertasThumbH + 'px');
     }
   });
   </script>
