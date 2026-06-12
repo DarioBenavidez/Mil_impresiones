@@ -10,18 +10,18 @@
       "category": "Impresión Digital",
       "color": "m",
       "icon": "TA",
-      "img": "/assets/uploads/papeleria.png",
+      "img": "/assets/uploads/tarjetas-personales.jpg",
       "badge": "Más pedido",
       "badgeType": "hot",
-      "desc": "Tarjetas 9×5 cm, full color doble faz. Papel ilustración 300g. La presentación que te representa. Acabado brillante o mate disponible.",
+      "desc": "Tarjetas 9×5 cm, full color doble faz. Papel ilustración 300g. La presentación que te representa. Acabado brillante solo frente.",
       "specs": [
         "300g",
         "9×5 cm",
         "Doble faz",
         "Laminado opcional"
       ],
-      "price": 15000,
-      "unit": "× 500 u.",
+      "price": 12000,
+      "unit": "100u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
       "oferta": true
@@ -238,8 +238,7 @@
       "price": 8500,
       "unit": "por m²",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?",
-      "oferta": true
+      "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?"
     },
     {
       "id": "roll-up-80200-cm",
@@ -261,7 +260,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": true
     },
     {
       "id": "logo-marca",
