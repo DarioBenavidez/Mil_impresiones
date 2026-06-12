@@ -238,7 +238,8 @@
       "price": 8500,
       "unit": "por m²",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?"
+      "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?",
+      "oferta": true
     },
     {
       "id": "roll-up-80200-cm",
@@ -260,7 +261,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
-      "oferta": true
+      "oferta": false
     },
     {
       "id": "logo-marca",
