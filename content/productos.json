@@ -94,7 +94,7 @@
       "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?"
     },
     {
-      "id": "afiche-a3",
+      "id": "afiches-a3",
       "name": "Afiches A3",
       "cat": "impresion",
       "category": "Impresión Digital",
@@ -112,7 +112,8 @@
       "price": 12000,
       "unit": "× 100 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan los Afiches A3. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
+      "oferta": false
     },
     {
       "id": "sobre-carta",
