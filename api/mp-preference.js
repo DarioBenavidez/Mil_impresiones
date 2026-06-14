@@ -28,7 +28,8 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Items requeridos' });
     }
 
-    const siteUrl = process.env.SITE_URL || 'https://milimpresiones.com';
+    const rawSiteUrl = process.env.SITE_URL || 'https://www.milimpresiones.com';
+    const siteUrl = rawSiteUrl.replace(/\/+$/, '');
     const body = {
       items: items.map(function(item) {
         return {
