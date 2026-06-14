@@ -21,5 +21,6 @@
   "ofertasCols": "3",
   "ofertasThumbH": "110",
   "bannerHomeMobileH": 40,
-  "bannerHomeHeight": "360"
+  "bannerHomeHeight": "360",
+  "bannerHomeMobilePosition": "50% 50%"
 }
