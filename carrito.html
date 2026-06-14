@@ -482,6 +482,11 @@
           dir: dir,
           obs: obs,
           external_reference: orderCode
+            + '|e:' + email
+            + '|w:' + wsp
+            + '|v:' + envio
+            + (dir ? '|d:' + dir : '')
+            + (obs ? '|o:' + obs : '')
         })
       })
       .then(function(r) { return r.json(); })

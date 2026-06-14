@@ -32,20 +32,29 @@ export default async function handler(req, res) {
     // Solo actuar cuando el pago esté aprobado
     if (payment.status !== 'approved') return res.status(200).end();
 
-    // Armar datos del pedido a partir de lo que guarda MP
-    const addInfo = payment.additional_info || {};
-    const payer = addInfo.payer || {};
+    // Deduplicar: MP envía múltiples notificaciones por pago.
+    // Usamos la fecha de aprobación como ventana — si el pago fue aprobado
+    // hace más de 2 minutos, es un reintento y lo ignoramos.
+    const dateApproved = payment.date_approved ? new Date(payment.date_approved) : null;
+    if (dateApproved && (Date.now() - dateApproved.getTime()) > 120000) {
+      return res.status(200).end();
+    }
+
+    // Extraer datos del cliente desde external_reference
+    // Formato: MI-XXXXXX|e:email|w:wsp|v:envio|d:dir|o:obs
+    const extRef = payment.external_reference || '';
+    const refParts = extRef.split('|');
+    const orderCode = refParts[0];
+    const refData = {};
+    refParts.slice(1).forEach(function(p) {
+      var idx = p.indexOf(':');
+      if (idx > -1) refData[p.slice(0, idx)] = p.slice(idx + 1);
+    });
+
+    // Datos del comprador desde MP (fallback)
     const mpPayer = payment.payer || {};
-
+    const addInfo = payment.additional_info || {};
     const rawItems = addInfo.items || [];
-    const firstItemDesc = (rawItems[0] && rawItems[0].description) || '';
-    const descParts = Object.fromEntries(
-      firstItemDesc.split(' | ').map(function(p) {
-        var idx = p.indexOf(':');
-        return idx > -1 ? [p.slice(0, idx), p.slice(idx + 1)] : [p, ''];
-      })
-    );
-
     const items = rawItems.map(function(i) {
       return {
         name: i.title || i.id,
@@ -54,22 +63,23 @@ export default async function handler(req, res) {
       };
     });
 
-    const wspRaw = (payer.phone && payer.phone.number) || '';
+    const wspRaw = refData['w'] || '';
     const wspClean = wspRaw.replace(/\D/g, '');
     const totalNum = payment.transaction_amount || 0;
+    const nombre = [mpPayer.first_name, mpPayer.last_name].filter(Boolean).join(' ') || 'Cliente';
 
     const order = {
-      code: payment.external_reference || ('MP-' + String(paymentId)),
+      code: orderCode || ('MP-' + String(paymentId)),
       total: '$' + totalNum.toLocaleString('es-AR'),
-      nombre: [payer.first_name, payer.last_name].filter(Boolean).join(' ') || mpPayer.first_name || 'Cliente',
+      nombre: nombre,
       dni: (mpPayer.identification && mpPayer.identification.number) || '-',
       wsp: wspRaw || '-',
       wspClean: wspClean,
-      email: payer.email || mpPayer.email || '',
+      email: refData['e'] || mpPayer.email || '',
       empresa: '',
-      envio: descParts['Envio'] || (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || 'Retiro en local',
-      dir: (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || '',
-      obs: descParts['Obs'] || '',
+      envio: refData['v'] || 'A coordinar',
+      dir: refData['d'] || '',
+      obs: refData['o'] || '',
       items: items,
       pago: 'Mercado Pago ✅ APROBADO (#' + paymentId + ')',
     };
