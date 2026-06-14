@@ -554,8 +554,9 @@
   // ── MP RETURN STATUS ────────────────────────────────────────────────────────
   (function() {
     var params = new URLSearchParams(window.location.search);
-    var status = params.get('status');
-    if (!status) return;
+    var mpStatus = params.get('status');
+    var paymentId = params.get('payment_id') || params.get('collection_id');
+    if (!mpStatus) return;
 
     // Clean URL without reload
     history.replaceState({}, '', window.location.pathname);
@@ -563,60 +564,87 @@
     var saved = {};
     try { saved = JSON.parse(sessionStorage.getItem('mp_pending_order') || '{}'); } catch(e) {}
 
-    if (status === 'success') {
+    function showSuccess() {
       Cart.clear();
       sessionStorage.removeItem('mp_pending_order');
       document.getElementById('cartLayout').style.display = 'none';
       document.getElementById('cartEmpty').style.display = 'none';
       document.getElementById('successIcon').textContent = '✅';
       document.getElementById('successTitle').textContent = '¡Pago aprobado!';
-      document.getElementById('successMsg').innerHTML = 'Tu pago fue aprobado por <strong>Mercado Pago</strong>. Te enviamos un email de confirmación y en breve te contactamos por WhatsApp para coordinar la producción.';
+      document.getElementById('successMsg').innerHTML = 'Tu pago fue aprobado por <strong>Mercado Pago</strong>. Te enviamos un email de confirmación y en breve te contactamos por WhatsApp.';
       if (saved.code) document.getElementById('orderCode').textContent = 'Código de pedido: ' + saved.code;
       document.getElementById('orderSuccess').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Notificar tienda + email al cliente vía Web3Forms, y abrir WhatsApp
-      if (saved.code) {
-        var itemsLabel = (saved.items || []).map(function(i) { return i.name + ' x' + i.qty; }).join(', ');
-        var fd2 = new FormData();
-        fd2.append('access_key', 'd1b10572-b5fd-4b85-b9ae-bcde20db4662');
-        fd2.append('subject', '✅ Pago aprobado - ' + saved.code + ' - Mil Impresiones');
-        fd2.append('nombre', saved.nombre || '');
-        fd2.append('dni', saved.dni || '');
-        fd2.append('whatsapp', saved.wsp || '');
-        fd2.append('email', saved.email || '');
-        fd2.append('empresa', saved.empresa || '');
-        fd2.append('envio', (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''));
-        fd2.append('pago', 'Mercado Pago ✅ APROBADO');
-        fd2.append('productos', itemsLabel);
-        fd2.append('total', saved.total || '');
-        fd2.append('observaciones', saved.obs || '');
-        fd2.append('codigo', saved.code);
-        fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: fd2 }).catch(function() {});
+      if (!saved.code) return;
+      var itemsLabel = (saved.items || []).map(function(i) { return i.name + ' x' + i.qty; }).join(', ');
+      var fd2 = new FormData();
+      fd2.append('access_key', 'd1b10572-b5fd-4b85-b9ae-bcde20db4662');
+      fd2.append('subject', '✅ Pago aprobado - ' + saved.code + ' - Mil Impresiones');
+      fd2.append('nombre', saved.nombre || '');
+      fd2.append('dni', saved.dni || '');
+      fd2.append('whatsapp', saved.wsp || '');
+      fd2.append('email', saved.email || '');
+      fd2.append('empresa', saved.empresa || '');
+      fd2.append('envio', (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''));
+      fd2.append('pago', 'Mercado Pago ✅ APROBADO' + (paymentId ? ' (#' + paymentId + ')' : ''));
+      fd2.append('productos', itemsLabel);
+      fd2.append('total', saved.total || '');
+      fd2.append('observaciones', saved.obs || '');
+      fd2.append('codigo', saved.code);
+      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: fd2 }).catch(function() {});
 
-        var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
-        var waMsg2 = encodeURIComponent(
-          '✅ *Pago aprobado - ' + saved.code + '*\n\n'
-          + '*Nombre:* ' + (saved.nombre || '') + '\n'
-          + '*WhatsApp:* ' + (saved.wsp || '') + '\n'
-          + '*Email:* ' + (saved.email || '') + '\n'
-          + '*Envío:* ' + (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : '') + '\n'
-          + '*Pago:* Mercado Pago ✅\n\n'
-          + '*Productos:*\n' + waItems + '\n\n'
-          + '*Total:* ' + saved.total
-        );
-        window.open('https://wa.me/5491136365889?text=' + waMsg2, '_blank');
-      }
+      var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
+      var waMsg2 = encodeURIComponent(
+        '✅ *Pago aprobado - ' + saved.code + '*\n\n'
+        + '*Nombre:* ' + (saved.nombre || '') + '\n'
+        + '*WhatsApp:* ' + (saved.wsp || '') + '\n'
+        + '*Email:* ' + (saved.email || '') + '\n'
+        + '*Envío:* ' + (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : '') + '\n'
+        + '*Pago:* Mercado Pago ✅' + (paymentId ? ' #' + paymentId : '') + '\n\n'
+        + '*Productos:*\n' + waItems + '\n\n'
+        + '*Total:* ' + saved.total
+      );
+      window.open('https://wa.me/5491136365889?text=' + waMsg2, '_blank');
+    }
 
-    } else if (status === 'pending') {
+    function showPending(msg) {
       var banner = document.getElementById('mpStatusBanner');
       banner.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FFF8E1;border:1.5px solid #F5D800;color:#7a6400';
-      banner.innerHTML = '<strong>⏳ Pago pendiente de acreditación</strong><br>Tu pago está siendo procesado por Mercado Pago. Te avisamos por WhatsApp cuando se confirme.';
+      banner.innerHTML = msg || '<strong>⏳ Pago pendiente de acreditación</strong><br>Tu pago está siendo procesado. Te avisamos por WhatsApp cuando se confirme.';
+    }
 
-    } else if (status === 'failure') {
-      var banner2 = document.getElementById('mpStatusBanner');
-      banner2.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FEF2F2;border:1.5px solid #f87171;color:#b91c1c';
-      banner2.innerHTML = '<strong>❌ El pago no pudo procesarse</strong><br>Hubo un problema con el pago. Intentalo de nuevo o elegí otro método de pago.';
+    function showFailure(msg) {
+      var banner = document.getElementById('mpStatusBanner');
+      banner.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FEF2F2;border:1.5px solid #f87171;color:#b91c1c';
+      banner.innerHTML = msg || '<strong>❌ El pago no pudo procesarse</strong><br>Intentalo de nuevo o elegí otro método de pago.';
+    }
+
+    // Verificar con MP API si tenemos payment_id
+    if (paymentId) {
+      fetch('/api/mp-verify?id=' + paymentId)
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (d.status === 'approved') {
+            showSuccess();
+          } else if (d.status === 'pending' || d.status === 'in_process' || d.status === 'pending_setup') {
+            showPending();
+          } else {
+            // rejected / cancelled / error
+            showFailure('<strong>❌ El pago fue rechazado</strong><br>' + (d.status_detail ? 'Motivo: ' + d.status_detail + '<br>' : '') + 'Intentalo de nuevo o elegí otro método de pago.');
+          }
+        })
+        .catch(function() {
+          // Si falla la verificación, mostramos pending y dejamos que el equipo lo confirme
+          showPending('<strong>⏳ Verificando tu pago...</strong><br>No pudimos confirmar el estado automáticamente. Un miembro del equipo lo verificará y te contactará por WhatsApp en breve.');
+        });
+    } else if (mpStatus === 'approved' || mpStatus === 'success') {
+      // MP redirigió sin payment_id (poco común) — mostrar success de todas formas
+      showSuccess();
+    } else if (mpStatus === 'pending' || mpStatus === 'in_process') {
+      showPending();
+    } else {
+      showFailure();
     }
   })();
 
