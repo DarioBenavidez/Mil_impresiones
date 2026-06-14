@@ -2398,37 +2398,66 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
 });
 
 // ── PHONE PREVIEW ────────────────────────────────────────────────────────────
-setTimeout(function() {
+(function() {
   var panel   = document.getElementById('phonePreviewPanel');
   var overlay = document.getElementById('phoneOverlay');
   var iframe  = document.getElementById('phoneIframe');
   var btn     = document.getElementById('togglePhonePreview');
-  if (!panel || !btn) return;
+  var loadingEl = document.getElementById('phoneLoading');
+  if (!panel || !btn || !iframe) return;
 
-  function togglePreview(open) {
-    panel.classList.toggle('open', open);
-    overlay.classList.toggle('open', open);
-    btn.classList.toggle('active', open);
+  var currentHref = '/';
+  var loaded = false;
+
+  function showLoading() {
+    if (loadingEl) loadingEl.style.display = 'flex';
+  }
+  function hideLoading() {
+    if (loadingEl) loadingEl.style.display = 'none';
+  }
+
+  function loadIframe(href) {
+    currentHref = href || currentHref;
+    showLoading();
+    iframe.src = currentHref;
+  }
+
+  iframe.addEventListener('load', function() {
+    hideLoading();
+    loaded = true;
+  });
+
+  function openPreview() {
+    panel.classList.add('open');
+    overlay.classList.add('open');
+    btn.classList.add('active');
+    loadIframe(currentHref);
+  }
+
+  function closePreview() {
+    panel.classList.remove('open');
+    overlay.classList.remove('open');
+    btn.classList.remove('active');
   }
 
   btn.addEventListener('click', function() {
-    togglePreview(!panel.classList.contains('open'));
+    if (panel.classList.contains('open')) { closePreview(); } else { openPreview(); }
   });
-  overlay.addEventListener('click', function() { togglePreview(false); });
-  document.getElementById('closePhone').addEventListener('click', function() { togglePreview(false); });
+  overlay.addEventListener('click', closePreview);
+  document.getElementById('closePhone').addEventListener('click', closePreview);
 
   document.getElementById('reloadPhone').addEventListener('click', function() {
-    iframe.src = iframe.src;
+    loadIframe(currentHref);
   });
 
   document.querySelectorAll('.pp-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       document.querySelectorAll('.pp-tab').forEach(function(t) { t.classList.remove('active'); });
       tab.classList.add('active');
-      iframe.src = tab.dataset.href;
+      loadIframe(tab.dataset.href);
     });
   });
-}, 0);
+}());
 </script>
 
 <!-- PHONE PREVIEW PANEL -->
@@ -2453,7 +2482,11 @@ setTimeout(function() {
   <div class="phone-wrap">
     <div class="phone-shell">
       <div class="phone-shell-notch"></div>
-      <iframe id="phoneIframe" src="/" scrolling="yes"></iframe>
+      <div id="phoneLoading" style="display:none;position:absolute;inset:0;background:#fff;z-index:10;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+        <div style="width:32px;height:32px;border:3px solid #eee;border-top-color:#EC008C;border-radius:50%;animation:spin .7s linear infinite"></div>
+        <span style="font-size:12px;color:#aaa;font-family:sans-serif">Cargando...</span>
+      </div>
+      <iframe id="phoneIframe" src="" scrolling="yes"></iframe>
     </div>
   </div>
   <div class="pp-footer">Guardá los cambios y tocá ↺ para ver cómo quedan en el celular</div>
