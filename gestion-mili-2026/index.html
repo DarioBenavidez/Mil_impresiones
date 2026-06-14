@@ -212,6 +212,15 @@ img{max-width:100%;display:block}
 .saving-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;margin-right:4px;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
+/* ── FORCE DEPLOY BTN ── */
+.btn-force-deploy{display:flex;align-items:center;gap:8px;padding:11px 14px;border-radius:10px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;width:100%;text-align:left;border:none;background:rgba(74,222,128,.12);color:#4ade80;transition:all .2s;margin-bottom:4px}
+.btn-force-deploy:hover{background:rgba(74,222,128,.22);color:#86efac}
+.btn-force-deploy.loading{opacity:.7;pointer-events:none}
+.btn-force-deploy .deploy-spinner{display:none;width:14px;height:14px;border:2px solid rgba(74,222,128,.3);border-top-color:#4ade80;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.btn-force-deploy.loading .deploy-spinner{display:block}
+.btn-force-deploy.loading .deploy-icon{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .app-layout{grid-template-columns:1fr}
@@ -347,6 +356,11 @@ img{max-width:100%;display:block}
         </div>
       </nav>
       <div class="sidebar-footer">
+        <button class="btn-force-deploy" id="forceDeployBtn" onclick="forceDeploy()">
+          <div class="deploy-spinner"></div>
+          <svg class="deploy-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+          Aplicar todos los cambios
+        </button>
         <button class="sidebar-phone-btn" id="togglePhonePreview">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           Vista móvil
@@ -1284,6 +1298,29 @@ function loadAllData() {
   loadWhyUs();
 
   // Banners se cargan con setBannerHomePreview / setBannerShopPreview al init
+}
+
+// ── FORCE DEPLOY ───────────────────────────────────────────────────────────
+function forceDeploy() {
+  var btn = document.getElementById('forceDeployBtn');
+  btn.classList.add('loading');
+  fetch('/api/force-deploy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + TOKEN }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    btn.classList.remove('loading');
+    if (d.ok) {
+      showToast('Cambios aplicados. El sitio se actualiza en ~1 min.', 'success');
+    } else {
+      showToast('Error al aplicar cambios: ' + (d.error || ''), 'error');
+    }
+  })
+  .catch(function() {
+    btn.classList.remove('loading');
+    showToast('Error de conexión al aplicar cambios', 'error');
+  });
 }
 
 // ── SAVE TO GITHUB ─────────────────────────────────────────────────────────
