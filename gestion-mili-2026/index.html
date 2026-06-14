@@ -2398,33 +2398,28 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
 });
 
 // ── PHONE PREVIEW ────────────────────────────────────────────────────────────
-(function() {
-  var panel   = document.getElementById('phonePreviewPanel');
-  var overlay = document.getElementById('phoneOverlay');
-  var iframe  = document.getElementById('phoneIframe');
-  var btn     = document.getElementById('togglePhonePreview');
+setTimeout(function() {
+  var panel     = document.getElementById('phonePreviewPanel');
+  var overlay   = document.getElementById('phoneOverlay');
+  var iframe    = document.getElementById('phoneIframe');
+  var btn       = document.getElementById('togglePhonePreview');
   var loadingEl = document.getElementById('phoneLoading');
   if (!panel || !btn || !iframe) return;
 
   var currentHref = '/';
-  var loaded = false;
 
-  function showLoading() {
-    if (loadingEl) loadingEl.style.display = 'flex';
-  }
-  function hideLoading() {
-    if (loadingEl) loadingEl.style.display = 'none';
-  }
+  function showLoading() { if (loadingEl) loadingEl.style.display = 'flex'; }
+  function hideLoading() { if (loadingEl) loadingEl.style.display = 'none'; }
 
   function loadIframe(href) {
     currentHref = href || currentHref;
     showLoading();
-    iframe.src = currentHref;
+    iframe.src = '';
+    setTimeout(function() { iframe.src = currentHref; }, 30);
   }
 
   iframe.addEventListener('load', function() {
-    hideLoading();
-    loaded = true;
+    if (iframe.src && iframe.src !== window.location.href) hideLoading();
   });
 
   function openPreview() {
@@ -2445,10 +2440,7 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
   });
   overlay.addEventListener('click', closePreview);
   document.getElementById('closePhone').addEventListener('click', closePreview);
-
-  document.getElementById('reloadPhone').addEventListener('click', function() {
-    loadIframe(currentHref);
-  });
+  document.getElementById('reloadPhone').addEventListener('click', function() { loadIframe(currentHref); });
 
   document.querySelectorAll('.pp-tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
@@ -2457,7 +2449,7 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
       loadIframe(tab.dataset.href);
     });
   });
-}());
+}, 0);
 </script>
 
 <!-- PHONE PREVIEW PANEL -->
