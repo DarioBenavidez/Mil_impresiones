@@ -451,85 +451,83 @@ img{max-width:100%;display:block}
         <div class="section-header">
           <div>
             <h2>Banner de inicio</h2>
-            <p>La foto grande que se muestra al tope de la página principal</p>
+            <p>Podés tener una imagen diferente para PC y para celular</p>
           </div>
         </div>
 
-        <!-- Preview de la foto -->
-        <div class="banner-current" id="bannerHomePreview">
-          <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
-        </div>
-        <p style="font-size:12px;color:var(--fg3);margin:-8px 0 20px">Arrastrá la imagen para reposicionarla</p>
-
-        <!-- Dimensiones en dos columnas -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-
-          <!-- COMPUTADORA -->
-          <div style="background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-              <div style="width:36px;height:36px;background:#E0F5FD;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00AEEF" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              </div>
-              <div>
-                <div style="font-size:14px;font-weight:700;color:var(--fg)">Computadora</div>
-                <div style="font-size:11px;color:var(--fg3)">Altura del banner en pantallas grandes</div>
-              </div>
+        <!-- ═══ SECCIÓN PC ═══ -->
+        <div style="background:var(--card);border:2px solid #00AEEF33;border-radius:16px;padding:22px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+            <div style="width:40px;height:40px;background:#E0F5FD;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00AEEF" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
-            <div style="height:1px;background:var(--border);margin:14px 0"></div>
+            <div>
+              <div style="font-size:16px;font-weight:700;color:var(--fg)">Banner para PC / Computadora</div>
+              <div style="font-size:12px;color:var(--fg3)">Se muestra en pantallas grandes. Formato horizontal ancho.</div>
+            </div>
+          </div>
+          <div class="banner-current" id="bannerHomePreview">
+            <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
+          </div>
+          <p style="font-size:12px;color:var(--fg3);margin:6px 0 16px">Arrastrá la imagen para reposicionarla</p>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Altura del banner en PC</div>
             <div style="display:flex;flex-direction:column;gap:8px" id="homeDeskHOptions">
-              <button class="height-btn" data-h="360" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Angosta</span><span style="font-size:11px;color:var(--fg3)">360 px de alto</span>
-              </button>
-              <button class="height-btn active" data-h="520" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Normal</span><span style="font-size:11px;color:var(--fg3)">520 px de alto</span>
-              </button>
-              <button class="height-btn" data-h="680" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Alta</span><span style="font-size:11px;color:var(--fg3)">680 px de alto</span>
-              </button>
+              <button class="height-btn" data-h="360" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Angosta</span><span style="font-size:11px;color:var(--fg3)">360 px de alto</span></button>
+              <button class="height-btn active" data-h="520" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Normal</span><span style="font-size:11px;color:var(--fg3)">520 px de alto</span></button>
+              <button class="height-btn" data-h="680" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Alta</span><span style="font-size:11px;color:var(--fg3)">680 px de alto</span></button>
             </div>
           </div>
-
-          <!-- CELULAR -->
-          <div style="background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-              <div style="width:36px;height:36px;background:#FDE4F1;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC008C" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-              </div>
-              <div>
-                <div style="font-size:14px;font-weight:700;color:var(--fg)">Celular / Android</div>
-                <div style="font-size:11px;color:var(--fg3)">Altura del banner en teléfonos</div>
-              </div>
-            </div>
-            <div style="height:1px;background:var(--border);margin:14px 0"></div>
-            <div style="display:flex;flex-direction:column;gap:8px" id="homeMobileHOptions">
-              <button class="height-btn" data-mob="40" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Chica</span><span style="font-size:11px;color:var(--fg3)">≈ 156 px de alto</span>
-              </button>
-              <button class="height-btn active" data-mob="55" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Normal</span><span style="font-size:11px;color:var(--fg3)">≈ 214 px de alto</span>
-              </button>
-              <button class="height-btn" data-mob="70" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Alta</span><span style="font-size:11px;color:var(--fg3)">≈ 273 px de alto</span>
-              </button>
-              <button class="height-btn" data-mob="85" style="text-align:left;display:flex;justify-content:space-between;align-items:center">
-                <span>Muy alta</span><span style="font-size:11px;color:var(--fg3)">≈ 332 px de alto</span>
-              </button>
-            </div>
+          <div class="banner-size-info" id="homeSizeInfo"></div>
+          <div class="upload-zone" id="bannerHomeUploadZone">
+            <input type="file" id="bannerHomeFileInput" accept="image/*">
+            <div class="upload-icon">🖥️</div>
+            <div class="upload-label">Arrastrá tu foto de PC acá, o hacé clic para elegirla</div>
+            <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×520 px (horizontal)</div>
+            <div class="upload-progress" id="bannerHomeProgress"><div class="upload-progress-bar" id="bannerHomeProgressBar"></div></div>
           </div>
+          <button class="btn-primary" id="saveHomeBannerConfig" style="margin-top:16px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar banner de PC
+          </button>
         </div>
 
-        <button class="btn-primary" id="saveHomeBannerConfig" style="margin-bottom:20px">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-          Guardar cambios de tamaño
-        </button>
-
-        <div class="banner-size-info" id="homeSizeInfo"></div>
-        <div class="upload-zone" id="bannerHomeUploadZone">
-          <input type="file" id="bannerHomeFileInput" accept="image/*">
-          <div class="upload-icon">🏠</div>
-          <div class="upload-label">Arrastrá tu foto acá, o hacé clic para elegirla</div>
-          <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×520 px</div>
-          <div class="upload-progress" id="bannerHomeProgress"><div class="upload-progress-bar" id="bannerHomeProgressBar"></div></div>
+        <!-- ═══ SECCIÓN ANDROID / CELULAR ═══ -->
+        <div style="background:var(--card);border:2px solid #EC008C33;border-radius:16px;padding:22px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+            <div style="width:40px;height:40px;background:#FDE4F1;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EC008C" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
+            <div>
+              <div style="font-size:16px;font-weight:700;color:var(--fg)">Banner para Celular / Android</div>
+              <div style="font-size:12px;color:var(--fg3)">Se muestra en teléfonos. Podés subir una imagen diferente a la de PC.</div>
+            </div>
+          </div>
+          <div class="banner-current" id="bannerHomeMobPreview">
+            <span style="color:var(--fg3);font-size:13px">Sin imagen de celular (usa la de PC)</span>
+          </div>
+          <p style="font-size:12px;color:var(--fg3);margin:6px 0 16px">Arrastrá la imagen para reposicionarla</p>
+          <div style="margin-bottom:16px">
+            <div style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Altura del banner en celular</div>
+            <div style="display:flex;flex-direction:column;gap:8px" id="homeMobileHOptions">
+              <button class="height-btn" data-mob="40" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Chica</span><span style="font-size:11px;color:var(--fg3)">≈ 156 px de alto</span></button>
+              <button class="height-btn active" data-mob="55" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Normal</span><span style="font-size:11px;color:var(--fg3)">≈ 214 px de alto</span></button>
+              <button class="height-btn" data-mob="70" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Alta</span><span style="font-size:11px;color:var(--fg3)">≈ 273 px de alto</span></button>
+              <button class="height-btn" data-mob="85" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Muy alta</span><span style="font-size:11px;color:var(--fg3)">≈ 332 px de alto</span></button>
+            </div>
+          </div>
+          <div class="banner-size-info" id="homeMobSizeInfo"></div>
+          <div class="upload-zone" id="bannerHomeMobUploadZone">
+            <input type="file" id="bannerHomeMobFileInput" accept="image/*">
+            <div class="upload-icon">📱</div>
+            <div class="upload-label">Arrastrá tu foto de celular acá, o hacé clic para elegirla</div>
+            <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 800×400 px (más cuadrada)</div>
+            <div class="upload-progress" id="bannerHomeMobProgress"><div class="upload-progress-bar" id="bannerHomeMobProgressBar"></div></div>
+          </div>
+          <button class="btn-primary" id="saveHomeMobBannerConfig" style="margin-top:16px;background:#EC008C">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar banner de celular
+          </button>
         </div>
       </div>
 
@@ -1650,6 +1648,7 @@ function initBannerDrag(previewId, configKey) {
     var newY = Math.max(0, Math.min(100, startPosY - dy));
     img.style.objectPosition = newX + '% ' + newY + '%';
     if (configKey === 'home') visualConfig.bannerHomePosition = newX + '% ' + newY + '%';
+    else if (configKey === 'home-mob') visualConfig.bannerHomeMobilePosition = newX + '% ' + newY + '%';
     else visualConfig.bannerShopPosition = newX + '% ' + newY + '%';
   }
 
@@ -1659,7 +1658,9 @@ function initBannerDrag(previewId, configKey) {
     dragging = true;
     startX = clientX; startY = clientY;
     var curPos = img.style.objectPosition ||
-      (configKey === 'home' ? visualConfig.bannerHomePosition : visualConfig.bannerShopPosition) || '50% 50%';
+      (configKey === 'home' ? visualConfig.bannerHomePosition :
+       configKey === 'home-mob' ? visualConfig.bannerHomeMobilePosition :
+       visualConfig.bannerShopPosition) || '50% 50%';
     var p = parsePos(curPos);
     startPosX = p.x; startPosY = p.y;
     container.classList.add('dragging');
@@ -1679,6 +1680,7 @@ function initBannerDrag(previewId, configKey) {
 }
 
 initBannerDrag('bannerHomePreview', 'home');
+initBannerDrag('bannerHomeMobPreview', 'home-mob');
 initBannerDrag('bannerPreview', 'shop');
 
 function showBannerSize(sizeElId, uploadSubEl, w, h) {
@@ -1688,12 +1690,19 @@ function showBannerSize(sizeElId, uploadSubEl, w, h) {
 }
 
 document.getElementById('saveHomeBannerConfig').addEventListener('click', function() {
-  var pos    = visualConfig.bannerHomePosition || '50% 50%';
-  var h      = document.querySelector('#homeDeskHOptions .height-btn.active').dataset.h;
+  var pos = visualConfig.bannerHomePosition || '50% 50%';
+  var h   = document.querySelector('#homeDeskHOptions .height-btn.active').dataset.h;
+  saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h })
+    .then(function(){ showToast('Banner de PC guardado'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
+});
+
+document.getElementById('saveHomeMobBannerConfig').addEventListener('click', function() {
+  var pos   = visualConfig.bannerHomeMobilePosition || '50% 50%';
   var mobBtn = document.querySelector('#homeMobileHOptions .height-btn.active');
   var mobH   = mobBtn ? parseInt(mobBtn.dataset.mob) : 55;
-  saveVisualConfig({ bannerHomePosition: pos, bannerHomeHeight: h, bannerHomeMobileH: mobH })
-    .then(function(){ showToast('Configuración guardada'); })
+  saveVisualConfig({ bannerHomeMobilePosition: pos, bannerHomeMobileH: mobH })
+    .then(function(){ showToast('Banner de celular guardado'); })
     .catch(function(){ showToast('Error al guardar', 'error'); });
 });
 
@@ -1798,7 +1807,57 @@ function uploadBannerHome(file) {
         bar.style.width = '100%';
         setBannerHomePreview((r.path || '/assets/uploads/banner-home.png') + '?t=' + Date.now(), '✓ Actualizado');
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
-        showToast('Banner de inicio actualizado');
+        showToast('Banner de PC actualizado');
+      })
+      .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── BANNER HOME MOBILE ──────────────────────────────────────────────────────
+function setBannerHomeMobPreview(src, badgeText) {
+  var preview = document.getElementById('bannerHomeMobPreview');
+  var img = new Image();
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+  img.onload = function() {
+    preview.innerHTML = '';
+    preview.appendChild(img);
+    var badge = document.createElement('span');
+    badge.className = 'banner-badge';
+    badge.textContent = badgeText || 'Imagen actual (celular)';
+    preview.appendChild(badge);
+    var hint = document.createElement('span');
+    hint.className = 'banner-drag-hint';
+    hint.textContent = 'Arrastrá para reposicionar';
+    preview.appendChild(hint);
+    img.style.objectPosition = visualConfig.bannerHomeMobilePosition || '50% 50%';
+    showBannerSize('homeMobSizeInfo', document.querySelector('#bannerHomeMobUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
+  };
+  img.src = src;
+}
+setBannerHomeMobPreview('/assets/uploads/banner-home-mobile.png?t=' + Date.now());
+
+(function() {
+  var zone = document.getElementById('bannerHomeMobUploadZone');
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });
+  zone.addEventListener('drop', function(e) { e.preventDefault(); zone.classList.remove('drag'); var f = e.dataTransfer.files[0]; if (f) uploadBannerHomeMob(f); });
+  document.getElementById('bannerHomeMobFileInput').addEventListener('change', function(e) { if (e.target.files[0]) uploadBannerHomeMob(e.target.files[0]); });
+})();
+
+function uploadBannerHomeMob(file) {
+  var progress = document.getElementById('bannerHomeMobProgress');
+  var bar = document.getElementById('bannerHomeMobProgressBar');
+  progress.style.display = 'block'; bar.style.width = '30%';
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    bar.style.width = '60%';
+    uploadToGithub('banner-home-mobile.png', ev.target.result)
+      .then(function(r) {
+        bar.style.width = '100%';
+        setBannerHomeMobPreview((r.path || '/assets/uploads/banner-home-mobile.png') + '?t=' + Date.now(), '✓ Actualizado');
+        setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
+        showToast('Banner de celular actualizado');
       })
       .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
   };

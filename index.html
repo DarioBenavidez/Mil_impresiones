@@ -15,7 +15,12 @@
 /* ── HERO HOME ── */
 .hero-home{width:100%;height:28vw;min-height:200px;max-height:560px;overflow:hidden;display:block;line-height:0;background:transparent;padding:0;margin:0}
 .hero-home img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;vertical-align:top}
-@media(max-width:600px){.hero-home{height:var(--banner-home-h-mob,55vw);min-height:unset;max-height:none}}
+.hero-home .hero-img-mob{display:none}
+@media(max-width:600px){
+  .hero-home{height:var(--banner-home-h-mob,55vw);min-height:unset;max-height:none}
+  .hero-home .hero-img-desk{display:none}
+  .hero-home .hero-img-mob{display:block}
+}
 
 /* ── CATEGORY STRIP ────────────────────────────────────────────────────────── */
 .category-strip{background:var(--bg);border-bottom:1px solid var(--border);padding:var(--s4) 0;overflow-x:auto;scrollbar-width:none}
@@ -183,15 +188,18 @@
 
   <!-- HERO: foto promocional — cambiable desde el admin (Banner de inicio) -->
   <section class="hero-home" id="heroHome">
-    <img src="/assets/uploads/banner-home.png" id="heroHomeImg" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
+    <img src="/assets/uploads/banner-home.png" id="heroHomeImg" class="hero-img-desk" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
+    <img src="/assets/uploads/banner-home-mobile.png" id="heroHomeMobImg" class="hero-img-mob" alt="Mil Impresiones" onerror="this.style.display='none';document.getElementById('heroHomeImg').style.display='block'">
   </section>
   <script>
   fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
     var s = document.getElementById('heroHome');
     var i = document.getElementById('heroHomeImg');
+    var im = document.getElementById('heroHomeMobImg');
     if(cfg.bannerHomeHeight && window.innerWidth > 600) s.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
     if(cfg.bannerHomeMobileH && window.innerWidth <= 600) document.documentElement.style.setProperty('--banner-home-h-mob', cfg.bannerHomeMobileH + 'vw');
     if(cfg.bannerHomePosition) i.style.objectPosition = cfg.bannerHomePosition;
+    if(cfg.bannerHomeMobilePosition && im) im.style.objectPosition = cfg.bannerHomeMobilePosition;
     if(cfg.productsLabel) document.getElementById('productsLabel').textContent = cfg.productsLabel;
     if(cfg.productsTitle) document.getElementById('productsTitle').textContent = cfg.productsTitle;
     if(cfg.productsSubtitle) document.getElementById('productsSubtitle').textContent = cfg.productsSubtitle;
