@@ -64,7 +64,7 @@ export default async function handler(req, res) {
       dni: (mpPayer.identification && mpPayer.identification.number) || '-',
       wsp: wspRaw || '-',
       wspClean: wspClean,
-      email: mpPayer.email || '',
+      email: payer.email || mpPayer.email || '',
       empresa: '',
       envio: descParts['Envio'] || (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || 'Retiro en local',
       dir: (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || '',

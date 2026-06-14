@@ -46,6 +46,7 @@ export default async function handler(req, res) {
       payer: Object.assign({}, payer ? {
         first_name: payer.name,
         last_name: payer.surname,
+        email: payer.email,
       } : {}, wsp ? { phone: { number: wsp } } : {}),
     };
     if (dir) {
