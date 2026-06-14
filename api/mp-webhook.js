@@ -166,6 +166,28 @@ export default async function handler(req, res) {
       }));
     }
 
+    // WhatsApp a la tienda via CallMeBot (si está configurado)
+    const callmebotKey = process.env.CALLMEBOT_APIKEY;
+    const storePhone = process.env.STORE_WHATSAPP || '5491136365889';
+    if (callmebotKey) {
+      var waLines = [
+        '✅ *Pago aprobado - ' + order.code + '*',
+        '*Cliente:* ' + order.nombre,
+        '*WhatsApp:* ' + order.wsp,
+        '*Email:* ' + order.email,
+        '*Envío:* ' + order.envio,
+        order.dir ? '*Dirección:* ' + order.dir : '',
+        '*Monto:* ' + order.total,
+        '*Productos:* ' + items.map(function(i) { return i.name + ' x' + i.qty; }).join(', '),
+        order.obs ? '*Obs:* ' + order.obs : '',
+        '*ID MP:* ' + paymentId,
+      ].filter(Boolean).join('%0A');
+      sends.push(
+        fetch('https://api.callmebot.com/whatsapp.php?phone=' + storePhone + '&text=' + waLines + '&apikey=' + callmebotKey)
+          .catch(function() {})
+      );
+    }
+
     await Promise.all(sends);
     return res.status(200).end();
 
