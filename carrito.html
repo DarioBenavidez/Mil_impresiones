@@ -522,22 +522,19 @@
 
     btn.innerHTML = 'Enviando...';
 
-    var fd = new FormData();
-    fd.append('access_key', 'd1b10572-b5fd-4b85-b9ae-bcde20db4662');
-    fd.append('subject', 'Nuevo pedido ' + orderCode + ' - Mil Impresiones');
-    fd.append('nombre', nombre);
-    fd.append('dni', dni);
-    fd.append('whatsapp', wsp);
-    fd.append('email', email);
-    fd.append('empresa', empresa);
-    fd.append('envio', envio + (dir ? ' - ' + dir : ''));
-    fd.append('pago', pagoLabel);
-    fd.append('productos', items.map(function (i) { return i.name + ' x' + i.qty; }).join(', '));
-    fd.append('total', total);
-    fd.append('observaciones', obs);
-    fd.append('codigo', orderCode);
-
-    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: fd })
+    fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order: {
+          code: orderCode, total: total,
+          nombre: nombre, dni: dni, wsp: wsp, email: email,
+          empresa: empresa, envio: envio + (dir ? ' - ' + dir : ''),
+          obs: obs, items: items, pago: pagoLabel
+        },
+        type: 'both'
+      })
+    })
       .then(function () {})
       .catch(function () {})
       .finally(function () {
@@ -577,22 +574,26 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (!saved.code) return;
-      var itemsLabel = (saved.items || []).map(function(i) { return i.name + ' x' + i.qty; }).join(', ');
-      var fd2 = new FormData();
-      fd2.append('access_key', 'd1b10572-b5fd-4b85-b9ae-bcde20db4662');
-      fd2.append('subject', '✅ Pago aprobado - ' + saved.code + ' - Mil Impresiones');
-      fd2.append('nombre', saved.nombre || '');
-      fd2.append('dni', saved.dni || '');
-      fd2.append('whatsapp', saved.wsp || '');
-      fd2.append('email', saved.email || '');
-      fd2.append('empresa', saved.empresa || '');
-      fd2.append('envio', (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''));
-      fd2.append('pago', 'Mercado Pago ✅ APROBADO' + (paymentId ? ' (#' + paymentId + ')' : ''));
-      fd2.append('productos', itemsLabel);
-      fd2.append('total', saved.total || '');
-      fd2.append('observaciones', saved.obs || '');
-      fd2.append('codigo', saved.code);
-      fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: fd2 }).catch(function() {});
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          order: {
+            code: saved.code,
+            total: saved.total || '',
+            nombre: saved.nombre || '',
+            dni: saved.dni || '',
+            wsp: saved.wsp || '',
+            email: saved.email || '',
+            empresa: saved.empresa || '',
+            envio: (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''),
+            obs: saved.obs || '',
+            items: saved.items || [],
+            pago: 'Mercado Pago ✅ APROBADO' + (paymentId ? ' (#' + paymentId + ')' : '')
+          },
+          type: 'both'
+        })
+      }).catch(function() {});
 
       var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
       var waMsg2 = encodeURIComponent(
