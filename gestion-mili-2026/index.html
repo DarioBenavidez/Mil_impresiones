@@ -1178,6 +1178,38 @@ img{max-width:100%;display:block}
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- PHONE PREVIEW PANEL -->
+<div class="phone-overlay" id="phoneOverlay"></div>
+<div class="phone-preview-panel" id="phonePreviewPanel">
+  <div class="pp-header">
+    <span class="pp-title">📱 Vista Android / Celular</span>
+    <div class="pp-tabs">
+      <button class="pp-tab active" data-href="/">Inicio</button>
+      <button class="pp-tab" data-href="/shop">Tienda</button>
+      <button class="pp-tab" data-href="/nosotros">Nosotros</button>
+    </div>
+    <div class="pp-actions">
+      <button class="pp-action-btn" id="reloadPhone" title="Recargar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+      </button>
+      <button class="pp-action-btn" id="closePhone" title="Cerrar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="phone-wrap">
+    <div class="phone-shell">
+      <div class="phone-shell-notch"></div>
+      <div id="phoneLoading" style="display:none;position:absolute;inset:0;background:#fff;z-index:10;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+        <div style="width:32px;height:32px;border:3px solid #eee;border-top-color:#EC008C;border-radius:50%;animation:spin .7s linear infinite"></div>
+        <span style="font-size:12px;color:#aaa;font-family:sans-serif">Cargando...</span>
+      </div>
+      <iframe id="phoneIframe" src="about:blank" scrolling="yes"></iframe>
+    </div>
+  </div>
+  <div class="pp-footer">Guardá los cambios y tocá ↺ para ver cómo quedan en el celular</div>
+</div>
+
 <script>
 // ── STATE ──────────────────────────────────────────────────────────────────
 var TOKEN = localStorage.getItem('admin_token') || '';
@@ -2464,7 +2496,7 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
 });
 
 // ── PHONE PREVIEW ────────────────────────────────────────────────────────────
-setTimeout(function() {
+(function() {
   var panel     = document.getElementById('phonePreviewPanel');
   var overlay   = document.getElementById('phoneOverlay');
   var iframe    = document.getElementById('phoneIframe');
@@ -2480,12 +2512,14 @@ setTimeout(function() {
   function loadIframe(href) {
     currentHref = href || currentHref;
     showLoading();
-    iframe.src = '';
-    setTimeout(function() { iframe.src = currentHref; }, 30);
+    iframe.src = 'about:blank';
+    setTimeout(function() {
+      iframe.src = currentHref + (currentHref.indexOf('?') >= 0 ? '&' : '?') + '_t=' + Date.now();
+    }, 30);
   }
 
   iframe.addEventListener('load', function() {
-    if (iframe.src && iframe.src !== window.location.href) hideLoading();
+    if (iframe.src && iframe.src !== 'about:blank') hideLoading();
   });
 
   function openPreview() {
@@ -2515,39 +2549,7 @@ setTimeout(function() {
       loadIframe(tab.dataset.href);
     });
   });
-}, 0);
+}());
 </script>
-
-<!-- PHONE PREVIEW PANEL -->
-<div class="phone-overlay" id="phoneOverlay"></div>
-<div class="phone-preview-panel" id="phonePreviewPanel">
-  <div class="pp-header">
-    <span class="pp-title">📱 Vista Android / Celular</span>
-    <div class="pp-tabs">
-      <button class="pp-tab active" data-href="/">Inicio</button>
-      <button class="pp-tab" data-href="/shop">Tienda</button>
-      <button class="pp-tab" data-href="/nosotros">Nosotros</button>
-    </div>
-    <div class="pp-actions">
-      <button class="pp-action-btn" id="reloadPhone" title="Recargar">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-      </button>
-      <button class="pp-action-btn" id="closePhone" title="Cerrar">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="phone-wrap">
-    <div class="phone-shell">
-      <div class="phone-shell-notch"></div>
-      <div id="phoneLoading" style="display:none;position:absolute;inset:0;background:#fff;z-index:10;align-items:center;justify-content:center;flex-direction:column;gap:12px">
-        <div style="width:32px;height:32px;border:3px solid #eee;border-top-color:#EC008C;border-radius:50%;animation:spin .7s linear infinite"></div>
-        <span style="font-size:12px;color:#aaa;font-family:sans-serif">Cargando...</span>
-      </div>
-      <iframe id="phoneIframe" src="" scrolling="yes"></iframe>
-    </div>
-  </div>
-  <div class="pp-footer">Guardá los cambios y tocá ↺ para ver cómo quedan en el celular</div>
-</div>
 </body>
 </html>
