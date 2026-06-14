@@ -66,7 +66,7 @@ export default async function handler(req, res) {
     const wspRaw = refData['w'] || '';
     const wspClean = wspRaw.replace(/\D/g, '');
     const totalNum = payment.transaction_amount || 0;
-    const nombre = [mpPayer.first_name, mpPayer.last_name].filter(Boolean).join(' ') || 'Cliente';
+    const nombre = refData['n'] || [mpPayer.first_name, mpPayer.last_name].filter(Boolean).join(' ') || 'Cliente';
 
     const order = {
       code: orderCode || ('MP-' + String(paymentId)),
