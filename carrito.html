@@ -599,9 +599,11 @@
         + '*Productos:*\n' + waItems + '\n\n'
         + '*Total:* ' + saved.total
       );
+      var waUrl2 = 'https://wa.me/5491136365889?text=' + waMsg2;
+      sessionStorage.setItem('mp_wa_url', waUrl2);
       var waBtnEl2 = document.querySelector('#successActions a[href*="wa.me"]');
-      if (waBtnEl2) waBtnEl2.href = 'https://wa.me/5491136365889?text=' + waMsg2;
-      window.open('https://wa.me/5491136365889?text=' + waMsg2, '_blank');
+      if (waBtnEl2) waBtnEl2.href = waUrl2;
+      window.open(waUrl2, '_blank');
     }
 
     function showPending(msg) {
@@ -649,6 +651,22 @@
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   renderCart();
+
+  // Si el usuario vuelve desde WhatsApp y la página se recargó, restaurar la
+  // pantalla de éxito y el botón con el mensaje pre-cargado.
+  var savedWaUrl = sessionStorage.getItem('mp_wa_url');
+  if (savedWaUrl && !window.location.search) {
+    document.getElementById('cartLayout').style.display = 'none';
+    document.getElementById('cartEmpty').style.display = 'none';
+    document.getElementById('orderSuccess').classList.add('show');
+    var waBtnRestore = document.querySelector('#successActions a[href*="wa.me"]');
+    if (waBtnRestore) waBtnRestore.href = savedWaUrl;
+    // Limpiar cuando el usuario decide seguir comprando
+    var keepBtnRestore = document.querySelector('#successActions a[href="/"]');
+    if (keepBtnRestore) keepBtnRestore.addEventListener('click', function() {
+      sessionStorage.removeItem('mp_wa_url');
+    });
+  }
 
 })();
 </script>
