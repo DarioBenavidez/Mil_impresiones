@@ -20,5 +20,6 @@
   "ofertasBg2": "#ec2b8c",
   "ofertasCols": "3",
   "ofertasThumbH": "110",
-  "bannerHomeMobileH": 40
+  "bannerHomeMobileH": 40,
+  "bannerHomeHeight": "680"
 }
