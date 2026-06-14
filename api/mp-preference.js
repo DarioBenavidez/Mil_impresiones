@@ -52,6 +52,7 @@ export default async function handler(req, res) {
       },
       statement_descriptor: 'MIL IMPRESIONES',
       external_reference: external_reference || 'MI-' + Date.now().toString(36).toUpperCase(),
+      notification_url: siteUrl + '/api/mp-webhook',
     };
 
     const mpRes = await fetch('https://api.mercadopago.com/checkout/preferences', {
