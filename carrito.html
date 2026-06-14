@@ -626,20 +626,23 @@
         .then(function(r) { return r.json(); })
         .then(function(d) {
           if (d.status === 'approved') {
+            // VERIFICACIÓN DE INTEGRIDAD: el pago debe pertenecer a este pedido exacto
+            // Evita que alguien reutilice un payment_id de otra compra
+            if (saved.code && d.external_reference && d.external_reference !== saved.code) {
+              showFailure('<strong>❌ Error de verificación</strong><br>El pago no corresponde a este pedido. Si creés que es un error, contactanos por WhatsApp.');
+              return;
+            }
             showSuccess();
           } else if (d.status === 'pending' || d.status === 'in_process' || d.status === 'pending_setup') {
             showPending();
           } else {
-            // rejected / cancelled / error
             showFailure('<strong>❌ El pago fue rechazado</strong><br>' + (d.status_detail ? 'Motivo: ' + d.status_detail + '<br>' : '') + 'Intentalo de nuevo o elegí otro método de pago.');
           }
         })
         .catch(function() {
-          // Si falla la verificación, mostramos pending y dejamos que el equipo lo confirme
           showPending('<strong>⏳ Verificando tu pago...</strong><br>No pudimos confirmar el estado automáticamente. Un miembro del equipo lo verificará y te contactará por WhatsApp en breve.');
         });
     } else if (mpStatus === 'approved' || mpStatus === 'success') {
-      // MP redirigió sin payment_id (poco común) — mostrar success de todas formas
       showSuccess();
     } else if (mpStatus === 'pending' || mpStatus === 'in_process') {
       showPending();
