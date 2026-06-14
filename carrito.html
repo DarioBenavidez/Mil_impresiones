@@ -458,8 +458,13 @@
       var nameParts = nombre.trim().split(/\s+/);
       var cleanDni = dni.replace(/[-.\s]/g, '');
 
-      // Save order snapshot so we can show it after MP redirect
-      sessionStorage.setItem('mp_pending_order', JSON.stringify({ code: orderCode, total: total, nombre: nombre }));
+      // Save full order snapshot for post-redirect notifications
+      sessionStorage.setItem('mp_pending_order', JSON.stringify({
+        code: orderCode, total: total,
+        nombre: nombre, dni: dni, wsp: wsp, email: email,
+        empresa: empresa, envio: envio, dir: dir, obs: obs,
+        items: items
+      }));
 
       fetch('/api/mp-preference', {
         method: 'POST',
@@ -565,10 +570,43 @@
       document.getElementById('cartEmpty').style.display = 'none';
       document.getElementById('successIcon').textContent = '✅';
       document.getElementById('successTitle').textContent = '¡Pago aprobado!';
-      document.getElementById('successMsg').innerHTML = 'Tu pago fue aprobado por <strong>Mercado Pago</strong>. En breve te contactamos por WhatsApp para coordinar la producción y entrega.';
+      document.getElementById('successMsg').innerHTML = 'Tu pago fue aprobado por <strong>Mercado Pago</strong>. Te enviamos un email de confirmación y en breve te contactamos por WhatsApp para coordinar la producción.';
       if (saved.code) document.getElementById('orderCode').textContent = 'Código de pedido: ' + saved.code;
       document.getElementById('orderSuccess').classList.add('show');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Notificar tienda + email al cliente vía Web3Forms, y abrir WhatsApp
+      if (saved.code) {
+        var itemsLabel = (saved.items || []).map(function(i) { return i.name + ' x' + i.qty; }).join(', ');
+        var fd2 = new FormData();
+        fd2.append('access_key', 'd1b10572-b5fd-4b85-b9ae-bcde20db4662');
+        fd2.append('subject', '✅ Pago aprobado - ' + saved.code + ' - Mil Impresiones');
+        fd2.append('nombre', saved.nombre || '');
+        fd2.append('dni', saved.dni || '');
+        fd2.append('whatsapp', saved.wsp || '');
+        fd2.append('email', saved.email || '');
+        fd2.append('empresa', saved.empresa || '');
+        fd2.append('envio', (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''));
+        fd2.append('pago', 'Mercado Pago ✅ APROBADO');
+        fd2.append('productos', itemsLabel);
+        fd2.append('total', saved.total || '');
+        fd2.append('observaciones', saved.obs || '');
+        fd2.append('codigo', saved.code);
+        fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: fd2 }).catch(function() {});
+
+        var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
+        var waMsg2 = encodeURIComponent(
+          '✅ *Pago aprobado - ' + saved.code + '*\n\n'
+          + '*Nombre:* ' + (saved.nombre || '') + '\n'
+          + '*WhatsApp:* ' + (saved.wsp || '') + '\n'
+          + '*Email:* ' + (saved.email || '') + '\n'
+          + '*Envío:* ' + (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : '') + '\n'
+          + '*Pago:* Mercado Pago ✅\n\n'
+          + '*Productos:*\n' + waItems + '\n\n'
+          + '*Total:* ' + saved.total
+        );
+        window.open('https://wa.me/5491136365889?text=' + waMsg2, '_blank');
+      }
 
     } else if (status === 'pending') {
       var banner = document.getElementById('mpStatusBanner');
