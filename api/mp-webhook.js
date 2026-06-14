@@ -9,8 +9,9 @@ export default async function handler(req, res) {
   const paymentId = data?.id || req.query.id;
   const notifTopic = type || topic;
 
-  // Solo procesamos notificaciones de pagos
-  if (notifTopic !== 'payment' && notifTopic !== 'merchant_order') {
+  // Solo procesamos notificaciones de tipo "payment"
+  // merchant_order también llega para el mismo pago y causaría email duplicado
+  if (notifTopic !== 'payment') {
     return res.status(200).end();
   }
 
