@@ -477,6 +477,10 @@
             email: email,
             identification: { type: cleanDni.length === 11 ? 'CUIT' : 'DNI', number: cleanDni }
           },
+          wsp: wsp,
+          envio: envio,
+          dir: dir,
+          obs: obs,
           external_reference: orderCode
         })
       })
@@ -574,27 +578,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (!saved.code) return;
-      fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          order: {
-            code: saved.code,
-            total: saved.total || '',
-            nombre: saved.nombre || '',
-            dni: saved.dni || '',
-            wsp: saved.wsp || '',
-            email: saved.email || '',
-            empresa: saved.empresa || '',
-            envio: (saved.envio || '') + (saved.dir ? ' - ' + saved.dir : ''),
-            obs: saved.obs || '',
-            items: saved.items || [],
-            pago: 'Mercado Pago ✅ APROBADO' + (paymentId ? ' (#' + paymentId + ')' : '')
-          },
-          type: 'both'
-        })
-      }).catch(function() {});
-
+      // El email lo manda el webhook de MP server-side — no lo enviamos desde el browser
+      // para evitar duplicados. Solo abrimos WhatsApp.
       var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
       var waMsg2 = encodeURIComponent(
         '✅ *Pago aprobado - ' + saved.code + '*\n\n'

@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { items, payer, external_reference } = req.body;
+    const { items, payer, external_reference, wsp, envio, dir, obs } = req.body;
 
     if (!items || !items.length) {
       return res.status(400).json({ error: 'Items requeridos' });
@@ -30,6 +30,35 @@ export default async function handler(req, res) {
 
     const rawSiteUrl = process.env.SITE_URL || 'https://www.milimpresiones.com';
     const siteUrl = rawSiteUrl.replace(/\/+$/, '');
+
+    // Construir additional_info con los datos extra del pedido
+    // MP los devuelve cuando consultamos el pago en el webhook
+    const additionalInfo = {
+      items: items.map(function(item) {
+        return {
+          id: String(item.id),
+          title: item.name,
+          quantity: item.qty || 1,
+          unit_price: Number(item.price),
+          currency_id: 'ARS',
+        };
+      }),
+      payer: Object.assign({}, payer ? {
+        first_name: payer.name,
+        last_name: payer.surname,
+      } : {}, wsp ? { phone: { number: wsp } } : {}),
+    };
+    if (dir) {
+      additionalInfo.shipments = { receiver_address: { street_name: dir } };
+    }
+    // Guardar envío y obs en description del primer item (campo libre de MP)
+    var extras = [];
+    if (envio) extras.push('Envio:' + envio);
+    if (obs) extras.push('Obs:' + obs);
+    if (extras.length && additionalInfo.items.length) {
+      additionalInfo.items[0].description = extras.join(' | ');
+    }
+
     const body = {
       items: items.map(function(item) {
         return {
@@ -40,6 +69,7 @@ export default async function handler(req, res) {
           currency_id: 'ARS',
         };
       }),
+      additional_info: additionalInfo,
       payer: payer || {},
       back_urls: {
         success: siteUrl + '/carrito?status=success',

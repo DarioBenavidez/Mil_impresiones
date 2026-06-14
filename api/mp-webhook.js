@@ -32,9 +32,20 @@ export default async function handler(req, res) {
     if (payment.status !== 'approved') return res.status(200).end();
 
     // Armar datos del pedido a partir de lo que guarda MP
-    const payer = payment.additional_info?.payer || {};
+    const addInfo = payment.additional_info || {};
+    const payer = addInfo.payer || {};
     const mpPayer = payment.payer || {};
-    const items = (payment.additional_info?.items || []).map(function(i) {
+
+    const rawItems = addInfo.items || [];
+    const firstItemDesc = (rawItems[0] && rawItems[0].description) || '';
+    const descParts = Object.fromEntries(
+      firstItemDesc.split(' | ').map(function(p) {
+        var idx = p.indexOf(':');
+        return idx > -1 ? [p.slice(0, idx), p.slice(idx + 1)] : [p, ''];
+      })
+    );
+
+    const items = rawItems.map(function(i) {
       return {
         name: i.title || i.id,
         qty: parseInt(i.quantity) || 1,
@@ -42,17 +53,22 @@ export default async function handler(req, res) {
       };
     });
 
+    const wspRaw = (payer.phone && payer.phone.number) || '';
+    const wspClean = wspRaw.replace(/\D/g, '');
     const totalNum = payment.transaction_amount || 0;
+
     const order = {
       code: payment.external_reference || ('MP-' + String(paymentId)),
       total: '$' + totalNum.toLocaleString('es-AR'),
       nombre: [payer.first_name, payer.last_name].filter(Boolean).join(' ') || mpPayer.first_name || 'Cliente',
       dni: (mpPayer.identification && mpPayer.identification.number) || '-',
-      wsp: (payer.phone && payer.phone.number) || '-',
+      wsp: wspRaw || '-',
+      wspClean: wspClean,
       email: mpPayer.email || '',
       empresa: '',
-      envio: (payment.additional_info?.shipments?.receiver_address?.street_name) || 'A coordinar',
-      obs: '',
+      envio: descParts['Envio'] || (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || 'Retiro en local',
+      dir: (addInfo.shipments && addInfo.shipments.receiver_address && addInfo.shipments.receiver_address.street_name) || '',
+      obs: descParts['Obs'] || '',
       items: items,
       pago: 'Mercado Pago ✅ APROBADO (#' + paymentId + ')',
     };
@@ -83,8 +99,11 @@ export default async function handler(req, res) {
       + '<tr><td style="padding:6px 0;color:#888;font-size:13px">DNI/CUIT</td><td style="padding:6px 0;font-size:14px">' + order.dni + '</td></tr>'
       + '<tr><td style="padding:6px 0;color:#888;font-size:13px">WhatsApp</td><td style="padding:6px 0;font-size:14px">' + order.wsp + '</td></tr>'
       + '<tr><td style="padding:6px 0;color:#888;font-size:13px">Email</td><td style="padding:6px 0;font-size:14px">' + order.email + '</td></tr>'
+      + '<tr><td style="padding:6px 0;color:#888;font-size:13px">Envío</td><td style="padding:6px 0;font-size:14px">' + order.envio + '</td></tr>'
+      + (order.dir ? '<tr><td style="padding:6px 0;color:#888;font-size:13px">Dirección</td><td style="padding:6px 0;font-size:14px">' + order.dir + '</td></tr>' : '')
       + '<tr><td style="padding:6px 0;color:#888;font-size:13px">Monto</td><td style="padding:6px 0;font-size:14px;color:#EC008C;font-weight:700">' + order.total + '</td></tr>'
       + '</table>'
+      + (order.obs ? '<div style="padding:12px;background:#fff8e1;border-radius:8px;font-size:13px;color:#7a6400;margin-bottom:20px"><strong>Observaciones:</strong> ' + order.obs + '</div>' : '')
       + '<h3 style="margin:0 0 12px;font-size:15px;color:#333">Productos</h3>'
       + '<table style="width:100%;border-collapse:collapse;margin-bottom:20px">'
       + '<thead><tr style="background:#f8f8f8">'
@@ -95,8 +114,7 @@ export default async function handler(req, res) {
       + '</table>'
       + '</div>'
       + '<div style="padding:16px 32px;background:#f8f8f8;text-align:center">'
-      + '<p style="margin:0 0 8px;font-size:13px;color:#666">Contactar al cliente</p>'
-      + '<a href="https://wa.me/549' + order.wsp.replace(/\D/g,'') + '" style="display:inline-block;background:#25D366;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">WhatsApp</a>'
+      + (order.wspClean ? '<p style="margin:0 0 8px;font-size:13px;color:#666">Contactar al cliente</p><a href="https://wa.me/549' + order.wspClean + '" style="display:inline-block;background:#25D366;color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">WhatsApp ' + order.wsp + '</a>' : '<p style="margin:0;font-size:13px;color:#666">Contactar al cliente por email: ' + order.email + '</p>')
       + '</div>'
       + '</div></body></html>';
 
