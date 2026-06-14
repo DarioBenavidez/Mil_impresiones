@@ -547,6 +547,8 @@
         var successEl = document.getElementById('orderSuccess');
         successEl.classList.add('show');
         document.getElementById('orderCode').textContent = 'Código de pedido: ' + orderCode;
+        var waBtnEl = document.querySelector('#successActions a[href*="wa.me"]');
+        if (waBtnEl) waBtnEl.href = 'https://wa.me/5491136365889?text=' + waMsg;
         window.open('https://wa.me/5491136365889?text=' + waMsg, '_blank');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
@@ -591,6 +593,8 @@
         + '*Productos:*\n' + waItems + '\n\n'
         + '*Total:* ' + saved.total
       );
+      var waBtnEl2 = document.querySelector('#successActions a[href*="wa.me"]');
+      if (waBtnEl2) waBtnEl2.href = 'https://wa.me/5491136365889?text=' + waMsg2;
       window.open('https://wa.me/5491136365889?text=' + waMsg2, '_blank');
     }
 
