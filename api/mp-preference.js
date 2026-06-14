@@ -22,34 +22,35 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { items, payer } = req.body;
+    const { items, payer, external_reference } = req.body;
 
     if (!items || !items.length) {
       return res.status(400).json({ error: 'Items requeridos' });
     }
 
+    const siteUrl = process.env.SITE_URL || 'https://milimpresiones.com';
     const body = {
       items: items.map(function(item) {
         return {
-          id: item.id,
+          id: String(item.id),
           title: item.name,
           quantity: item.qty || 1,
-          unit_price: item.price,
+          unit_price: Number(item.price),
           currency_id: 'ARS',
         };
       }),
       payer: payer || {},
       back_urls: {
-        success: (process.env.SITE_URL || 'https://milimpresiones.com') + '/carrito?status=success',
-        failure: (process.env.SITE_URL || 'https://milimpresiones.com') + '/carrito?status=failure',
-        pending: (process.env.SITE_URL || 'https://milimpresiones.com') + '/carrito?status=pending',
+        success: siteUrl + '/carrito?status=success',
+        failure: siteUrl + '/carrito?status=failure',
+        pending: siteUrl + '/carrito?status=pending',
       },
       auto_return: 'approved',
       payment_methods: {
         installments: 12,
       },
       statement_descriptor: 'MIL IMPRESIONES',
-      external_reference: 'MI-' + Date.now().toString(36).toUpperCase(),
+      external_reference: external_reference || 'MI-' + Date.now().toString(36).toUpperCase(),
     };
 
     const mpRes = await fetch('https://api.mercadopago.com/checkout/preferences', {

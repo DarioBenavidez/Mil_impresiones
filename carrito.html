@@ -230,14 +230,13 @@
                     <input type="radio" name="pago" value="mercadopago">
                     <span class="payment-icon">💳</span>
                     <div class="payment-info">
-                      <div class="payment-name">Mercado Pago <span style="font-size:10px;background:var(--y);color:var(--k);padding:2px 6px;border-radius:999px;font-family:var(--font-display);font-weight:700;letter-spacing:.05em;margin-left:6px">PRÓXIMAMENTE</span></div>
-                      <div class="payment-desc">Tarjeta, débito, cuotas sin interés o QR</div>
+                      <div class="payment-name">Mercado Pago</div>
+                      <div class="payment-desc">Tarjeta, débito, hasta 12 cuotas o QR</div>
                     </div>
                   </label>
                   <div class="payment-detail" id="detail-mp">
-                    <strong>Pago online con Mercado Pago</strong><br>
-                    Estamos integrando el pago online con Mercado Pago. Por ahora, al seleccionar esta opción te enviamos un link de pago personalizado por WhatsApp en los próximos <strong>15 minutos</strong>.<br><br>
-                    Podés pagar con tarjeta de crédito, débito, cuotas o escaneando el QR.<br><br>
+                    <strong>Pago seguro con Mercado Pago</strong><br>
+                    Al confirmar te redirigimos al checkout oficial de Mercado Pago. Podés pagar con tarjeta de crédito, débito, cuotas o QR desde tu app.<br><br>
                     <em>Cuotas sin interés disponibles según banco emisor.</em>
                   </div>
 
@@ -286,15 +285,18 @@
 
       </div><!-- /cart-layout -->
 
+      <!-- MP STATUS BANNER -->
+      <div id="mpStatusBanner" style="display:none;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5"></div>
+
       <!-- SUCCESS STATE -->
       <div class="order-success" id="orderSuccess">
-        <div class="success-icon">🎉</div>
-        <h2 style="font-family:var(--font-display);font-size:28px;font-weight:700;margin-bottom:var(--s3)">¡Pedido recibido!</h2>
-        <p style="color:var(--fg-2);max-width:420px;margin:0 auto var(--s4);line-height:1.5">
+        <div class="success-icon" id="successIcon">🎉</div>
+        <h2 style="font-family:var(--font-display);font-size:28px;font-weight:700;margin-bottom:var(--s3)" id="successTitle">¡Pedido recibido!</h2>
+        <p style="color:var(--fg-2);max-width:420px;margin:0 auto var(--s4);line-height:1.5" id="successMsg">
           Te contactamos por WhatsApp en los próximos <strong>15 minutos</strong> para confirmar los detalles y coordinar el pago.
         </p>
         <span class="success-code" id="orderCode"></span>
-        <div style="margin-top:var(--s7);display:flex;gap:var(--s3);justify-content:center;flex-wrap:wrap">
+        <div style="margin-top:var(--s7);display:flex;gap:var(--s3);justify-content:center;flex-wrap:wrap" id="successActions">
           <a href="/" class="btn btn-primary">Seguir comprando</a>
           <a href="https://wa.me/5491136365889" class="btn" style="background:#25D366;color:#fff" target="_blank">
             Escribinos por WhatsApp
@@ -443,10 +445,61 @@
 
     // Build order summary
     var orderCode = 'MI-' + Date.now().toString(36).toUpperCase();
-    var productsList = items.map(function (i) { return i.name + ' ×' + i.qty + ' ($' + (i.price * i.qty).toLocaleString('es-AR') + ')'; }).join('%0A');
     var total = '$' + Cart.total().toLocaleString('es-AR');
     var pagoLabel = { efectivo: 'Efectivo en local', transferencia: 'Transferencia bancaria', mercadopago: 'Mercado Pago' }[pago.value] || pago.value;
 
+    var btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+
+    // ── MERCADO PAGO FLOW ──────────────────────────────────────────────────
+    if (pago.value === 'mercadopago') {
+      btn.innerHTML = 'Conectando con Mercado Pago...';
+
+      var nameParts = nombre.trim().split(/\s+/);
+      var cleanDni = dni.replace(/[-.\s]/g, '');
+
+      // Save order snapshot so we can show it after MP redirect
+      sessionStorage.setItem('mp_pending_order', JSON.stringify({ code: orderCode, total: total, nombre: nombre }));
+
+      fetch('/api/mp-preference', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map(function(i) { return { id: String(i.id), name: i.name, qty: i.qty, price: i.price }; }),
+          payer: {
+            name: nameParts[0],
+            surname: nameParts.slice(1).join(' ') || '-',
+            email: email,
+            identification: { type: cleanDni.length === 11 ? 'CUIT' : 'DNI', number: cleanDni }
+          },
+          external_reference: orderCode
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.status === 'pending_setup' || !d.init_point) {
+          // MP no configurado aún → caer al flujo de WhatsApp
+          doWhatsAppFlow(orderCode, nombre, dni, wsp, email, empresa, envio, dir, obs, items, total, pagoLabel, btn);
+          return;
+        }
+        window.location.href = d.init_point;
+      })
+      .catch(function() {
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Confirmar pedido';
+        var banner = document.getElementById('mpStatusBanner');
+        banner.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FEF2F2;border:1.5px solid #f87171;color:#b91c1c';
+        banner.innerHTML = '<strong>❌ Error al conectar con Mercado Pago</strong><br>Intentá de nuevo o elegí otro método de pago.';
+        banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      return;
+    }
+
+    // ── WHATSAPP FLOW (efectivo / transferencia) ───────────────────────────
+    doWhatsAppFlow(orderCode, nombre, dni, wsp, email, empresa, envio, dir, obs, items, total, pagoLabel, btn);
+  });
+
+  function doWhatsAppFlow(orderCode, nombre, dni, wsp, email, empresa, envio, dir, obs, items, total, pagoLabel, btn) {
     var waMsg = encodeURIComponent(
       '🛒 *Nuevo pedido - ' + orderCode + '*\n\n'
       + '*Nombre:* ' + nombre + '\n'
@@ -462,9 +515,6 @@
       + 'Código: ' + orderCode
     );
 
-    // Submit to Web3Forms + open WhatsApp
-    var btn = document.getElementById('btnSubmit');
-    btn.disabled = true;
     btn.innerHTML = 'Enviando...';
 
     var fd = new FormData();
@@ -494,7 +544,43 @@
         window.open('https://wa.me/5491136365889?text=' + waMsg, '_blank');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-  });
+  }
+
+  // ── MP RETURN STATUS ────────────────────────────────────────────────────────
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var status = params.get('status');
+    if (!status) return;
+
+    // Clean URL without reload
+    history.replaceState({}, '', window.location.pathname);
+
+    var saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem('mp_pending_order') || '{}'); } catch(e) {}
+
+    if (status === 'success') {
+      Cart.clear();
+      sessionStorage.removeItem('mp_pending_order');
+      document.getElementById('cartLayout').style.display = 'none';
+      document.getElementById('cartEmpty').style.display = 'none';
+      document.getElementById('successIcon').textContent = '✅';
+      document.getElementById('successTitle').textContent = '¡Pago aprobado!';
+      document.getElementById('successMsg').innerHTML = 'Tu pago fue aprobado por <strong>Mercado Pago</strong>. En breve te contactamos por WhatsApp para coordinar la producción y entrega.';
+      if (saved.code) document.getElementById('orderCode').textContent = 'Código de pedido: ' + saved.code;
+      document.getElementById('orderSuccess').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } else if (status === 'pending') {
+      var banner = document.getElementById('mpStatusBanner');
+      banner.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FFF8E1;border:1.5px solid #F5D800;color:#7a6400';
+      banner.innerHTML = '<strong>⏳ Pago pendiente de acreditación</strong><br>Tu pago está siendo procesado por Mercado Pago. Te avisamos por WhatsApp cuando se confirme.';
+
+    } else if (status === 'failure') {
+      var banner2 = document.getElementById('mpStatusBanner');
+      banner2.style.cssText = 'display:block;padding:16px 20px;border-radius:12px;margin-bottom:var(--s6);font-size:14px;line-height:1.5;background:#FEF2F2;border:1.5px solid #f87171;color:#b91c1c';
+      banner2.innerHTML = '<strong>❌ El pago no pudo procesarse</strong><br>Hubo un problema con el pago. Intentalo de nuevo o elegí otro método de pago.';
+    }
+  })();
 
   // ── INIT ───────────────────────────────────────────────────────────────────
   renderCart();
