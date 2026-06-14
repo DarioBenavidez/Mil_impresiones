@@ -361,14 +361,16 @@ img{max-width:100%;display:block}
           <svg class="deploy-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
           Aplicar todos los cambios
         </button>
-        <button class="sidebar-phone-btn" id="togglePhonePreview">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          Vista móvil
-        </button>
-        <a href="/" target="_blank" class="sidebar-visit">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          Ver tienda
-        </a>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:4px">
+          <button class="sidebar-phone-btn" id="togglePhonePreview" style="margin-bottom:0;justify-content:center;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:9px;background:rgba(255,255,255,.05)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            <span style="font-size:11px;font-weight:600">Android</span>
+          </button>
+          <a href="/" target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:9px;background:rgba(255,255,255,.05);font-size:11px;font-weight:600;color:rgba(255,255,255,.6);transition:all .15s;text-decoration:none" onmouseover="this.style.background='rgba(255,255,255,.09)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,.05)';this.style.color='rgba(255,255,255,.6)'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span>PC</span>
+          </a>
+        </div>
         <button class="sidebar-logout" id="logoutBtn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Cerrar sesión
@@ -2456,7 +2458,7 @@ setTimeout(function() {
 <div class="phone-overlay" id="phoneOverlay"></div>
 <div class="phone-preview-panel" id="phonePreviewPanel">
   <div class="pp-header">
-    <span class="pp-title">📱 Vista móvil</span>
+    <span class="pp-title">📱 Vista Android / Celular</span>
     <div class="pp-tabs">
       <button class="pp-tab active" data-href="/">Inicio</button>
       <button class="pp-tab" data-href="/shop">Tienda</button>
