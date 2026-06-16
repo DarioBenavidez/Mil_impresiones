@@ -46,7 +46,7 @@
       "unit": "× 1000 u.",
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesa \"Flyers 10x15 Full Color\". ¿Pueden cotizarme?",
-      "oferta": true
+      "oferta": false
     },
     {
       "id": "pack-emprendedor",
@@ -199,7 +199,8 @@
       "price": 28000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "banner-lona",
@@ -264,7 +265,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
-      "oferta": true,
+      "oferta": false,
       "hidden": true
     },
     {
@@ -329,7 +330,8 @@
       "price": 8500,
       "unit": "por unidad",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "libretas-personalizadas",
