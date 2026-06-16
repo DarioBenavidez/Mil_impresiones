@@ -46,7 +46,7 @@
       "unit": "× 1000 u.",
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesa \"Flyers 10x15 Full Color\". ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": true
     },
     {
       "id": "pack-emprendedor",
@@ -69,7 +69,7 @@
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesa \"Pack Emprendedor\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "folleto-triptico",
@@ -264,7 +264,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
-      "oferta": false,
+      "oferta": true,
       "hidden": true
     },
     {
@@ -329,8 +329,7 @@
       "price": 8500,
       "unit": "por unidad",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?",
-      "oferta": true
+      "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?"
     },
     {
       "id": "libretas-personalizadas",
@@ -351,8 +350,7 @@
       "price": 12000,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?",
-      "oferta": true
+      "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?"
     },
     {
       "id": "souvenirs-kit",
