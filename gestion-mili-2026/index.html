@@ -118,8 +118,6 @@ img{max-width:100%;display:block}
 .prod-edit-btn:hover{background:#c4007a}
 .prod-del-btn{padding:8px 12px;background:transparent;color:#ef4444;border:1.5px solid #fecaca;border-radius:8px;font:inherit;font-size:13px;cursor:pointer;transition:all .2s}
 .prod-del-btn:hover{background:#fef2f2}
-.prod-hide-btn{padding:8px 12px;background:transparent;color:var(--fg3);border:1.5px solid var(--border);border-radius:8px;font:inherit;font-size:13px;cursor:pointer;transition:all .2s}
-.prod-hide-btn:hover{border-color:var(--fg);color:var(--fg)}
 .prod-card-admin.hidden-product{opacity:.45}
 .prod-card-admin.hidden-product .prod-thumb-admin::after{content:'OCULTO';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-size:13px;font-weight:700;letter-spacing:.1em}
 .add-product-card{background:transparent;border:2px dashed var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:260px;cursor:pointer;transition:all .2s;color:var(--fg3)}
@@ -1452,18 +1450,9 @@ function renderProducts() {
       + '<div class="prod-delivery-admin">⏱ ' + (p.delivery || '—') + '</div>'
       + '<div class="prod-actions-admin">'
       + '<button class="prod-edit-btn" onclick="openProductModal(' + i + ')">✏️ Editar</button>'
-      + '<button class="prod-hide-btn" onclick="toggleProductVisibility(' + i + ')" title="' + (p.hidden ? 'Publicar' : 'Ocultar') + '">' + (p.hidden ? '👁 Mostrar' : '🙈 Ocultar') + '</button>'
       + '<button class="prod-del-btn" onclick="deleteProduct(' + i + ')">🗑</button>'
       + '</div></div></div>';
   }).join('') + '<div class="add-product-card" onclick="openProductModal(null)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span style="font-size:14px;font-weight:600">Agregar producto</span></div>';
-}
-
-function toggleProductVisibility(i) {
-  productos[i].hidden = !productos[i].hidden;
-  var label = productos[i].hidden ? 'Producto ocultado' : 'Producto publicado';
-  saveToGithub('content/productos.json', { updated: new Date().toISOString().slice(0,7), currency:'ARS', note:'Actualizar precios en este archivo.', products: productos })
-    .then(function() { renderProducts(); showToast(label); })
-    .catch(function() { productos[i].hidden = !productos[i].hidden; showToast('No se pudo guardar. ¿Hay conexión?', 'error'); });
 }
 
 function openProductModal(idx) {
