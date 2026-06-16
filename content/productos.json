@@ -203,12 +203,12 @@
       "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?"
     },
     {
-      "id": "banner-lona",
+      "id": "banner-lona-12-m",
       "name": "Banner Lona 1×2 m",
       "cat": "giganto",
       "category": "Gigantografías",
       "color": "k",
-      "icon": "BN",
+      "icon": "BA",
       "img": "/assets/uploads/banner-bc.png",
       "badge": "⚡ Rápido",
       "badgeType": "fast",
@@ -221,8 +221,9 @@
       "price": 18000,
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
-      "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?",
-      "hidden": false
+      "whatsapp": "Me interesa \"Banner Lona 1×2 m\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "vinilo-adhesivo",
