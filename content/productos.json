@@ -69,7 +69,8 @@
       "unit": "el pack",
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesa \"Pack Emprendedor\". ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "folleto-triptico",
