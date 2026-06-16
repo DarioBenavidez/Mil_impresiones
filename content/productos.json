@@ -72,12 +72,12 @@
       "hidden": true
     },
     {
-      "id": "folleto-triptico",
+      "id": "folleto-a4-trptico",
       "name": "Folleto A4 Tríptico",
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "c",
-      "icon": "TR",
+      "icon": "FO",
       "img": "/assets/uploads/offsettt.png",
       "badge": null,
       "badgeType": null,
@@ -91,8 +91,9 @@
       "price": 32000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?",
-      "hidden": false
+      "whatsapp": "Me interesa \"Folleto A4 Tríptico\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "afiches-a3",
