@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "headers": [
     {
+      "source": "/content/productos.json",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }]
+    },
+    {
       "source": "/content/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=60" }]
     },
