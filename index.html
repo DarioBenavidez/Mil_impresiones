@@ -480,7 +480,7 @@ allProducts = getDefaultProducts();
 renderProducts(allProducts.slice(0, 3));
 
 // Then fetch real data and update silently
-fetch('/content/productos.json')
+fetch('/api/products')
   .then(function(r){ return r.ok ? r.json() : null; })
   .catch(function(){ return null; })
   .then(function(data){
@@ -625,7 +625,7 @@ function addToCart(p) {
   }
 
   // Load and render
-  fetch('/content/productos.json')
+  fetch('/api/products')
     .then(function(r){ return r.ok ? r.json() : null; })
     .catch(function(){ return null; })
     .then(function(d){ allCatalogProducts = d && d.products ? d.products : []; renderCatalog(allCatalogProducts); });

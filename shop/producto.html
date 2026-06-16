@@ -374,7 +374,7 @@
     }
   }
 
-  fetch('/content/productos.json')
+  fetch('/api/products')
     .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
     .catch(function() { return null; })
     .then(function(d) {

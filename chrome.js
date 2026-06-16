@@ -397,7 +397,7 @@
 
     function loadSearchData(cb) {
       if (searchData) { cb(searchData); return; }
-      fetch('/content/productos.json').then(function(r){ return r.ok ? r.json() : null; })
+      fetch('/api/products').then(function(r){ return r.ok ? r.json() : null; })
         .catch(function(){ return null; })
         .then(function(d){ searchData = d && d.products ? d.products : []; cb(searchData); });
     }
