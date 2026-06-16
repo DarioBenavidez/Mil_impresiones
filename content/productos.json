@@ -220,7 +220,8 @@
       "price": 18000,
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
-      "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?",
+      "hidden": true
     },
     {
       "id": "vinilo-adhesivo",
