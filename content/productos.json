@@ -24,8 +24,7 @@
       "unit": "100u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
-      "oferta": true,
-      "hidden": false
+      "oferta": true
     },
     {
       "id": "flyers-10x15-full-color",
@@ -92,8 +91,7 @@
       "price": 32000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?",
-      "hidden": true
+      "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?"
     },
     {
       "id": "afiches-a3",
@@ -115,8 +113,7 @@
       "unit": "× 100 u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
-      "oferta": false,
-      "hidden": true
+      "oferta": false
     },
     {
       "id": "sobre-carta",
@@ -221,8 +218,7 @@
       "price": 18000,
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
-      "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?",
-      "hidden": true
+      "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?"
     },
     {
       "id": "vinilo-adhesivo",
@@ -265,8 +261,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
-      "oferta": true,
-      "hidden": true
+      "oferta": true
     },
     {
       "id": "logo-marca",
@@ -372,8 +367,7 @@
       "price": 32000,
       "unit": "por kit",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa el Kit de Souvenirs. ¿Pueden cotizarme?",
-      "hidden": true
+      "whatsapp": "Me interesa el Kit de Souvenirs. ¿Pueden cotizarme?"
     }
   ]
 }
