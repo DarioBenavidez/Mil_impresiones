@@ -199,8 +199,7 @@
       "price": 28000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?",
-      "oferta": true
+      "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?"
     },
     {
       "id": "banner-lona",
@@ -352,7 +351,8 @@
       "price": 12000,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "souvenirs-kit",
