@@ -223,7 +223,7 @@
       "delivery": "Listo en 24 hs",
       "whatsapp": "Me interesa \"Banner Lona 1×2 m\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "vinilo-adhesivo",
