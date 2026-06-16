@@ -354,12 +354,12 @@
       "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?"
     },
     {
-      "id": "souvenirs-kit",
+      "id": "kit-de-souvenirs",
       "name": "Kit de Souvenirs",
       "cat": "merch",
       "category": "Merchandising",
       "color": "y",
-      "icon": "KT",
+      "icon": "KI",
       "img": "/assets/uploads/souvenir.png",
       "badge": null,
       "badgeType": null,
@@ -372,8 +372,9 @@
       "price": 32000,
       "unit": "por kit",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa el Kit de Souvenirs. ¿Pueden cotizarme?",
-      "hidden": false
+      "whatsapp": "Me interesa \"Kit de Souvenirs\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     }
   ]
 }
