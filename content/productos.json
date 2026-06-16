@@ -115,7 +115,7 @@
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "sobre-carta",
