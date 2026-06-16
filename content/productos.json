@@ -93,7 +93,7 @@
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Folleto A4 Tríptico\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "afiches-a3",
