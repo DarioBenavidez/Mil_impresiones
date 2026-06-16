@@ -92,7 +92,8 @@
       "price": 32000,
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?"
+      "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?",
+      "hidden": true
     },
     {
       "id": "afiches-a3",
