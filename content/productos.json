@@ -92,7 +92,7 @@
       "unit": "× 500 u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesan los Folletos A4 Tríptico. ¿Pueden cotizarme 500 unidades?",
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "afiches-a3",
@@ -221,7 +221,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
       "whatsapp": "Me interesa un Banner de Lona 1x2m. ¿Pueden cotizarme?",
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "vinilo-adhesivo",
