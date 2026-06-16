@@ -24,7 +24,8 @@
       "unit": "100u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
-      "oferta": true
+      "oferta": true,
+      "hidden": true
     },
     {
       "id": "flyers-10x15-full-color",
@@ -285,13 +286,13 @@
       "whatsapp": "Me interesa el diseño de Logo. ¿Pueden darme más info?"
     },
     {
-      "id": "identidad-visual-completa",
+      "id": "identidad-visual",
       "name": "Identidad Visual Completa",
       "cat": "diseno",
       "category": "Diseño Gráfico",
       "color": "m",
       "icon": "ID",
-      "img": "/assets/uploads/identidad-de-marca-.png",
+      "img": "/assets/uploads/diseno.png",
       "badge": "Premium",
       "badgeType": "hot",
       "desc": "Logo + paleta de colores + tipografías + papelería básica (tarjeta, sobre, hoja membretada). Manual de marca completo. Ideal para emprendimientos.",
@@ -303,8 +304,7 @@
       "price": 120000,
       "unit": "por proyecto",
       "delivery": "Listo en 10 días hábiles",
-      "whatsapp": "Me interesa \"Identidad Visual Completa\". ¿Pueden cotizarme?",
-      "oferta": false
+      "whatsapp": "Me interesa la Identidad Visual Completa. ¿Pueden darme más info?"
     },
     {
       "id": "tazas-personalizadas",
