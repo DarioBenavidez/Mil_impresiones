@@ -266,7 +266,7 @@
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Roll-Up 80×200 cm\". ¿Pueden cotizarme?",
       "oferta": true,
-      "hidden": false
+      "hidden": true
     },
     {
       "id": "logo-marca",
