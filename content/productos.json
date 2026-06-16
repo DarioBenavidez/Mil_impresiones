@@ -114,7 +114,8 @@
       "unit": "× 100 u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "sobre-carta",
