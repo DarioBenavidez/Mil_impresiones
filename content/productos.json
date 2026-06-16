@@ -372,7 +372,7 @@
       "unit": "por kit",
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa el Kit de Souvenirs. ¿Pueden cotizarme?",
-      "hidden": true
+      "hidden": false
     }
   ]
 }
