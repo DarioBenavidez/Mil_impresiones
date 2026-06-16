@@ -33,8 +33,9 @@ export default async function handler(req, res) {
 
     const payment = await mpRes.json();
 
+    const rawItems = (payment.additional_info && payment.additional_info.items) || [];
     return res.status(200).json({
-      status: payment.status,                         // approved | pending | rejected | cancelled
+      status: payment.status,
       status_detail: payment.status_detail,
       amount: payment.transaction_amount,
       currency: payment.currency_id,
@@ -42,6 +43,9 @@ export default async function handler(req, res) {
       payment_method: payment.payment_method_id,
       payment_type: payment.payment_type_id,
       date_approved: payment.date_approved,
+      items: rawItems.map(function(i) {
+        return { name: i.title || i.id, qty: parseInt(i.quantity) || 1, price: parseFloat(i.unit_price) || 0 };
+      }),
     });
 
   } catch (err) {

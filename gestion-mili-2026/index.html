@@ -118,6 +118,10 @@ img{max-width:100%;display:block}
 .prod-edit-btn:hover{background:#c4007a}
 .prod-del-btn{padding:8px 12px;background:transparent;color:#ef4444;border:1.5px solid #fecaca;border-radius:8px;font:inherit;font-size:13px;cursor:pointer;transition:all .2s}
 .prod-del-btn:hover{background:#fef2f2}
+.prod-hide-btn{padding:8px 12px;background:transparent;color:var(--fg3);border:1.5px solid var(--border);border-radius:8px;font:inherit;font-size:13px;cursor:pointer;transition:all .2s}
+.prod-hide-btn:hover{border-color:var(--fg);color:var(--fg)}
+.prod-card-admin.hidden-product{opacity:.45}
+.prod-card-admin.hidden-product .prod-thumb-admin::after{content:'OCULTO';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-size:13px;font-weight:700;letter-spacing:.1em}
 .add-product-card{background:transparent;border:2px dashed var(--border);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:260px;cursor:pointer;transition:all .2s;color:var(--fg3)}
 .add-product-card:hover{border-color:var(--m);color:var(--m);background:rgba(236,0,140,.03)}
 .add-product-card svg{opacity:.5}
@@ -1073,6 +1077,11 @@ img{max-width:100%;display:block}
         <span style="font-size:14px;font-weight:600;color:var(--m)">🔥 Agregar a Ofertas del día</span>
         <span style="font-size:12px;color:#c4007a;margin-left:auto">Aparece en la página principal</span>
       </label>
+      <label style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#f5f5f5;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color .15s;margin-top:8px" id="hiddenLabel">
+        <input type="checkbox" id="pHidden" style="width:18px;height:18px;accent-color:#666;cursor:pointer">
+        <span style="font-size:14px;font-weight:600;color:#555">🙈 Ocultar producto de la tienda</span>
+        <span style="font-size:12px;color:#888;margin-left:auto">No aparece en el catálogo</span>
+      </label>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeProductModal()">Cancelar</button>
@@ -1434,7 +1443,7 @@ function renderProducts() {
     var thumb = p.img
       ? '<img src="' + p.img + '" style="width:100%;height:100%;object-fit:cover" loading="lazy">'
       : '<div class="prod-thumb-ph">' + (p.icon || 'MI') + '</div>';
-    return '<div class="prod-card-admin">'
+    return '<div class="prod-card-admin' + (p.hidden ? ' hidden-product' : '') + '">'
       + '<div class="prod-thumb-admin" style="background:' + bg + '">' + thumb + (p.oferta ? '<div style="position:absolute;top:8px;right:8px;background:#EC008C;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px">🔥 Oferta</div>' : '') + '</div>'
       + '<div class="prod-card-body-admin">'
       + '<div class="prod-cat-admin">' + (p.category || '') + '</div>'
@@ -1443,9 +1452,18 @@ function renderProducts() {
       + '<div class="prod-delivery-admin">⏱ ' + (p.delivery || '—') + '</div>'
       + '<div class="prod-actions-admin">'
       + '<button class="prod-edit-btn" onclick="openProductModal(' + i + ')">✏️ Editar</button>'
+      + '<button class="prod-hide-btn" onclick="toggleProductVisibility(' + i + ')" title="' + (p.hidden ? 'Publicar' : 'Ocultar') + '">' + (p.hidden ? '👁 Mostrar' : '🙈 Ocultar') + '</button>'
       + '<button class="prod-del-btn" onclick="deleteProduct(' + i + ')">🗑</button>'
       + '</div></div></div>';
   }).join('') + '<div class="add-product-card" onclick="openProductModal(null)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span style="font-size:14px;font-weight:600">Agregar producto</span></div>';
+}
+
+function toggleProductVisibility(i) {
+  productos[i].hidden = !productos[i].hidden;
+  var label = productos[i].hidden ? 'Producto ocultado' : 'Producto publicado';
+  saveToGithub('content/productos.json', { updated: new Date().toISOString().slice(0,7), currency:'ARS', note:'Actualizar precios en este archivo.', products: productos })
+    .then(function() { renderProducts(); showToast(label); })
+    .catch(function() { productos[i].hidden = !productos[i].hidden; showToast('No se pudo guardar. ¿Hay conexión?', 'error'); });
 }
 
 function openProductModal(idx) {
@@ -1464,6 +1482,7 @@ function openProductModal(idx) {
   document.getElementById('pBadgeType').value = p ? (p.badgeType || 'hot') : 'hot';
   document.getElementById('pColor').value = p ? (p.color || 'm') : 'm';
   document.getElementById('pOferta').checked = p ? !!p.oferta : false;
+  document.getElementById('pHidden').checked = p ? !!p.hidden : false;
   // Preview imagen existente
   var prev = document.getElementById('prodImgPreview');
   var prevImg = document.getElementById('prodImgPreviewImg');
@@ -1509,7 +1528,8 @@ document.getElementById('prodImgInput').addEventListener('change', function(e) {
 function saveProduct() {
   var name = document.getElementById('pName').value.trim();
   var price = parseInt(document.getElementById('pPrice').value) || 0;
-  if (!name || !price) { showToast('Nombre y precio son obligatorios', 'error'); return; }
+  if (!name) { showToast('El nombre del producto es obligatorio', 'error'); return; }
+  if (!price) { showToast('El precio es obligatorio (debe ser mayor a 0)', 'error'); return; }
 
   // Capturar todos los valores del form ANTES de cualquier operación async
   var formData = {
@@ -1520,7 +1540,8 @@ function saveProduct() {
     desc: document.getElementById('pDesc').value.trim(),
     unit: document.getElementById('pUnit').value.trim(),
     delivery: document.getElementById('pDelivery').value.trim(),
-    oferta: document.getElementById('pOferta').checked
+    oferta: document.getElementById('pOferta').checked,
+    hidden: document.getElementById('pHidden').checked
   };
 
   var btn = document.getElementById('saveProductBtn');
@@ -1528,7 +1549,7 @@ function saveProduct() {
   btn.disabled = true;
 
   function doSave(imgPath) {
-    var catLabels = { impresion:'Impresión Digital', packaging:'Packaging', giganto:'Gigantografías', diseno:'Diseño Gráfico', merch:'Merchandising' };
+    var catLabels = { impresion:'Impresión Digital', packaging:'Packaging', giganto:'Gigantografías', diseno:'Diseño Gráfico', merch:'Merchandising', papeleria:'Papelería Creativa' };
     var prod = {
       id: name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
       name: name,
@@ -1545,7 +1566,8 @@ function saveProduct() {
       unit: formData.unit,
       delivery: formData.delivery,
       whatsapp: 'Me interesa "' + name + '". ¿Pueden cotizarme?',
-      oferta: formData.oferta
+      oferta: formData.oferta,
+      hidden: formData.hidden || false
     };
     if (currentProductIdx !== null) { productos[currentProductIdx] = prod; }
     else { productos.push(prod); }

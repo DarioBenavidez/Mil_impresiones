@@ -317,6 +317,11 @@
     if (cartOverlay) cartOverlay.addEventListener('click', function () { Cart.closeDrawer(); });
     if (drawerWaBtn) {
       drawerWaBtn.addEventListener('click', function () {
+        var savedOrderUrl = sessionStorage.getItem('mp_wa_url');
+        if (savedOrderUrl) {
+          window.open(savedOrderUrl, '_blank');
+          return;
+        }
         var items = Cart.get();
         var msg = 'Hola! Quiero consultar sobre mi pedido:\n\n'
           + items.map(function(i){ return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price*i.qty).toLocaleString('es-AR'); }).join('\n')

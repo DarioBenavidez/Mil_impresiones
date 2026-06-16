@@ -573,6 +573,29 @@
     var saved = {};
     try { saved = JSON.parse(sessionStorage.getItem('mp_pending_order') || '{}'); } catch(e) {}
 
+    // Si sessionStorage está vacío (móvil borra la sesión al redirigir a MP),
+    // reconstruir desde external_reference que MP incluye en la URL de vuelta
+    if (!saved.code) {
+      var urlExtRef = params.get('external_reference') || '';
+      if (urlExtRef) {
+        var urlParts = urlExtRef.split('|');
+        saved.code = urlParts[0];
+        var urlData = {};
+        urlParts.slice(1).forEach(function(p) {
+          var idx = p.indexOf(':');
+          if (idx > -1) urlData[p.slice(0, idx)] = p.slice(idx + 1);
+        });
+        saved.nombre = urlData['n'] || '';
+        saved.email  = urlData['e'] || '';
+        saved.wsp    = urlData['w'] || '';
+        saved.envio  = urlData['v'] || '';
+        saved.dir    = urlData['d'] || '';
+        saved.obs    = urlData['o'] || '';
+        saved.items  = [];
+        saved.total  = '';
+      }
+    }
+
     function showSuccess() {
       Cart.clear();
       sessionStorage.removeItem('mp_pending_order');
@@ -624,9 +647,19 @@
         .then(function(r) { return r.json(); })
         .then(function(d) {
           if (d.status === 'approved') {
-            // VERIFICACIÓN DE INTEGRIDAD: el pago debe pertenecer a este pedido exacto
-            // Evita que alguien reutilice un payment_id de otra compra
-            if (saved.code && d.external_reference && d.external_reference !== saved.code) {
+            // Decodificar external_reference para recuperar datos si sessionStorage se perdió
+            // (ocurre en móvil cuando MP abre en otra app y el browser limpia la sesión)
+            var extRef = d.external_reference || '';
+            var extParts = extRef.split('|');
+            var extRefCode = extParts[0];
+            // Completar total e items desde mp-verify cuando no están en sessionStorage
+            if (!saved.total && d.amount) {
+              saved.total = '$' + Number(d.amount).toLocaleString('es-AR');
+            }
+            if ((!saved.items || !saved.items.length) && d.items && d.items.length) {
+              saved.items = d.items;
+            }
+            if (saved.code && extRefCode && extRefCode !== saved.code) {
               showFailure('<strong>❌ Error de verificación</strong><br>El pago no corresponde a este pedido. Si creés que es un error, contactanos por WhatsApp.');
               return;
             }

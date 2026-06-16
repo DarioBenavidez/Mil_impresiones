@@ -335,7 +335,7 @@
   document.getElementById('sortSelect').addEventListener('change', function() { render(); });
 
   function getFiltered() {
-    var list = allProducts;
+    var list = allProducts.filter(function(p) { return !p.hidden; });
     if (activeCat !== 'all') list = list.filter(function(p) { return p.cat === activeCat; });
     if (searchQ) {
       list = list.filter(function(p) {
