@@ -69,7 +69,7 @@
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesa \"Pack Emprendedor\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": false
+      "hidden": true
     },
     {
       "id": "folleto-triptico",
