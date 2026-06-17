@@ -24,7 +24,8 @@
       "unit": "100u.",
       "delivery": "Listo en 48 hs",
       "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
-      "oferta": true
+      "oferta": true,
+      "hidden": true
     },
     {
       "id": "flyers-10x15-full-color",
