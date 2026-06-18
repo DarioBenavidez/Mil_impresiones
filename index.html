@@ -485,7 +485,7 @@ fetch('/api/products')
   .catch(function(){ return null; })
   .then(function(data){
     if (data && data.products && data.products.length) {
-      allProducts = data.products;
+      allProducts = data.products.filter(function(p){ return !p.hidden; });
       var ofertas = allProducts.filter(function(p){ return p.oferta; });
       renderProducts(ofertas.length ? ofertas : allProducts.slice(0, 3));
     }
@@ -628,7 +628,7 @@ function addToCart(p) {
   fetch('/api/products')
     .then(function(r){ return r.ok ? r.json() : null; })
     .catch(function(){ return null; })
-    .then(function(d){ allCatalogProducts = d && d.products ? d.products : []; renderCatalog(allCatalogProducts); });
+    .then(function(d){ allCatalogProducts = d && d.products ? d.products.filter(function(p){ return !p.hidden; }) : []; renderCatalog(allCatalogProducts); });
 
   // Filters
   var filterBtns = document.querySelectorAll('#catalogFilters .cat-card');
