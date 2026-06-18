@@ -1352,12 +1352,15 @@ document.querySelectorAll('.nav-item[data-panel]').forEach(function(el) {
 
 // ── LOAD DATA ──────────────────────────────────────────────────────────────
 function loadAllData() {
-  fetch('/content/productos.json').then(function(r) { return r.json(); })
+  fetch('/api/products').then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function(d) {
       productos = d.products || [];
       document.getElementById('dashProductCount').textContent = productos.length;
       renderProducts();
-    }).catch(function() {});
+    }).catch(function() {
+      fetch('/content/productos.json').then(function(r) { return r.json(); })
+        .then(function(d) { productos = d.products || []; renderProducts(); }).catch(function() {});
+    });
 
   fetch('/content/trabajos.json').then(function(r) { return r.json(); })
     .then(function(d) {
@@ -1409,7 +1412,12 @@ function saveToGithub(path, content) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + TOKEN },
     body: JSON.stringify({ path, content })
-  }).then(function(r) { return r.json(); });
+  }).then(function(r) {
+    return r.json().then(function(d) {
+      if (!r.ok || d.error) throw new Error(d.error || 'Error al guardar');
+      return d;
+    });
+  });
 }
 
 function uploadToGithub(filename, base64, folder) {

@@ -221,6 +221,31 @@
 
 /* Loading / error */
 .page-loading { padding: var(--s10); text-align: center; color: var(--fg-3); font-size: 16px; }
+
+/* Lightbox */
+.img-zoom-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,.85);
+  display: flex; align-items: center; justify-content: center;
+  cursor: zoom-out;
+  animation: lbFadeIn .18s ease;
+}
+@keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.img-zoom-overlay img {
+  max-width: 90vw; max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: lbScaleIn .18s ease;
+}
+@keyframes lbScaleIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.img-zoom-close {
+  position: absolute; top: 18px; right: 22px;
+  color: #fff; font-size: 32px; font-weight: 300;
+  cursor: pointer; line-height: 1; opacity: .8;
+}
+.img-zoom-close:hover { opacity: 1; }
+.producto-img-wrap img { cursor: zoom-in; }
 </style>
 </head>
 <body data-page="producto">
@@ -338,6 +363,23 @@
         '<div class="related-grid" id="relatedGrid"></div>',
       '</div>',
     ].join('');
+
+    // Lightbox zoom
+    if (p.img) {
+      var imgWrap = document.querySelector('.producto-img-wrap');
+      if (imgWrap) {
+        imgWrap.querySelector('img') && imgWrap.addEventListener('click', function() {
+          var ov = document.createElement('div');
+          ov.className = 'img-zoom-overlay';
+          ov.innerHTML = '<span class="img-zoom-close">×</span><img src="' + p.img + '" alt="' + p.name + '">';
+          document.body.appendChild(ov);
+          function closeLb() { ov.remove(); document.removeEventListener('keydown', onKey); }
+          function onKey(e) { if (e.key === 'Escape') closeLb(); }
+          ov.addEventListener('click', function(e) { if (e.target === ov || e.target.classList.contains('img-zoom-close')) closeLb(); });
+          document.addEventListener('keydown', onKey);
+        });
+      }
+    }
 
     // Qty controls
     document.getElementById('qtyInc').addEventListener('click', function() {

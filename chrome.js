@@ -323,7 +323,7 @@
           return;
         }
         var items = Cart.get();
-        var msg = 'Hola! Quiero consultar sobre mi pedido:\n\n'
+        var msg = 'Hola, quisiera hacer una consulta por estos productos:\n\n'
           + items.map(function(i){ return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price*i.qty).toLocaleString('es-AR'); }).join('\n')
           + '\n\nTotal: $' + Cart.total().toLocaleString('es-AR');
         window.open('https://wa.me/5491136365889?text=' + encodeURIComponent(msg), '_blank');

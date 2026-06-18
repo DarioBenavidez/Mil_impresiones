@@ -44,7 +44,7 @@ export default async function handler(req, res) {
   } catch (_) {}
 
   const body = {
-    message: `admin: actualiza ${path}`,
+    message: `admin: actualiza ${path} [vercel skip]`,
     content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
     branch: 'main',
   };
