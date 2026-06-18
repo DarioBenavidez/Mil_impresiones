@@ -183,12 +183,12 @@
       "whatsapp": "Me interesan las Cajas Troqueladas. ¿Pueden cotizarme?"
     },
     {
-      "id": "bolsas-logo",
+      "id": "bolsas-con-logo",
       "name": "Bolsas con Logo",
       "cat": "packaging",
       "category": "Packaging",
       "color": "k",
-      "icon": "BL",
+      "icon": "BO",
       "img": "/assets/uploads/packagin.png",
       "badge": null,
       "badgeType": null,
@@ -201,7 +201,9 @@
       "price": 28000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Bolsas con Logo. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa \"Bolsas con Logo\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "banner-lona-190-x-90-cm",
