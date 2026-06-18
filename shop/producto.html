@@ -365,20 +365,21 @@
     ].join('');
 
     // Lightbox zoom
-    if (p.img) {
-      var imgWrap = document.querySelector('.producto-img-wrap');
-      if (imgWrap) {
-        imgWrap.querySelector('img') && imgWrap.addEventListener('click', function() {
-          var ov = document.createElement('div');
-          ov.className = 'img-zoom-overlay';
-          ov.innerHTML = '<span class="img-zoom-close">×</span><img src="' + p.img + '" alt="' + p.name + '">';
-          document.body.appendChild(ov);
-          function closeLb() { ov.remove(); document.removeEventListener('keydown', onKey); }
-          function onKey(e) { if (e.key === 'Escape') closeLb(); }
-          ov.addEventListener('click', function(e) { if (e.target === ov || e.target.classList.contains('img-zoom-close')) closeLb(); });
-          document.addEventListener('keydown', onKey);
+    var prodImg = document.querySelector('.producto-img-wrap img');
+    if (prodImg) {
+      prodImg.style.cursor = 'zoom-in';
+      prodImg.addEventListener('click', function() {
+        var ov = document.createElement('div');
+        ov.className = 'img-zoom-overlay';
+        ov.innerHTML = '<span class="img-zoom-close">×</span><img src="' + prodImg.src + '" alt="">';
+        document.body.appendChild(ov);
+        function closeLb() { ov.remove(); document.removeEventListener('keydown', onKey); }
+        function onKey(e) { if (e.key === 'Escape') closeLb(); }
+        ov.addEventListener('click', function(e) {
+          if (e.target === ov || e.target.classList.contains('img-zoom-close')) closeLb();
         });
-      }
+        document.addEventListener('keydown', onKey);
+      });
     }
 
     // Qty controls
