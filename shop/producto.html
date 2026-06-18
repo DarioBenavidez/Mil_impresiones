@@ -261,6 +261,18 @@
 
 <script src="/chrome.js?v=5"></script>
 <script>
+function openImgZoom(src) {
+  var ov = document.createElement('div');
+  ov.className = 'img-zoom-overlay';
+  ov.innerHTML = '<span class="img-zoom-close" onclick="this.parentNode.remove()">×</span><img src="' + src + '" alt="">';
+  document.body.appendChild(ov);
+  ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
+  document.addEventListener('keydown', function onKey(e) {
+    if (e.key === 'Escape') { ov.remove(); document.removeEventListener('keydown', onKey); }
+  });
+}
+</script>
+<script>
 (function() {
   var params = new URLSearchParams(location.search);
   var productId = params.get('id') || '';
@@ -283,7 +295,7 @@
     var accentClass = getAccentClass(p.color || 'm');
     var visualClass = 'visual-' + (p.color || 'm');
     var thumbHtml = p.img
-      ? '<img src="' + p.img + '" alt="' + p.name + '">'
+      ? '<img src="' + p.img + '" alt="' + p.name + '" onclick="openImgZoom(this.src)" style="cursor:zoom-in">'
       : '<div class="producto-img-placeholder">' + (p.icon || '📦') + '</div>';
 
     var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
@@ -363,24 +375,6 @@
         '<div class="related-grid" id="relatedGrid"></div>',
       '</div>',
     ].join('');
-
-    // Lightbox zoom
-    var prodImg = document.querySelector('.producto-img-wrap img');
-    if (prodImg) {
-      prodImg.style.cursor = 'zoom-in';
-      prodImg.addEventListener('click', function() {
-        var ov = document.createElement('div');
-        ov.className = 'img-zoom-overlay';
-        ov.innerHTML = '<span class="img-zoom-close">×</span><img src="' + prodImg.src + '" alt="">';
-        document.body.appendChild(ov);
-        function closeLb() { ov.remove(); document.removeEventListener('keydown', onKey); }
-        function onKey(e) { if (e.key === 'Escape') closeLb(); }
-        ov.addEventListener('click', function(e) {
-          if (e.target === ov || e.target.classList.contains('img-zoom-close')) closeLb();
-        });
-        document.addEventListener('keydown', onKey);
-      });
-    }
 
     // Qty controls
     document.getElementById('qtyInc').addEventListener('click', function() {
