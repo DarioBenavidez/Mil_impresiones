@@ -138,7 +138,8 @@
       "price": 18000,
       "unit": "× 500 u.",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan los Sobres Personalizados. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesan los Sobres Personalizados. ¿Pueden cotizarme?",
+      "oferta": true
     },
     {
       "id": "etiquetas-autoadhesivas",
@@ -292,7 +293,8 @@
       "price": 55000,
       "unit": "por proyecto",
       "delivery": "Listo en 5 días hábiles",
-      "whatsapp": "Me interesa el diseño de Logo. ¿Pueden darme más info?"
+      "whatsapp": "Me interesa el diseño de Logo. ¿Pueden darme más info?",
+      "oferta": true
     },
     {
       "id": "identidad-visual",
@@ -335,7 +337,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 72 hs",
       "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": true
     },
     {
       "id": "libretas-personalizadas",
