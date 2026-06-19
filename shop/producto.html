@@ -224,26 +224,31 @@
 
 /* Lightbox */
 .img-zoom-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 9000;
-  background: rgba(0,0,0,.85);
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 9999;
+  background: rgba(0,0,0,.92);
   display: flex; align-items: center; justify-content: center;
   cursor: zoom-out;
   animation: lbFadeIn .18s ease;
 }
 @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
 .img-zoom-overlay img {
-  width: 92vw;
-  height: 88vh;
+  width: 90vw;
+  height: 90vh;
+  max-width: none;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 24px 80px rgba(0,0,0,.6);
   animation: lbScaleIn .18s ease;
+  cursor: default;
+  display: block;
+  touch-action: pinch-zoom;
 }
-@keyframes lbScaleIn { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes lbScaleIn { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .img-zoom-close {
   position: absolute; top: 18px; right: 22px;
-  color: #fff; font-size: 32px; font-weight: 300;
-  cursor: pointer; line-height: 1; opacity: .8;
+  color: #fff; font-size: 40px; font-weight: 300;
+  cursor: pointer; line-height: 1; opacity: .85;
+  z-index: 1;
 }
 .img-zoom-close:hover { opacity: 1; }
 .producto-img-wrap img { cursor: zoom-in; }
@@ -264,21 +269,9 @@
 <script>
 function openImgZoom(src) {
   var ov = document.createElement('div');
-  ov.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out;overflow:auto;-webkit-overflow-scrolling:touch';
-
-  var close = document.createElement('span');
-  close.textContent = '×';
-  close.style.cssText = 'position:absolute;top:14px;right:20px;color:#fff;font-size:36px;font-weight:300;cursor:pointer;line-height:1;z-index:1;opacity:.85';
-  close.onclick = function() { ov.remove(); };
-
-  var img = document.createElement('img');
-  img.src = src;
-  img.style.cssText = 'max-width:95vw;max-height:90vh;width:auto;height:auto;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.7);touch-action:pinch-zoom;cursor:default;display:block';
-
-  ov.appendChild(close);
-  ov.appendChild(img);
+  ov.className = 'img-zoom-overlay';
+  ov.innerHTML = '<span class="img-zoom-close" onclick="this.parentNode.remove()">×</span><img src="' + src + '" alt="">';
   document.body.appendChild(ov);
-
   ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
   document.addEventListener('keydown', function onKey(e) {
     if (e.key === 'Escape') { ov.remove(); document.removeEventListener('keydown', onKey); }
