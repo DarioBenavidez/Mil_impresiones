@@ -269,17 +269,32 @@
 <script>
 function openImgZoom(src) {
   var ov = document.createElement('div');
-  ov.className = 'img-zoom-overlay';
-  ov.innerHTML = '<span class="img-zoom-close" onclick="this.parentNode.remove()">×</span><img src="' + src + '" alt="">';
+  ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:999999;display:flex;align-items:center;justify-content:center;cursor:zoom-out';
+  ov.onclick = function(e) { if (e.target === ov || e.target === close) { document.body.removeChild(ov); } };
+  var close = document.createElement('span');
+  close.innerHTML = '&times;';
+  close.style.cssText = 'position:absolute;top:14px;right:20px;color:#fff;font-size:52px;line-height:1;cursor:pointer;user-select:none;font-weight:300';
+  var img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'max-width:92vw;max-height:90vh;width:auto;height:auto;object-fit:contain;display:block;cursor:default;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.6)';
+  img.onclick = function(e) { e.stopPropagation(); };
+  ov.appendChild(close);
+  ov.appendChild(img);
   document.body.appendChild(ov);
-  ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
-  document.addEventListener('keydown', function onKey(e) {
-    if (e.key === 'Escape') { ov.remove(); document.removeEventListener('keydown', onKey); }
+  document.addEventListener('keydown', function onEsc(e) {
+    if (e.key === 'Escape' && document.body.contains(ov)) { document.body.removeChild(ov); document.removeEventListener('keydown', onEsc); }
   });
 }
 </script>
 <script>
 (function() {
+  // Zoom: event delegation a nivel documento (funciona siempre)
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.tagName === 'IMG' && e.target.closest && e.target.closest('.producto-img-wrap')) {
+      openImgZoom(e.target.src);
+    }
+  });
+
   var params = new URLSearchParams(location.search);
   var productId = params.get('id') || '';
   var qty = 1;
@@ -391,12 +406,6 @@ function openImgZoom(src) {
       qty = Math.max(qty - 1, 1);
       document.getElementById('qtyNum').textContent = qty;
     });
-
-    // Zoom imagen
-    var zoomImg = document.querySelector('.producto-img-wrap img');
-    if (zoomImg) {
-      zoomImg.addEventListener('click', function() { openImgZoom(this.src); });
-    }
 
     // Add to cart
     document.getElementById('btnAddCart').addEventListener('click', function() {
