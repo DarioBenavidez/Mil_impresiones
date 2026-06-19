@@ -264,9 +264,21 @@
 <script>
 function openImgZoom(src) {
   var ov = document.createElement('div');
-  ov.className = 'img-zoom-overlay';
-  ov.innerHTML = '<span class="img-zoom-close" onclick="this.parentNode.remove()">×</span><img src="' + src + '" alt="">';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;cursor:zoom-out;overflow:auto;-webkit-overflow-scrolling:touch';
+
+  var close = document.createElement('span');
+  close.textContent = '×';
+  close.style.cssText = 'position:absolute;top:14px;right:20px;color:#fff;font-size:36px;font-weight:300;cursor:pointer;line-height:1;z-index:1;opacity:.85';
+  close.onclick = function() { ov.remove(); };
+
+  var img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'max-width:95vw;max-height:90vh;width:auto;height:auto;object-fit:contain;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.7);touch-action:pinch-zoom;cursor:default;display:block';
+
+  ov.appendChild(close);
+  ov.appendChild(img);
   document.body.appendChild(ov);
+
   ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
   document.addEventListener('keydown', function onKey(e) {
     if (e.key === 'Escape') { ov.remove(); document.removeEventListener('keydown', onKey); }
