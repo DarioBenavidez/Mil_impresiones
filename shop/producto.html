@@ -301,7 +301,7 @@ function openImgZoom(src) {
     var accentClass = getAccentClass(p.color || 'm');
     var visualClass = 'visual-' + (p.color || 'm');
     var thumbHtml = p.img
-      ? '<img src="' + p.img + '" alt="' + p.name + '" onclick="openImgZoom(this.src)" style="cursor:zoom-in">'
+      ? '<img src="' + p.img + '" alt="' + p.name + '" style="cursor:zoom-in">'
       : '<div class="producto-img-placeholder">' + (p.icon || '📦') + '</div>';
 
     var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
@@ -391,6 +391,12 @@ function openImgZoom(src) {
       qty = Math.max(qty - 1, 1);
       document.getElementById('qtyNum').textContent = qty;
     });
+
+    // Zoom imagen
+    var zoomImg = document.querySelector('.producto-img-wrap img');
+    if (zoomImg) {
+      zoomImg.addEventListener('click', function() { openImgZoom(this.src); });
+    }
 
     // Add to cart
     document.getElementById('btnAddCart').addEventListener('click', function() {
