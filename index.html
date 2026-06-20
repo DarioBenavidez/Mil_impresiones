@@ -47,7 +47,7 @@
 /* ── PRODUCT CARD ──────────────────────────────────────────────────────────── */
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s;position:relative}
 .product-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px -16px rgba(0,0,0,.14)}
-.product-thumb{height:var(--catalog-thumb-h,180px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-thumb{height:var(--catalog-thumb-h,180px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-decoration:none;color:inherit;cursor:pointer}
 .product-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:56px;font-weight:700;opacity:.18;letter-spacing:-.04em;color:#fff;user-select:none}
 .product-card.c-card .product-thumb{background:linear-gradient(135deg,#00AEEF,#0088CC)}
 .product-card.m-card .product-thumb{background:linear-gradient(135deg,#EC008C,#BB006F)}
@@ -69,6 +69,8 @@
 .price-amount{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--fg);letter-spacing:-.03em}
 .price-unit-label{font-size:12px;color:var(--fg-3)}
 .product-ctas{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
+.btn-ver-card{grid-column:1/-1;font-family:var(--font-display);font-size:13px;font-weight:600;padding:10px 8px;border-radius:var(--radius-sm);background:transparent;color:var(--fg);border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,color .2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:4px}
+.btn-ver-card:hover{border-color:var(--m);color:var(--m);background:rgba(236,0,140,.05)}
 .btn-buy-card{font-family:var(--font-display);font-size:13px;font-weight:600;padding:11px 8px;border-radius:var(--radius-sm);background:var(--m);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-buy-card:hover{background:#c4007a;transform:translateY(-1px)}
 .product-card.c-card .btn-buy-card{background:var(--c)}
@@ -443,14 +445,15 @@ function renderProducts(products){
   grid.innerHTML = products.map(function(p){
     var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden darme más información?');
     var buyUrl = '/contacto?producto=' + encodeURIComponent(p.name) + '&accion=comprar';
+    var detailUrl = '/shop/producto?id=' + encodeURIComponent(p.id || p.name);
     return '<div class="product-card ' + p.color + '-card reveal">'
-      + '<div class="product-thumb">'
+      + '<a class="product-thumb" href="' + detailUrl + '">'
       + (p.badge ? '<span class="product-badge badge-' + p.badgeType + '">' + p.badge + '</span>' : '')
       + (p.img ? '<img src="' + p.img + '" alt="' + p.name + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:0">' : '<span class="product-thumb-inner">' + (p.icon||'📦') + '</span>')
-      + '</div>'
+      + '</a>'
       + '<div class="product-body">'
       + '<span class="product-category">' + p.category + '</span>'
-      + '<span class="product-name">' + p.name + '</span>'
+      + '<a class="product-name" href="' + detailUrl + '" style="text-decoration:none;color:inherit">' + p.name + '</a>'
       + '<p class="product-desc">' + p.desc + '</p>'
       + '<div class="product-specs">' + p.specs.map(function(s){ return '<span class="spec-chip">'+s+'</span>'; }).join('') + '</div>'
       + '<div class="product-price-block">'
@@ -459,6 +462,7 @@ function renderProducts(products){
       + '<span class="price-unit-label">' + p.unit + '</span>'
       + '</div>'
       + '<div class="product-ctas">'
+      + '<a href="' + detailUrl + '" class="btn-ver-card">Ver producto →</a>'
       + '<button class="btn-buy-card" onclick="Cart.add(' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/"/g,'&quot;') + ')">🛒 Agregar al carrito</button>'
       + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
       + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
