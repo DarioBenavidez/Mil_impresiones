@@ -398,7 +398,7 @@ function openImgZoom(src) {
     });
 
     // Related products
-    var related = allProducts.filter(function(r) { return r.id !== p.id; }).slice(0, 4);
+    var related = allProducts.filter(function(r) { return r.id !== p.id && !r.hidden; }).slice(0, 4);
     var rGrid = document.getElementById('relatedGrid');
     if (rGrid) {
       rGrid.innerHTML = related.map(function(r) {
