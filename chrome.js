@@ -258,6 +258,7 @@
             <li><a href="mailto:ventas@milimpresiones.com">ventas@milimpresiones.com</a></li>
             <li><a href="https://wa.me/5491136365889" target="_blank">WhatsApp</a></li>
             <li><a href="https://www.instagram.com/1000_impresiones" target="_blank">Instagram</a></li>
+            <li style="color:#ffffff99;font-size:12px;margin-top:4px">Lun–Vie 9–18 hs</li>
             <li style="color:#ffffff99;font-size:13px;margin-top:8px">milimpresiones.com</li>
           </ul>
         </div>

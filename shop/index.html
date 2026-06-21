@@ -281,6 +281,7 @@
       <div class="shop-bar">
         <span class="shop-bar-count" id="shopCount">Cargando...</span>
         <select class="sort-select" id="sortSelect">
+          <option value="popular">Más vendidos</option>
           <option value="default">Ordenar: relevancia</option>
           <option value="price-asc">Precio: menor a mayor</option>
           <option value="price-desc">Precio: mayor a menor</option>
@@ -345,6 +346,7 @@
       });
     }
     var sort = document.getElementById('sortSelect').value;
+    if (sort === 'popular') list = list.slice().sort(function(a,b) { return (b.badge ? 1 : 0) - (a.badge ? 1 : 0); });
     if (sort === 'price-asc') list = list.slice().sort(function(a,b) { return a.price - b.price; });
     if (sort === 'price-desc') list = list.slice().sort(function(a,b) { return b.price - a.price; });
     return list;
