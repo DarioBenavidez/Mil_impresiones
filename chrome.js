@@ -514,6 +514,7 @@
         + '<a href="/contacto" class="drawer-main-link">Contacto</a>'
         + '<a href="/carrito" class="drawer-main-link">Carrito</a>';
       drawer.innerHTML = html;
+      drawer.scrollTop = 0;
       drawer.querySelector('#drawerCloseBtn').addEventListener('click', function() { toggle(false); });
       drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { toggle(false); }); });
       drawer.querySelectorAll('.drawer-cat-card').forEach(function(btn) {
@@ -544,6 +545,7 @@
         html += '<a href="/shop?cat=' + cat.key + '" class="drawer-sub-item">' + sub + '</a>';
       });
       drawer.innerHTML = html;
+      drawer.scrollTop = 0;
       drawer.querySelector('#drawerBackBtn').addEventListener('click', mainScreen);
       drawer.querySelector('#drawerCloseBtn2').addEventListener('click', function() { toggle(false); });
       drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { toggle(false); }); });
