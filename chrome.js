@@ -156,9 +156,9 @@
           </div>
         </div>
 
-        <!-- NOSOTROS & CONTACTO -->
-        <a href="/nosotros" class="nav-link${CURRENT === 'nosotros' ? ' active' : ''}" data-link="nosotros">
-          Nosotros & Contacto
+        <!-- CONTACTO -->
+        <a href="/contacto" class="nav-link${CURRENT === 'contacto' ? ' active' : ''}" data-link="contacto">
+          Contacto
         </a>
 
       </div><!-- /nav-links -->
@@ -372,7 +372,7 @@
     // Fallback estático (se reemplaza con acordeón cuando carguen las categorías)
     mobileDrawer.innerHTML =
       '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Tienda</a>'
-      + '<a href="/nosotros" class="drawer-main-link' + (CURRENT === 'nosotros' ? ' active' : '') + '">Nosotros & Contacto</a>'
+      + '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">Contacto</a>'
       + '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">🛒 Carrito</a>';
     document.body.appendChild(mobileDrawer);
 
@@ -497,7 +497,7 @@
           }).join('')
         + '</div>';
     });
-    html += '<a href="/nosotros" class="drawer-main-link' + (CURRENT === 'nosotros' ? ' active' : '') + '">Nosotros & Contacto</a>';
+    html += '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">Contacto</a>';
     html += '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">🛒 Carrito</a>';
     drawer.innerHTML = html;
 
