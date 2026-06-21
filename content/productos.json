@@ -40,14 +40,14 @@
       "desc": "Flyers 10 x 15cm , full color doble faz. Papel ilustración 150g. Ideal para eventos, promociones y lanzamientos.",
       "specs": [
         "150g",
-        "A5",
         "Doble faz"
       ],
-      "price": 25000,
+      "price": 59999,
       "unit": "× 1000 u.",
-      "delivery": "Listo en 72 hs",
+      "delivery": "Listo en 7 Dias",
       "whatsapp": "Me interesa \"Flyers 10x15 Full Color\". ¿Pueden cotizarme?",
-      "oferta": false
+      "oferta": false,
+      "hidden": false
     },
     {
       "id": "pack-emprendedor",
