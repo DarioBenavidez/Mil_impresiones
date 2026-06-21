@@ -2016,9 +2016,16 @@ function uploadBannerHome(file) {
     uploadToGithub('banner-home.png', ev.target.result)
       .then(function(r) {
         bar.style.width = '100%';
-        setBannerHomePreview((r.path || '/assets/uploads/banner-home.png') + '?t=' + Date.now(), '✓ Actualizado');
+        var ts = Date.now();
+        var url = (r.path || '/assets/uploads/banner-home.png') + '?v=' + ts;
+        setBannerHomePreview(url, '✓ Actualizado');
+        var b = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
+        if (!b[0]) b[0] = {};
+        b[0].desk = url;
+        visualConfig.heroBanners = b;
+        saveVisualConfig({ heroBanners: b });
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
-        showToast('Banner de PC actualizado');
+        showToast('✓ Banner actualizado — visible en la web en ~1 minuto');
       })
       .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
   };
@@ -2063,7 +2070,14 @@ function uploadBannerHomeMob(file) {
     uploadToGithub('banner-home-mobile.png', ev.target.result)
       .then(function(r) {
         bar.style.width = '100%';
-        setBannerHomeMobPreview((r.path || '/assets/uploads/banner-home-mobile.png') + '?t=' + Date.now(), '✓ Actualizado');
+        var ts = Date.now();
+        var url = (r.path || '/assets/uploads/banner-home-mobile.png') + '?v=' + ts;
+        setBannerHomeMobPreview(url, '✓ Actualizado');
+        var b = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
+        if (!b[0]) b[0] = {};
+        b[0].mob = url;
+        visualConfig.heroBanners = b;
+        saveVisualConfig({ heroBanners: b });
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
         showToast('Banner de celular actualizado');
       })
