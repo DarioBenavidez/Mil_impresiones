@@ -254,25 +254,25 @@
       "hidden": false
     },
     {
-      "id": "roll-up-190200-cm",
-      "name": "Roll-Up 1,90×2,00 cm",
+      "id": "banner-soporte-doble-tensor",
+      "name": "Banner soporte doble tensor",
       "cat": "giganto",
       "category": "Gigantografías",
       "color": "k",
-      "icon": "RO",
+      "icon": "BA",
       "img": "/assets/uploads/banner-bc.png",
       "badge": null,
       "badgeType": null,
-      "desc": "Banner roll-up retráctil completo: estructura de aluminio + impresión de alta calidad + bolso de transporte. Listo para usar.",
+      "desc": "Banner soporte doble tensor estructura de aluminio + impresión de alta calidad Listo para usar. 190 x 90cm",
       "specs": [
-        "80×200 cm",
         "Estructura aluminio",
-        "Bolso incluido"
+        "Bolso incluido",
+        "190X90cm"
       ],
-      "price": 42000,
+      "price": 106500,
       "unit": "por unidad",
       "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa \"Roll-Up 1,90×2,00 cm\". ¿Pueden cotizarme?",
+      "whatsapp": "Me interesa \"Banner soporte doble tensor\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
     },
