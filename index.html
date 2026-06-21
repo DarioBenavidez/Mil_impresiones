@@ -12,14 +12,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ── HERO HOME ── */
-.hero-home{width:100%;height:28vw;min-height:200px;max-height:560px;overflow:hidden;display:block;line-height:0;background:transparent;padding:0;margin:0}
-.hero-home img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;vertical-align:top}
-.hero-home .hero-img-mob{display:none}
+/* ── HERO SLIDER ── */
+.hero-slider{position:relative;width:100%;height:28vw;min-height:200px;max-height:560px;overflow:hidden;background:#111}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
+.hero-slide.active{opacity:1;pointer-events:auto}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-slide .hero-img-mob{display:none}
+.hero-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:10}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);border:none;cursor:pointer;padding:0;transition:background .3s,transform .3s}
+.hero-dot.active{background:#fff;transform:scale(1.25)}
+.hero-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(0,0,0,.35);border:none;color:#fff;font-size:22px;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;line-height:1}
+.hero-arrow:hover{background:rgba(0,0,0,.6)}
+.hero-arrow.prev{left:14px}
+.hero-arrow.next{right:14px}
 @media(max-width:600px){
-  .hero-home{height:var(--banner-home-h-mob,55vw);min-height:unset;max-height:none}
-  .hero-home .hero-img-desk{display:none}
-  .hero-home .hero-img-mob{display:block}
+  .hero-slider{height:var(--banner-home-h-mob,55vw);min-height:unset;max-height:none}
+  .hero-slide .hero-img-desk{display:none}
+  .hero-slide .hero-img-mob{display:block}
+  .hero-arrow{display:none}
 }
 
 /* ── CATEGORY STRIP ────────────────────────────────────────────────────────── */
@@ -198,20 +208,80 @@
 <body data-page="home">
 <main>
 
-  <!-- HERO: foto promocional — cambiable desde el admin (Banner de inicio) -->
-  <section class="hero-home" id="heroHome">
-    <img src="/assets/uploads/banner-home.png" id="heroHomeImg" class="hero-img-desk" alt="Mil Impresiones" onerror="this.src='/assets/uploads/banner-bc.png'">
-    <img src="/assets/uploads/banner-home-mobile.png" id="heroHomeMobImg" class="hero-img-mob" alt="Mil Impresiones" onerror="this.style.display='none';document.getElementById('heroHomeImg').style.display='block'">
-  </section>
+  <!-- HERO SLIDER — banners manejados desde el admin -->
+  <div class="hero-slider" id="heroSlider"></div>
   <script>
   fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
-    var s = document.getElementById('heroHome');
-    var i = document.getElementById('heroHomeImg');
-    var im = document.getElementById('heroHomeMobImg');
-    if(cfg.bannerHomeHeight && window.innerWidth > 600) s.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
+    // Altura del slider
+    var slider = document.getElementById('heroSlider');
+    if(cfg.bannerHomeHeight && window.innerWidth > 600) slider.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
     if(cfg.bannerHomeMobileH && window.innerWidth <= 600) document.documentElement.style.setProperty('--banner-home-h-mob', cfg.bannerHomeMobileH + 'vw');
-    if(cfg.bannerHomePosition) i.style.objectPosition = cfg.bannerHomePosition;
-    if(cfg.bannerHomeMobilePosition && im) im.style.objectPosition = cfg.bannerHomeMobilePosition;
+
+    // Construir slides desde cfg.heroBanners o fallback al banner único
+    var banners = cfg.heroBanners && cfg.heroBanners.length
+      ? cfg.heroBanners
+      : [{desk: '/assets/uploads/banner-home.png', mob: '/assets/uploads/banner-home-mobile.png', posDesk: cfg.bannerHomePosition, posMob: cfg.bannerHomeMobilePosition}];
+
+    banners.forEach(function(b, idx) {
+      var slide = document.createElement('div');
+      slide.className = 'hero-slide' + (idx === 0 ? ' active' : '');
+      var imgD = document.createElement('img');
+      imgD.src = b.desk || '/assets/uploads/banner-home.png';
+      imgD.className = 'hero-img-desk';
+      imgD.alt = 'Mil Impresiones';
+      if(b.posDesk) imgD.style.objectPosition = b.posDesk;
+      var imgM = document.createElement('img');
+      imgM.src = b.mob || b.desk || '/assets/uploads/banner-home.png';
+      imgM.className = 'hero-img-mob';
+      imgM.alt = 'Mil Impresiones';
+      if(b.posMob) imgM.style.objectPosition = b.posMob;
+      slide.appendChild(imgD);
+      slide.appendChild(imgM);
+      slider.appendChild(slide);
+    });
+
+    var slides = slider.querySelectorAll('.hero-slide');
+    if(slides.length <= 1) return; // nada que rotar
+
+    // Dots
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'hero-dots';
+    slides.forEach(function(_, i) {
+      var d = document.createElement('button');
+      d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i+1));
+      dotsWrap.appendChild(d);
+    });
+    slider.appendChild(dotsWrap);
+
+    // Flechas
+    var prev = document.createElement('button');
+    prev.className = 'hero-arrow prev';
+    prev.innerHTML = '&#8249;';
+    var next = document.createElement('button');
+    next.className = 'hero-arrow next';
+    next.innerHTML = '&#8250;';
+    slider.appendChild(prev);
+    slider.appendChild(next);
+
+    var cur = 0;
+    var dots = dotsWrap.querySelectorAll('.hero-dot');
+
+    function goTo(n) {
+      slides[cur].classList.remove('active');
+      dots[cur].classList.remove('active');
+      cur = (n + slides.length) % slides.length;
+      slides[cur].classList.add('active');
+      dots[cur].classList.add('active');
+    }
+
+    var timer = setInterval(function() { goTo(cur + 1); }, 4000);
+
+    prev.addEventListener('click', function() { clearInterval(timer); goTo(cur - 1); timer = setInterval(function(){ goTo(cur+1); }, 4000); });
+    next.addEventListener('click', function() { clearInterval(timer); goTo(cur + 1); timer = setInterval(function(){ goTo(cur+1); }, 4000); });
+    dots.forEach(function(d, i) {
+      d.addEventListener('click', function() { clearInterval(timer); goTo(i); timer = setInterval(function(){ goTo(cur+1); }, 4000); });
+    });
     if(cfg.productsLabel) document.getElementById('productsLabel').textContent = cfg.productsLabel;
     if(cfg.productsTitle) document.getElementById('productsTitle').textContent = cfg.productsTitle;
     if(cfg.productsSubtitle) document.getElementById('productsSubtitle').textContent = cfg.productsSubtitle;
