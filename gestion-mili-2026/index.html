@@ -1960,29 +1960,28 @@ function addBannerDelBtn(preview, onDelete) {
 
 function setBannerHomePreview(src, badgeText) {
   var preview = document.getElementById('bannerHomePreview');
-  var img = new Image();
+  preview.innerHTML = '';
+  var img = document.createElement('img');
   img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.onload = function() {
-    preview.innerHTML = '';
-    preview.appendChild(img);
-    var badge = document.createElement('span');
-    badge.className = 'banner-badge';
-    badge.textContent = badgeText || 'Imagen actual';
-    preview.appendChild(badge);
-    var hint = document.createElement('span');
-    hint.className = 'banner-drag-hint';
-    hint.textContent = 'Arrastrá para reposicionar';
-    preview.appendChild(hint);
-    img.style.objectPosition = visualConfig.bannerHomePosition || '50% 50%';
-    showBannerSize('homeSizeInfo', document.querySelector('#bannerHomeUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
-    addBannerDelBtn(preview, function() {
-      clearBannerPreview('bannerHomePreview', 'Sin imagen');
-      var b = visualConfig.heroBanners || [];
-      if (b[0]) b[0].desk = '';
-      visualConfig.heroBanners = b;
-      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de PC eliminado'); });
-    });
-  };
+  img.style.objectPosition = visualConfig.bannerHomePosition || '50% 50%';
+  preview.appendChild(img);
+  var badge = document.createElement('span');
+  badge.className = 'banner-badge';
+  badge.textContent = badgeText || 'Imagen actual';
+  preview.appendChild(badge);
+  var hint = document.createElement('span');
+  hint.className = 'banner-drag-hint';
+  hint.textContent = 'Arrastrá para reposicionar';
+  preview.appendChild(hint);
+  addBannerDelBtn(preview, function() {
+    clearBannerPreview('bannerHomePreview', 'Sin imagen');
+    var b = visualConfig.heroBanners || [];
+    if (b[0]) b[0].desk = '';
+    visualConfig.heroBanners = b;
+    saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de PC eliminado'); });
+  });
+  img.onload = function() { showBannerSize('homeSizeInfo', document.querySelector('#bannerHomeUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight); };
+  img.onerror = function() { preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">Sin imagen</span>'; };
   img.src = src;
 }
 setBannerHomePreview('/assets/uploads/banner-home.png?t=' + Date.now());
@@ -2018,30 +2017,28 @@ function uploadBannerHome(file) {
 function setBannerHomeMobPreview(src, badgeText) {
   var preview = document.getElementById('bannerHomeMobPreview');
   if (!preview) return;
-  var img = new Image();
+  preview.innerHTML = '';
+  var img = document.createElement('img');
   img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.onload = function() {
-    preview.innerHTML = '';
-    preview.appendChild(img);
-    var badge = document.createElement('span');
-    badge.className = 'banner-badge';
-    badge.textContent = badgeText || 'Imagen actual (celular)';
-    preview.appendChild(badge);
-    var hint = document.createElement('span');
-    hint.className = 'banner-drag-hint';
-    hint.textContent = 'Arrastrá para reposicionar';
-    preview.appendChild(hint);
-    img.style.objectPosition = visualConfig.bannerHomeMobilePosition || '50% 50%';
-    showBannerSize('homeMobSizeInfo', document.querySelector('#bannerHomeMobUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
-    addBannerDelBtn(preview, function() {
-      clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
-      var b = visualConfig.heroBanners || [];
-      if (b[0]) b[0].mob = '';
-      visualConfig.heroBanners = b;
-      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de celular eliminado'); });
-    });
-  };
-  img.onerror = function() { /* archivo no existe aún, el placeholder ya está visible */ };
+  img.style.objectPosition = visualConfig.bannerHomeMobilePosition || '50% 50%';
+  preview.appendChild(img);
+  var badge = document.createElement('span');
+  badge.className = 'banner-badge';
+  badge.textContent = badgeText || 'Imagen actual (celular)';
+  preview.appendChild(badge);
+  var hint = document.createElement('span');
+  hint.className = 'banner-drag-hint';
+  hint.textContent = 'Arrastrá para reposicionar';
+  preview.appendChild(hint);
+  addBannerDelBtn(preview, function() {
+    clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
+    var b = visualConfig.heroBanners || [];
+    if (b[0]) b[0].mob = '';
+    visualConfig.heroBanners = b;
+    saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de celular eliminado'); });
+  });
+  img.onload = function() { showBannerSize('homeMobSizeInfo', document.querySelector('#bannerHomeMobUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight); };
+  img.onerror = function() { preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">Sin imagen de celular (usa la de PC)</span>'; };
   img.src = src;
 }
 setBannerHomeMobPreview('/assets/uploads/banner-home-mobile.png?t=' + Date.now());
