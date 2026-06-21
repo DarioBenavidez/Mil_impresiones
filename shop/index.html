@@ -126,7 +126,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: inherit;
 }
+.pcard-desc, .pcard-specs { display: none; }
 .pcard-thumb img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -364,21 +367,22 @@
       var thumbHtml = p.img
         ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">'
         : '<div class="pcard-thumb-placeholder">' + (p.icon || '📦') + '</div>';
+      var detailUrl = '/shop/producto?id=' + encodeURIComponent(p.id || p.name);
       return '<div class="pcard ' + (p.color || 'm') + '-card">'
-        + '<div class="pcard-thumb">'
+        + '<a class="pcard-thumb" href="' + detailUrl + '">'
         + (p.badge ? '<span class="pcard-badge badge-' + (p.badgeType || 'hot') + '">' + p.badge + '</span>' : '')
         + thumbHtml
-        + '</div>'
+        + '</a>'
         + '<div class="pcard-body">'
         + '<span class="pcard-cat">' + (p.category || '') + '</span>'
-        + '<span class="pcard-name">' + p.name + '</span>'
+        + '<a class="pcard-name" href="' + detailUrl + '" style="text-decoration:none;color:inherit">' + p.name + '</a>'
         + '<p class="pcard-desc">' + (p.desc || '').slice(0, 80) + (p.desc && p.desc.length > 80 ? '…' : '') + '</p>'
         + '<div class="pcard-specs">' + (p.specs || []).slice(0, 3).map(function(s) { return '<span class="pcard-spec">' + s + '</span>'; }).join('') + '</div>'
         + '<div class="pcard-price-row"><span class="pcard-from">Desde</span><span class="pcard-price">$' + (p.price || 0).toLocaleString('es-AR') + '</span><span class="pcard-unit">' + (p.unit || '') + '</span></div>'
         + '<div class="pcard-delivery">⏱ ' + (p.delivery || 'Consultar') + '</div>'
         + '<div class="pcard-actions">'
         + '<button class="pcard-btn-cart" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'>🛒 Agregar</button>'
-        + '<a href="/shop/producto?id=' + encodeURIComponent(p.id || p.name) + '" class="pcard-btn-detail">Ver →</a>'
+        + '<a href="' + detailUrl + '" class="pcard-btn-detail">Ver producto →</a>'
         + '</div>'
         + '</div></div>';
     }).join('');
