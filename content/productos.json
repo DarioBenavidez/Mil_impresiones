@@ -73,8 +73,8 @@
       "hidden": true
     },
     {
-      "id": "folleto-a4-trptico",
-      "name": "Folleto A4 Tríptico",
+      "id": "folleto-20-x-30",
+      "name": "Folleto 20 x 30",
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "c",
@@ -82,17 +82,15 @@
       "img": "/assets/uploads/offsettt.png",
       "badge": null,
       "badgeType": null,
-      "desc": "Folleto tríptico A4 full color, papel ilustración 150g. Presentación profesional para tu empresa o producto. 6 caras aprovechables.",
+      "desc": "Folleto 20x 30  full color, papel ilustración 150g. Presentación profesional para tu empresa o producto.",
       "specs": [
         "150g",
-        "A4 tríptico",
-        "Full color",
-        "Doble faz"
+        "Full color"
       ],
-      "price": 32000,
-      "unit": "× 500 u.",
-      "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa \"Folleto A4 Tríptico\". ¿Pueden cotizarme?",
+      "price": 132000,
+      "unit": "1000",
+      "delivery": "Listo en 7 Dias",
+      "whatsapp": "Me interesa \"Folleto 20 x 30\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
     },
