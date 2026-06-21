@@ -490,60 +490,66 @@
     var toggle = drawer._toggle;
 
     var catColors = ['#EC008C','#00AEEF','#C9A800','#333333','#7C3AED','#059669','#EA580C','#0891B2'];
-    var html = '<div class="drawer-close-row">'
-      + '<span class="drawer-brand-label">Menú</span>'
-      + '<button class="drawer-close-btn" aria-label="Cerrar menú">'
-      + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
-      + '</button></div>'
-      + '<div class="drawer-section-label">Categorías</div>'
-      + '<div class="drawer-cats-grid">';
-    categories.forEach(function(cat, i) {
-      var bg = catColors[i % catColors.length];
-      html += '<a href="/shop?cat=' + cat.key + '" class="drawer-cat-card" style="background:' + bg + '">'
-        + '<span class="drawer-cat-icon">' + cat.icon + '</span>'
-        + '<span class="drawer-cat-name">' + cat.label + '</span>'
-        + '</a>';
-    });
-    html += '</div>'
-      + '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">'
-      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2"/></svg>'
-      + 'Ver toda la tienda</a>'
-      + '<div class="drawer-divider"></div>'
-      + '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">'
-      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.09 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>'
-      + 'Contacto</a>'
-      + '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">'
-      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>'
-      + 'Carrito</a>';
-    drawer.innerHTML = html;
 
-    drawer.querySelectorAll('.drawer-acc-toggle').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var row = btn.closest('.drawer-acc-row');
-        var key = row.dataset.key;
-        var subs = document.getElementById('mob-subs-' + key);
-        var opening = !row.classList.contains('open');
-        // Cerrar todos
-        drawer.querySelectorAll('.drawer-acc-row.open').forEach(function(r) {
-          r.classList.remove('open');
-          var s = document.getElementById('mob-subs-' + r.dataset.key);
-          if (s) s.classList.remove('open');
-        });
-        row.classList.toggle('open', opening);
-        if (subs) subs.classList.toggle('open', opening);
+    function mainScreen() {
+      var html = '<div class="drawer-close-row">'
+        + '<span class="drawer-brand-label">Menú</span>'
+        + '<button class="drawer-close-btn" id="drawerCloseBtn">'
+        + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+        + '</button></div>'
+        + '<div class="drawer-section-label">Categorías</div>'
+        + '<div class="drawer-cats-grid">';
+      categories.forEach(function(cat, i) {
+        var bg = catColors[i % catColors.length];
+        var hasSubs = cat.subs && cat.subs.length;
+        html += '<button class="drawer-cat-card" style="background:' + bg + '" data-key="' + cat.key + '" data-idx="' + i + '">'
+          + '<span class="drawer-cat-icon">' + cat.icon + '</span>'
+          + '<span class="drawer-cat-name">' + cat.label + '</span>'
+          + (hasSubs ? '<span class="drawer-cat-arrow">›</span>' : '')
+          + '</button>';
       });
-    });
-
-    var closeBtn = drawer.querySelector('.drawer-close-btn');
-    if (closeBtn && toggle) closeBtn.addEventListener('click', function() { toggle(false); });
-
-    if (toggle) {
-      drawer.querySelectorAll('a').forEach(function(a) {
-        a.addEventListener('click', function() { toggle(false); });
+      html += '</div>'
+        + '<a href="/shop" class="drawer-main-link">Ver toda la tienda</a>'
+        + '<div class="drawer-divider"></div>'
+        + '<a href="/contacto" class="drawer-main-link">Contacto</a>'
+        + '<a href="/carrito" class="drawer-main-link">Carrito</a>';
+      drawer.innerHTML = html;
+      drawer.querySelector('#drawerCloseBtn').addEventListener('click', function() { toggle(false); });
+      drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { toggle(false); }); });
+      drawer.querySelectorAll('.drawer-cat-card').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var idx = parseInt(btn.dataset.idx);
+          var cat = categories[idx];
+          if (cat.subs && cat.subs.length) { subScreen(cat, catColors[idx % catColors.length]); }
+          else { toggle(false); location.href = '/shop?cat=' + cat.key; }
+        });
       });
     }
+
+    function subScreen(cat, color) {
+      var html = '<div class="drawer-close-row">'
+        + '<button class="drawer-back-btn" id="drawerBackBtn">'
+        + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>'
+        + 'Volver</button>'
+        + '<button class="drawer-close-btn" id="drawerCloseBtn2">'
+        + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+        + '</button></div>'
+        + '<div class="drawer-sub-header" style="background:' + color + '">'
+        + '<span class="drawer-cat-icon" style="font-size:32px">' + cat.icon + '</span>'
+        + '<span style="font-family:var(--font-display);font-size:18px;font-weight:700;color:#fff">' + cat.label + '</span>'
+        + '</div>'
+        + '<a href="/shop?cat=' + cat.key + '" class="drawer-main-link drawer-sub-all">Ver todo en ' + cat.label + ' →</a>'
+        + '<div class="drawer-section-label">Subcategorías</div>';
+      cat.subs.forEach(function(sub) {
+        html += '<a href="/shop?cat=' + cat.key + '" class="drawer-sub-item">' + sub + '</a>';
+      });
+      drawer.innerHTML = html;
+      drawer.querySelector('#drawerBackBtn').addEventListener('click', mainScreen);
+      drawer.querySelector('#drawerCloseBtn2').addEventListener('click', function() { toggle(false); });
+      drawer.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { toggle(false); }); });
+    }
+
+    mainScreen();
   }
 
   function bindMegaHover() {

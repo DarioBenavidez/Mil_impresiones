@@ -1796,6 +1796,14 @@ html { color-scheme: light !important; }
 }
 .drawer-main-link:active { color: #fff; }
 .drawer-main-link.active { color: var(--accent); }
+.drawer-cat-arrow { font-size: 18px; color: rgba(255,255,255,.6); position: absolute; bottom: 8px; right: 10px; }
+.drawer-cat-card { position: relative; border: none; cursor: pointer; }
+.drawer-back-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: rgba(255,255,255,.7); font-size: 15px; font-family: var(--font-display); font-weight: 600; cursor: pointer; padding: 4px 0; transition: color .15s; }
+.drawer-back-btn:active { color: #fff; }
+.drawer-sub-header { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px 16px; margin: 0 16px 8px; border-radius: 16px; }
+.drawer-sub-all { font-size: 14px !important; padding: 12px 20px !important; color: var(--c) !important; }
+.drawer-sub-item { display: block; padding: 13px 20px; font-size: 15px; font-family: var(--font-display); font-weight: 500; color: rgba(255,255,255,.85); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.07); transition: color .15s, background .15s; }
+.drawer-sub-item:active { background: rgba(255,255,255,.06); color: #fff; }
 
 /* ── "Pedí tu cotización" button pill (override if needed) ────────────────── */
 .btn-pill { border-radius: 999px !important; }
