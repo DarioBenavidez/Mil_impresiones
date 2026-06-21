@@ -277,12 +277,12 @@
       "hidden": false
     },
     {
-      "id": "logo-marca",
+      "id": "diseo-de-logo",
       "name": "Diseño de Logo",
       "cat": "diseno",
       "category": "Diseño Gráfico",
       "color": "m",
-      "icon": "LG",
+      "icon": "DI",
       "img": "/assets/uploads/diseno.png",
       "badge": null,
       "badgeType": null,
@@ -296,8 +296,9 @@
       "price": 55000,
       "unit": "por proyecto",
       "delivery": "Listo en 5 días hábiles",
-      "whatsapp": "Me interesa el diseño de Logo. ¿Pueden darme más info?",
-      "oferta": true
+      "whatsapp": "Me interesa \"Diseño de Logo\". ¿Pueden cotizarme?",
+      "oferta": true,
+      "hidden": true
     },
     {
       "id": "identidad-visual",
