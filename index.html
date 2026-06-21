@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="styles.css">
 <style>
 /* ── HERO SLIDER ── */
-.hero-slider{position:relative;width:100%;height:28vw;min-height:200px;max-height:560px;overflow:hidden;background:#111}
+.hero-slider{position:relative;width:100%;aspect-ratio:1920/540;max-height:60vh;min-height:180px;overflow:hidden;background:#111}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
 .hero-slide.active{opacity:1;pointer-events:auto}
 .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
@@ -26,7 +26,7 @@
 .hero-arrow.prev{left:14px}
 .hero-arrow.next{right:14px}
 @media(max-width:600px){
-  .hero-slider{height:var(--banner-home-h-mob,55vw);min-height:unset;max-height:none}
+  .hero-slider{aspect-ratio:390/215;max-height:none;min-height:unset}
   .hero-slide .hero-img-desk{display:none}
   .hero-slide .hero-img-mob{display:block}
   .hero-arrow{display:none}

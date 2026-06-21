@@ -480,20 +480,18 @@ img{max-width:100%;display:block}
             <span style="color:var(--fg3);font-size:13px">Sin imagen</span>
           </div>
           <p style="font-size:12px;color:var(--fg3);margin:6px 0 16px">Arrastrá la imagen para reposicionarla</p>
-          <div style="margin-bottom:16px">
-            <div style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Altura del banner en PC</div>
-            <div style="display:flex;flex-direction:column;gap:8px" id="homeDeskHOptions">
-              <button class="height-btn" data-h="360" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Angosta</span><span style="font-size:11px;color:var(--fg3)">360 px de alto</span></button>
-              <button class="height-btn active" data-h="520" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Normal</span><span style="font-size:11px;color:var(--fg3)">520 px de alto</span></button>
-              <button class="height-btn" data-h="680" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Alta</span><span style="font-size:11px;color:var(--fg3)">680 px de alto</span></button>
+          <div style="background:#E0F5FD;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+            <span style="font-size:22px">📐</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#00AEEF">Tamaño exacto: 1920 × 540 px</div>
+              <div style="font-size:11px;color:#555;margin-top:2px">Horizontal · JPG o PNG · La imagen se va a estirar para cubrir todo el ancho</div>
             </div>
           </div>
-          <div class="banner-size-info" id="homeSizeInfo"></div>
           <div class="upload-zone" id="bannerHomeUploadZone">
             <input type="file" id="bannerHomeFileInput" accept="image/*">
             <div class="upload-icon">🖥️</div>
             <div class="upload-label">Arrastrá tu foto de PC acá, o hacé clic para elegirla</div>
-            <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 1600×520 px (horizontal)</div>
+            <div class="upload-sub">Tamaño ideal: 1920 × 540 px</div>
             <div class="upload-progress" id="bannerHomeProgress"><div class="upload-progress-bar" id="bannerHomeProgressBar"></div></div>
           </div>
           <button class="btn-primary" id="saveHomeBannerConfig" style="margin-top:16px">
@@ -585,21 +583,18 @@ img{max-width:100%;display:block}
             <span style="color:var(--fg3);font-size:13px">Sin imagen de celular (usa la de PC)</span>
           </div>
           <p style="font-size:12px;color:var(--fg3);margin:6px 0 16px">Arrastrá la imagen para reposicionarla</p>
-          <div style="margin-bottom:16px">
-            <div style="font-size:12px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Altura del banner en celular</div>
-            <div style="display:flex;flex-direction:column;gap:8px" id="homeMobileHOptions">
-              <button class="height-btn" data-mob="40" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Chica</span><span style="font-size:11px;color:var(--fg3)">≈ 156 px de alto</span></button>
-              <button class="height-btn active" data-mob="55" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Normal</span><span style="font-size:11px;color:var(--fg3)">≈ 214 px de alto</span></button>
-              <button class="height-btn" data-mob="70" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Alta</span><span style="font-size:11px;color:var(--fg3)">≈ 273 px de alto</span></button>
-              <button class="height-btn" data-mob="85" style="text-align:left;display:flex;justify-content:space-between;align-items:center"><span>Muy alta</span><span style="font-size:11px;color:var(--fg3)">≈ 332 px de alto</span></button>
+          <div style="background:#FDE4F1;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
+            <span style="font-size:22px">📐</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#EC008C">Tamaño exacto: 390 × 215 px</div>
+              <div style="font-size:11px;color:#555;margin-top:2px">Más cuadrada · JPG o PNG · Si no subís una, usa la imagen de PC</div>
             </div>
           </div>
-          <div class="banner-size-info" id="homeMobSizeInfo"></div>
           <div class="upload-zone" id="bannerHomeMobUploadZone">
             <input type="file" id="bannerHomeMobFileInput" accept="image/*">
             <div class="upload-icon">📱</div>
             <div class="upload-label">Arrastrá tu foto de celular acá, o hacé clic para elegirla</div>
-            <div class="upload-sub">JPG, PNG o WEBP · Recomendado: 800×400 px (más cuadrada)</div>
+            <div class="upload-sub">Tamaño ideal: 390 × 215 px</div>
             <div class="upload-progress" id="bannerHomeMobProgress"><div class="upload-progress-bar" id="bannerHomeMobProgressBar"></div></div>
           </div>
           <button class="btn-primary" id="saveHomeMobBannerConfig" style="margin-top:16px;background:#EC008C">
