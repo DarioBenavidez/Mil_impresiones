@@ -1950,39 +1950,51 @@ function clearBannerPreview(previewId, placeholder) {
   if (preview) preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">' + (placeholder || 'Sin imagen') + '</span>';
 }
 
-function addBannerDelBtn(preview, onDelete) {
-  var btn = document.createElement('button');
-  btn.className = 'banner-del-btn';
-  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg> Eliminar';
-  btn.addEventListener('click', function(e) { e.stopPropagation(); onDelete(); });
-  preview.appendChild(btn);
-}
-
-function setBannerHomePreview(src, badgeText) {
-  var preview = document.getElementById('bannerHomePreview');
+function buildBannerPreview(previewId, src, opts) {
+  // opts: { objPos, badgeText, placeholder, sizeInfoId, sizeUploadSel, onDelete }
+  opts = opts || {};
+  var preview = document.getElementById(previewId);
+  if (!preview) return;
   preview.innerHTML = '';
   var img = document.createElement('img');
   img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.style.objectPosition = visualConfig.bannerHomePosition || '50% 50%';
+  img.style.objectPosition = opts.objPos || '50% 50%';
   preview.appendChild(img);
   var badge = document.createElement('span');
   badge.className = 'banner-badge';
-  badge.textContent = badgeText || 'Imagen actual';
+  badge.textContent = opts.badgeText || 'Imagen actual';
   preview.appendChild(badge);
   var hint = document.createElement('span');
   hint.className = 'banner-drag-hint';
   hint.textContent = 'Arrastrá para reposicionar';
   preview.appendChild(hint);
-  addBannerDelBtn(preview, function() {
-    clearBannerPreview('bannerHomePreview', 'Sin imagen');
-    var b = visualConfig.heroBanners || [];
-    if (b[0]) b[0].desk = '';
-    visualConfig.heroBanners = b;
-    saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de PC eliminado'); });
-  });
-  img.onload = function() { showBannerSize('homeSizeInfo', document.querySelector('#bannerHomeUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight); };
-  img.onerror = function() { preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">Sin imagen</span>'; };
+  if (opts.onDelete) {
+    var btn = document.createElement('button');
+    btn.className = 'banner-del-btn';
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg> Eliminar';
+    btn.addEventListener('click', function(e) { e.stopPropagation(); opts.onDelete(); });
+    preview.appendChild(btn);
+  }
+  img.onload = function() {
+    if (opts.sizeInfoId && opts.sizeUploadSel) showBannerSize(opts.sizeInfoId, document.querySelector(opts.sizeUploadSel), img.naturalWidth, img.naturalHeight);
+  };
+  img.onerror = function() { clearBannerPreview(previewId, opts.placeholder || 'Sin imagen'); };
   img.src = src;
+}
+
+function setBannerHomePreview(src, badgeText) {
+  buildBannerPreview('bannerHomePreview', src, {
+    objPos: visualConfig.bannerHomePosition || '50% 50%',
+    badgeText: badgeText || 'Imagen actual',
+    sizeInfoId: 'homeSizeInfo', sizeUploadSel: '#bannerHomeUploadZone .upload-sub',
+    onDelete: function() {
+      clearBannerPreview('bannerHomePreview', 'Sin imagen');
+      var b = visualConfig.heroBanners || [];
+      if (b[0]) b[0].desk = '';
+      visualConfig.heroBanners = b;
+      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de PC eliminado'); });
+    }
+  });
 }
 setBannerHomePreview('/assets/uploads/banner-home.png?t=' + Date.now());
 
@@ -2015,31 +2027,19 @@ function uploadBannerHome(file) {
 
 // ── BANNER HOME MOBILE ──────────────────────────────────────────────────────
 function setBannerHomeMobPreview(src, badgeText) {
-  var preview = document.getElementById('bannerHomeMobPreview');
-  if (!preview) return;
-  preview.innerHTML = '';
-  var img = document.createElement('img');
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.style.objectPosition = visualConfig.bannerHomeMobilePosition || '50% 50%';
-  preview.appendChild(img);
-  var badge = document.createElement('span');
-  badge.className = 'banner-badge';
-  badge.textContent = badgeText || 'Imagen actual (celular)';
-  preview.appendChild(badge);
-  var hint = document.createElement('span');
-  hint.className = 'banner-drag-hint';
-  hint.textContent = 'Arrastrá para reposicionar';
-  preview.appendChild(hint);
-  addBannerDelBtn(preview, function() {
-    clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
-    var b = visualConfig.heroBanners || [];
-    if (b[0]) b[0].mob = '';
-    visualConfig.heroBanners = b;
-    saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de celular eliminado'); });
+  buildBannerPreview('bannerHomeMobPreview', src, {
+    objPos: visualConfig.bannerHomeMobilePosition || '50% 50%',
+    badgeText: badgeText || 'Imagen actual (celular)',
+    placeholder: 'Sin imagen de celular (usa la de PC)',
+    sizeInfoId: 'homeMobSizeInfo', sizeUploadSel: '#bannerHomeMobUploadZone .upload-sub',
+    onDelete: function() {
+      clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
+      var b = visualConfig.heroBanners || [];
+      if (b[0]) b[0].mob = '';
+      visualConfig.heroBanners = b;
+      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de celular eliminado'); });
+    }
   });
-  img.onload = function() { showBannerSize('homeMobSizeInfo', document.querySelector('#bannerHomeMobUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight); };
-  img.onerror = function() { preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">Sin imagen de celular (usa la de PC)</span>'; };
-  img.src = src;
 }
 setBannerHomeMobPreview('/assets/uploads/banner-home-mobile.png?t=' + Date.now());
 
@@ -2078,14 +2078,20 @@ function refreshHeroBanners() {
   saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Slider actualizado'); });
 }
 
-function setSlidePreview(previewId, src) {
-  var preview = document.getElementById(previewId);
-  if (!preview) return;
-  var img = new Image();
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px';
-  img.onload = function() { preview.innerHTML = ''; preview.appendChild(img); };
-  img.onerror = function() {};
-  img.src = src;
+function setSlidePreview(previewId, src, slotNum, isMob) {
+  var n = slotNum;
+  buildBannerPreview(previewId, src, {
+    badgeText: 'Slide ' + n + (isMob ? ' · Celular' : ' · PC'),
+    placeholder: 'Sin imagen',
+    onDelete: function() {
+      clearBannerPreview(previewId, 'Sin imagen');
+      var b = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
+      var idx = n - 1;
+      if (b[idx]) { if (isMob) b[idx].mob = ''; else b[idx].desk = ''; }
+      visualConfig.heroBanners = b;
+      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Slide ' + n + ' eliminado'); });
+    }
+  });
 }
 
 function uploadSlide(slotNum, isMob, file) {
@@ -2101,7 +2107,7 @@ function uploadSlide(slotNum, isMob, file) {
     if (bar) bar.style.width = '60%';
     uploadToGithub(filename, ev.target.result).then(function(r) {
       var url = (r.path || '/assets/uploads/' + filename) + '?t=' + Date.now();
-      setSlidePreview(previewId, url);
+      setSlidePreview(previewId, url, slotNum, isMob);
       if (bar) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; bar.style.width='0%'; }, 800); }
       var banners = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [{desk:'/assets/uploads/banner-home.png', mob:'/assets/uploads/banner-home-mobile.png'}];
       var idx = slotNum - 1;
@@ -2142,32 +2148,23 @@ function uploadSlide(slotNum, isMob, file) {
 (function() {
   var b = visualConfig.heroBanners;
   if (!b) return;
-  if (b[1] && b[1].desk) setSlidePreview('banner2Preview', b[1].desk + '?t=' + Date.now());
-  if (b[1] && b[1].mob)  setSlidePreview('banner2MobPreview', b[1].mob + '?t=' + Date.now());
-  if (b[2] && b[2].desk) setSlidePreview('banner3Preview', b[2].desk + '?t=' + Date.now());
-  if (b[2] && b[2].mob)  setSlidePreview('banner3MobPreview', b[2].mob + '?t=' + Date.now());
+  if (b[1] && b[1].desk) setSlidePreview('banner2Preview', b[1].desk + '?t=' + Date.now(), 2, false);
+  if (b[1] && b[1].mob)  setSlidePreview('banner2MobPreview', b[1].mob + '?t=' + Date.now(), 2, true);
+  if (b[2] && b[2].desk) setSlidePreview('banner3Preview', b[2].desk + '?t=' + Date.now(), 3, false);
+  if (b[2] && b[2].mob)  setSlidePreview('banner3MobPreview', b[2].mob + '?t=' + Date.now(), 3, true);
 })();
 
 // ── BANNER TIENDA ───────────────────────────────────────────────────────────
 function setBannerShopPreview(src, badgeText) {
-  var preview = document.getElementById('bannerPreview');
-  var img = new Image();
-  img.style.cssText = 'width:100%;height:100%;object-fit:cover';
-  img.onload = function() {
-    preview.innerHTML = '';
-    preview.appendChild(img);
-    var badge = document.createElement('span');
-    badge.className = 'banner-badge';
-    badge.textContent = badgeText || 'Imagen actual';
-    preview.appendChild(badge);
-    var hint = document.createElement('span');
-    hint.className = 'banner-drag-hint';
-    hint.textContent = 'Arrastrá para reposicionar';
-    preview.appendChild(hint);
-    img.style.objectPosition = visualConfig.bannerShopPosition || '50% 50%';
-    showBannerSize('shopSizeInfo', document.querySelector('#bannerUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
-  };
-  img.src = src;
+  buildBannerPreview('bannerPreview', src, {
+    objPos: visualConfig.bannerShopPosition || '50% 50%',
+    badgeText: badgeText || 'Imagen actual',
+    sizeInfoId: 'shopSizeInfo', sizeUploadSel: '#bannerUploadZone .upload-sub',
+    onDelete: function() {
+      clearBannerPreview('bannerPreview', 'Sin imagen');
+      saveVisualConfig({ bannerShopSrc: '' }).then(function(){ showToast('Banner de tienda eliminado'); });
+    }
+  });
 }
 setBannerShopPreview('/assets/uploads/banner-bc.png?t=' + Date.now());
 
