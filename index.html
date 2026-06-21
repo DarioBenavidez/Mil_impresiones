@@ -82,9 +82,15 @@
 .product-delivery{font-family:var(--font-display);font-size:11px;color:var(--fg-3);display:flex;align-items:center;gap:5px;margin-top:var(--s2)}
 
 /* ── TRUST BAND (proceso) ──────────────────────────────────────────────────── */
-.trust-band{background:var(--fg);padding:var(--s4) 0}
+.trust-band{background:var(--fg);padding:var(--s4) 0;overflow:hidden}
 .trust-grid{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
-.trust-step{display:flex;align-items:center;gap:10px;padding:10px var(--s4)}
+.trust-step{display:flex;align-items:center;gap:10px;padding:10px var(--s4);opacity:0;transform:translateX(-32px);transition:none}
+.trust-band.animate .trust-step{animation:trustSlide .45s ease forwards}
+.trust-band.animate .trust-step:nth-child(1){animation-delay:.05s}
+.trust-band.animate .trust-step:nth-child(2){animation-delay:.28s}
+.trust-band.animate .trust-step:nth-child(3){animation-delay:.51s}
+.trust-band.animate .trust-step:nth-child(4){animation-delay:.74s}
+@keyframes trustSlide{to{opacity:1;transform:translateX(0)}}
 .trust-step:not(:last-child)::after{content:'→';color:rgba(255,255,255,.3);font-size:16px;margin-left:var(--s4)}
 .trust-num{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.4);line-height:1;flex-shrink:0}
 .trust-body{display:flex;flex-direction:column;gap:1px}
@@ -691,6 +697,16 @@ fetch('/api/content?file=ticker.json')
     }
   });
 
+</script>
+<script>
+(function(){
+  var band = document.querySelector('.trust-band');
+  if(!band) return;
+  var io = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){ band.classList.add('animate'); io.disconnect(); }
+  }, {threshold: 0.3});
+  io.observe(band);
+})();
 </script>
 </body>
 </html>
