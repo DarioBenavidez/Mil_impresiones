@@ -150,16 +150,17 @@
       "img": "/assets/uploads/packagin.png",
       "badge": "Nuevo",
       "badgeType": "new",
-      "desc": "Etiquetas en rollo o troqueladas. Autoadhesivas para frascos, cajas, bolsas y más. Acabado brillante o mate. Impresión UV disponible.",
+      "desc": "Etiquetas x 10u. Autoadhesivas para frascos, cajas, bolsas y más. Acabado brillante.",
       "specs": [
         "Troquelado libre",
-        "Brillo o mate",
         "Impermeable"
       ],
-      "price": 22000,
-      "unit": "× 1000 u.",
-      "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan las Etiquetas Autoadhesivas. ¿Pueden cotizarme?"
+      "price": 4220,
+      "unit": "10",
+      "delivery": "Listo en 24 hs",
+      "whatsapp": "Me interesa \"Etiquetas Autoadhesivas\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     },
     {
       "id": "cajas-troqueladas",
