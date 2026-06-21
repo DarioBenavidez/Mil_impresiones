@@ -301,7 +301,7 @@
       "hidden": true
     },
     {
-      "id": "identidad-visual",
+      "id": "identidad-visual-completa",
       "name": "Identidad Visual Completa",
       "cat": "diseno",
       "category": "Diseño Gráfico",
@@ -319,7 +319,9 @@
       "price": 120000,
       "unit": "por proyecto",
       "delivery": "Listo en 10 días hábiles",
-      "whatsapp": "Me interesa la Identidad Visual Completa. ¿Pueden darme más info?"
+      "whatsapp": "Me interesa \"Identidad Visual Completa\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "tazas-personalizadas",
