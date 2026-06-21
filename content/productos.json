@@ -118,12 +118,12 @@
       "hidden": false
     },
     {
-      "id": "sobre-carta",
+      "id": "sobres-personalizados",
       "name": "Sobres Personalizados",
       "cat": "impresion",
-      "category": "Papelería",
+      "category": "Impresión Digital",
       "color": "c",
-      "icon": "SB",
+      "icon": "SO",
       "img": "/assets/uploads/papeleria.png",
       "badge": "Nuevo",
       "badgeType": "new",
@@ -136,8 +136,9 @@
       "price": 18000,
       "unit": "× 500 u.",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan los Sobres Personalizados. ¿Pueden cotizarme?",
-      "oferta": true
+      "whatsapp": "Me interesa \"Sobres Personalizados\". ¿Pueden cotizarme?",
+      "oferta": true,
+      "hidden": true
     },
     {
       "id": "etiquetas-autoadhesivas",
