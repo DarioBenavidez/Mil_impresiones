@@ -1,24 +1,8 @@
 {
   "steps": [
-    {
-      "num": "01",
-      "title": "Nos contás",
-      "sub": "WhatsApp, email o formulario"
-    },
-    {
-      "num": "02",
-      "title": "Te cotizamos",
-      "sub": "En menos de 2 horas hábiles"
-    },
-    {
-      "num": "03",
-      "title": "Producimos",
-      "sub": "Con tu aprobación previa"
-    },
-    {
-      "num": "04",
-      "title": "Listo en 48-72 hs",
-      "sub": "Entrega o retiro en local"
-    }
+    { "num": "01", "color": "#00AEEF", "title": "Elegís tu producto", "sub": "Seleccionás el servicio y clickeás \"Pedir ahora\"" },
+    { "num": "02", "color": "#EC008C", "title": "Nos contás tu proyecto", "sub": "Cantidad, medidas y cualquier detalle que tengas" },
+    { "num": "03", "color": "#C9A800", "title": "Cotización en 2 horas", "sub": "Te mandamos precio final con detalle completo" },
+    { "num": "04", "color": "#ffffff66", "title": "Producimos y entregamos", "sub": "48-72 hs hábiles. Envío o retiro en local" }
   ]
 }

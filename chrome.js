@@ -218,7 +218,15 @@
   </div>`;
 
   // ─── FOOTER ───────────────────────────────────────────────────────────────
-  const footerHTML = `
+  function buildFooter(cfg) {
+    var email   = cfg.footerEmail    || 'ventas@milimpresiones.com';
+    var wa      = cfg.footerWA       || '5491136365889';
+    var hours   = cfg.footerHours    || 'Lun–Vie 9–18 hs';
+    var addr1   = cfg.footerAddress1 || 'Ana María Janer 345, C1437 CABA';
+    var addr2   = cfg.footerAddress2 || 'Cafferata 2911, B1768 Villa Madero, GBA';
+    var ig      = cfg.footerInstagram|| '1000_impresiones';
+    var pinSvg  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+    return `
   <footer class="footer">
     <div class="footer-inner">
       <div class="cmyk-bar" style="margin-bottom:var(--s7)"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
@@ -227,10 +235,8 @@
           <img src="/assets/logo-icon-dark.png" alt="1000 Impresiones" style="height:48px;width:auto;margin-bottom:var(--s4)">
           <p>Soluciones creativas en diseño e impresión.</p>
           <p style="color:#ffffff66;font-size:13px;line-height:1.6;margin-top:var(--s4)">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Ana María Janer 345, C1437 CABA<br>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Cafferata 2911, B1768 Villa Madero, GBA
+            ${pinSvg}${addr1}<br>
+            ${pinSvg}${addr2}
           </p>
         </div>
         <div class="footer-col">
@@ -255,10 +261,10 @@
         <div class="footer-col">
           <h4>Contacto</h4>
           <ul>
-            <li><a href="mailto:ventas@milimpresiones.com">ventas@milimpresiones.com</a></li>
-            <li><a href="https://wa.me/5491136365889" target="_blank">WhatsApp</a></li>
-            <li><a href="https://www.instagram.com/1000_impresiones" target="_blank">Instagram</a></li>
-            <li style="color:#ffffff99;font-size:12px;margin-top:4px">Lun–Vie 9–18 hs</li>
+            <li><a href="mailto:${email}">${email}</a></li>
+            <li><a href="https://wa.me/${wa}" target="_blank">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/${ig}" target="_blank">Instagram</a></li>
+            <li style="color:#ffffff99;font-size:12px;margin-top:4px">${hours}</li>
             <li style="color:#ffffff99;font-size:13px;margin-top:8px">milimpresiones.com</li>
           </ul>
         </div>
@@ -272,6 +278,7 @@
       </div>
     </div>
   </footer>`;
+  }
 
   // ─── WHATSAPP FLOAT ───────────────────────────────────────────────────────
   const waHTML = `
@@ -295,7 +302,7 @@
     // Inject nav + cart drawer + footer + wa
     document.body.insertAdjacentHTML('afterbegin', buildNav(cfg));
     document.body.insertAdjacentHTML('beforeend', cartDrawerHTML);
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
+    document.body.insertAdjacentHTML('beforeend', buildFooter(cfg));
     document.body.insertAdjacentHTML('beforeend', waHTML);
 
     // Init cart badge

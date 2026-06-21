@@ -347,6 +347,14 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Menú / Categorías
         </div>
+        <div class="nav-item" data-panel="proceso">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ¿Cómo funciona?
+        </div>
+        <div class="nav-item" data-panel="footer-config">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Footer / Contacto
+        </div>
         <span class="nav-section-label">Contenido</span>
         <div class="nav-item" data-panel="portfolio">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -948,6 +956,61 @@ img{max-width:100%;display:block}
         <button onclick="addMenuCat()" style="margin-top:8px;background:none;border:2px dashed var(--border2);color:var(--fg2);border-radius:10px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:600;width:100%;transition:border-color .15s,color .15s" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--fg2)'">
           + Agregar categoría
         </button>
+      </div>
+
+      <!-- PROCESO / CÓMO FUNCIONA -->
+      <div class="panel" id="panel-proceso">
+        <div class="section-header">
+          <div>
+            <h2>¿Cómo funciona?</h2>
+            <p>Los 4 pasos que se animan en la barra oscura de la home</p>
+          </div>
+          <button class="btn-primary" onclick="saveProceso()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+        <div id="procesoEditor" style="display:flex;flex-direction:column;gap:12px"></div>
+      </div>
+
+      <!-- FOOTER / CONTACTO -->
+      <div class="panel" id="panel-footer-config">
+        <div class="section-header">
+          <div>
+            <h2>Footer / Contacto</h2>
+            <p>Email, WhatsApp, horario y direcciones del pie de página</p>
+          </div>
+          <button class="btn-primary" onclick="saveFooterConfig()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:2px">📬 Contacto</div>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Email
+              <input type="email" id="fcEmail" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="ventas@milimpresiones.com">
+            </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">WhatsApp (número sin +)
+              <input type="text" id="fcWA" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="5491136365889">
+            </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Instagram (sin @)
+              <input type="text" id="fcIG" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="1000_impresiones">
+            </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Horario de atención
+              <input type="text" id="fcHours" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="Lun–Vie 9–18 hs">
+            </label>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:14px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:2px">📍 Direcciones</div>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Dirección 1
+              <input type="text" id="fcAddr1" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="Calle 123, CABA">
+            </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Dirección 2
+              <input type="text" id="fcAddr2" style="display:block;margin-top:6px;width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)" placeholder="Calle 456, GBA">
+            </label>
+          </div>
+        </div>
       </div>
 
       <!-- PORTFOLIO -->
@@ -2513,6 +2576,60 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
     });
   }
 });
+
+// ── PROCESO ──────────────────────────────────────────────────────────────────
+var procesoSteps = [];
+fetch('/api/content?file=proceso.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(data){
+  procesoSteps = (data && data.steps) || [
+    {num:'01',color:'#00AEEF',title:'Elegís tu producto',sub:'Seleccionás el servicio y clickeás "Pedir ahora"'},
+    {num:'02',color:'#EC008C',title:'Nos contás tu proyecto',sub:'Cantidad, medidas y cualquier detalle que tengas'},
+    {num:'03',color:'#C9A800',title:'Cotización en 2 horas',sub:'Te mandamos precio final con detalle completo'},
+    {num:'04',color:'#ffffff66',title:'Producimos y entregamos',sub:'48-72 hs hábiles. Envío o retiro en local'}
+  ];
+  renderProcesoEditor();
+});
+
+function renderProcesoEditor() {
+  var el = document.getElementById('procesoEditor');
+  if(!el) return;
+  el.innerHTML = procesoSteps.map(function(s, i) {
+    return '<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:60px 1fr 1fr auto;gap:12px;align-items:center">'
+      + '<div style="display:flex;flex-direction:column;align-items:center;gap:6px">'
+      + '<span style="font-size:18px;font-weight:700;color:'+s.color+'">'+s.num+'</span>'
+      + '<input type="color" value="'+(s.color.startsWith('#')?s.color:'#888888')+'" onchange="procesoSteps['+i+'].color=this.value;renderProcesoEditor()" style="width:36px;height:28px;border:none;border-radius:6px;cursor:pointer;padding:0">'
+      + '</div>'
+      + '<label style="font-size:12px;font-weight:600;color:var(--fg2)">Título<input type="text" value="'+s.title+'" oninput="procesoSteps['+i+'].title=this.value" style="display:block;margin-top:4px;width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)"></label>'
+      + '<label style="font-size:12px;font-weight:600;color:var(--fg2)">Subtítulo<input type="text" value="'+(s.sub||'')+'" oninput="procesoSteps['+i+'].sub=this.value" style="display:block;margin-top:4px;width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2)"></label>'
+      + '</div>';
+  }).join('');
+}
+
+function saveProceso() {
+  saveToGithub('content/proceso.json', { steps: procesoSteps });
+}
+
+// ── FOOTER CONFIG ─────────────────────────────────────────────────────────────
+fetch('/api/content?file=config-visual.json').then(function(r){return r.ok?r.json():{};}).catch(function(){return{};}).then(function(cfg){
+  var set = function(id, val){ var el=document.getElementById(id); if(el && val) el.value=val; };
+  set('fcEmail',  cfg.footerEmail);
+  set('fcWA',     cfg.footerWA);
+  set('fcIG',     cfg.footerInstagram);
+  set('fcHours',  cfg.footerHours);
+  set('fcAddr1',  cfg.footerAddress1);
+  set('fcAddr2',  cfg.footerAddress2);
+});
+
+function saveFooterConfig() {
+  fetch('/api/content?file=config-visual.json').then(function(r){return r.ok?r.json():{};}).catch(function(){return{};}).then(function(cfg){
+    cfg.footerEmail     = document.getElementById('fcEmail').value;
+    cfg.footerWA        = document.getElementById('fcWA').value;
+    cfg.footerInstagram = document.getElementById('fcIG').value;
+    cfg.footerHours     = document.getElementById('fcHours').value;
+    cfg.footerAddress1  = document.getElementById('fcAddr1').value;
+    cfg.footerAddress2  = document.getElementById('fcAddr2').value;
+    saveToGithub('content/config-visual.json', cfg);
+  });
+}
 
 // ── PHONE PREVIEW ────────────────────────────────────────────────────────────
 (function() {

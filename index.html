@@ -299,38 +299,10 @@
 <!-- ══════════════════════════════════════════════════════
        TRUST BAND — Cómo funciona (pasos 01-04)
   ══════════════════════════════════════════════════════ -->
-  <section class="trust-band">
+  <section class="trust-band" id="trustBand">
     <div class="container">
-      <div class="eyebrow ink-dot" style="margin-bottom:var(--s5)">¿Cómo funciona?</div>
-      <div class="trust-grid">
-        <div class="trust-step">
-          <span class="trust-num" style="color:var(--c)">01</span>
-          <div class="trust-body">
-            <span class="trust-title">Elegís tu producto</span>
-            <span class="trust-sub">Seleccionás el servicio y clickeás "Pedir ahora"</span>
-          </div>
-        </div>
-        <div class="trust-step">
-          <span class="trust-num" style="color:var(--m)">02</span>
-          <div class="trust-body">
-            <span class="trust-title">Nos contás tu proyecto</span>
-            <span class="trust-sub">Cantidad, medidas y cualquier detalle que tengas</span>
-          </div>
-        </div>
-        <div class="trust-step">
-          <span class="trust-num" style="color:var(--y-ink,#C9A800)">03</span>
-          <div class="trust-body">
-            <span class="trust-title">Cotización en 2 horas</span>
-            <span class="trust-sub">Te mandamos precio final con detalle completo</span>
-          </div>
-        </div>
-        <div class="trust-step">
-          <span class="trust-num">04</span>
-          <div class="trust-body">
-            <span class="trust-title">Producimos y entregamos</span>
-            <span class="trust-sub">48-72 hs hábiles. Envío o retiro en local</span>
-          </div>
-        </div>
+      <div class="trust-grid" id="trustGrid">
+        <!-- pasos cargados desde /api/content?file=proceso.json -->
       </div>
     </div>
   </section>
@@ -703,12 +675,24 @@ fetch('/api/content?file=ticker.json')
 </script>
 <script>
 (function(){
-  var band = document.querySelector('.trust-band');
-  if(!band) return;
-  var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){ band.classList.add('animate'); io.disconnect(); }
-  }, {threshold: 0.3});
-  io.observe(band);
+  var band = document.getElementById('trustBand');
+  var grid = document.getElementById('trustGrid');
+  if(!band || !grid) return;
+  fetch('/api/content?file=proceso.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(data){
+    var steps = (data && data.steps) || [
+      {num:'01',color:'#00AEEF',title:'Elegís tu producto'},
+      {num:'02',color:'#EC008C',title:'Nos contás tu proyecto'},
+      {num:'03',color:'#C9A800',title:'Cotización en 2 horas'},
+      {num:'04',color:'#ffffff66',title:'Producimos y entregamos'}
+    ];
+    grid.innerHTML = steps.map(function(s){
+      return '<div class="trust-step"><span class="trust-num" style="color:'+s.color+'">'+s.num+'</span><div class="trust-body"><span class="trust-title">'+s.title+'</span></div></div>';
+    }).join('');
+    var io = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting){ band.classList.add('animate'); io.disconnect(); }
+    },{threshold:0.3});
+    io.observe(band);
+  });
 })();
 </script>
 </body>
