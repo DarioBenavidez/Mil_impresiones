@@ -352,7 +352,7 @@
       "cat": "merch",
       "category": "Merchandising",
       "color": "k",
-      "icon": "LB",
+      "icon": "LI",
       "img": "/assets/uploads/notebook-despues-.jpg",
       "badge": null,
       "badgeType": null,
@@ -365,7 +365,9 @@
       "price": 12000,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Libretas Personalizadas. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa \"Libretas Personalizadas\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "souvenirs",
