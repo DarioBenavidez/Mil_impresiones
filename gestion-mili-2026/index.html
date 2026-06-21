@@ -156,6 +156,8 @@ img{max-width:100%;display:block}
 .banner-current{cursor:grab;user-select:none}
 .banner-current.dragging{cursor:grabbing}
 .banner-drag-hint{position:absolute;bottom:10px;right:12px;background:rgba(0,0,0,.6);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;pointer-events:none;letter-spacing:.01em}
+.banner-del-btn{position:absolute;top:10px;right:10px;background:rgba(220,38,38,.85);color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .15s;z-index:5}
+.banner-del-btn:hover{background:#dc2626}
 .banner-controls{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
 .banner-size-info{display:none;font-size:12px;color:var(--fg3);padding:5px 10px;background:var(--bg2);border-radius:6px;border:1px solid var(--border);margin-bottom:12px}
 .height-options{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
@@ -1943,6 +1945,19 @@ document.getElementById('saveShopLayout').addEventListener('click', function() {
 });
 
 // ── BANNER HOME ────────────────────────────────────────────────────────────
+function clearBannerPreview(previewId, placeholder) {
+  var preview = document.getElementById(previewId);
+  if (preview) preview.innerHTML = '<span style="color:var(--fg3);font-size:13px">' + (placeholder || 'Sin imagen') + '</span>';
+}
+
+function addBannerDelBtn(preview, onDelete) {
+  var btn = document.createElement('button');
+  btn.className = 'banner-del-btn';
+  btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg> Eliminar';
+  btn.addEventListener('click', function(e) { e.stopPropagation(); onDelete(); });
+  preview.appendChild(btn);
+}
+
 function setBannerHomePreview(src, badgeText) {
   var preview = document.getElementById('bannerHomePreview');
   var img = new Image();
@@ -1960,6 +1975,13 @@ function setBannerHomePreview(src, badgeText) {
     preview.appendChild(hint);
     img.style.objectPosition = visualConfig.bannerHomePosition || '50% 50%';
     showBannerSize('homeSizeInfo', document.querySelector('#bannerHomeUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
+    addBannerDelBtn(preview, function() {
+      clearBannerPreview('bannerHomePreview', 'Sin imagen');
+      var b = visualConfig.heroBanners || [];
+      if (b[0]) b[0].desk = '';
+      visualConfig.heroBanners = b;
+      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de PC eliminado'); });
+    });
   };
   img.src = src;
 }
@@ -2011,6 +2033,13 @@ function setBannerHomeMobPreview(src, badgeText) {
     preview.appendChild(hint);
     img.style.objectPosition = visualConfig.bannerHomeMobilePosition || '50% 50%';
     showBannerSize('homeMobSizeInfo', document.querySelector('#bannerHomeMobUploadZone .upload-sub'), img.naturalWidth, img.naturalHeight);
+    addBannerDelBtn(preview, function() {
+      clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
+      var b = visualConfig.heroBanners || [];
+      if (b[0]) b[0].mob = '';
+      visualConfig.heroBanners = b;
+      saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Banner de celular eliminado'); });
+    });
   };
   img.onerror = function() { /* archivo no existe aún, el placeholder ya está visible */ };
   img.src = src;
