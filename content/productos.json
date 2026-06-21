@@ -168,7 +168,7 @@
       "cat": "packaging",
       "category": "Packaging",
       "color": "y",
-      "icon": "CJ",
+      "icon": "CA",
       "img": "/assets/uploads/packagin.png",
       "badge": null,
       "badgeType": null,
@@ -181,7 +181,9 @@
       "price": 35000,
       "unit": "× 100 u.",
       "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesan las Cajas Troqueladas. ¿Pueden cotizarme?"
+      "whatsapp": "Me interesa \"Cajas Troqueladas\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     },
     {
       "id": "bolsas-con-logo",
