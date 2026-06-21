@@ -86,10 +86,10 @@
 .trust-grid{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
 .trust-step{display:flex;align-items:center;gap:10px;padding:10px var(--s4);opacity:0;transform:translateX(-32px);transition:none}
 .trust-band.animate .trust-step{animation:trustSlide .45s ease forwards}
-.trust-band.animate .trust-step:nth-child(1){animation-delay:.05s}
-.trust-band.animate .trust-step:nth-child(2){animation-delay:.28s}
-.trust-band.animate .trust-step:nth-child(3){animation-delay:.51s}
-.trust-band.animate .trust-step:nth-child(4){animation-delay:.74s}
+.trust-band.animate .trust-step:nth-child(1){animation-delay:0s}
+.trust-band.animate .trust-step:nth-child(2){animation-delay:2s}
+.trust-band.animate .trust-step:nth-child(3){animation-delay:4s}
+.trust-band.animate .trust-step:nth-child(4){animation-delay:6s}
 @keyframes trustSlide{to{opacity:1;transform:translateX(0)}}
 .trust-step:not(:last-child)::after{content:'→';color:rgba(255,255,255,.3);font-size:16px;margin-left:var(--s4)}
 .trust-num{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.4);line-height:1;flex-shrink:0}
