@@ -31,16 +31,8 @@
   "footerInstagram": "1000_impresiones",
   "heroBanners": [
     {
-      "desk": "",
+      "desk": "/assets/uploads/banner-home.png",
       "mob": "/assets/uploads/banner-home-mobile.png"
-    },
-    {
-      "desk": "/assets/uploads/banner-home-2.png",
-      "mob": ""
-    },
-    {
-      "desk": "/assets/uploads/banner-home-3.png",
-      "mob": ""
     }
   ]
 }

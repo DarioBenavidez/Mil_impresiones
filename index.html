@@ -228,15 +228,16 @@
       slide.className = 'hero-slide' + (firstActive ? ' active' : '');
       firstActive = false;
       var imgD = document.createElement('img');
-      imgD.src = b.desk;
       imgD.className = 'hero-img-desk';
       imgD.alt = 'Mil Impresiones';
       if(b.posDesk) imgD.style.objectPosition = b.posDesk;
+      imgD.onerror = function() { slide.style.display = 'none'; };
+      imgD.src = b.desk;
       var imgM = document.createElement('img');
-      imgM.src = b.mob || b.desk;
       imgM.className = 'hero-img-mob';
       imgM.alt = 'Mil Impresiones';
       if(b.posMob) imgM.style.objectPosition = b.posMob;
+      imgM.src = b.mob || b.desk;
       slide.appendChild(imgD);
       slide.appendChild(imgM);
       slider.appendChild(slide);
