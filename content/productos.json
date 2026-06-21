@@ -388,7 +388,7 @@
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa \"Souvenirs\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": false
+      "hidden": true
     }
   ]
 }
