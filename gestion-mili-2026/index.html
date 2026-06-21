@@ -502,6 +502,74 @@ img{max-width:100%;display:block}
           </button>
         </div>
 
+        <!-- ═══ SLIDE 2 ═══ -->
+        <div style="background:var(--card);border:2px solid #C9A80033;border-radius:16px;padding:22px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:40px;height:40px;background:#FDF7DC;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">2️⃣</div>
+              <div>
+                <div style="font-size:16px;font-weight:700;color:var(--fg)">Slide 2 (opcional)</div>
+                <div style="font-size:12px;color:var(--fg3)">Segunda imagen del carrusel</div>
+              </div>
+            </div>
+            <button id="removeSlide2Btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--fg3);cursor:pointer">Quitar slide</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:8px">🖥️ PC</div>
+              <div class="banner-current" id="banner2Preview" style="height:120px"><span style="color:var(--fg3);font-size:12px">Sin imagen</span></div>
+              <div class="upload-zone" id="banner2UploadZone" style="margin-top:10px;padding:16px">
+                <input type="file" id="banner2FileInput" accept="image/*">
+                <div class="upload-label" style="font-size:12px">Clic para subir imagen PC</div>
+                <div class="upload-progress" id="banner2Progress"><div class="upload-progress-bar" id="banner2ProgressBar"></div></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:8px">📱 Celular</div>
+              <div class="banner-current" id="banner2MobPreview" style="height:120px"><span style="color:var(--fg3);font-size:12px">Sin imagen</span></div>
+              <div class="upload-zone" id="banner2MobUploadZone" style="margin-top:10px;padding:16px">
+                <input type="file" id="banner2MobFileInput" accept="image/*">
+                <div class="upload-label" style="font-size:12px">Clic para subir imagen celular</div>
+                <div class="upload-progress" id="banner2MobProgress"><div class="upload-progress-bar" id="banner2MobProgressBar"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ SLIDE 3 ═══ -->
+        <div style="background:var(--card);border:2px solid #7C3AED33;border-radius:16px;padding:22px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:40px;height:40px;background:#EDE9FE;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px">3️⃣</div>
+              <div>
+                <div style="font-size:16px;font-weight:700;color:var(--fg)">Slide 3 (opcional)</div>
+                <div style="font-size:12px;color:var(--fg3)">Tercera imagen del carrusel</div>
+              </div>
+            </div>
+            <button id="removeSlide3Btn" style="background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--fg3);cursor:pointer">Quitar slide</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:8px">🖥️ PC</div>
+              <div class="banner-current" id="banner3Preview" style="height:120px"><span style="color:var(--fg3);font-size:12px">Sin imagen</span></div>
+              <div class="upload-zone" id="banner3UploadZone" style="margin-top:10px;padding:16px">
+                <input type="file" id="banner3FileInput" accept="image/*">
+                <div class="upload-label" style="font-size:12px">Clic para subir imagen PC</div>
+                <div class="upload-progress" id="banner3Progress"><div class="upload-progress-bar" id="banner3ProgressBar"></div></div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--fg2);margin-bottom:8px">📱 Celular</div>
+              <div class="banner-current" id="banner3MobPreview" style="height:120px"><span style="color:var(--fg3);font-size:12px">Sin imagen</span></div>
+              <div class="upload-zone" id="banner3MobUploadZone" style="margin-top:10px;padding:16px">
+                <input type="file" id="banner3MobFileInput" accept="image/*">
+                <div class="upload-label" style="font-size:12px">Clic para subir imagen celular</div>
+                <div class="upload-progress" id="banner3MobProgress"><div class="upload-progress-bar" id="banner3MobProgressBar"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- ═══ SECCIÓN ANDROID / CELULAR ═══ -->
         <div style="background:var(--card);border:2px solid #EC008C33;border-radius:16px;padding:22px">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
@@ -1982,6 +2050,82 @@ function uploadBannerHomeMob(file) {
   };
   reader.readAsDataURL(file);
 }
+
+// ── SLIDES 2 y 3 ───────────────────────────────────────────────────────────
+function refreshHeroBanners() {
+  var b = visualConfig.heroBanners || [{desk:'/assets/uploads/banner-home.png', mob:'/assets/uploads/banner-home-mobile.png'}];
+  saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Slider actualizado'); });
+}
+
+function setSlidePreview(previewId, src) {
+  var preview = document.getElementById(previewId);
+  if (!preview) return;
+  var img = new Image();
+  img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:8px';
+  img.onload = function() { preview.innerHTML = ''; preview.appendChild(img); };
+  img.onerror = function() {};
+  img.src = src;
+}
+
+function uploadSlide(slotNum, isMob, file) {
+  var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.png';
+  var progressId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Progress';
+  var barId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'ProgressBar';
+  var previewId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Preview';
+  var prog = document.getElementById(progressId);
+  var bar = document.getElementById(barId);
+  if (prog) { prog.style.display = 'block'; bar.style.width = '30%'; }
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    if (bar) bar.style.width = '60%';
+    uploadToGithub(filename, ev.target.result).then(function(r) {
+      var url = (r.path || '/assets/uploads/' + filename) + '?t=' + Date.now();
+      setSlidePreview(previewId, url);
+      if (bar) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; bar.style.width='0%'; }, 800); }
+      var banners = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [{desk:'/assets/uploads/banner-home.png', mob:'/assets/uploads/banner-home-mobile.png'}];
+      var idx = slotNum - 1;
+      if (!banners[idx]) banners[idx] = {desk:'', mob:''};
+      if (isMob) banners[idx].mob = r.path || '/assets/uploads/' + filename;
+      else banners[idx].desk = r.path || '/assets/uploads/' + filename;
+      visualConfig.heroBanners = banners;
+      refreshHeroBanners();
+    }).catch(function() { showToast('Error al subir', 'error'); if (prog) prog.style.display = 'none'; });
+  };
+  reader.readAsDataURL(file);
+}
+
+['2','3'].forEach(function(n) {
+  ['', 'Mob'].forEach(function(mob) {
+    var zone = document.getElementById('banner' + n + mob + 'UploadZone');
+    var input = document.getElementById('banner' + n + mob + 'FileInput');
+    if (!zone || !input) return;
+    var isMob = mob === 'Mob';
+    zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
+    zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });
+    zone.addEventListener('drop', function(e) { e.preventDefault(); zone.classList.remove('drag'); var f = e.dataTransfer.files[0]; if (f) uploadSlide(parseInt(n), isMob, f); });
+    input.addEventListener('change', function(e) { if (e.target.files[0]) uploadSlide(parseInt(n), isMob, e.target.files[0]); });
+    zone.addEventListener('click', function(e) { if (e.target !== input) input.click(); });
+  });
+  document.getElementById('removeSlide' + n + 'Btn').addEventListener('click', function() {
+    var banners = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
+    var idx = parseInt(n) - 1;
+    banners.splice(idx, 1);
+    visualConfig.heroBanners = banners;
+    refreshHeroBanners();
+    document.getElementById('banner' + n + 'Preview').innerHTML = '<span style="color:var(--fg3);font-size:12px">Sin imagen</span>';
+    document.getElementById('banner' + n + 'MobPreview').innerHTML = '<span style="color:var(--fg3);font-size:12px">Sin imagen</span>';
+  });
+});
+
+// Precargar previews de slides 2 y 3
+(function() {
+  var b = visualConfig.heroBanners;
+  if (!b) return;
+  if (b[1] && b[1].desk) setSlidePreview('banner2Preview', b[1].desk + '?t=' + Date.now());
+  if (b[1] && b[1].mob)  setSlidePreview('banner2MobPreview', b[1].mob + '?t=' + Date.now());
+  if (b[2] && b[2].desk) setSlidePreview('banner3Preview', b[2].desk + '?t=' + Date.now());
+  if (b[2] && b[2].mob)  setSlidePreview('banner3MobPreview', b[2].mob + '?t=' + Date.now());
+})();
 
 // ── BANNER TIENDA ───────────────────────────────────────────────────────────
 function setBannerShopPreview(src, badgeText) {
