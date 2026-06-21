@@ -53,12 +53,12 @@
 .fchip {
   font-family: var(--font-display);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 7px 16px;
   border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--bg);
-  color: var(--fg-2);
+  border: 1.5px solid #EC008C;
+  background: #EC008C;
+  color: #fff;
   cursor: pointer;
   transition: all .2s;
   white-space: nowrap;
@@ -67,8 +67,8 @@
   align-items: center;
   gap: 6px;
 }
-.fchip:hover { border-color: var(--fg); color: var(--fg); }
-.fchip.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.fchip:hover { background: #cc006f; border-color: #cc006f; color: #fff; }
+.fchip.active { background: #a3004e; border-color: #a3004e; color: #fff; }
 .fchip-dot { width: 7px; height: 7px; border-radius: 50%; }
 
 /* Sort + count bar */
@@ -256,24 +256,12 @@
     <div class="container">
       <div class="filter-strip-inner" id="filterChips">
         <button class="fchip active" data-cat="all">Todos</button>
-        <button class="fchip" data-cat="impresion">
-          <span class="fchip-dot" style="background:var(--c)"></span>Impresión
-        </button>
-        <button class="fchip" data-cat="packaging">
-          <span class="fchip-dot" style="background:var(--y)"></span>Packaging
-        </button>
-        <button class="fchip" data-cat="giganto">
-          <span class="fchip-dot" style="background:var(--k)"></span>Gigantografías
-        </button>
-        <button class="fchip" data-cat="diseno">
-          <span class="fchip-dot" style="background:var(--m)"></span>Diseño
-        </button>
-        <button class="fchip" data-cat="merch">
-          <span class="fchip-dot" style="background:#888"></span>Merchandising
-        </button>
-        <button class="fchip" data-cat="papeleria">
-          <span class="fchip-dot" style="background:#a855f7"></span>Papelería
-        </button>
+        <button class="fchip" data-cat="impresion">Impresión</button>
+        <button class="fchip" data-cat="packaging">Packaging</button>
+        <button class="fchip" data-cat="giganto">Gigantografías</button>
+        <button class="fchip" data-cat="diseno">Diseño</button>
+        <button class="fchip" data-cat="merch">Merchandising</button>
+        <button class="fchip" data-cat="papeleria">Papelería</button>
       </div>
     </div>
   </div>
