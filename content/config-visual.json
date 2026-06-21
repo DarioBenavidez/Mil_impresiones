@@ -35,7 +35,7 @@
       "mob": "/assets/uploads/banner-home-mobile.png"
     },
     {
-      "desk": "",
+      "desk": "/assets/uploads/banner-home-2.png",
       "mob": ""
     }
   ]
