@@ -217,21 +217,23 @@
     if(cfg.bannerHomeHeight && window.innerWidth > 600) slider.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
     if(cfg.bannerHomeMobileH && window.innerWidth <= 600) document.documentElement.style.setProperty('--banner-home-h-mob', cfg.bannerHomeMobileH + 'vw');
 
-    // Construir slides desde cfg.heroBanners o fallback al banner único
-    var banners = cfg.heroBanners && cfg.heroBanners.length
-      ? cfg.heroBanners
-      : [{desk: '/assets/uploads/banner-home.png', mob: '/assets/uploads/banner-home-mobile.png', posDesk: cfg.bannerHomePosition, posMob: cfg.bannerHomeMobilePosition}];
+    // Construir slides — solo incluir banners con imagen definida
+    var banners = (cfg.heroBanners || []).filter(function(b) { return b.desk; });
+    if (!banners.length) banners = [{desk: '/assets/uploads/banner-home.png', mob: '/assets/uploads/banner-home-mobile.png'}];
 
-    banners.forEach(function(b, idx) {
+    var firstActive = true;
+    banners.forEach(function(b) {
+      if (!b.desk) return;
       var slide = document.createElement('div');
-      slide.className = 'hero-slide' + (idx === 0 ? ' active' : '');
+      slide.className = 'hero-slide' + (firstActive ? ' active' : '');
+      firstActive = false;
       var imgD = document.createElement('img');
-      imgD.src = b.desk || '/assets/uploads/banner-home.png';
+      imgD.src = b.desk;
       imgD.className = 'hero-img-desk';
       imgD.alt = 'Mil Impresiones';
       if(b.posDesk) imgD.style.objectPosition = b.posDesk;
       var imgM = document.createElement('img');
-      imgM.src = b.mob || b.desk || '/assets/uploads/banner-home.png';
+      imgM.src = b.mob || b.desk;
       imgM.className = 'hero-img-mob';
       imgM.alt = 'Mil Impresiones';
       if(b.posMob) imgM.style.objectPosition = b.posMob;
