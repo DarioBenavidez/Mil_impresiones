@@ -84,13 +84,16 @@
 /* ── TRUST BAND (proceso) ──────────────────────────────────────────────────── */
 .trust-band{background:var(--fg);padding:var(--s4) 0;overflow:hidden}
 .trust-grid{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
-.trust-step{display:flex;align-items:center;gap:10px;padding:10px var(--s4);opacity:0;transform:translateX(-32px);transition:none}
-.trust-band.animate .trust-step{animation:trustSlide .45s ease forwards}
-.trust-band.animate .trust-step:nth-child(1){animation-delay:0s}
-.trust-band.animate .trust-step:nth-child(2){animation-delay:2s}
-.trust-band.animate .trust-step:nth-child(3){animation-delay:4s}
-.trust-band.animate .trust-step:nth-child(4){animation-delay:6s}
-@keyframes trustSlide{to{opacity:1;transform:translateX(0)}}
+.trust-step{display:flex;align-items:center;gap:10px;padding:10px var(--s4);opacity:0;transform:translateX(-32px)}
+.trust-band.animate .trust-step{animation-duration:5.5s;animation-timing-function:ease;animation-iteration-count:infinite;animation-fill-mode:both}
+.trust-band.animate .trust-step:nth-child(1){animation-name:ts1}
+.trust-band.animate .trust-step:nth-child(2){animation-name:ts2}
+.trust-band.animate .trust-step:nth-child(3){animation-name:ts3}
+.trust-band.animate .trust-step:nth-child(4){animation-name:ts4}
+@keyframes ts1{0%{opacity:0;transform:translateX(-32px)}7%{opacity:1;transform:translateX(0)}72%{opacity:1;transform:translateX(0)}80%{opacity:0;transform:translateX(-32px)}100%{opacity:0;transform:translateX(-32px)}}
+@keyframes ts2{0%,18%{opacity:0;transform:translateX(-32px)}25%{opacity:1;transform:translateX(0)}72%{opacity:1;transform:translateX(0)}80%,100%{opacity:0;transform:translateX(-32px)}}
+@keyframes ts3{0%,36%{opacity:0;transform:translateX(-32px)}43%{opacity:1;transform:translateX(0)}72%{opacity:1;transform:translateX(0)}80%,100%{opacity:0;transform:translateX(-32px)}}
+@keyframes ts4{0%,54%{opacity:0;transform:translateX(-32px)}61%{opacity:1;transform:translateX(0)}72%{opacity:1;transform:translateX(0)}80%,100%{opacity:0;transform:translateX(-32px)}}
 .trust-step:not(:last-child)::after{content:'→';color:rgba(255,255,255,.3);font-size:16px;margin-left:var(--s4)}
 .trust-num{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:.05em;color:rgba(255,255,255,.4);line-height:1;flex-shrink:0}
 .trust-body{display:flex;flex-direction:column;gap:1px}
