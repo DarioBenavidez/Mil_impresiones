@@ -241,16 +241,17 @@
       "img": "/assets/uploads/notebook-despues-.jpg",
       "badge": null,
       "badgeType": null,
-      "desc": "Vinilos adhesivos para vidrieras, paredes y vehículos. Fácil aplicación, durable hasta 5 años en exterior. Corte de precisión incluido.",
+      "desc": "Vinilos adhesivos para vidrieras, paredes y vehículos.",
       "specs": [
         "Interior o exterior",
-        "5 años durabilidad",
-        "Corte incluido"
+        "Brillo"
       ],
-      "price": 8500,
+      "price": 32400,
       "unit": "por m²",
-      "delivery": "Listo en 48 hs",
-      "whatsapp": "Me interesa el Vinilo Adhesivo. ¿Pueden cotizarme por m²?"
+      "delivery": "Listo en 72 hs",
+      "whatsapp": "Me interesa \"Vinilo Adhesivo\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     },
     {
       "id": "roll-up-190200-cm",
