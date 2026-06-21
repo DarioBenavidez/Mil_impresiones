@@ -329,7 +329,7 @@
       "cat": "merch",
       "category": "Merchandising",
       "color": "c",
-      "icon": "TZ",
+      "icon": "TA",
       "img": "/assets/uploads/taza-dana.png",
       "badge": "Nuevo",
       "badgeType": "new",
@@ -339,11 +339,12 @@
         "Sublimación",
         "Apta lavavajillas"
       ],
-      "price": 8500,
+      "price": 10999,
       "unit": "por unidad",
-      "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesan las Tazas Personalizadas. ¿Pueden cotizarme?",
-      "oferta": true
+      "delivery": "Listo en 24 hs",
+      "whatsapp": "Me interesa \"Tazas Personalizadas\". ¿Pueden cotizarme?",
+      "oferta": true,
+      "hidden": false
     },
     {
       "id": "libretas-personalizadas",
