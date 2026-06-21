@@ -376,11 +376,13 @@
     var mobileDrawer = document.createElement('div');
     mobileDrawer.className = 'mobile-drawer';
     mobileDrawer.id = 'mobileNavDrawer';
-    // Fallback estático (se reemplaza con acordeón cuando carguen las categorías)
+    // Fallback estático (se reemplaza cuando carguen las categorías)
     mobileDrawer.innerHTML =
-      '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Tienda</a>'
+      '<div class="drawer-close-row"><span class="drawer-brand-label">Menú</span><button class="drawer-close-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
+      + '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Ver tienda</a>'
+      + '<div class="drawer-divider"></div>'
       + '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">Contacto</a>'
-      + '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">🛒 Carrito</a>';
+      + '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">Carrito</a>';
     document.body.appendChild(mobileDrawer);
 
     var toggleMobileDrawer = function (open) {
@@ -486,26 +488,33 @@
     var drawer = document.getElementById('mobileNavDrawer');
     if (!drawer) return;
     var toggle = drawer._toggle;
-    var CHEVDOWN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
 
+    var catColors = ['#EC008C','#00AEEF','#C9A800','#333333','#7C3AED','#059669','#EA580C','#0891B2'];
     var html = '<div class="drawer-close-row">'
+      + '<span class="drawer-brand-label">Menú</span>'
       + '<button class="drawer-close-btn" aria-label="Cerrar menú">'
-      + '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+      + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
       + '</button></div>'
-      + '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">Tienda</a>';
-    categories.forEach(function(cat) {
-      html += '<div class="drawer-acc-row" data-key="' + cat.key + '">'
-        + '<a href="/shop?cat=' + cat.key + '" class="drawer-acc-link"><span class="drawer-acc-icon">' + cat.icon + '</span>' + cat.label + '</a>'
-        + '<button class="drawer-acc-toggle" aria-label="Ver subcategorías de ' + cat.label + '">' + CHEVDOWN + '</button>'
-        + '</div>'
-        + '<div class="drawer-acc-subs" id="mob-subs-' + cat.key + '">'
-        + (cat.subs || []).map(function(sub) {
-            return '<a href="/shop?cat=' + cat.key + '" class="drawer-acc-sub">· ' + sub + '</a>';
-          }).join('')
-        + '</div>';
+      + '<div class="drawer-section-label">Categorías</div>'
+      + '<div class="drawer-cats-grid">';
+    categories.forEach(function(cat, i) {
+      var bg = catColors[i % catColors.length];
+      html += '<a href="/shop?cat=' + cat.key + '" class="drawer-cat-card" style="background:' + bg + '">'
+        + '<span class="drawer-cat-icon">' + cat.icon + '</span>'
+        + '<span class="drawer-cat-name">' + cat.label + '</span>'
+        + '</a>';
     });
-    html += '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">Contacto</a>';
-    html += '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">🛒 Carrito</a>';
+    html += '</div>'
+      + '<a href="/shop" class="drawer-main-link' + (CURRENT === 'shop' ? ' active' : '') + '">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2"/></svg>'
+      + 'Ver toda la tienda</a>'
+      + '<div class="drawer-divider"></div>'
+      + '<a href="/contacto" class="drawer-main-link' + (CURRENT === 'contacto' ? ' active' : '') + '">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.1 2.18 2 2 0 012.09 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>'
+      + 'Contacto</a>'
+      + '<a href="/carrito" class="drawer-main-link' + (CURRENT === 'carrito' ? ' active' : '') + '">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>'
+      + 'Carrito</a>';
     drawer.innerHTML = html;
 
     drawer.querySelectorAll('.drawer-acc-toggle').forEach(function(btn) {

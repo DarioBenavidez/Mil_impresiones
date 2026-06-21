@@ -241,15 +241,13 @@ section { padding: var(--s7) 0; position: relative; }
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: var(--bg);
+  background: var(--fg);
   flex-direction: column;
-  padding-top: 80px;
-  padding-bottom: var(--s6);
+  padding: 0;
   align-items: stretch;
   overflow-y: auto;
 }
 .mobile-drawer.open { display: flex; }
-.mobile-drawer a.active { color: var(--accent); }
 
 /* ============ Buttons ============ */
 .btn {
@@ -1721,87 +1719,83 @@ html { color-scheme: light !important; }
 .mobile-drawer .drawer-sub { font-size: 13px; padding-left: 32px; color: var(--fg-2); opacity: .8; }
 
 /* ── MOBILE DRAWER acordeón de categorías ────────────────────────────────── */
+/* ── Mobile drawer rediseño ── */
 .drawer-close-row {
   display: flex;
-  justify-content: flex-end;
-  padding: 12px 16px 4px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 12px;
+}
+.drawer-brand-label {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(255,255,255,.5);
+  letter-spacing: .05em;
+  text-transform: uppercase;
 }
 .drawer-close-btn {
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   border-radius: 50%;
-  background: var(--border);
+  background: rgba(255,255,255,.1);
   border: none;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  color: var(--fg);
+  color: #fff;
   transition: background .15s;
 }
-.drawer-close-btn:active { background: var(--fg-3); }
-.drawer-main-link {
-  display: block;
-  padding: 16px 24px;
-  font-size: 17px;
-  font-family: var(--font-display);
+.drawer-close-btn:active { background: rgba(255,255,255,.2); }
+.drawer-section-label {
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: -.02em;
-  color: var(--fg);
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  padding: 16px 20px 8px;
 }
-.drawer-main-link.active { color: var(--accent); }
-.drawer-acc-row {
-  display: flex;
-  align-items: stretch;
-  border-bottom: 1px solid var(--border);
-}
-.drawer-acc-link {
-  flex: 1;
-  display: flex;
-  align-items: center;
+.drawer-cats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  padding: 14px 16px 14px 24px;
-  font-size: 15px;
-  font-family: var(--font-display);
-  font-weight: 500;
-  color: var(--fg);
-  text-decoration: none;
+  padding: 0 16px 16px;
 }
-.drawer-acc-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
-.drawer-acc-toggle {
-  padding: 0 18px;
-  background: none;
-  border: none;
-  border-left: 1px solid var(--border);
-  cursor: pointer;
-  color: var(--fg-3);
+.drawer-cat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 12px;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: transform .15s, opacity .15s;
+  min-height: 90px;
+}
+.drawer-cat-card:active { transform: scale(.96); opacity: .85; }
+.drawer-cat-icon { font-size: 28px; line-height: 1; }
+.drawer-cat-name {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  letter-spacing: -.01em;
+}
+.drawer-divider { height: 1px; background: rgba(255,255,255,.1); margin: 4px 20px 4px; }
+.drawer-main-link {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
-  min-width: 52px;
-  justify-content: center;
-}
-.drawer-acc-toggle:active { background: var(--border); }
-.drawer-acc-toggle svg { transition: transform .22s ease; }
-.drawer-acc-row.open .drawer-acc-toggle svg { transform: rotate(180deg); }
-.drawer-acc-subs {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .3s ease;
-  background: #edeae2;
-}
-.drawer-acc-subs.open { max-height: 1000px; }
-.drawer-acc-sub {
-  display: block;
-  padding: 12px 20px 12px 56px;
-  font-size: 14px;
-  line-height: 1.3;
-  font-family: var(--font-body);
-  color: var(--fg-2);
+  gap: 12px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: rgba(255,255,255,.85);
   text-decoration: none;
-  border-bottom: 1px solid var(--border);
+  transition: color .15s;
 }
-.drawer-acc-sub:last-child { border-bottom: none; }
-.drawer-acc-sub:active { background: var(--border); }
+.drawer-main-link:active { color: #fff; }
+.drawer-main-link.active { color: var(--accent); }
 
 /* ── "Pedí tu cotización" button pill (override if needed) ────────────────── */
 .btn-pill { border-radius: 999px !important; }
