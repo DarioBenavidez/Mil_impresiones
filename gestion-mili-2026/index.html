@@ -1580,6 +1580,45 @@ function uploadToGithub(filename, base64, folder) {
   }).then(function(r) { return r.json(); });
 }
 
+function compressImage(file, maxW, maxH, quality) {
+  return new Promise(function(resolve) {
+    var img = new Image();
+    var objUrl = URL.createObjectURL(file);
+    img.onload = function() {
+      URL.revokeObjectURL(objUrl);
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (w > maxW || h > maxH) {
+        var ratio = Math.min(maxW / w, maxH / h);
+        w = Math.round(w * ratio); h = Math.round(h * ratio);
+      }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      canvas.toBlob(function(blob) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          resolve({ base64: e.target.result, origSize: file.size, newSize: blob.size });
+        };
+        reader.readAsDataURL(blob);
+      }, 'image/webp', quality || 0.85);
+    };
+    img.onerror = function() {
+      URL.revokeObjectURL(objUrl);
+      var reader = new FileReader();
+      reader.onload = function(e) { resolve({ base64: e.target.result, origSize: file.size, newSize: file.size }); };
+      reader.readAsDataURL(file);
+    };
+    img.src = objUrl;
+  });
+}
+
+function sizeLabel(origSize, newSize) {
+  if (!origSize || origSize === newSize) return '';
+  var from = origSize >= 1048576 ? (origSize/1048576).toFixed(1) + ' MB' : Math.round(origSize/1024) + ' KB';
+  var to = newSize >= 1048576 ? (newSize/1048576).toFixed(1) + ' MB' : Math.round(newSize/1024) + ' KB';
+  return ' (' + from + ' → ' + to + ')';
+}
+
 // ── TOAST ──────────────────────────────────────────────────────────────────
 var toastTimer;
 function showToast(msg, type) {
@@ -1665,13 +1704,11 @@ function removeSpec(i) { currentProductSpecs.splice(i, 1); renderSpecTags(); }
 document.getElementById('prodImgInput').addEventListener('change', function(e) {
   var file = e.target.files[0];
   if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    document.getElementById('prodImgPreviewImg').src = ev.target.result;
+  compressImage(file, 800, 800, 0.82).then(function(c) {
+    document.getElementById('prodImgPreviewImg').src = c.base64;
     document.getElementById('prodImgPreview').style.display = 'block';
-    currentProductImg = { base64: ev.target.result, filename: file.name };
-  };
-  reader.readAsDataURL(file);
+    currentProductImg = { base64: c.base64, filename: file.name.replace(/\.[^.]+$/, '.webp') };
+  });
 });
 
 function saveProduct() {
@@ -2032,15 +2069,13 @@ setBannerHomePreview('/assets/uploads/banner-home.png?t=' + Date.now());
 function uploadBannerHome(file) {
   var progress = document.getElementById('bannerHomeProgress');
   var bar = document.getElementById('bannerHomeProgressBar');
-  progress.style.display = 'block'; bar.style.width = '30%';
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    bar.style.width = '60%';
-    uploadToGithub('banner-home.png', ev.target.result)
+  progress.style.display = 'block'; bar.style.width = '20%';
+  compressImage(file, 1920, 540, 0.85).then(function(c) {
+    bar.style.width = '50%';
+    uploadToGithub('banner-home.webp', c.base64)
       .then(function(r) {
         bar.style.width = '100%';
-        var ts = Date.now();
-        var url = (r.path || '/assets/uploads/banner-home.png') + '?v=' + ts;
+        var url = (r.path || '/assets/uploads/banner-home.webp') + '?v=' + Date.now();
         setBannerHomePreview(url, '✓ Actualizado');
         var b = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
         if (!b[0]) b[0] = {};
@@ -2048,11 +2083,10 @@ function uploadBannerHome(file) {
         visualConfig.heroBanners = b;
         saveVisualConfig({ heroBanners: b });
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
-        showToast('✓ Banner actualizado — visible en la web en ~1 minuto');
+        showToast('✓ Banner actualizado' + sizeLabel(c.origSize, c.newSize));
       })
       .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
 // ── BANNER HOME MOBILE ──────────────────────────────────────────────────────
@@ -2086,15 +2120,13 @@ setBannerHomeMobPreview('/assets/uploads/banner-home-mobile.png?t=' + Date.now()
 function uploadBannerHomeMob(file) {
   var progress = document.getElementById('bannerHomeMobProgress');
   var bar = document.getElementById('bannerHomeMobProgressBar');
-  progress.style.display = 'block'; bar.style.width = '30%';
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    bar.style.width = '60%';
-    uploadToGithub('banner-home-mobile.png', ev.target.result)
+  progress.style.display = 'block'; bar.style.width = '20%';
+  compressImage(file, 390, 215, 0.85).then(function(c) {
+    bar.style.width = '50%';
+    uploadToGithub('banner-home-mobile.webp', c.base64)
       .then(function(r) {
         bar.style.width = '100%';
-        var ts = Date.now();
-        var url = (r.path || '/assets/uploads/banner-home-mobile.png') + '?v=' + ts;
+        var url = (r.path || '/assets/uploads/banner-home-mobile.webp') + '?v=' + Date.now();
         setBannerHomeMobPreview(url, '✓ Actualizado');
         var b = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
         if (!b[0]) b[0] = {};
@@ -2102,11 +2134,10 @@ function uploadBannerHomeMob(file) {
         visualConfig.heroBanners = b;
         saveVisualConfig({ heroBanners: b });
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
-        showToast('Banner de celular actualizado');
+        showToast('Banner de celular actualizado' + sizeLabel(c.origSize, c.newSize));
       })
       .catch(function() { showToast('Error al subir', 'error'); progress.style.display = 'none'; });
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
 // ── SLIDES 2 y 3 ───────────────────────────────────────────────────────────
@@ -2132,17 +2163,17 @@ function setSlidePreview(previewId, src, slotNum, isMob) {
 }
 
 function uploadSlide(slotNum, isMob, file) {
-  var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.png';
+  var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.webp';
+  var maxW = isMob ? 390 : 1920, maxH = isMob ? 215 : 540;
   var progressId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Progress';
   var barId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'ProgressBar';
   var previewId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Preview';
   var prog = document.getElementById(progressId);
   var bar = document.getElementById(barId);
-  if (prog) { prog.style.display = 'block'; bar.style.width = '30%'; }
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    if (bar) bar.style.width = '60%';
-    uploadToGithub(filename, ev.target.result).then(function(r) {
+  if (prog) { prog.style.display = 'block'; bar.style.width = '20%'; }
+  compressImage(file, maxW, maxH, 0.85).then(function(c) {
+    if (bar) bar.style.width = '50%';
+    uploadToGithub(filename, c.base64).then(function(r) {
       var url = (r.path || '/assets/uploads/' + filename) + '?v=' + Date.now();
       setSlidePreview(previewId, url, slotNum, isMob);
       if (bar) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; bar.style.width='0%'; }, 800); }
@@ -2153,9 +2184,9 @@ function uploadSlide(slotNum, isMob, file) {
       else banners[idx].desk = url;
       visualConfig.heroBanners = banners;
       refreshHeroBanners();
+      showToast('✓ Slide ' + slotNum + ' actualizado' + sizeLabel(c.origSize, c.newSize));
     }).catch(function() { showToast('Error al subir', 'error'); if (prog) prog.style.display = 'none'; });
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
 ['2','3'].forEach(function(n) {
@@ -2214,20 +2245,18 @@ document.getElementById('bannerFileInput').addEventListener('change', function(e
 function uploadBanner(file) {
   var progress = document.getElementById('bannerProgress');
   var bar = document.getElementById('bannerProgressBar');
-  progress.style.display = 'block'; bar.style.width = '30%';
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    bar.style.width = '60%';
-    uploadToGithub('banner-bc.png', ev.target.result)
+  progress.style.display = 'block'; bar.style.width = '20%';
+  compressImage(file, 1600, 580, 0.85).then(function(c) {
+    bar.style.width = '50%';
+    uploadToGithub('banner-bc.webp', c.base64)
       .then(function(r) {
         bar.style.width = '100%';
-        setBannerShopPreview((r.path || '/assets/uploads/banner-bc.png') + '?t=' + Date.now(), '✓ Actualizado');
+        setBannerShopPreview((r.path || '/assets/uploads/banner-bc.webp') + '?v=' + Date.now(), '✓ Actualizado');
         setTimeout(function() { progress.style.display = 'none'; bar.style.width = '0%'; }, 800);
-        showToast('Banner actualizado y publicado');
+        showToast('Banner actualizado' + sizeLabel(c.origSize, c.newSize));
       })
       .catch(function() { showToast('Error al subir el banner', 'error'); progress.style.display = 'none'; });
-  };
-  reader.readAsDataURL(file);
+  });
 }
 
 // ── PORTFOLIO ──────────────────────────────────────────────────────────────
@@ -2253,16 +2282,12 @@ function uploadPortfolioItems(files) {
   if (!files || !files.length) return;
   showToast('Subiendo ' + files.length + ' foto' + (files.length > 1 ? 's' : '') + '...');
   var promises = Array.from(files).map(function(file) {
-    return new Promise(function(resolve) {
-      var reader = new FileReader();
-      reader.onload = function(ev) {
-        uploadToGithub(file.name, ev.target.result)
-          .then(function(r) {
-            trabajos.push({ title: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '), img: r.path, meta: '', cat: 'general', size: 'span-4' });
-            resolve();
-          }).catch(resolve);
-      };
-      reader.readAsDataURL(file);
+    return compressImage(file, 1200, 1200, 0.82).then(function(c) {
+      var newName = file.name.replace(/\.[^.]+$/, '.webp');
+      return uploadToGithub(newName, c.base64)
+        .then(function(r) {
+          trabajos.push({ title: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '), img: r.path, meta: '', cat: 'general', size: 'span-4' });
+        }).catch(function(){});
     });
   });
   Promise.all(promises).then(function() {
@@ -2286,6 +2311,7 @@ function openPortfolioModal(i) {
   document.getElementById('portCat').value = item.cat || 'general';
   document.getElementById('portMeta').value = item.meta || '';
   document.getElementById('portImgInput').value = '';
+  currentPortfolioImg = null;
   var preview = document.getElementById('portImgPreview');
   var previewImg = document.getElementById('portImgPreviewImg');
   if (item.img) { previewImg.src = item.img; preview.style.display = 'block'; }
@@ -2300,15 +2326,15 @@ function closePortfolioModal() {
   document.getElementById('portfolioModal').classList.remove('open');
 }
 
+var currentPortfolioImg = null;
 function portImgPreviewChange(input) {
   if (!input.files || !input.files[0]) return;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    var preview = document.getElementById('portImgPreview');
-    document.getElementById('portImgPreviewImg').src = ev.target.result;
-    preview.style.display = 'block';
-  };
-  reader.readAsDataURL(input.files[0]);
+  var file = input.files[0];
+  compressImage(file, 1200, 1200, 0.82).then(function(c) {
+    document.getElementById('portImgPreviewImg').src = c.base64;
+    document.getElementById('portImgPreview').style.display = 'block';
+    currentPortfolioImg = { base64: c.base64, filename: file.name.replace(/\.[^.]+$/, '.webp'), origSize: c.origSize, newSize: c.newSize };
+  });
 }
 
 function savePortfolioItem() {
@@ -2343,18 +2369,18 @@ function savePortfolioItem() {
   }
 
   var fileInput = document.getElementById('portImgInput');
-  if (fileInput.files && fileInput.files[0]) {
-    var file = fileInput.files[0];
+  if (currentPortfolioImg) {
     var prog = document.getElementById('portImgProgress');
     var bar = document.getElementById('portImgProgressBar');
     prog.style.display = 'block'; bar.style.width = '60%';
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      uploadToGithub(file.name, ev.target.result)
-        .then(function(r) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; }, 400); doSave(r.path); })
-        .catch(function() { showToast('Error al subir imagen', 'error'); btn.disabled = false; btn.textContent = 'Guardar trabajo'; });
-    };
-    reader.readAsDataURL(file);
+    uploadToGithub(currentPortfolioImg.filename, currentPortfolioImg.base64)
+      .then(function(r) {
+        bar.style.width = '100%';
+        setTimeout(function(){ prog.style.display='none'; }, 400);
+        currentPortfolioImg = null;
+        doSave(r.path);
+      })
+      .catch(function() { showToast('Error al subir imagen', 'error'); btn.disabled = false; btn.textContent = 'Guardar trabajo'; });
   } else {
     doSave(undefined);
   }
