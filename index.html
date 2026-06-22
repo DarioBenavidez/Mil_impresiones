@@ -219,7 +219,7 @@
 
     // Construir slides — solo incluir banners con imagen definida
     var banners = (cfg.heroBanners || []).filter(function(b) { return b.desk; });
-    if (!banners.length) banners = [{desk: '/assets/uploads/banner-home.png', mob: '/assets/uploads/banner-home-mobile.png'}];
+    if (!banners.length) { slider.style.display = 'none'; return; }
 
     var firstActive = true;
     banners.forEach(function(b) {
