@@ -11,12 +11,12 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=60" }]
     },
     {
-      "source": "/assets/uploads/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
-    },
-    {
       "source": "/assets/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    },
+    {
+      "source": "/assets/uploads/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ]
 }
