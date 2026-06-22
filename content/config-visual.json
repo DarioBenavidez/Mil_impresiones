@@ -32,10 +32,6 @@
   "heroBanners": [
     {
       "desk": "",
-      "mob": "/assets/uploads/banner-home-mobile.png?v=1782082143856"
-    },
-    {
-      "desk": "/assets/uploads/banner-home-2.png?v=1782098607241",
       "mob": ""
     }
   ]
