@@ -37,6 +37,10 @@
     {
       "desk": "/assets/uploads/banner-home-2.png",
       "mob": "/assets/uploads/banner-home-2-mobile.png"
+    },
+    {
+      "desk": "/assets/uploads/banner-home-3.png",
+      "mob": ""
     }
   ]
 }
