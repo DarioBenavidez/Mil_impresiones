@@ -10,7 +10,7 @@
   "paperColor": "#f8f8fa",
   "accentColor": "#EC008C",
   "inkColor": "#1a1815",
-  "bannerHomePosition": "50% 50.357142857142854%",
+  "bannerHomePosition": "60.29955505617978% 0%",
   "bannerShopPosition": "47.288180928162745% 9.28567142857143%",
   "bannerShopHeight": "580",
   "productsLabel": "Ofertas del día",
@@ -33,6 +33,10 @@
     {
       "desk": "/assets/uploads/banner-home.png?v=1782098506710",
       "mob": "/assets/uploads/banner-home-mobile.png?v=1782082143856"
+    },
+    {
+      "desk": "/assets/uploads/banner-home-2.png?v=1782098607241",
+      "mob": ""
     }
   ]
 }
