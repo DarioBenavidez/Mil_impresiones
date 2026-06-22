@@ -2111,7 +2111,7 @@ function uploadBannerHomeMob(file) {
 
 // ── SLIDES 2 y 3 ───────────────────────────────────────────────────────────
 function refreshHeroBanners() {
-  var b = visualConfig.heroBanners || [{desk:'/assets/uploads/banner-home.png', mob:'/assets/uploads/banner-home-mobile.png'}];
+  var b = visualConfig.heroBanners || [];
   saveVisualConfig({ heroBanners: b }).then(function(){ showToast('Slider actualizado'); });
 }
 
@@ -2143,14 +2143,14 @@ function uploadSlide(slotNum, isMob, file) {
   reader.onload = function(ev) {
     if (bar) bar.style.width = '60%';
     uploadToGithub(filename, ev.target.result).then(function(r) {
-      var url = (r.path || '/assets/uploads/' + filename) + '?t=' + Date.now();
+      var url = (r.path || '/assets/uploads/' + filename) + '?v=' + Date.now();
       setSlidePreview(previewId, url, slotNum, isMob);
       if (bar) { bar.style.width = '100%'; setTimeout(function(){ prog.style.display='none'; bar.style.width='0%'; }, 800); }
-      var banners = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [{desk:'/assets/uploads/banner-home.png', mob:'/assets/uploads/banner-home-mobile.png'}];
+      var banners = visualConfig.heroBanners ? visualConfig.heroBanners.slice() : [];
       var idx = slotNum - 1;
       if (!banners[idx]) banners[idx] = {desk:'', mob:''};
-      if (isMob) banners[idx].mob = r.path || '/assets/uploads/' + filename;
-      else banners[idx].desk = r.path || '/assets/uploads/' + filename;
+      if (isMob) banners[idx].mob = url;
+      else banners[idx].desk = url;
       visualConfig.heroBanners = banners;
       refreshHeroBanners();
     }).catch(function() { showToast('Error al subir', 'error'); if (prog) prog.style.display = 'none'; });
