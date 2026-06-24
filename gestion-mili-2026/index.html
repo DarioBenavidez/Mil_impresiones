@@ -1109,6 +1109,11 @@ img{max-width:100%;display:block}
             <p>Fotos de trabajos realizados que se muestran en la página</p>
           </div>
         </div>
+        <label style="display:flex;align-items:center;gap:10px;padding:14px 16px;background:#f5f5f5;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color .15s;margin-bottom:16px" id="portfolioHiddenLabel">
+          <input type="checkbox" id="portfolioHidden" onchange="togglePortfolioVisibility()" style="width:18px;height:18px;accent-color:#666;cursor:pointer">
+          <span style="font-size:14px;font-weight:600;color:#555">🙈 Ocultar la sección de trabajos realizados</span>
+          <span style="font-size:12px;color:#888;margin-left:auto">No aparece en la página principal</span>
+        </label>
         <div class="portfolio-grid" id="portfolioGrid"></div>
       </div>
 
@@ -1378,6 +1383,7 @@ var MAX_ATTEMPTS = 5;
 var LOCKOUT_MS = 30 * 60 * 1000;
 var productos = [];
 var trabajos = [];
+var trabajosHidden = false;
 var testimonios = [];
 var currentProductIdx = null;
 var currentTestiIdx = null;
@@ -1517,6 +1523,9 @@ function loadAllData() {
   fetch('/content/trabajos.json').then(function(r) { return r.json(); })
     .then(function(d) {
       trabajos = d.items || [];
+      trabajosHidden = !!d.hidden;
+      var chk = document.getElementById('portfolioHidden');
+      if (chk) chk.checked = trabajosHidden;
       document.getElementById('dashPortfolioCount').textContent = trabajos.length;
       renderPortfolio();
     }).catch(function() { trabajos = []; renderPortfolio(); });
@@ -2260,6 +2269,21 @@ function uploadBanner(file) {
 }
 
 // ── PORTFOLIO ──────────────────────────────────────────────────────────────
+function togglePortfolioVisibility() {
+  var chk = document.getElementById('portfolioHidden');
+  trabajosHidden = chk.checked;
+  chk.disabled = true;
+  saveToGithub('content/trabajos.json', { items: trabajos, hidden: trabajosHidden })
+    .then(function() {
+      showToast(trabajosHidden ? '🙈 Sección de trabajos ocultada' : '✓ Sección de trabajos visible');
+    })
+    .catch(function() {
+      trabajosHidden = !trabajosHidden; chk.checked = trabajosHidden;
+      showToast('Error al guardar', 'error');
+    })
+    .then(function() { chk.disabled = false; });
+}
+
 function renderPortfolio() {
   var grid = document.getElementById('portfolioGrid');
   var colors = { impresion:'var(--c)', packaging:'var(--y)', gigantografia:'var(--k)', diseno:'var(--m)', merchandising:'#888' };
@@ -2291,7 +2315,7 @@ function uploadPortfolioItems(files) {
     });
   });
   Promise.all(promises).then(function() {
-    saveToGithub('content/trabajos.json', { items: trabajos })
+    saveToGithub('content/trabajos.json', { items: trabajos, hidden: trabajosHidden })
       .then(function() {
         renderPortfolio();
         document.getElementById('dashPortfolioCount').textContent = trabajos.length;
@@ -2358,7 +2382,7 @@ function savePortfolioItem() {
     };
     if (editingPortfolioIdx !== null) { trabajos[editingPortfolioIdx] = item; }
     else { trabajos.push(item); }
-    saveToGithub('content/trabajos.json', { items: trabajos })
+    saveToGithub('content/trabajos.json', { items: trabajos, hidden: trabajosHidden })
       .then(function() {
         renderPortfolio();
         document.getElementById('dashPortfolioCount').textContent = trabajos.length;
@@ -2389,7 +2413,7 @@ function savePortfolioItem() {
 function deletePortfolioItem(i) {
   if (!confirm('¿Eliminar "' + (trabajos[i].title || 'este trabajo') + '"?')) return;
   trabajos.splice(i, 1);
-  saveToGithub('content/trabajos.json', { items: trabajos })
+  saveToGithub('content/trabajos.json', { items: trabajos, hidden: trabajosHidden })
     .then(function() { renderPortfolio(); document.getElementById('dashPortfolioCount').textContent = trabajos.length; showToast('Trabajo eliminado'); })
     .catch(function() { showToast('Error al eliminar', 'error'); });
 }

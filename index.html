@@ -465,7 +465,7 @@
   <!-- ══════════════════════════════════════════════════════
        TRABAJOS RECIENTES
   ══════════════════════════════════════════════════════ -->
-  <section class="products-section" style="padding-top:0">
+  <section class="products-section" id="trabajosSection" style="padding-top:0">
     <div class="container">
       <div class="products-header">
         <div>
@@ -665,6 +665,7 @@ function addToCart(p) {
     .then(function(r){ return r.ok ? r.json() : null; })
     .catch(function(){ return null; })
     .then(function(data){
+      if (data && data.hidden) { var sec = document.getElementById('trabajosSection'); if (sec) sec.style.display = 'none'; return; }
       items = data && data.items ? data.items.filter(function(i){ return i.title; }) : [];
       if (!items.length) { track.innerHTML = '<p style="padding:2rem;color:var(--fg-3);text-align:center">Portfolio próximamente.</p>'; return; }
       track.innerHTML = items.map(function(item, i){
