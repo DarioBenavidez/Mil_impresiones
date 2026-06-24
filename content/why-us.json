@@ -1,7 +1,7 @@
 {
-  "iconSize": 16,
-  "labelSize": 10,
-  "subSize": 10,
+  "iconSize": 30,
+  "labelSize": 17,
+  "subSize": 14,
   "items": [
     {
       "icon": "⚡",
@@ -24,6 +24,6 @@
       "sub": "Te acompañamos en cada paso"
     }
   ],
-  "paddingV": 8,
-  "paddingH": 4
+  "paddingV": 34,
+  "paddingH": 32
 }
