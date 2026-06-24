@@ -79,50 +79,47 @@
 .cat-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 
 /* ── PRODUCTS SECTION ──────────────────────────────────────────────────────── */
-.products-section{padding:var(--s7) 0}
+.products-section{padding:var(--s8) 0}
 .products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--s5);flex-wrap:wrap;gap:var(--s3)}
 .products-title{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--fg)}
 .products-subtitle{font-size:14px;color:var(--fg-3);margin-top:4px}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
 #productsGrid{grid-template-columns:repeat(var(--ofertas-cols,3),1fr)}
 #catalogGrid{grid-template-columns:repeat(var(--catalog-cols,3),1fr)}
-@media(max-width:900px){.products-grid{grid-template-columns:1fr 1fr !important}}
-@media(max-width:580px){.products-grid{grid-template-columns:1fr !important}}
+@media(max-width:900px){.products-grid,#productsGrid,#catalogGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.products-grid,#productsGrid,#catalogGrid{grid-template-columns:1fr}}
 
 /* ── PRODUCT CARD ──────────────────────────────────────────────────────────── */
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s;position:relative}
 .product-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px -16px rgba(0,0,0,.14)}
 .product-thumb{height:var(--catalog-thumb-h,180px);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;text-decoration:none;color:inherit;cursor:pointer}
-.product-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:56px;font-weight:700;opacity:.18;letter-spacing:-.04em;color:#fff;user-select:none}
-.product-card.c-card .product-thumb{background:linear-gradient(135deg,#00AEEF,#0088CC)}
-.product-card.m-card .product-thumb{background:linear-gradient(135deg,#EC008C,#BB006F)}
-.product-card.y-card .product-thumb{background:linear-gradient(135deg,#F5D800,#D4B800)}
-.product-card.k-card .product-thumb{background:linear-gradient(135deg,#333,#111)}
+.product-thumb-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:56px;font-weight:700;opacity:.35;letter-spacing:-.04em;color:var(--fg-3);user-select:none}
+.product-thumb{background:var(--bg-2)}
+.product-card.c-card .product-thumb-inner{color:var(--c)}
+.product-card.m-card .product-thumb-inner{color:var(--m)}
+.product-card.y-card .product-thumb-inner{color:var(--y-ink)}
+.product-card.k-card .product-thumb-inner{color:var(--fg)}
 .product-badge{position:absolute;top:12px;left:12px;font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
 .badge-hot{background:var(--m);color:#fff}
 .badge-fast{background:var(--c);color:#fff}
 .badge-new{background:var(--y);color:var(--k)}
-.badge-sale{background:#ff4500;color:#fff}
+.badge-sale{background:var(--m);color:#fff}
 .product-body{padding:var(--s5);display:flex;flex-direction:column;gap:var(--s3);flex:1}
 .product-category{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3)}
 .product-name{font-family:var(--font-display);font-size:18px;font-weight:700;letter-spacing:-.02em;color:var(--fg);line-height:1.2}
 .product-desc{font-size:13px;color:var(--fg-2);line-height:1.45;flex:1}
 .product-specs{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:auto}
-.spec-chip{font-family:var(--font-display);font-size:11px;padding:3px 8px;border-radius:4px;background:var(--bg-2);color:var(--fg-3);border:1px solid var(--border)}
+.spec-chip{font-family:var(--font-display);font-size:11px;padding:3px 10px;border-radius:999px;background:var(--bg-2);color:var(--fg-3);border:1px solid var(--border)}
 .product-price-block{display:flex;align-items:baseline;gap:var(--s2);padding-top:var(--s3);border-top:1px solid var(--border)}
 .price-from-label{font-size:12px;color:var(--fg-3)}
 .price-amount{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--fg);letter-spacing:-.03em}
 .price-unit-label{font-size:12px;color:var(--fg-3)}
 .product-ctas{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin-top:var(--s3)}
-.btn-ver-card{grid-column:1/-1;font-family:var(--font-display);font-size:12px;font-weight:600;padding:7px 8px;border-radius:var(--radius-sm);background:transparent;color:var(--fg);border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,color .2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:4px}
-.btn-ver-card:hover{border-color:var(--m);color:var(--m);background:rgba(236,0,140,.05)}
-.btn-buy-card{font-family:var(--font-display);font-size:12px;font-weight:600;padding:8px 6px;border-radius:var(--radius-sm);background:var(--m);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-buy-card:hover{background:#c4007a;transform:translateY(-1px)}
-.product-card.c-card .btn-buy-card{background:var(--c)}
-.product-card.c-card .btn-buy-card:hover{background:#0093cc}
-.product-card.y-card .btn-buy-card{background:var(--k);color:var(--bg)}
-.product-card.k-card .btn-buy-card{background:var(--c)}
-.btn-wa-card{font-family:var(--font-display);font-size:11px;font-weight:500;padding:8px 6px;border-radius:var(--radius-sm);background:transparent;color:var(--fg-2);border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px}
+.btn-ver-card{grid-column:1/-1;font-family:var(--font-display);font-size:12px;font-weight:600;padding:8px 8px;border-radius:999px;background:transparent;color:var(--fg);border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,color .2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:4px}
+.btn-ver-card:hover{border-color:var(--fg);background:var(--bg-2)}
+.btn-buy-card{font-family:var(--font-display);font-size:12px;font-weight:600;padding:9px 6px;border-radius:999px;background:var(--m);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:background .2s,transform .15s;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-buy-card:hover{background:color-mix(in srgb,var(--m) 85%,#000);transform:translateY(-1px)}
+.btn-wa-card{font-family:var(--font-display);font-size:11px;font-weight:500;padding:9px 6px;border-radius:999px;background:transparent;color:var(--fg-2);border:1.5px solid var(--border);cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px}
 .btn-wa-card:hover{border-color:#25D366;color:#25D366}
 .product-delivery{font-family:var(--font-display);font-size:11px;color:var(--fg-3);display:flex;align-items:center;gap:5px;margin-top:var(--s2)}
 
@@ -169,34 +166,15 @@
   .why-sub{display:none!important}
 }
 
-/* ── OFERTAS SECTION — variante "floating card" ─────────────────────────────── */
+/* ── OFERTAS SECTION — franja negra plana full-width ────────────────────────── */
 .ofertas-dark-section{
-  background:linear-gradient(135deg,#003D5C 0%,#001E35 55%,#001220 100%);
-  border-radius:28px;
-  margin:0 clamp(12px,3vw,48px) var(--s7);
-  padding:var(--s6) 0 var(--s5);
+  background:var(--k);
+  padding:var(--s8) 0 var(--s7);
   position:relative;
-  overflow:hidden;
-  box-shadow:0 32px 80px -20px rgba(0,174,239,.35);
-}
-.ofertas-dark-section::before{
-  content:'OFERTAS';
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  font-family:var(--font-display);
-  font-size:clamp(80px,16vw,200px);
-  font-weight:900;
-  letter-spacing:-.05em;
-  color:rgba(255,255,255,.06);
-  white-space:nowrap;
-  pointer-events:none;
-  user-select:none;
-  line-height:1;
 }
 .ofertas-dark-section .skeleton-card{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.1)}
 .ofertas-dark-section .skeleton-thumb,.ofertas-dark-section .skeleton-line{background:linear-gradient(90deg,rgba(255,255,255,.1) 25%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.1) 75%);background-size:200% 100%}
-@media(max-width:600px){.ofertas-dark-section{border-radius:18px;margin:0 12px var(--s6)}}
+@media(max-width:600px){.ofertas-dark-section{padding:var(--s7) 0 var(--s6)}}
 /* Cards compactas dentro de ofertas */
 .ofertas-dark-section .products-grid{gap:var(--s3)}
 .ofertas-dark-section .product-thumb{height:var(--ofertas-thumb-h,110px)}
@@ -337,8 +315,7 @@
     // Ofertas del día
     var sec = document.getElementById('ofertasSection');
     if(sec) {
-      if(cfg.ofertasBg1 || cfg.ofertasBg2)
-        sec.style.background = 'linear-gradient(135deg,' + (cfg.ofertasBg1||'#003D5C') + ' 0%,' + (cfg.ofertasBg2||'#001220') + ' 100%)';
+      // Fondo fijo (negro de marca) — no se sobrescribe con gradientes de config
       if(cfg.ofertasCols) document.documentElement.style.setProperty('--ofertas-cols', cfg.ofertasCols);
       if(cfg.ofertasThumbH) document.documentElement.style.setProperty('--ofertas-thumb-h', cfg.ofertasThumbH + 'px');
     }
@@ -397,7 +374,7 @@
     <div class="container">
       <div class="products-header">
         <div>
-          <div class="eyebrow" id="productsLabel" style="color:var(--m);justify-content:flex-start;gap:6px">🔥 <span>OFERTAS DEL DÍA</span></div>
+          <div class="eyebrow" id="productsLabel" style="color:var(--m);justify-content:flex-start;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2c1 3-1 5-1 7a3 3 0 0 0 6 0c0-1 0-2-.5-3 2 1.5 3.5 4 3.5 7a8 8 0 1 1-16 0c0-3.5 2-6.5 4-9 .5 2 1.5 2.5 2.5 2 .5-1.5-.5-3-.5-3Z"/></svg><span>OFERTAS DEL DÍA</span></div>
           <h2 class="products-title" id="productsTitle" style="color:#fff">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--m)">materializamos</em> para vos</h2>
           <p class="products-subtitle" id="productsSubtitle" style="color:rgba(255,255,255,.5)">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
         </div>
@@ -426,7 +403,7 @@
   <!-- ══════════════════════════════════════════════════════
        CATÁLOGO COMPLETO
   ══════════════════════════════════════════════════════ -->
-  <section class="products-section" id="catalogSection" style="padding-top:0;border-top:1px solid var(--border);background:#F4F1EA;position:relative;z-index:1">
+  <section class="products-section" id="catalogSection" style="padding-top:var(--s8);border-top:1px solid var(--border);background:var(--paper);position:relative;z-index:1">
     <div class="container">
       <div class="products-header" style="margin-bottom:var(--s4)">
         <div>
@@ -470,7 +447,7 @@
       <div class="products-header">
         <div>
           <div class="eyebrow ink-dot c">Portfolio</div>
-          <h2 class="products-title">Trabajos <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--c)">recientes</em></h2>
+          <h2 class="products-title">Trabajos recientes</h2>
           <p class="products-subtitle">Algunos de los proyectos que materializamos</p>
         </div>
         <a href="/trabajos" style="font-family:var(--font-display);font-size:14px;color:var(--c);font-weight:600;text-decoration:none;white-space:nowrap">Ver todos →</a>
@@ -478,10 +455,10 @@
       <div class="carousel-wrap reveal">
         <div class="carousel-track" id="trabajosTrack">
           <div class="carousel-loading">
-            <div class="carousel-loading-slide c">Próximamente</div>
-            <div class="carousel-loading-slide m">Próximamente</div>
-            <div class="carousel-loading-slide y">Próximamente</div>
-            <div class="carousel-loading-slide k">Próximamente</div>
+            <div class="carousel-loading-slide">Próximamente</div>
+            <div class="carousel-loading-slide">Próximamente</div>
+            <div class="carousel-loading-slide">Próximamente</div>
+            <div class="carousel-loading-slide">Próximamente</div>
           </div>
         </div>
         <button class="carousel-btn carousel-prev" id="trabajosPrev" aria-label="Anterior"></button>
@@ -560,12 +537,12 @@ function renderProducts(products){
       + '</div>'
       + '<div class="product-ctas">'
       + '<a href="' + detailUrl + '" class="btn-ver-card">Ver producto →</a>'
-      + '<button class="btn-buy-card" onclick="Cart.add(' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/"/g,'&quot;') + ')">🛒 Agregar al carrito</button>'
+      + '<button class="btn-buy-card" onclick="Cart.add(' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/"/g,'&quot;') + ')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Agregar al carrito</button>'
       + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
       + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
       + 'Consultar</a>'
       + '</div>'
-      + '<span class="product-delivery">⏱ ' + p.delivery + '</span>'
+      + '<span class="product-delivery"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> ' + p.delivery + '</span>'
       + '</div></div>';
   }).join('');
   // Trigger reveals
@@ -711,11 +688,11 @@ function addToCart(p) {
         + '<div class="product-price-block"><span class="price-from-label">Desde</span><span class="price-amount">$' + (p.price||0).toLocaleString('es-AR') + '</span><span class="price-unit-label">' + (p.unit||'') + '</span></div>'
         + '<div class="product-ctas">'
         + '<a href="' + detailUrl + '" class="btn-ver-card">Ver producto →</a>'
-        + '<button class="btn-buy-card" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price||0,unit:p.unit||'',color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'>🛒 Agregar al carrito</button>'
+        + '<button class="btn-buy-card" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price||0,unit:p.unit||'',color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Agregar al carrito</button>'
         + '<a href="https://wa.me/5491136365889?text=' + waMsg + '" class="btn-wa-card" target="_blank">'
         + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.559 4.122 1.533 5.856L0 24l6.341-1.516A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.857 0-3.599-.487-5.112-1.338l-.368-.216-3.765.9.95-3.668-.235-.384A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>'
         + 'Consultar</a></div>'
-        + '<span class="product-delivery">⏱ ' + (p.delivery||'Consultar') + '</span>'
+        + '<span class="product-delivery"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> ' + (p.delivery||'Consultar') + '</span>'
         + '</div></div>';
     }).join('');
     if (window.__reObserveReveal) window.__reObserveReveal();

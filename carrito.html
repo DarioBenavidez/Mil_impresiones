@@ -16,18 +16,18 @@
 
 /* Empty state */
 .cart-empty { text-align: center; padding: var(--s10) var(--s5); }
-.cart-empty-icon { font-size: 72px; margin-bottom: var(--s5); opacity: .6; }
+.cart-empty-icon { color: var(--fg-3); margin-bottom: var(--s5); opacity: .7; display: flex; justify-content: center; }
 .cart-empty h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; margin-bottom: var(--s3); }
 .cart-empty p { color: var(--fg-2); margin-bottom: var(--s6); }
 
 /* Cart items */
 .cart-items-wrap { display: flex; flex-direction: column; gap: var(--s3); }
 .cart-item { display: grid; grid-template-columns: 56px 1fr auto; gap: var(--s4); align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--s4); }
-.cart-item-thumb { width: 56px; height: 56px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
-.cart-item-thumb.m-card { background: linear-gradient(135deg,#EC008C,#BB006F); }
-.cart-item-thumb.c-card { background: linear-gradient(135deg,#00AEEF,#0088CC); }
-.cart-item-thumb.y-card { background: linear-gradient(135deg,#F5D800,#D4B800); }
-.cart-item-thumb.k-card { background: linear-gradient(135deg,#333,#111); }
+.cart-item-thumb { width: 56px; height: 56px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 14px; font-weight: 700; background: var(--bg-2); color: var(--fg-3); flex-shrink: 0; }
+.cart-item-thumb.m-card { color: var(--m); }
+.cart-item-thumb.c-card { color: var(--c); }
+.cart-item-thumb.y-card { color: var(--y-ink); }
+.cart-item-thumb.k-card { color: var(--fg); }
 .cart-item-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .cart-item-name { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cart-item-unit { font-size: 12px; color: var(--fg-3); }
@@ -71,7 +71,7 @@
 .payment-option:hover { border-color: var(--m); background: var(--m-soft, #FDE4F1); }
 .payment-option input[type=radio] { width: 18px; height: 18px; accent-color: var(--m); cursor: pointer; flex-shrink: 0; }
 .payment-option.selected { border-color: var(--m); background: #FDE4F1; }
-.payment-icon { font-size: 22px; flex-shrink: 0; }
+.payment-icon { flex-shrink: 0; display: flex; align-items: center; color: var(--fg-2); }
 .payment-info { flex: 1; }
 .payment-name { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--fg); }
 .payment-desc { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
@@ -85,13 +85,13 @@
 
 /* Submit */
 .btn-submit { width: 100%; padding: 16px; background: var(--m); color: #fff; border: none; border-radius: var(--radius-sm); font-family: var(--font-display); font-size: 16px; font-weight: 700; cursor: pointer; transition: background .2s, transform .15s; margin-top: var(--s5); display: flex; align-items: center; justify-content: center; gap: 8px; }
-.btn-submit:hover { background: #c4007a; transform: translateY(-1px); }
+.btn-submit:hover { background: color-mix(in srgb, var(--m) 85%, #000); transform: translateY(-1px); }
 .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; }
 
 /* Success */
 .order-success { display: none; text-align: center; padding: var(--s8); }
 .order-success.show { display: block; }
-.success-icon { font-size: 64px; margin-bottom: var(--s5); }
+.success-icon { font-size: 64px; margin-bottom: var(--s5); color: var(--m); display: flex; justify-content: center; }
 .success-code { font-family: var(--font-display); font-size: 13px; color: var(--fg-3); background: var(--bg-2); display: inline-block; padding: 4px 12px; border-radius: 999px; margin-top: var(--s3); }
 </style>
 </head>
@@ -110,7 +110,7 @@
 
       <!-- Empty state (hidden when items exist) -->
       <div class="cart-empty" id="cartEmpty" style="display:none">
-        <div class="cart-empty-icon">🛒</div>
+        <div class="cart-empty-icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
         <h2>Tu carrito está vacío</h2>
         <p>Todavía no agregaste ningún producto. ¡Explorá nuestra tienda!</p>
         <a href="/" class="btn btn-primary">Ver productos</a>
@@ -128,7 +128,7 @@
             <h2 class="checkout-title">Datos para tu pedido</h2>
 
             <div class="security-note">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="#00AEEF"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--c)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <p>Tus datos se usan <strong>únicamente</strong> para coordinar tu pedido. Nunca los compartimos con terceros. El DNI/CUIT nos permite validar tu identidad antes de iniciar la producción.</p>
             </div>
 
@@ -196,7 +196,7 @@
 
                   <label class="payment-option" id="pay-efectivo">
                     <input type="radio" name="pago" value="efectivo">
-                    <span class="payment-icon">💵</span>
+                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/></svg></span>
                     <div class="payment-info">
                       <div class="payment-name">Efectivo en local</div>
                       <div class="payment-desc">Pagás al retirar tu pedido</div>
@@ -204,14 +204,14 @@
                   </label>
                   <div class="payment-detail" id="detail-efectivo">
                     <strong>Retiro en local</strong><br>
-                    📍 Ana María Janer 345, CABA<br>
-                    📍 Cafferata 2911, Villa Madero, GBA<br>
+                    Ana María Janer 345, CABA<br>
+                    Cafferata 2911, Villa Madero, GBA<br>
                     Lunes a viernes 9 a 18 hs · Coordinaremos la fecha por WhatsApp.
                   </div>
 
                   <label class="payment-option" id="pay-transferencia">
                     <input type="radio" name="pago" value="transferencia">
-                    <span class="payment-icon">🏦</span>
+                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 10h16M5 10l7-6 7 6M6 10v8M10 10v8M14 10v8M18 10v8"/></svg></span>
                     <div class="payment-info">
                       <div class="payment-name">Transferencia bancaria</div>
                       <div class="payment-desc">Transferís y te mandamos el comprobante</div>
@@ -228,7 +228,7 @@
 
                   <label class="payment-option" id="pay-mp">
                     <input type="radio" name="pago" value="mercadopago">
-                    <span class="payment-icon">💳</span>
+                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
                     <div class="payment-info">
                       <div class="payment-name">Mercado Pago</div>
                       <div class="payment-desc">Tarjeta, débito, hasta 12 cuotas o QR</div>
@@ -268,15 +268,15 @@
             </p>
             <div style="display:flex;flex-direction:column;gap:var(--s2)">
               <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="#00AEEF"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--c)"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Compra segura
               </div>
               <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="#EC008C"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.63 2 2 0 015.11 5.44h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 13.9a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 20.92z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--m)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.63 2 2 0 015.11 5.44h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 13.9a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 20.92z"/></svg>
                 Asesoramiento incluido
               </div>
               <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="#F5D800"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--y-ink)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 Respuesta en menos de 2 hs
               </div>
             </div>
@@ -290,7 +290,7 @@
 
       <!-- SUCCESS STATE -->
       <div class="order-success" id="orderSuccess">
-        <div class="success-icon" id="successIcon">🎉</div>
+        <div class="success-icon" id="successIcon"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg></div>
         <h2 style="font-family:var(--font-display);font-size:28px;font-weight:700;margin-bottom:var(--s3)" id="successTitle">¡Pedido recibido!</h2>
         <p style="color:var(--fg-2);max-width:420px;margin:0 auto var(--s4);line-height:1.5" id="successMsg">
           Te contactamos por WhatsApp en los próximos <strong>15 minutos</strong> para confirmar los detalles y coordinar el pago.
