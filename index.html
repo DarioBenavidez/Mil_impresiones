@@ -42,8 +42,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400;9..144,1,600&family=Jost:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="styles.css">
 <script src="chrome.js?v=5" defer></script>
 <style>
@@ -217,17 +217,15 @@
 .manifiesto-quote em{font-style:normal;color:var(--m)}
 .manifiesto-attr{font-family:var(--font-display);font-size:13px;font-weight:500;color:rgba(255,255,255,.35);margin-top:var(--s5);letter-spacing:.1em;text-transform:uppercase;position:relative;z-index:1}
 
-/* ── CATEGORY CARDS ────────────────────────────────────────────────────────── */
-.cat-cards-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:var(--s6)}
-.cat-card{border:none;border-radius:14px;padding:16px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;transition:transform .2s,box-shadow .2s,opacity .15s;position:relative;overflow:hidden}
-.cat-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px -8px rgba(0,0,0,.3)}
-.cat-card.active{transform:translateY(-3px);box-shadow:0 12px 28px -8px rgba(0,0,0,.3)}
-.cat-card:not(.active){opacity:.8}
-.cat-card:hover,.cat-card.active{opacity:1}
-.cat-card-icon{font-size:24px;line-height:1}
-.cat-card-name{font-family:var(--font-display);font-size:11px;font-weight:700;color:#fff;letter-spacing:.02em;text-align:center;line-height:1.2}
-@media(max-width:860px){.cat-cards-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:480px){.cat-cards-grid{grid-template-columns:repeat(3,1fr)}}
+/* ── CATEGORY CHIPS (planos · pill) ─────────────────────────────────────────── */
+.cat-cards-grid{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s6)}
+.cat-card{border:1px solid var(--border);border-radius:999px;padding:9px 18px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:var(--card);color:var(--fg-2);transition:background .2s,border-color .2s,color .2s;position:relative}
+.cat-card:hover{border-color:var(--fg);color:var(--fg)}
+.cat-card.active{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.cat-card-icon{display:none}
+.cat-card-name{font-family:var(--font-display);font-size:13px;font-weight:600;color:inherit;letter-spacing:0;line-height:1}
+.cat-card .cat-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.cat-card.active .cat-dot{display:none}
 
 /* ── LOADING SKELETONS ─────────────────────────────────────────────────────── */
 .skeleton-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
@@ -430,14 +428,14 @@
           <p class="products-subtitle">Seleccioná, agregá al carrito y coordinamos juntos</p>
         </div>
       </div>
-      <div class="cat-cards-grid" id="catalogFilters" style="margin-bottom:var(--s6);background:#F4F1EA">
-        <button class="cat-card active" data-cat="all" style="background:linear-gradient(135deg,#333,#111)"><span class="cat-card-icon">🛍️</span><span class="cat-card-name">Todos</span></button>
-        <button class="cat-card" data-cat="impresion" style="background:linear-gradient(135deg,#00AEEF,#006FA8)"><span class="cat-card-icon">🖨️</span><span class="cat-card-name">Impresión</span></button>
-        <button class="cat-card" data-cat="packaging" style="background:linear-gradient(135deg,#F5D800,#C9A800)"><span class="cat-card-icon">📦</span><span class="cat-card-name" style="color:#1a1815">Packaging</span></button>
-        <button class="cat-card" data-cat="giganto" style="background:linear-gradient(135deg,#444,#1a1a1a)"><span class="cat-card-icon">🖼️</span><span class="cat-card-name">Giganto</span></button>
-        <button class="cat-card" data-cat="diseno" style="background:linear-gradient(135deg,#EC008C,#8B004F)"><span class="cat-card-icon">✏️</span><span class="cat-card-name">Diseño</span></button>
-        <button class="cat-card" data-cat="merch" style="background:linear-gradient(135deg,#7C3AED,#4C1D95)"><span class="cat-card-icon">🎁</span><span class="cat-card-name">Merch</span></button>
-        <button class="cat-card" data-cat="papeleria" style="background:linear-gradient(135deg,#059669,#064E3B)"><span class="cat-card-icon">📝</span><span class="cat-card-name">Papelería</span></button>
+      <div class="cat-cards-grid" id="catalogFilters" style="margin-bottom:var(--s6)">
+        <button class="cat-card active" data-cat="all"><span class="cat-dot" style="background:var(--k)"></span><span class="cat-card-name">Todos</span></button>
+        <button class="cat-card" data-cat="impresion"><span class="cat-dot" style="background:var(--c)"></span><span class="cat-card-name">Impresión</span></button>
+        <button class="cat-card" data-cat="packaging"><span class="cat-dot" style="background:var(--y)"></span><span class="cat-card-name">Packaging</span></button>
+        <button class="cat-card" data-cat="giganto"><span class="cat-dot" style="background:var(--k)"></span><span class="cat-card-name">Giganto</span></button>
+        <button class="cat-card" data-cat="diseno"><span class="cat-dot" style="background:var(--m)"></span><span class="cat-card-name">Diseño</span></button>
+        <button class="cat-card" data-cat="merch"><span class="cat-dot" style="background:var(--c)"></span><span class="cat-card-name">Merch</span></button>
+        <button class="cat-card" data-cat="papeleria"><span class="cat-dot" style="background:var(--m)"></span><span class="cat-card-name">Papelería</span></button>
       </div>
       <div class="products-grid" id="catalogGrid"></div>
     </div>
