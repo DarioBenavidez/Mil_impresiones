@@ -18,12 +18,12 @@
   --y-soft: #FFF9D1;
 
   /* Neutrals */
-  --paper: #F4F1EA;
-  --paper-2: #EAE5DB;
+  --paper: #F5F6F8;
+  --paper-2: #E9EBEF;
   --ink: #1a1815;
   --ink-2: #3A3A3A;
   --ink-3: #6B6B6B;
-  --line: #D9D4C8;
+  --line: #E1E3E8;
 
   /* Semantic (light by default) */
   --bg: var(--paper);
