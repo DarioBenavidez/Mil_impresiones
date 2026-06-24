@@ -1,7 +1,7 @@
 {
-  "iconSize": 30,
-  "labelSize": 17,
-  "subSize": 14,
+  "iconSize": 20,
+  "labelSize": 11,
+  "subSize": 11,
   "items": [
     {
       "icon": "⚡",
