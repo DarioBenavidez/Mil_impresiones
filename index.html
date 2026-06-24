@@ -226,17 +226,20 @@
       if (!b.desk) return;
       var slide = document.createElement('div');
       slide.className = 'hero-slide' + (firstActive ? ' active' : '');
+      var isFirst = firstActive;
       firstActive = false;
       var imgD = document.createElement('img');
       imgD.className = 'hero-img-desk';
       imgD.alt = 'Mil Impresiones';
       if(b.posDesk) imgD.style.objectPosition = b.posDesk;
       imgD.onerror = function() { slide.style.display = 'none'; };
+      if(isFirst) imgD.fetchPriority = 'high'; else imgD.loading = 'lazy';
       imgD.src = b.desk;
       var imgM = document.createElement('img');
       imgM.className = 'hero-img-mob';
       imgM.alt = 'Mil Impresiones';
       if(b.posMob) imgM.style.objectPosition = b.posMob;
+      if(isFirst) imgM.fetchPriority = 'high'; else imgM.loading = 'lazy';
       imgM.src = b.mob || b.desk;
       slide.appendChild(imgD);
       slide.appendChild(imgM);
@@ -504,7 +507,7 @@ function renderProducts(products){
     return '<div class="product-card ' + p.color + '-card reveal">'
       + '<a class="product-thumb" href="' + detailUrl + '">'
       + (p.badge ? '<span class="product-badge badge-' + p.badgeType + '">' + p.badge + '</span>' : '')
-      + (p.img ? '<img src="' + p.img + '" alt="' + p.name + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:0">' : '<span class="product-thumb-inner">' + (p.icon||'📦') + '</span>')
+      + (p.img ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:0">' : '<span class="product-thumb-inner">' + (p.icon||'📦') + '</span>')
       + '</a>'
       + '<div class="product-body">'
       + '<span class="product-category">' + p.category + '</span>'
@@ -627,7 +630,7 @@ function addToCart(p) {
       if (!items.length) { track.innerHTML = '<p style="padding:2rem;color:var(--fg-3);text-align:center">Portfolio próximamente.</p>'; return; }
       track.innerHTML = items.map(function(item, i){
         var imgHtml = item.img
-          ? '<img src="' + item.img + '" alt="' + item.title + '" style="width:100%;height:auto;display:block">'
+          ? '<img src="' + item.img + '" alt="' + item.title + '" loading="lazy" style="width:100%;height:auto;display:block">'
           : '<div class="carousel-loading-slide ' + colors[i % 4] + '" style="min-height:220px">' + (item.title.split(' ')[0]) + '</div>';
         return '<div class="carousel-slide"><a href="/trabajos" style="display:block;text-decoration:none;color:inherit">' + imgHtml + '<div class="work-overlay-v3"><div class="work-meta">' + (item.meta||'') + '</div><div class="work-title">' + item.title + '</div></div></a></div>';
       }).join('');
@@ -657,7 +660,7 @@ function addToCart(p) {
       var detailUrl = '/shop/producto?id=' + encodeURIComponent(p.id || p.name);
       return '<div class="product-card ' + (p.color||'m') + '-card reveal">'
         + '<a class="product-thumb" href="' + detailUrl + '">'
-        + (p.img ? '<img src="' + p.img + '" alt="' + p.name + '" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:0">' : '<span class="product-thumb-inner">' + (p.icon||'📦') + '</span>')
+        + (p.img ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;border-radius:0">' : '<span class="product-thumb-inner">' + (p.icon||'📦') + '</span>')
         + (p.badge ? '<span class="product-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span>' : '')
         + '</a>'
         + '<div class="product-body">'
