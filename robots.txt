@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /gestion-mili-2026/
+
+Sitemap: https://milimpresiones.com/sitemap.xml

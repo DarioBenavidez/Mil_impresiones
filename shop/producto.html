@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Producto · 1000 Impresiones</title>
+<title>Producto · Mil Impresiones</title>
+<meta name="description" content="Impresión digital de calidad en Buenos Aires. Cotización en 2 hs · Entrega en 48-72 hs · IVA incluido.">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Mil Impresiones">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -305,7 +310,25 @@ function openImgZoom(src) {
 
     var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
 
-    document.title = p.name + ' · 1000 Impresiones';
+    document.title = p.name + ' · Mil Impresiones';
+    var pageUrl = 'https://milimpresiones.com/shop/producto?id=' + encodeURIComponent(p.id || p.name);
+    var desc = (p.description || ('Comprá ' + p.name + ' en Mil Impresiones. Cotización en 2 hs · Entrega en 48-72 hs · IVA incluido.'));
+    var img = p.img ? ('https://milimpresiones.com' + p.img.replace(/\?.*/, '')) : 'https://milimpresiones.com/assets/uploads/banner-home.png';
+    document.querySelector('meta[name="description"]').content = desc;
+    (function setMeta(prop, val) {
+      var el = document.querySelector('meta[property="' + prop + '"]') || document.createElement('meta');
+      el.setAttribute('property', prop); el.content = val;
+      if (!el.parentNode) document.head.appendChild(el);
+    });
+    [['og:url', pageUrl], ['og:title', p.name + ' · Mil Impresiones'], ['og:description', desc], ['og:image', img]].forEach(function(m) {
+      var el = document.querySelector('meta[property="' + m[0] + '"]') || document.createElement('meta');
+      el.setAttribute('property', m[0]); el.content = m[1];
+      if (!el.parentNode) document.head.appendChild(el);
+    });
+    var ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.text = JSON.stringify({ '@context':'https://schema.org', '@type':'Product', name: p.name, description: desc, image: img, url: pageUrl, offers: { '@type':'Offer', priceCurrency:'ARS', price: p.price || 0, availability:'https://schema.org/InStock', seller: { '@type':'Organization', name:'Mil Impresiones' } } });
+    document.head.appendChild(ld);
 
     document.getElementById('pageContent').innerHTML = [
       '<nav class="breadcrumb">',
