@@ -24,25 +24,6 @@
 /* ── SHOP PAGE ── */
 .shop-page { padding: var(--shop-page-pt, 48px) 0 var(--shop-page-pb, 128px); }
 
-/* Hero: solo imagen */
-.shop-hero {
-  width: 100%;
-  height: 29vw;
-  min-height: 180px;
-  max-height: 600px;
-  overflow: hidden;
-  display: block;
-  line-height: 0;
-}
-.shop-hero-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-@media(max-width:600px) { .shop-hero { height: 48vw; min-height: unset; max-height: none; } }
-
 /* Filter strip */
 .filter-strip {
   background: var(--bg);
@@ -244,15 +225,8 @@
 <body data-page="shop">
 <main>
 
-  <section class="shop-hero" id="shopHero">
-    <img src="/assets/uploads/banner-bc.png" id="shopHeroImg" alt="Mil Impresiones" class="shop-hero-img">
-  </section>
   <script>
   fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
-    var s = document.getElementById('shopHero');
-    var i = document.getElementById('shopHeroImg');
-    if(cfg.bannerShopHeight && window.innerWidth > 600) s.style.height = Math.round(parseInt(cfg.bannerShopHeight)/14.4) + 'vw';
-    if(cfg.bannerShopPosition) i.style.objectPosition = cfg.bannerShopPosition;
     if(cfg.shopCols) document.documentElement.style.setProperty('--shop-cols', cfg.shopCols);
     if(cfg.shopThumbH) document.documentElement.style.setProperty('--shop-thumb-h', cfg.shopThumbH + 'px');
     if(cfg.shopBgColor) document.querySelector('.shop-page').style.background = cfg.shopBgColor;
