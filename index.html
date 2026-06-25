@@ -168,11 +168,18 @@
 
 /* ── OFERTAS SECTION — franja negra plana full-width ────────────────────────── */
 .ofertas-dark-section{
-  background:var(--paper-2);
+  background:var(--bg);
   padding:var(--s8) 0 var(--s7);
   position:relative;
 }
-.ofertas-dark-section::before{
+.ofertas-panel{
+  background:var(--y-soft);
+  border-radius:var(--radius-lg);
+  padding:var(--s7) var(--s6);
+  position:relative;
+  overflow:hidden;
+}
+.ofertas-panel::before{
   content:'';position:absolute;top:0;left:0;right:0;height:5px;
   background:linear-gradient(90deg,var(--c) 0 25%,var(--m) 25% 50%,var(--y) 50% 75%,var(--k) 75% 100%);
 }
@@ -374,6 +381,7 @@
   ══════════════════════════════════════════════════════ -->
   <section class="products-section ofertas-dark-section" id="ofertasSection">
     <div class="container">
+      <div class="ofertas-panel">
       <div class="products-header">
         <div>
           <div class="eyebrow" id="productsLabel" style="color:var(--m);justify-content:flex-start;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2c1 3-1 5-1 7a3 3 0 0 0 6 0c0-1 0-2-.5-3 2 1.5 3.5 4 3.5 7a8 8 0 1 1-16 0c0-3.5 2-6.5 4-9 .5 2 1.5 2.5 2.5 2 .5-1.5-.5-3-.5-3Z"/></svg><span>OFERTAS DEL DÍA</span></div>
@@ -386,6 +394,7 @@
         <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line tall"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
         <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line tall"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
         <div class="skeleton-card"><div class="skeleton-thumb"></div><div class="skeleton-body"><div class="skeleton-line short"></div><div class="skeleton-line tall"></div><div class="skeleton-line"></div><div class="skeleton-line short"></div></div></div>
+      </div>
       </div>
     </div>
   </section>
