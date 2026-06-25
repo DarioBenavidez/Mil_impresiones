@@ -2082,7 +2082,7 @@ function uploadBannerHome(file) {
   var progress = document.getElementById('bannerHomeProgress');
   var bar = document.getElementById('bannerHomeProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 2560, 720, 0.95).then(function(c) {
+  compressImage(file, 2560, 800, 0.95).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home.webp', c.base64)
       .then(function(r) {
@@ -2176,7 +2176,7 @@ function setSlidePreview(previewId, src, slotNum, isMob) {
 
 function uploadSlide(slotNum, isMob, file) {
   var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.webp';
-  var maxW = isMob ? 1080 : 2560, maxH = isMob ? 595 : 720;
+  var maxW = isMob ? 1080 : 2560, maxH = isMob ? 595 : 800;
   var progressId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Progress';
   var barId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'ProgressBar';
   var previewId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Preview';
