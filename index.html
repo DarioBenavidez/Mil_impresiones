@@ -48,7 +48,7 @@
 <script src="chrome.js?v=5" defer></script>
 <style>
 /* ── HERO SLIDER ── */
-.hero-slider{position:relative;width:100%;aspect-ratio:1920/600;max-height:80vh;min-height:180px;overflow:hidden;background:#111}
+.hero-slider{position:relative;width:100%;aspect-ratio:1920/360;max-height:80vh;min-height:140px;overflow:hidden;background:#111}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
 .hero-slide.active{opacity:1;pointer-events:auto}
 .hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
@@ -61,7 +61,7 @@
 .hero-arrow.prev{left:14px}
 .hero-arrow.next{right:14px}
 @media(max-width:600px){
-  .hero-slider{aspect-ratio:390/215;max-height:none;min-height:unset}
+  .hero-slider{aspect-ratio:1080/420;max-height:none;min-height:unset}
   .hero-slide .hero-img-desk{display:none}
   .hero-slide .hero-img-mob{display:block}
   .hero-arrow{display:none}
