@@ -239,10 +239,10 @@
   <div class="hero-slider" id="heroSlider"></div>
   <script>
   fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}).catch(function(){return{};}).then(function(cfg){
-    // Altura del slider
+    // Altura del slider: la define la proporción del banner (1920/360 desktop,
+    // 1080/420 mobile) vía CSS aspect-ratio. No se fuerza alto desde config para
+    // no romper la relación de aspecto y evitar recortes.
     var slider = document.getElementById('heroSlider');
-    if(cfg.bannerHomeHeight && window.innerWidth > 600) slider.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
-    if(cfg.bannerHomeMobileH && window.innerWidth <= 600) document.documentElement.style.setProperty('--banner-home-h-mob', cfg.bannerHomeMobileH + 'vw');
 
     // Construir slides — INDEPENDIENTES por dispositivo: mobile usa solo sus
     // imágenes (b.mob) y desktop solo las suyas (b.desk). Sin fallback entre sí.
