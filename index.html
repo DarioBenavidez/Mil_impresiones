@@ -168,12 +168,14 @@
 
 /* ── OFERTAS SECTION — franja negra plana full-width ────────────────────────── */
 .ofertas-dark-section{
-  background:var(--k);
+  background:var(--paper-2);
   padding:var(--s8) 0 var(--s7);
   position:relative;
 }
-.ofertas-dark-section .skeleton-card{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.1)}
-.ofertas-dark-section .skeleton-thumb,.ofertas-dark-section .skeleton-line{background:linear-gradient(90deg,rgba(255,255,255,.1) 25%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.1) 75%);background-size:200% 100%}
+.ofertas-dark-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--c) 0 25%,var(--m) 25% 50%,var(--y) 50% 75%,var(--k) 75% 100%);
+}
 @media(max-width:600px){.ofertas-dark-section{padding:var(--s7) 0 var(--s6)}}
 /* Cards compactas dentro de ofertas */
 .ofertas-dark-section .products-grid{gap:var(--s3)}
@@ -315,7 +317,7 @@
     // Ofertas del día
     var sec = document.getElementById('ofertasSection');
     if(sec) {
-      // Fondo fijo (negro de marca) — no se sobrescribe con gradientes de config
+      // Fondo fijo (crema --paper-2 + barra CMYK) — no se sobrescribe desde config
       if(cfg.ofertasCols) document.documentElement.style.setProperty('--ofertas-cols', cfg.ofertasCols);
       if(cfg.ofertasThumbH) document.documentElement.style.setProperty('--ofertas-thumb-h', cfg.ofertasThumbH + 'px');
     }
@@ -375,8 +377,8 @@
       <div class="products-header">
         <div>
           <div class="eyebrow" id="productsLabel" style="color:var(--m);justify-content:flex-start;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2c1 3-1 5-1 7a3 3 0 0 0 6 0c0-1 0-2-.5-3 2 1.5 3.5 4 3.5 7a8 8 0 1 1-16 0c0-3.5 2-6.5 4-9 .5 2 1.5 2.5 2.5 2 .5-1.5-.5-3-.5-3Z"/></svg><span>OFERTAS DEL DÍA</span></div>
-          <h2 class="products-title" id="productsTitle" style="color:#fff">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--m)">materializamos</em> para vos</h2>
-          <p class="products-subtitle" id="productsSubtitle" style="color:rgba(255,255,255,.5)">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
+          <h2 class="products-title" id="productsTitle" style="color:var(--fg)">Lo que <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--m)">materializamos</em> para vos</h2>
+          <p class="products-subtitle" id="productsSubtitle" style="color:var(--fg-3)">Precios actualizados · IVA incluido · Entrega en Buenos Aires</p>
         </div>
       </div>
       <div class="products-grid" id="productsGrid">
