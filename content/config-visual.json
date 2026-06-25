@@ -33,6 +33,10 @@
     {
       "desk": "/assets/uploads/banner-home.webp?v=1782410523778",
       "mob": "/assets/uploads/banner-home-mobile.webp?v=1782414934731"
+    },
+    {
+      "desk": "/assets/uploads/banner-home-2.webp?v=1782415865417",
+      "mob": ""
     }
   ]
 }
