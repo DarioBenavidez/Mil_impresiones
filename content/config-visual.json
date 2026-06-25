@@ -10,7 +10,7 @@
   "paperColor": "#f8f8fa",
   "accentColor": "#EC008C",
   "inkColor": "#1a1815",
-  "bannerHomePosition": "50.7758% 89.2857%",
+  "bannerHomePosition": "49.328107502799554% 41.78574285714286%",
   "bannerShopPosition": "47.288180928162745% 9.28567142857143%",
   "bannerShopHeight": "580",
   "productsLabel": "Ofertas del día",
@@ -22,7 +22,7 @@
   "ofertasThumbH": "110",
   "bannerHomeMobileH": 55,
   "bannerHomeHeight": "360",
-  "bannerHomeMobilePosition": "49.15195772994129% 42.14285714285714%",
+  "bannerHomeMobilePosition": "50% 50%",
   "footerEmail": "ventas@milimpresiones.com",
   "footerWA": "5491136365889",
   "footerHours": "Lun–Vie 9–18 hs",
@@ -31,8 +31,8 @@
   "footerInstagram": "1000_impresiones",
   "heroBanners": [
     {
-      "desk": "/assets/uploads/banner-home.webp?v=1782413952527",
-      "mob": "/assets/uploads/banner-home-mobile.webp?v=1782413205652"
+      "desk": "/assets/uploads/banner-home.webp?v=1782410523778",
+      "mob": "/assets/uploads/banner-home-mobile.webp?v=1782414934731"
     }
   ]
 }
