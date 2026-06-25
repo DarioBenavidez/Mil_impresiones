@@ -10,7 +10,7 @@
   "paperColor": "#f8f8fa",
   "accentColor": "#EC008C",
   "inkColor": "#1a1815",
-  "bannerHomePosition": "60.29955505617978% 0%",
+  "bannerHomePosition": "49.328107502799554% 41.78574285714286%",
   "bannerShopPosition": "47.288180928162745% 9.28567142857143%",
   "bannerShopHeight": "580",
   "productsLabel": "Ofertas del día",
@@ -36,10 +36,6 @@
     },
     {
       "desk": "/assets/uploads/banner-home-2.png?v=1782099132519",
-      "mob": ""
-    },
-    {
-      "desk": "/assets/uploads/banner-home-3.png?v=1782099380381",
       "mob": ""
     }
   ]
