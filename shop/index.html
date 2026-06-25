@@ -10,14 +10,14 @@
 <meta property="og:url" content="https://milimpresiones.com/shop/">
 <meta property="og:title" content="Tienda · Mil Impresiones">
 <meta property="og:description" content="Catálogo completo de impresión digital. Tarjetas, volantes, packaging y más. Entrega en 48-72 hs.">
-<meta property="og:image" content="https://milimpresiones.com/assets/uploads/banner-bc.png">
+<meta property="og:image" content="https://milimpresiones.com/assets/uploads/banner-home.png">
 <meta property="og:locale" content="es_AR">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/styles.css">
 <script src="/chrome.js?v=5" defer></script>
 <style>
@@ -46,21 +46,21 @@
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 600;
-  padding: 7px 16px;
+  padding: 9px 18px;
   border-radius: 999px;
-  border: 1.5px solid #EC008C;
-  background: #EC008C;
-  color: #fff;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--fg-2);
   cursor: pointer;
-  transition: all .2s;
+  transition: background .2s, border-color .2s, color .2s;
   white-space: nowrap;
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
-.fchip:hover { background: #cc006f; border-color: #cc006f; color: #fff; }
-.fchip.active { background: #a3004e; border-color: #a3004e; color: #fff; }
+.fchip:hover { border-color: var(--fg); color: var(--fg); }
+.fchip.active { background: var(--fg); border-color: var(--fg); color: var(--bg); }
 .fchip-dot { width: 7px; height: 7px; border-radius: 50%; }
 
 /* Sort + count bar */
@@ -134,13 +134,10 @@
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
   font-size: 48px; font-weight: 700;
-  opacity: .18; letter-spacing: -.04em;
-  color: #fff;
+  opacity: .4; letter-spacing: -.04em;
+  color: var(--fg-3);
 }
-.pcard.m-card .pcard-thumb { background: linear-gradient(135deg,#EC008C,#BB006F); }
-.pcard.c-card .pcard-thumb { background: linear-gradient(135deg,#00AEEF,#0088CC); }
-.pcard.y-card .pcard-thumb { background: linear-gradient(135deg,#F5D800,#D4B800); }
-.pcard.k-card .pcard-thumb { background: linear-gradient(135deg,#333,#111); }
+.pcard-thumb { background: var(--bg-2); }
 
 .pcard-badge {
   position: absolute; top: 10px; left: 10px;
@@ -193,11 +190,7 @@
   display: flex; align-items: center; justify-content: center; gap: 5px;
   text-decoration: none;
 }
-.pcard-btn-cart:hover { background: #c4007a; transform: translateY(-1px); }
-.pcard.c-card .pcard-btn-cart { background: var(--c); }
-.pcard.c-card .pcard-btn-cart:hover { background: #0093cc; }
-.pcard.y-card .pcard-btn-cart { background: var(--k); color: var(--bg); }
-.pcard.k-card .pcard-btn-cart { background: var(--c); }
+.pcard-btn-cart:hover { background: color-mix(in srgb, var(--m) 85%, #000); transform: translateY(-1px); }
 
 .pcard-btn-detail {
   font-family: var(--font-display); font-size: 12px; font-weight: 500;
@@ -338,7 +331,7 @@
       var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
       var thumbHtml = p.img
         ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">'
-        : '<div class="pcard-thumb-placeholder">' + (p.icon || '📦') + '</div>';
+        : '<div class="pcard-thumb-placeholder">' + (p.name || 'MI').slice(0, 2).toUpperCase() + '</div>';
       var detailUrl = '/shop/producto?id=' + encodeURIComponent(p.id || p.name);
       return '<div class="pcard ' + (p.color || 'm') + '-card">'
         + '<a class="pcard-thumb" href="' + detailUrl + '">'
@@ -351,9 +344,9 @@
         + '<p class="pcard-desc">' + (p.desc || '').slice(0, 80) + (p.desc && p.desc.length > 80 ? '…' : '') + '</p>'
         + '<div class="pcard-specs">' + (p.specs || []).slice(0, 3).map(function(s) { return '<span class="pcard-spec">' + s + '</span>'; }).join('') + '</div>'
         + '<div class="pcard-price-row"><span class="pcard-from">Desde</span><span class="pcard-price">$' + (p.price || 0).toLocaleString('es-AR') + '</span><span class="pcard-unit">' + (p.unit || '') + '</span></div>'
-        + '<div class="pcard-delivery">⏱ ' + (p.delivery || 'Consultar') + '</div>'
+        + '<div class="pcard-delivery"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> ' + (p.delivery || 'Consultar') + '</div>'
         + '<div class="pcard-actions">'
-        + '<button class="pcard-btn-cart" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'>🛒 Agregar</button>'
+        + '<button class="pcard-btn-cart" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Agregar</button>'
         + '<a href="' + detailUrl + '" class="pcard-btn-detail">Ver producto →</a>'
         + '</div>'
         + '</div></div>';
