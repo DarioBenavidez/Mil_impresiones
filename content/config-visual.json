@@ -10,7 +10,7 @@
   "paperColor": "#f8f8fa",
   "accentColor": "#EC008C",
   "inkColor": "#1a1815",
-  "bannerHomePosition": "60.29955505617978% 0%",
+  "bannerHomePosition": "59.51682113502935% 65.35714285714286%",
   "bannerShopPosition": "47.288180928162745% 9.28567142857143%",
   "bannerShopHeight": "580",
   "productsLabel": "Ofertas del día",
@@ -31,7 +31,7 @@
   "footerInstagram": "1000_impresiones",
   "heroBanners": [
     {
-      "desk": "/assets/uploads/banner-home.webp?v=1782413223317",
+      "desk": "",
       "mob": "/assets/uploads/banner-home-mobile.webp?v=1782413205652"
     },
     {
