@@ -2079,7 +2079,7 @@ function uploadBannerHome(file) {
   var progress = document.getElementById('bannerHomeProgress');
   var bar = document.getElementById('bannerHomeProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 2400, 675, 0.92).then(function(c) {
+  compressImage(file, 2560, 720, 0.92).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home.webp', c.base64)
       .then(function(r) {
@@ -2130,7 +2130,7 @@ function uploadBannerHomeMob(file) {
   var progress = document.getElementById('bannerHomeMobProgress');
   var bar = document.getElementById('bannerHomeMobProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 780, 430, 0.92).then(function(c) {
+  compressImage(file, 1080, 595, 0.92).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home-mobile.webp', c.base64)
       .then(function(r) {
@@ -2173,7 +2173,7 @@ function setSlidePreview(previewId, src, slotNum, isMob) {
 
 function uploadSlide(slotNum, isMob, file) {
   var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.webp';
-  var maxW = isMob ? 780 : 2400, maxH = isMob ? 430 : 675;
+  var maxW = isMob ? 1080 : 2560, maxH = isMob ? 595 : 720;
   var progressId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Progress';
   var barId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'ProgressBar';
   var previewId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Preview';
