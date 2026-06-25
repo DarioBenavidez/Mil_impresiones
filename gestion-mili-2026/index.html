@@ -566,13 +566,13 @@ img{max-width:100%;display:block}
             </div>
           </div>
           <div class="banner-current" id="bannerHomeMobPreview">
-            <span style="color:var(--fg3);font-size:13px">Sin imagen de celular (usa la de PC)</span>
+            <span style="color:var(--fg3);font-size:13px">Sin imagen de celular (independiente de PC)</span>
           </div>
           <div style="background:#FDE4F1;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px">
             <span style="font-size:22px">📐</span>
             <div>
               <div style="font-size:13px;font-weight:700;color:#EC008C">Tamaño exacto: 1080 × 420 px</div>
-              <div style="font-size:11px;color:#555;margin-top:2px">Más cuadrada · JPG o PNG · Si no subís una, usa la imagen de PC</div>
+              <div style="font-size:11px;color:#555;margin-top:2px">Más cuadrada · JPG o PNG · Independiente de PC (si no subís una, en celular no se muestra banner)</div>
             </div>
           </div>
           <div class="upload-zone" id="bannerHomeMobUploadZone">
@@ -2098,10 +2098,10 @@ function setBannerHomeMobPreview(src, badgeText) {
   buildBannerPreview('bannerHomeMobPreview', src, {
     objPos: visualConfig.bannerHomeMobilePosition || '50% 50%',
     badgeText: badgeText || 'Imagen actual (celular)',
-    placeholder: 'Sin imagen de celular (usa la de PC)',
+    placeholder: 'Sin imagen de celular (independiente de PC)',
     sizeInfoId: 'homeMobSizeInfo', sizeUploadSel: '#bannerHomeMobUploadZone .upload-sub',
     onDelete: function() {
-      clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (usa la de PC)');
+      clearBannerPreview('bannerHomeMobPreview', 'Sin imagen de celular (independiente de PC)');
       var b = visualConfig.heroBanners || [];
       if (b[0]) b[0].mob = '';
       visualConfig.heroBanners = b;

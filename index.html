@@ -244,32 +244,29 @@
     if(cfg.bannerHomeHeight && window.innerWidth > 600) slider.style.height = Math.round(parseInt(cfg.bannerHomeHeight)/14.4) + 'vw';
     if(cfg.bannerHomeMobileH && window.innerWidth <= 600) document.documentElement.style.setProperty('--banner-home-h-mob', cfg.bannerHomeMobileH + 'vw');
 
-    // Construir slides — solo incluir banners con imagen definida
-    var banners = (cfg.heroBanners || []).filter(function(b) { return b.desk; });
+    // Construir slides — INDEPENDIENTES por dispositivo: mobile usa solo sus
+    // imágenes (b.mob) y desktop solo las suyas (b.desk). Sin fallback entre sí.
+    var isMobView = window.innerWidth <= 600;
+    var banners = (cfg.heroBanners || []).filter(function(b) { return isMobView ? b.mob : b.desk; });
     if (!banners.length) { slider.style.display = 'none'; return; }
 
     var firstActive = true;
     banners.forEach(function(b) {
-      if (!b.desk) return;
+      var src = isMobView ? b.mob : b.desk;
+      if (!src) return;
       var slide = document.createElement('div');
       slide.className = 'hero-slide' + (firstActive ? ' active' : '');
       var isFirst = firstActive;
       firstActive = false;
-      var imgD = document.createElement('img');
-      imgD.className = 'hero-img-desk';
-      imgD.alt = 'Mil Impresiones';
-      if(b.posDesk) imgD.style.objectPosition = b.posDesk;
-      imgD.onerror = function() { slide.style.display = 'none'; };
-      if(isFirst) imgD.fetchPriority = 'high'; else imgD.loading = 'lazy';
-      imgD.src = b.desk;
-      var imgM = document.createElement('img');
-      imgM.className = 'hero-img-mob';
-      imgM.alt = 'Mil Impresiones';
-      if(b.posMob) imgM.style.objectPosition = b.posMob;
-      if(isFirst) imgM.fetchPriority = 'high'; else imgM.loading = 'lazy';
-      imgM.src = b.mob || b.desk;
-      slide.appendChild(imgD);
-      slide.appendChild(imgM);
+      var img = document.createElement('img');
+      img.className = isMobView ? 'hero-img-mob' : 'hero-img-desk';
+      img.alt = 'Mil Impresiones';
+      var pos = isMobView ? b.posMob : b.posDesk;
+      if(pos) img.style.objectPosition = pos;
+      img.onerror = function() { slide.style.display = 'none'; };
+      if(isFirst) img.fetchPriority = 'high'; else img.loading = 'lazy';
+      img.src = src;
+      slide.appendChild(img);
       slider.appendChild(slide);
     });
 
