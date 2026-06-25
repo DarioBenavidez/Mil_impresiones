@@ -1602,7 +1602,10 @@ function compressImage(file, maxW, maxH, quality) {
       }
       var canvas = document.createElement('canvas');
       canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, w, h);
       canvas.toBlob(function(blob) {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -2079,7 +2082,7 @@ function uploadBannerHome(file) {
   var progress = document.getElementById('bannerHomeProgress');
   var bar = document.getElementById('bannerHomeProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 2560, 720, 0.92).then(function(c) {
+  compressImage(file, 2560, 720, 0.95).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home.webp', c.base64)
       .then(function(r) {
@@ -2130,7 +2133,7 @@ function uploadBannerHomeMob(file) {
   var progress = document.getElementById('bannerHomeMobProgress');
   var bar = document.getElementById('bannerHomeMobProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 1080, 595, 0.92).then(function(c) {
+  compressImage(file, 1080, 595, 0.95).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home-mobile.webp', c.base64)
       .then(function(r) {
@@ -2180,7 +2183,7 @@ function uploadSlide(slotNum, isMob, file) {
   var prog = document.getElementById(progressId);
   var bar = document.getElementById(barId);
   if (prog) { prog.style.display = 'block'; bar.style.width = '20%'; }
-  compressImage(file, maxW, maxH, 0.92).then(function(c) {
+  compressImage(file, maxW, maxH, 0.95).then(function(c) {
     if (bar) bar.style.width = '50%';
     uploadToGithub(filename, c.base64).then(function(r) {
       var url = (r.path || '/assets/uploads/' + filename) + '?v=' + Date.now();
