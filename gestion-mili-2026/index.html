@@ -2079,7 +2079,7 @@ function uploadBannerHome(file) {
   var progress = document.getElementById('bannerHomeProgress');
   var bar = document.getElementById('bannerHomeProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 1920, 540, 0.85).then(function(c) {
+  compressImage(file, 2400, 675, 0.92).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home.webp', c.base64)
       .then(function(r) {
@@ -2130,7 +2130,7 @@ function uploadBannerHomeMob(file) {
   var progress = document.getElementById('bannerHomeMobProgress');
   var bar = document.getElementById('bannerHomeMobProgressBar');
   progress.style.display = 'block'; bar.style.width = '20%';
-  compressImage(file, 390, 215, 0.85).then(function(c) {
+  compressImage(file, 780, 430, 0.92).then(function(c) {
     bar.style.width = '50%';
     uploadToGithub('banner-home-mobile.webp', c.base64)
       .then(function(r) {
@@ -2173,14 +2173,14 @@ function setSlidePreview(previewId, src, slotNum, isMob) {
 
 function uploadSlide(slotNum, isMob, file) {
   var filename = 'banner-home-' + slotNum + (isMob ? '-mobile' : '') + '.webp';
-  var maxW = isMob ? 390 : 1920, maxH = isMob ? 215 : 540;
+  var maxW = isMob ? 780 : 2400, maxH = isMob ? 430 : 675;
   var progressId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Progress';
   var barId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'ProgressBar';
   var previewId = 'banner' + slotNum + (isMob ? 'Mob' : '') + 'Preview';
   var prog = document.getElementById(progressId);
   var bar = document.getElementById(barId);
   if (prog) { prog.style.display = 'block'; bar.style.width = '20%'; }
-  compressImage(file, maxW, maxH, 0.85).then(function(c) {
+  compressImage(file, maxW, maxH, 0.92).then(function(c) {
     if (bar) bar.style.width = '50%';
     uploadToGithub(filename, c.base64).then(function(r) {
       var url = (r.path || '/assets/uploads/' + filename) + '?v=' + Date.now();
