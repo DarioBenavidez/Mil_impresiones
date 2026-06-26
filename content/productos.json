@@ -115,7 +115,7 @@
       "delivery": "Listo en 24hs",
       "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": false
+      "hidden": true
     },
     {
       "id": "sobres-personalizados",
