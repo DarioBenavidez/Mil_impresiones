@@ -141,13 +141,13 @@
       "hidden": true
     },
     {
-      "id": "etiquetas-autoadhesivas",
-      "name": "Etiquetas Autoadhesivas",
-      "cat": "packaging",
-      "category": "Packaging",
+      "id": "sticker-personalizados",
+      "name": "Sticker Personalizados",
+      "cat": "papeleria",
+      "category": "Papelería Creativa",
       "color": "y",
-      "icon": "ET",
-      "img": "/assets/uploads/etiquetas-autoadhesivas.webp",
+      "icon": "ST",
+      "img": "/assets/uploads/mesa-de-trabajo-4.webp",
       "badge": "Nuevo",
       "badgeType": "new",
       "desc": "Etiquetas x 10u. Autoadhesivas para frascos, cajas, bolsas y más. Acabado brillante.",
@@ -158,7 +158,7 @@
       "price": 4220,
       "unit": "10",
       "delivery": "Listo en 24 hs",
-      "whatsapp": "Me interesa \"Etiquetas Autoadhesivas\". ¿Pueden cotizarme?",
+      "whatsapp": "Me interesa \"Sticker Personalizados\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
     },
