@@ -325,7 +325,7 @@
       "delivery": "Listo en 3 días hábiles",
       "whatsapp": "Me interesa \"CUADRO MURAL 40 X 60CM\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "tazas-personalizadas",
