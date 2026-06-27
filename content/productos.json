@@ -375,27 +375,36 @@
       "hidden": false
     },
     {
-      "id": "libretas-personalizadas",
-      "name": "Libretas Personalizadas",
+      "id": "set-de-mate",
+      "name": "Set de mate",
       "cat": "merch",
+      "cats": [
+        "merch"
+      ],
       "category": "Merchandising",
       "color": "k",
-      "icon": "LI",
-      "img": "/assets/uploads/notebook-despues-.jpg",
+      "icon": "SE",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-21.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-21.webp",
       "badge": null,
       "badgeType": null,
-      "desc": "Libretas A5 tapa dura con tu logo o diseño. 80 hojas rayadas o lisas. Ideales para regalos corporativos, eventos y brand lovers.",
+      "desc": "Set de termo de 1lt , mate, yerbera y azucarera en ceramica sublimada.\nTodo personalizado.",
       "specs": [
-        "A5 tapa dura",
-        "80 hojas",
-        "Logo incluido"
+        "Termo 1LT.",
+        "Yerbera",
+        "Azucarera",
+        "Mate",
+        "ceramica",
+        "Sublimado"
       ],
-      "price": 12000,
+      "price": 70000,
       "unit": "por unidad",
-      "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa \"Libretas Personalizadas\". ¿Pueden cotizarme?",
+      "delivery": "Listo en 3 días",
+      "whatsapp": "Me interesa \"Set de mate\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "souvenirs",
