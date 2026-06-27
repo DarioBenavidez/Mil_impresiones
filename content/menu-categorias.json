@@ -22,7 +22,8 @@
         "Etiquetas y stickers",
         "Packaging kraft",
         "Blísters / Displays"
-      ]
+      ],
+      "hidden": true
     },
     {
       "key": "giganto",
