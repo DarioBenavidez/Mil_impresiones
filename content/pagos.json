@@ -1,0 +1,26 @@
+{
+  "methods": [
+    {
+      "id": "efectivo",
+      "name": "Efectivo en local",
+      "desc": "Pagás al retirar tu pedido",
+      "detail": "Retiro en local\nAna María Janer 345, CABA\nCafferata 2911, Villa Madero, GBA\nLunes a viernes 9 a 18 hs · Coordinamos la fecha por WhatsApp.",
+      "hidden": false
+    },
+    {
+      "id": "transferencia",
+      "name": "Transferencia bancaria",
+      "desc": "Transferís y te mandamos el comprobante",
+      "detail": "Datos bancarios\nBanco: Galicia · Caja de ahorro $\nCBU: 0070123456789012345678\nAlias: MILI.IMPRESIONES\nTitular: 1000 Impresiones\nLa producción inicia una vez confirmado el pago.",
+      "hidden": false
+    },
+    {
+      "id": "mercadopago",
+      "name": "Mercado Pago",
+      "desc": "Tarjeta, débito, hasta 12 cuotas o QR",
+      "detail": "Pago seguro con Mercado Pago\nAl confirmar te redirigimos al checkout oficial de Mercado Pago. Podés pagar con tarjeta de crédito, débito, cuotas o QR.\nCuotas sin interés según banco emisor.",
+      "hidden": false,
+      "mp": true
+    }
+  ]
+}

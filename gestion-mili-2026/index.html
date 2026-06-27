@@ -341,6 +341,10 @@ img{max-width:100%;display:block}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
           Catálogo (inicio)
         </div>
+        <div class="nav-item" data-panel="pagos">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Medios de pago
+        </div>
         <div class="nav-item" data-panel="why-us">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
           Franja de beneficios
@@ -997,6 +1001,22 @@ img{max-width:100%;display:block}
         <div id="procesoEditor" style="display:flex;flex-direction:column;gap:12px"></div>
       </div>
 
+      <!-- MEDIOS DE PAGO -->
+      <div class="panel" id="panel-pagos">
+        <div class="section-header">
+          <div>
+            <h2>Medios de pago</h2>
+            <p>Editá, ocultá o agregá los métodos de pago del checkout</p>
+          </div>
+          <button class="btn-primary" onclick="savePagos()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Guardar cambios
+          </button>
+        </div>
+        <div id="pagosEditor" style="display:flex;flex-direction:column;gap:14px"></div>
+        <button onclick="addPago()" style="margin-top:14px;background:none;border:1px dashed var(--border);border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--fg2);cursor:pointer;width:100%">+ Agregar método de pago</button>
+      </div>
+
       <!-- FOOTER / CONTACTO -->
       <div class="panel" id="panel-footer-config">
         <div class="section-header">
@@ -1426,6 +1446,7 @@ var panelTitles = {
   'textos-inicio': ['Textos del inicio', 'Editar los títulos de la sección de productos'],
   ofertas: ['Ofertas del día', 'Promociones especiales visibles en la página principal'],
   catalogo: ['Catálogo (inicio)', 'Distribución del catálogo completo en la página principal'],
+  pagos: ['Medios de pago', 'Métodos de pago del checkout'],
   'why-us': ['Franja de beneficios', 'Íconos con texto debajo del banner principal'],
   ticker: ['Ticker / Barra', 'Barra de desplazamiento de la página principal'],
   'menu-cats': ['Menú / Categorías', 'Categorías y sub-categorías del menú de navegación'],
@@ -2754,6 +2775,45 @@ function renderProcesoEditor() {
 
 function saveProceso() {
   saveToGithub('content/proceso.json', { steps: procesoSteps });
+}
+
+// ── MEDIOS DE PAGO ──────────────────────────────────────────────────────────
+var pagosData = [];
+fetch('/api/content?file=pagos.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(d){
+  pagosData = (d && d.methods) ? d.methods : [];
+  renderPagosEditor();
+});
+
+function pEsc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+
+function renderPagosEditor() {
+  var el = document.getElementById('pagosEditor');
+  if (!el) return;
+  if (!pagosData.length) { el.innerHTML = '<p style="color:var(--fg3);text-align:center;padding:20px">No hay métodos. Agregá uno.</p>'; return; }
+  el.innerHTML = pagosData.map(function(m, i) {
+    var isMp = !!m.mp;
+    return '<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px' + (m.hidden ? ';opacity:.6' : '') + '">'
+      + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
+      + '<input type="text" value="' + pEsc(m.name) + '" placeholder="Nombre" style="flex:1;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-weight:700" oninput="pagosData[' + i + '].name=this.value">'
+      + (isMp ? '<span style="font-size:10px;font-weight:700;color:#0093cc;background:#E0F5FD;padding:3px 8px;border-radius:5px;white-space:nowrap">PAGO ONLINE</span>' : '')
+      + (m.hidden ? '<span style="font-size:10px;font-weight:700;color:#999;background:var(--border);padding:3px 8px;border-radius:5px">OCULTO</span>' : '')
+      + '<button type="button" onclick="togglePagoHidden(' + i + ')" title="' + (m.hidden?'Mostrar':'Ocultar') + '" style="background:none;border:1px solid var(--border2);border-radius:6px;width:32px;height:32px;cursor:pointer;font-size:14px">' + (m.hidden?'🙈':'👁') + '</button>'
+      + (isMp ? '' : '<button type="button" onclick="deletePago(' + i + ')" title="Eliminar" style="background:none;border:1px solid #e55;border-radius:6px;width:32px;height:32px;cursor:pointer;color:#e55">✕</button>')
+      + '</div>'
+      + '<input type="text" value="' + pEsc(m.desc) + '" placeholder="Descripción corta" style="width:100%;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:13px;margin-bottom:8px" oninput="pagosData[' + i + '].desc=this.value">'
+      + '<textarea placeholder="Detalle (datos bancarios, dirección, etc. — una línea por renglón)" rows="4" style="width:100%;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:13px;font-family:inherit;resize:vertical" oninput="pagosData[' + i + '].detail=this.value">' + pEsc(m.detail) + '</textarea>'
+      + (isMp ? '<div style="font-size:11px;color:var(--fg3);margin-top:6px">Abre el checkout de Mercado Pago. No se puede eliminar (sí ocultar o editar su texto).</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+function togglePagoHidden(i){ pagosData[i].hidden = !pagosData[i].hidden; renderPagosEditor(); }
+function deletePago(i){ if(!confirm('¿Eliminar este método de pago?')) return; pagosData.splice(i,1); renderPagosEditor(); }
+function addPago(){ pagosData.push({ id: 'pago-' + Date.now().toString(36), name: 'Nuevo método', desc: '', detail: '', hidden: false }); renderPagosEditor(); }
+function savePagos(){
+  saveToGithub('content/pagos.json', { methods: pagosData })
+    .then(function(){ showToast('Medios de pago guardados'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
 }
 
 // ── FOOTER CONFIG ─────────────────────────────────────────────────────────────

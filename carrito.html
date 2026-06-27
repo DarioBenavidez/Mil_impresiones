@@ -192,55 +192,7 @@
               <!-- PAYMENT METHOD -->
               <div class="payment-section">
                 <p class="payment-title">Método de pago <span style="color:var(--m)">*</span></p>
-                <div class="payment-options" id="paymentOptions">
-
-                  <label class="payment-option" id="pay-efectivo">
-                    <input type="radio" name="pago" value="efectivo">
-                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/></svg></span>
-                    <div class="payment-info">
-                      <div class="payment-name">Efectivo en local</div>
-                      <div class="payment-desc">Pagás al retirar tu pedido</div>
-                    </div>
-                  </label>
-                  <div class="payment-detail" id="detail-efectivo">
-                    <strong>Retiro en local</strong><br>
-                    Ana María Janer 345, CABA<br>
-                    Cafferata 2911, Villa Madero, GBA<br>
-                    Lunes a viernes 9 a 18 hs · Coordinaremos la fecha por WhatsApp.
-                  </div>
-
-                  <label class="payment-option" id="pay-transferencia">
-                    <input type="radio" name="pago" value="transferencia">
-                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 10h16M5 10l7-6 7 6M6 10v8M10 10v8M14 10v8M18 10v8"/></svg></span>
-                    <div class="payment-info">
-                      <div class="payment-name">Transferencia bancaria</div>
-                      <div class="payment-desc">Transferís y te mandamos el comprobante</div>
-                    </div>
-                  </label>
-                  <div class="payment-detail" id="detail-transferencia">
-                    <strong>Datos bancarios</strong><br>
-                    Banco: Galicia · Tipo: Caja de ahorro $<br>
-                    CBU: <code style="background:var(--bg);padding:2px 6px;border-radius:4px">0070123456789012345678</code><br>
-                    Alias: <code style="background:var(--bg);padding:2px 6px;border-radius:4px">MILI.IMPRESIONES</code><br>
-                    Titular: 1000 Impresiones<br><br>
-                    <em>La producción inicia una vez confirmado el pago.</em>
-                  </div>
-
-                  <label class="payment-option" id="pay-mp">
-                    <input type="radio" name="pago" value="mercadopago">
-                    <span class="payment-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
-                    <div class="payment-info">
-                      <div class="payment-name">Mercado Pago</div>
-                      <div class="payment-desc">Tarjeta, débito, hasta 12 cuotas o QR</div>
-                    </div>
-                  </label>
-                  <div class="payment-detail" id="detail-mp">
-                    <strong>Pago seguro con Mercado Pago</strong><br>
-                    Al confirmar te redirigimos al checkout oficial de Mercado Pago. Podés pagar con tarjeta de crédito, débito, cuotas o QR desde tu app.<br><br>
-                    <em>Cuotas sin interés disponibles según banco emisor.</em>
-                  </div>
-
-                </div>
+                <div class="payment-options" id="paymentOptions"></div>
                 <span class="form-error" id="err-pago" style="display:none;margin-top:8px">Seleccioná un método de pago</span>
               </div>
 
@@ -378,17 +330,55 @@
     });
   }
 
-  // ── PAYMENT SELECTION ──────────────────────────────────────────────────────
-  document.querySelectorAll('.payment-option input[type=radio]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      document.querySelectorAll('.payment-option').forEach(function (opt) { opt.classList.remove('selected'); });
-      document.querySelectorAll('.payment-detail').forEach(function (d) { d.classList.remove('show'); });
-      radio.closest('.payment-option').classList.add('selected');
-      var detailId = 'detail-' + radio.value;
-      var detail = document.getElementById(detailId);
-      if (detail) detail.classList.add('show');
+  // ── MÉTODOS DE PAGO (data-driven desde content/pagos.json) ──────────────────
+  var PAY_DEFAULT = [
+    { id:'efectivo', name:'Efectivo en local', desc:'Pagás al retirar tu pedido', detail:'Retiro en local\nCoordinamos por WhatsApp.', hidden:false },
+    { id:'transferencia', name:'Transferencia bancaria', desc:'Transferís y te mandamos el comprobante', detail:'Datos bancarios\nConsultanos por WhatsApp.', hidden:false },
+    { id:'mercadopago', name:'Mercado Pago', desc:'Tarjeta, débito, hasta 12 cuotas o QR', detail:'Pago seguro con Mercado Pago.', hidden:false, mp:true }
+  ];
+  var PAY_METHODS = PAY_DEFAULT;
+  var PAY_LABELS = {};
+
+  function payIcon(m) {
+    if (m.id === 'efectivo') return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v6M18 9v6"/></svg>';
+    if (m.id === 'transferencia') return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 10h16M5 10l7-6 7 6M6 10v8M10 10v8M14 10v8M18 10v8"/></svg>';
+    if (m.mp || m.id === 'mercadopago') return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
+    return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
+  }
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function renderPayments() {
+    var wrap = document.getElementById('paymentOptions');
+    if (!wrap) return;
+    var visible = PAY_METHODS.filter(function(m){ return m && !m.hidden && m.name; });
+    PAY_LABELS = {};
+    wrap.innerHTML = visible.map(function(m) {
+      PAY_LABELS[m.id] = m.name;
+      var detailHtml = esc(m.detail || '').replace(/\n/g, '<br>');
+      return '<label class="payment-option" id="pay-' + m.id + '">'
+        + '<input type="radio" name="pago" value="' + m.id + '">'
+        + '<span class="payment-icon">' + payIcon(m) + '</span>'
+        + '<div class="payment-info"><div class="payment-name">' + esc(m.name) + '</div><div class="payment-desc">' + esc(m.desc || '') + '</div></div>'
+        + '</label>'
+        + (detailHtml ? '<div class="payment-detail" id="detail-' + m.id + '">' + detailHtml + '</div>' : '');
+    }).join('');
+    // Bind selección
+    wrap.querySelectorAll('.payment-option input[type=radio]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        wrap.querySelectorAll('.payment-option').forEach(function (opt) { opt.classList.remove('selected'); });
+        wrap.querySelectorAll('.payment-detail').forEach(function (d) { d.classList.remove('show'); });
+        radio.closest('.payment-option').classList.add('selected');
+        var detail = document.getElementById('detail-' + radio.value);
+        if (detail) detail.classList.add('show');
+      });
     });
-  });
+  }
+
+  renderPayments(); // render inmediato con defaults (evita checkout vacío)
+  fetch('/api/content?file=pagos.json')
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .catch(function(){ return null; })
+    .then(function(d){ if (d && d.methods && d.methods.length) { PAY_METHODS = d.methods; renderPayments(); } });
 
   // ── ENVÍO ADDRESS ──────────────────────────────────────────────────────────
   document.getElementById('f-envio').addEventListener('change', function () {
@@ -446,7 +436,7 @@
     // Build order summary
     var orderCode = 'MI-' + Date.now().toString(36).toUpperCase();
     var total = '$' + Cart.total().toLocaleString('es-AR');
-    var pagoLabel = { efectivo: 'Efectivo en local', transferencia: 'Transferencia bancaria', mercadopago: 'Mercado Pago' }[pago.value] || pago.value;
+    var pagoLabel = PAY_LABELS[pago.value] || pago.value;
 
     var btn = document.getElementById('btnSubmit');
     btn.disabled = true;
