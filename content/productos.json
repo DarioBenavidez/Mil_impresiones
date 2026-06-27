@@ -330,7 +330,10 @@
       "category": "Merchandising",
       "color": "c",
       "icon": "TA",
-      "img": "/assets/uploads/taza-dana.png",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-17.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-17.webp",
       "badge": "Nuevo",
       "badgeType": "new",
       "desc": "Tazas blancas de cerámica con tu diseño impreso en sublimación. Alta durabilidad. Ideales para regalos corporativos y souvenirs.",
