@@ -406,7 +406,7 @@
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa \"Libretas Personalizadas\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": false
+      "hidden": true
     },
     {
       "id": "souvenirs",
