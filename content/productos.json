@@ -383,9 +383,15 @@
       "id": "libretas-personalizadas",
       "name": "Libretas Personalizadas",
       "cat": "merch",
+      "cats": [
+        "merch"
+      ],
       "category": "Merchandising",
       "color": "k",
       "icon": "LI",
+      "images": [
+        "/assets/uploads/notebook-despues-.jpg"
+      ],
       "img": "/assets/uploads/notebook-despues-.jpg",
       "badge": null,
       "badgeType": null,
@@ -395,12 +401,12 @@
         "80 hojas",
         "Logo incluido"
       ],
-      "price": 12000,
+      "price": 1,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa \"Libretas Personalizadas\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "souvenirs",
