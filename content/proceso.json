@@ -26,7 +26,7 @@
     }
   ],
   "bandColor": "#404040",
-  "bandPadding": 8,
+  "bandPadding": 6,
   "bandWidth": 78,
-  "bandRadius": 0
+  "bandRadius": 999
 }
