@@ -343,7 +343,7 @@
       "unit": "por unidad",
       "delivery": "Listo en 24 hs",
       "whatsapp": "Me interesa \"Tazas Personalizadas\". ¿Pueden cotizarme?",
-      "oferta": false,
+      "oferta": true,
       "hidden": false
     },
     {
