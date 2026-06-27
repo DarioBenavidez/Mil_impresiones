@@ -22,6 +22,11 @@
       "icon": "💬",
       "label": "Asesoramiento real",
       "sub": "Te acompañamos en cada paso"
+    },
+    {
+      "icon": "⭐",
+      "label": "Envios ",
+      "sub": "Coordinamos o por Andreani "
     }
   ],
   "paddingV": 8,
