@@ -101,11 +101,6 @@
       "id": "etiquetas-circulares",
       "name": "Etiquetas Circulares",
       "cat": "impresion",
-      "cats": [
-        "impresion",
-        "merch",
-        "papeleria"
-      ],
       "category": "Impresión Digital",
       "color": "m",
       "icon": "ET",
@@ -129,7 +124,7 @@
       "unit": "100u",
       "delivery": "Listo en 24 hs",
       "whatsapp": "Me interesa \"Etiquetas Circulares\". ¿Pueden cotizarme?",
-      "oferta": true,
+      "oferta": false,
       "hidden": false
     },
     {
@@ -345,7 +340,7 @@
         "MDF 9mm",
         "SIN MARCOS"
       ],
-      "price": 68000,
+      "price": 75000,
       "unit": "por proyecto",
       "delivery": "Listo en 3 días hábiles",
       "whatsapp": "Me interesa \"CUADRO MURAL 40 X 60CM\". ¿Pueden cotizarme?",
@@ -383,15 +378,9 @@
       "id": "libretas-personalizadas",
       "name": "Libretas Personalizadas",
       "cat": "merch",
-      "cats": [
-        "merch"
-      ],
       "category": "Merchandising",
       "color": "k",
       "icon": "LI",
-      "images": [
-        "/assets/uploads/notebook-despues-.jpg"
-      ],
       "img": "/assets/uploads/notebook-despues-.jpg",
       "badge": null,
       "badgeType": null,
@@ -401,7 +390,7 @@
         "80 hojas",
         "Logo incluido"
       ],
-      "price": 1,
+      "price": 12000,
       "unit": "por unidad",
       "delivery": "Listo en 5 días",
       "whatsapp": "Me interesa \"Libretas Personalizadas\". ¿Pueden cotizarme?",
