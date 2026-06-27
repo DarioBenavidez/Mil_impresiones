@@ -170,27 +170,29 @@
       "hidden": false
     },
     {
-      "id": "cajas-troqueladas",
-      "name": "Cajas Troqueladas",
-      "cat": "packaging",
-      "category": "Packaging",
+      "id": "tags-colgantes",
+      "name": "Tags colgantes",
+      "cat": "impresion",
+      "category": "Impresión Digital",
       "color": "y",
-      "icon": "CA",
-      "img": "/assets/uploads/packagin.png",
+      "icon": "TA",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-1.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-1.webp",
       "badge": null,
       "badgeType": null,
-      "desc": "Cajas troqueladas a medida para tu producto. Cartón microcanal o cartulina. Impresión full color + barniz UV. Armado incluido.",
+      "desc": "Tarjeta tag personalizada en papel Madera Kraft de 200 grs, con impresión en negro en una sola cara y perforación lista para usar. Tamaño a elección entre los disponibles, ideal como etiqueta souvenir o packaging con un diseño básico incluido. No incluye hilo — podés sumar hilo de yute por metro como opción adicional. \nMedidas para elegir: \n-6x4cm\n-6x3cm\n-5x5cm\n-7x2,5cm",
       "specs": [
         "A medida",
-        "Cartulina o microcanal",
-        "Barniz UV"
+        "papel craft 200g"
       ],
-      "price": 35000,
-      "unit": "× 100 u.",
-      "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa \"Cajas Troqueladas\". ¿Pueden cotizarme?",
+      "price": 12000,
+      "unit": "20u",
+      "delivery": "Listo en 24hs",
+      "whatsapp": "Me interesa \"Tags colgantes\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "bolsas-con-logo",
