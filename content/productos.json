@@ -295,12 +295,12 @@
         "125ml",
         "Fragancias a eleccion"
       ],
-      "price": 40000,
+      "price": 38000,
       "unit": "10u",
       "delivery": "Listo en 3 días hábiles",
       "whatsapp": "Me interesa \"Difusor aromatico personalizado\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "identidad-visual-completa",
