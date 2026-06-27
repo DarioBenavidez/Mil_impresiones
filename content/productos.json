@@ -435,6 +435,35 @@
       "whatsapp": "Me interesa \"Centro de mesa\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "taza-conica-ceramica",
+      "name": "Taza conica ceramica",
+      "cat": "merch",
+      "cats": [
+        "merch"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "TA",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-23.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-23.webp",
+      "badge": "Nuevo",
+      "badgeType": "hot",
+      "desc": "Taza conica de ceramica nacional, sublimada con logo , fotos o diseño personalizado. \nIdeal souvenir, empresas o regalos particulares.",
+      "specs": [
+        "Ceramica",
+        "Taza conica",
+        "sublimada"
+      ],
+      "price": 10999,
+      "unit": "1",
+      "delivery": "Listo en 48hs",
+      "whatsapp": "Me interesa \"Taza conica ceramica\". ¿Pueden cotizarme?",
+      "oferta": true,
+      "hidden": false
     }
   ]
 }
