@@ -2692,10 +2692,8 @@ fetch('/api/content?file=config-visual.json').then(function(r){return r.json();}
   }
 });
 
-// ── CLOSE MODALS ON CLICK OUTSIDE ─────────────────────────────────────────
-document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
-  overlay.addEventListener('click', function(e) { if (e.target === overlay) { overlay.classList.remove('open'); } });
-});
+// Los modales de carga (producto, portfolio, testimonios) NO se cierran al
+// hacer clic en el fondo, para no perder lo cargado. Cierran solo con Cancelar / ×.
 
 // ── OFERTAS DEL DÍA ────────────────────────────────────────────────────────
 function renderOfertasProductList() {
