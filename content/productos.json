@@ -303,25 +303,27 @@
       "hidden": false
     },
     {
-      "id": "identidad-visual-completa",
-      "name": "Identidad Visual Completa",
-      "cat": "diseno",
-      "category": "Diseño Gráfico",
+      "id": "cuadro-mural-40-x-60cm",
+      "name": "CUADRO MURAL 40 X 60CM",
+      "cat": "merch",
+      "category": "Merchandising",
       "color": "m",
-      "icon": "ID",
-      "img": "/assets/uploads/diseno.png",
+      "icon": "CU",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-16.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-16.webp",
       "badge": "Premium",
       "badgeType": "hot",
-      "desc": "Logo + paleta de colores + tipografías + papelería básica (tarjeta, sobre, hoja membretada). Manual de marca completo. Ideal para emprendimientos.",
+      "desc": "Cuadro mural en MDF de 9 mm con acabado en bordes negros, ideal para inmortalizar tus momentos más especiales con una foto personalizada de alta calidad. Su material resistente y diseño elegante lo convierten en una pieza decorativa única que embellece cualquier pared del hogar u oficina.",
       "specs": [
-        "Logo completo",
-        "Papelería incluida",
-        "Manual de marca"
+        "MDF 9mm",
+        "SIN MARCOS"
       ],
-      "price": 120000,
+      "price": 68000,
       "unit": "por proyecto",
-      "delivery": "Listo en 10 días hábiles",
-      "whatsapp": "Me interesa \"Identidad Visual Completa\". ¿Pueden cotizarme?",
+      "delivery": "Listo en 3 días hábiles",
+      "whatsapp": "Me interesa \"CUADRO MURAL 40 X 60CM\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": true
     },
