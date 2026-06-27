@@ -28,6 +28,6 @@
   "bandColor": "#c7c7c7",
   "bandTextColor": "#0d0d0d",
   "bandPadding": 2,
-  "bandWidth": 77,
+  "bandWidth": 64,
   "bandRadius": 999
 }
