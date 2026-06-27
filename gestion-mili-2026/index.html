@@ -1005,6 +1005,9 @@ img{max-width:100%;display:block}
             <label style="font-size:13px;font-weight:600;color:var(--fg2)">Color de la franja
               <input type="color" id="procBandColor" value="#1a1815" style="display:block;margin-top:6px;width:100%;height:42px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
             </label>
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Color del texto
+              <input type="color" id="procBandTextColor" value="#ffffff" style="display:block;margin-top:6px;width:100%;height:42px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
+            </label>
             <div>
               <label style="font-size:13px;font-weight:600;color:var(--fg2)">Grosor (alto): <span id="procBandPaddingVal">8px</span></label>
               <input type="range" id="procBandPadding" min="2" max="28" value="8" oninput="document.getElementById('procBandPaddingVal').textContent=this.value+'px'" style="display:block;margin-top:10px;width:100%">
@@ -2782,6 +2785,7 @@ fetch('/api/content?file=proceso.json').then(function(r){return r.ok?r.json():nu
   ];
   // Estilo de la franja
   if (data.bandColor) document.getElementById('procBandColor').value = data.bandColor;
+  if (data.bandTextColor) document.getElementById('procBandTextColor').value = data.bandTextColor;
   if (data.bandPadding != null) { document.getElementById('procBandPadding').value = data.bandPadding; document.getElementById('procBandPaddingVal').textContent = data.bandPadding + 'px'; }
   if (data.bandWidth != null) { document.getElementById('procBandWidth').value = data.bandWidth; document.getElementById('procBandWidthVal').textContent = data.bandWidth + '%'; }
   var rad = String(data.bandRadius != null ? data.bandRadius : 0);
@@ -2816,6 +2820,7 @@ function saveProceso() {
   var payload = {
     steps: procesoSteps,
     bandColor: document.getElementById('procBandColor').value,
+    bandTextColor: document.getElementById('procBandTextColor').value,
     bandPadding: parseInt(document.getElementById('procBandPadding').value, 10),
     bandWidth: parseInt(document.getElementById('procBandWidth').value, 10),
     bandRadius: radBtn ? parseInt(radBtn.dataset.radius, 10) : 0
