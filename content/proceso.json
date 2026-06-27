@@ -25,7 +25,8 @@
       "sub": "48-72 hs hábiles. Envío o retiro en local"
     }
   ],
-  "bandColor": "#750039",
+  "bandColor": "#e6e6e6",
+  "bandTextColor": "#0d0d0d",
   "bandPadding": 6,
   "bandWidth": 78,
   "bandRadius": 999
