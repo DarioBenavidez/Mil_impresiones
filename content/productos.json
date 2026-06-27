@@ -417,9 +417,10 @@
       "color": "y",
       "icon": "CE",
       "images": [
+        "/assets/uploads/mesa-de-trabajo-24.webp",
         "/assets/uploads/mesa-de-trabajo-25.webp"
       ],
-      "img": "/assets/uploads/mesa-de-trabajo-25.webp",
+      "img": "/assets/uploads/mesa-de-trabajo-24.webp",
       "badge": null,
       "badgeType": null,
       "desc": "Centro de mesa en papel de 200gr , alta calidad de imagen. \nSet por 10u.",
