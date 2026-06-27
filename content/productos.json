@@ -407,25 +407,32 @@
       "hidden": false
     },
     {
-      "id": "souvenirs",
-      "name": "Souvenirs",
-      "cat": "merch",
-      "category": "Merchandising",
+      "id": "centro-de-mesa",
+      "name": "Centro de mesa",
+      "cat": "papeleria",
+      "cats": [
+        "papeleria"
+      ],
+      "category": "Papelería Creativa",
       "color": "y",
-      "icon": "SO",
-      "img": "/assets/uploads/souvenir.png",
+      "icon": "CE",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-25.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-25.webp",
       "badge": null,
       "badgeType": null,
-      "desc": "Kit personalizable: taza + libreta + lapicera + tarjeta. Empaque premium con tu marca. Ideal para regalos corporativos y eventos.",
+      "desc": "Centro de mesa en papel de 200gr , alta calidad de imagen. \nSet por 10u.",
       "specs": [
-        "4 productos",
-        "Empaque incluido",
-        "Personalizable"
+        "Personalizable",
+        "Centro de mesa",
+        "Triptico",
+        "PAPEL FOTOGRAFICO 200G"
       ],
-      "price": 32000,
-      "unit": "por kit",
-      "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa \"Souvenirs\". ¿Pueden cotizarme?",
+      "price": 20000,
+      "unit": "Kit x 10u",
+      "delivery": "Listo en 3 días",
+      "whatsapp": "Me interesa \"Centro de mesa\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": true
     }
