@@ -24,7 +24,7 @@
       "unit": "100u.",
       "delivery": "Listo en 72hs",
       "whatsapp": "Me interesa \"Tarjetas Personales\". ¿Pueden cotizarme?",
-      "oferta": false,
+      "oferta": true,
       "hidden": false
     },
     {
@@ -91,7 +91,7 @@
       "unit": "1000",
       "delivery": "Listo en 7 Dias",
       "whatsapp": "Me interesa \"Folleto 20 x 30\". ¿Pueden cotizarme?",
-      "oferta": false,
+      "oferta": true,
       "hidden": false
     },
     {
@@ -114,7 +114,7 @@
       "unit": "1",
       "delivery": "Listo en 24hs",
       "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
-      "oferta": false,
+      "oferta": true,
       "hidden": true
     },
     {
