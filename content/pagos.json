@@ -12,7 +12,7 @@
       "name": "Transferencia bancaria",
       "desc": "Transferís y te mandamos el comprobante",
       "detail": "Datos bancarios\nBanco: Galicia · Caja de ahorro $\nCBU: 0070123456789012345678\nAlias: MILI.IMPRESIONES\nTitular: 1000 Impresiones\nLa producción inicia una vez confirmado el pago.",
-      "hidden": false
+      "hidden": true
     },
     {
       "id": "mercadopago",
