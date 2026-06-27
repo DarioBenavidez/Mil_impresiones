@@ -2562,11 +2562,13 @@ function renderMenuCats() {
     return;
   }
   editor.innerHTML = menuCats.map(function(cat, ci) {
-    return '<div class="menu-cat-card" data-ci="' + ci + '" style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px">'
+    return '<div class="menu-cat-card" data-ci="' + ci + '" style="background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:16px' + (cat.hidden ? ';opacity:.55' : '') + '">'
       + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">'
       + '<input type="text" value="' + cat.icon + '" placeholder="ícono" style="width:52px;text-align:center;font-size:20px;border:1px solid var(--border2);border-radius:8px;padding:6px;background:var(--bg)" oninput="menuCats[' + ci + '].icon=this.value">'
       + '<input type="text" value="' + cat.label + '" placeholder="Nombre" style="flex:1;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-weight:600" oninput="menuCats[' + ci + '].label=this.value">'
+      + (cat.hidden ? '<span style="font-size:10px;font-weight:700;color:#999;background:var(--border);padding:3px 8px;border-radius:5px;white-space:nowrap">OCULTA</span>' : '')
       + '<input type="text" value="' + cat.key + '" placeholder="clave" style="width:110px;border:1px solid var(--border2);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:12px;color:var(--fg3)" title="Clave de filtro (ej: impresion)" oninput="menuCats[' + ci + '].key=this.value">'
+      + '<button onclick="toggleMenuCatHidden(' + ci + ')" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="' + (cat.hidden ? 'Mostrar' : 'Ocultar') + '">' + (cat.hidden ? '🙈' : '👁') + '</button>'
       + '<button onclick="moveMenuCat(' + ci + ',-1)" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="Subir">↑</button>'
       + '<button onclick="moveMenuCat(' + ci + ',1)" style="background:none;border:1px solid var(--border2);border-radius:6px;width:30px;height:30px;cursor:pointer;font-size:14px" title="Bajar">↓</button>'
       + '<button onclick="deleteMenuCat(' + ci + ')" style="background:none;border:1px solid #e55;border-radius:6px;width:30px;height:30px;cursor:pointer;color:#e55;font-size:14px" title="Eliminar">✕</button>'
@@ -2583,6 +2585,11 @@ function renderMenuCats() {
       + '</div>'
       + '</div>';
   }).join('');
+}
+
+function toggleMenuCatHidden(ci) {
+  menuCats[ci].hidden = !menuCats[ci].hidden;
+  renderMenuCats();
 }
 
 function addMenuCat() {

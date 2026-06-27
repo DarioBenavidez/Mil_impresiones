@@ -463,6 +463,7 @@
   var CHEV = '<svg class="mega-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>';
 
   function buildMegaMenu(categories) {
+    categories = (categories || []).filter(function(c){ return !c.hidden; });
     var left  = document.getElementById('megaLeft');
     var right = document.getElementById('megaRight');
     if (!left || !right) return;
