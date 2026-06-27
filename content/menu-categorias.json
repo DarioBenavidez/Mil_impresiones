@@ -47,7 +47,8 @@
         "Diseño de packaging",
         "Piezas para redes sociales",
         "Material de impresión"
-      ]
+      ],
+      "hidden": true
     },
     {
       "key": "merch",
