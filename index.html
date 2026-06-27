@@ -157,6 +157,9 @@
   .trust-step:not(:last-child)::after{display:none}
   .trust-num{font-size:15px}
   .trust-title{font-size:11px;white-space:normal;line-height:1.25}
+  /* En mobile: franja a todo el ancho y pasos quietos (sin animación) para que entren los 4 */
+  .trust-band{max-width:none !important;margin-left:0 !important;margin-right:0 !important;border-radius:0 !important}
+  .trust-band.animate .trust-step,.trust-step{animation:none !important;opacity:1 !important;transform:none !important}
 }
 @media(max-width:700px){.trust-step:not(:last-child)::after{display:none}.trust-grid{gap:0}.trust-step{padding:8px var(--s3)}}
 
