@@ -580,3 +580,33 @@
   });
 
 })();
+
+/* ── Galería de imágenes por producto (cards + detalle) ─────────────────── */
+(function () {
+  function setIndex(tg, i) {
+    var imgs;
+    try { imgs = JSON.parse(tg.dataset.imgs || '[]'); } catch (_) { imgs = []; }
+    if (!imgs.length) return;
+    i = ((i % imgs.length) + imgs.length) % imgs.length;
+    tg.dataset.i = i;
+    var main = tg.querySelector('.tg-img');
+    if (main) main.src = imgs[i];
+    tg.querySelectorAll('.tg-thumb').forEach(function (t, k) { t.classList.toggle('active', k === i); });
+  }
+  document.addEventListener('click', function (e) {
+    var arrow = e.target.closest('.tg-arrow');
+    if (arrow) {
+      e.preventDefault(); e.stopPropagation();
+      var tg = arrow.closest('.tg'); if (!tg) return;
+      var cur = parseInt(tg.dataset.i || '0', 10);
+      setIndex(tg, arrow.classList.contains('next') ? cur + 1 : cur - 1);
+      return;
+    }
+    var thumb = e.target.closest('.tg-thumb');
+    if (thumb) {
+      e.preventDefault(); e.stopPropagation();
+      var tg2 = thumb.closest('.tg'); if (!tg2) return;
+      setIndex(tg2, parseInt(thumb.dataset.idx || '0', 10));
+    }
+  });
+})();

@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/styles.css">
-<script src="/chrome.js?v=5" defer></script>
+<script src="/chrome.js?v=6" defer></script>
 <style>
 /* ── SHOP PAGE ── */
 .shop-page { padding: var(--shop-page-pt, 48px) 0 var(--shop-page-pb, 128px); }
@@ -330,15 +330,17 @@
     }
     grid.innerHTML = products.map(function(p) {
       var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
-      var thumbHtml = p.img
-        ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy">'
-        : '<div class="pcard-thumb-placeholder">' + (p.name || 'MI').slice(0, 2).toUpperCase() + '</div>';
       var detailUrl = '/shop/producto?id=' + encodeURIComponent(p.id || p.name);
+      var imgs = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+      var thumbInner = imgs.length
+        ? '<a class="tg-link" href="' + detailUrl + '"><img class="tg-img" src="' + imgs[0] + '" alt="' + p.name + '" loading="lazy"></a>'
+          + (imgs.length > 1 ? '<button class="tg-arrow prev" type="button" aria-label="Anterior">‹</button><button class="tg-arrow next" type="button" aria-label="Siguiente">›</button>' : '')
+        : '<a class="tg-link" href="' + detailUrl + '" style="display:flex;align-items:center;justify-content:center"><div class="pcard-thumb-placeholder">' + (p.name || 'MI').slice(0, 2).toUpperCase() + '</div></a>';
       return '<div class="pcard ' + (p.color || 'm') + '-card">'
-        + '<a class="pcard-thumb" href="' + detailUrl + '">'
+        + '<div class="pcard-thumb tg" data-imgs=\'' + JSON.stringify(imgs).replace(/'/g,"&#39;") + '\' data-i="0">'
         + (p.badge ? '<span class="pcard-badge badge-' + (p.badgeType || 'hot') + '">' + p.badge + '</span>' : '')
-        + thumbHtml
-        + '</a>'
+        + thumbInner
+        + '</div>'
         + '<div class="pcard-body">'
         + '<span class="pcard-cat">' + (p.category || '') + '</span>'
         + '<a class="pcard-name" href="' + detailUrl + '" style="text-decoration:none;color:inherit">' + p.name + '</a>'

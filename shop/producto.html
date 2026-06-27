@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,ital,wght@9..144,1,400&family=Jost:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/styles.css">
-<script src="/chrome.js?v=5" defer></script>
+<script src="/chrome.js?v=6" defer></script>
 <style>
 .producto-page { padding: var(--s6) 0 var(--s10); }
 
@@ -67,6 +67,14 @@
 .visual-m, .visual-c, .visual-y, .visual-k { background: var(--bg-2); }
 
 .producto-badge-wrap { margin-top: var(--s4); display: flex; gap: var(--s2); flex-wrap: wrap; }
+
+/* Miniaturas de galería */
+.producto-thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.tg-thumb { width: 68px; height: 50px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; background: var(--bg-2); cursor: pointer; padding: 0; }
+.tg-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tg-thumb.active { border-color: var(--m); }
+/* En el detalle, mostrar las flechas siempre (no solo en hover) */
+.producto-visual .tg-arrow { opacity: .92; }
 
 /* Info */
 .producto-info {}
@@ -295,9 +303,17 @@ function openImgZoom(src) {
   function renderProduct(p) {
     var accentClass = getAccentClass(p.color || 'm');
     var visualClass = 'visual-' + (p.color || 'm');
-    var thumbHtml = p.img
-      ? '<img src="' + p.img + '" alt="' + p.name + '" style="cursor:zoom-in" onclick="openImgZoom(this.src)">'
-      : '<div class="producto-img-placeholder">' + (p.name || 'MI').slice(0, 2).toUpperCase() + '</div>';
+    var imgs = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+    var galleryHtml;
+    if (imgs.length) {
+      galleryHtml = '<div class="producto-img-wrap ' + visualClass + '">'
+        + '<img class="tg-img" src="' + imgs[0] + '" alt="' + p.name + '" style="cursor:zoom-in" onclick="openImgZoom(this.src)">'
+        + (imgs.length > 1 ? '<button class="tg-arrow prev" type="button" aria-label="Anterior">‹</button><button class="tg-arrow next" type="button" aria-label="Siguiente">›</button>' : '')
+        + '</div>'
+        + (imgs.length > 1 ? '<div class="producto-thumbs">' + imgs.map(function(u, i){ return '<button class="tg-thumb' + (i === 0 ? ' active' : '') + '" type="button" data-idx="' + i + '"><img src="' + u + '" alt=""></button>'; }).join('') + '</div>' : '');
+    } else {
+      galleryHtml = '<div class="producto-img-wrap ' + visualClass + '"><div class="producto-img-placeholder">' + (p.name || 'MI').slice(0, 2).toUpperCase() + '</div></div>';
+    }
 
     var waMsg = encodeURIComponent('Hola! Me interesa "' + p.name + '". ¿Pueden cotizarme?');
 
@@ -332,8 +348,8 @@ function openImgZoom(src) {
       '<div class="producto-layout">',
 
         // Visual
-        '<div class="producto-visual">',
-          '<div class="producto-img-wrap ' + visualClass + '">' + thumbHtml + '</div>',
+        '<div class="producto-visual tg" data-imgs=\'' + JSON.stringify(imgs).replace(/'/g,"&#39;") + '\' data-i="0">',
+          galleryHtml,
           (p.badge ? '<div class="producto-badge-wrap"><span class="pcard-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span></div>' : ''),
         '</div>',
 

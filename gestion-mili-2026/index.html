@@ -1103,13 +1103,13 @@ img{max-width:100%;display:block}
     </div>
     <div class="modal-body">
       <div class="field">
-        <label>Foto del producto</label>
+        <label>Fotos del producto (hasta 5 · la primera es la portada)</label>
+        <div id="prodImagesGrid" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px"></div>
         <div class="upload-zone" id="prodImgZone" style="padding:20px">
-          <input type="file" id="prodImgInput" accept="image/*">
+          <input type="file" id="prodImgInput" accept="image/*" multiple>
           <div class="upload-icon" style="font-size:28px">📸</div>
-          <div class="upload-label" style="font-size:13px">Arrastrá o elegí una foto</div>
-          <div class="upload-sub">JPG, PNG · Máx 5MB · 1500×1000 px recomendado (3:2, alta calidad)</div>
-          <div class="upload-preview" id="prodImgPreview"><img id="prodImgPreviewImg" src="" alt=""></div>
+          <div class="upload-label" style="font-size:13px">Arrastrá o elegí fotos (hasta 5)</div>
+          <div class="upload-sub">JPG, PNG · 1500×1000 px recomendado (3:2). La primera es la portada.</div>
           <div class="upload-progress" id="prodImgProgress"><div class="upload-progress-bar" id="prodImgProgressBar"></div></div>
         </div>
       </div>
@@ -1344,7 +1344,7 @@ var testimonios = [];
 var currentProductIdx = null;
 var currentTestiIdx = null;
 var currentProductSpecs = [];
-var currentProductImg = null;
+var currentProductImages = []; // mezcla de strings (URL ya subida) y {base64, filename} (pendiente)
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 function showApp() {
@@ -1624,8 +1624,8 @@ function renderProducts() {
 
 function openProductModal(idx) {
   currentProductIdx = idx;
-  currentProductImg = null;
   var p = idx !== null ? productos[idx] : null;
+  currentProductImages = p ? ((p.images && p.images.length) ? p.images.slice() : (p.img ? [p.img] : [])) : [];
   currentProductSpecs = p ? (p.specs || []).slice() : [];
   document.getElementById('productModalTitle').textContent = p ? 'Editar producto' : 'Nuevo producto';
   document.getElementById('pName').value = p ? p.name : '';
@@ -1639,11 +1639,7 @@ function openProductModal(idx) {
   document.getElementById('pColor').value = p ? (p.color || 'm') : 'm';
   document.getElementById('pOferta').checked = p ? !!p.oferta : false;
   document.getElementById('pHidden').checked = p ? !!p.hidden : false;
-  // Preview imagen existente
-  var prev = document.getElementById('prodImgPreview');
-  var prevImg = document.getElementById('prodImgPreviewImg');
-  if (p && p.img) { prevImg.src = p.img; prev.style.display = 'block'; currentProductImg = p.img; }
-  else { prev.style.display = 'none'; prevImg.src = ''; }
+  renderProductImages();
   renderSpecTags();
   document.getElementById('productModal').classList.add('open');
 }
@@ -1668,15 +1664,39 @@ document.getElementById('specInput').addEventListener('keydown', function(e) { i
 
 function removeSpec(i) { currentProductSpecs.splice(i, 1); renderSpecTags(); }
 
-// Upload foto de producto
+// Galería de hasta 5 fotos de producto
+function imgSrcOf(it) { return typeof it === 'string' ? it : it.base64; }
+
+function renderProductImages() {
+  var grid = document.getElementById('prodImagesGrid');
+  if (!grid) return;
+  grid.innerHTML = currentProductImages.map(function(it, i) {
+    return '<div style="position:relative;width:84px;height:56px;border-radius:8px;overflow:hidden;border:1px solid var(--border)">'
+      + '<img src="' + imgSrcOf(it) + '" style="width:100%;height:100%;object-fit:cover;display:block">'
+      + (i === 0 ? '<span style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:9px;text-align:center;padding:1px 0">Portada</span>' : '')
+      + '<button type="button" onclick="removeProductImage(' + i + ')" title="Quitar" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;border:none;background:rgba(0,0,0,.6);color:#fff;cursor:pointer;font-size:12px;line-height:1;padding:0">×</button>'
+      + '</div>';
+  }).join('');
+  var zone = document.getElementById('prodImgZone');
+  if (zone) zone.style.display = currentProductImages.length >= 5 ? 'none' : '';
+}
+
+function removeProductImage(i) {
+  currentProductImages.splice(i, 1);
+  renderProductImages();
+}
+
 document.getElementById('prodImgInput').addEventListener('change', function(e) {
-  var file = e.target.files[0];
-  if (!file) return;
-  compressImage(file, 1600, 1600, 0.92).then(function(c) {
-    document.getElementById('prodImgPreviewImg').src = c.base64;
-    document.getElementById('prodImgPreview').style.display = 'block';
-    currentProductImg = { base64: c.base64, filename: file.name.replace(/\.[^.]+$/, '.webp') };
+  var files = Array.from(e.target.files || []);
+  var free = 5 - currentProductImages.length;
+  if (free <= 0) { showToast('Máximo 5 imágenes por producto', 'error'); e.target.value = ''; return; }
+  files.slice(0, free).forEach(function(file) {
+    compressImage(file, 1600, 1600, 0.92).then(function(c) {
+      currentProductImages.push({ base64: c.base64, filename: file.name.replace(/\.[^.]+$/, '.webp') });
+      renderProductImages();
+    });
   });
+  e.target.value = '';
 });
 
 function saveProduct() {
@@ -1702,7 +1722,8 @@ function saveProduct() {
   btn.textContent = 'Guardando...';
   btn.disabled = true;
 
-  function doSave(imgPath) {
+  function doSave(imgs) {
+    imgs = (imgs || []).filter(Boolean);
     var catLabels = { impresion:'Impresión Digital', packaging:'Packaging', giganto:'Gigantografías', diseno:'Diseño Gráfico', merch:'Merchandising', papeleria:'Papelería Creativa' };
     var prod = {
       id: name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
@@ -1711,7 +1732,8 @@ function saveProduct() {
       category: catLabels[formData.cat] || formData.cat,
       color: formData.color,
       icon: name.slice(0, 2).toUpperCase(),
-      img: imgPath || null,
+      images: imgs,
+      img: imgs[0] || null,
       badge: formData.badge || null,
       badgeType: formData.badge ? formData.badgeType : null,
       desc: formData.desc,
@@ -1738,13 +1760,13 @@ function saveProduct() {
       });
   }
 
-  if (currentProductImg && typeof currentProductImg === 'object') {
-    uploadToGithub(currentProductImg.filename, currentProductImg.base64)
-      .then(function(r) { doSave(r.path || null); })
-      .catch(function() { doSave(null); });
-  } else {
-    doSave(typeof currentProductImg === 'string' ? currentProductImg : null);
-  }
+  // Subir las imágenes pendientes (objetos) en orden; las strings (ya subidas) quedan igual
+  Promise.all(currentProductImages.map(function(it) {
+    if (typeof it === 'string') return Promise.resolve(it);
+    return uploadToGithub(it.filename, it.base64).then(function(r) { return r.path || null; }).catch(function() { return null; });
+  })).then(function(urls) {
+    doSave(urls);
+  });
 }
 
 function deleteProduct(i) {
