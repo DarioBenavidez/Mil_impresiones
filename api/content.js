@@ -10,6 +10,7 @@ const ALLOWED = new Set([
   'trabajos.json',
   'testimonios.json',
   'pagos.json',
+  'proceso.json',
 ]);
 
 export default async function handler(req, res) {

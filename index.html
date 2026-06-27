@@ -840,12 +840,22 @@ fetch('/api/content?file=ticker.json')
   var grid = document.getElementById('trustGrid');
   if(!band || !grid) return;
   fetch('/api/content?file=proceso.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(data){
-    var steps = (data && data.steps) || [
+    data = data || {};
+    var steps = data.steps || [
       {num:'01',color:'#00AEEF',title:'Elegís tu producto'},
       {num:'02',color:'#EC008C',title:'Nos contás tu proyecto'},
       {num:'03',color:'#C9A800',title:'Cotización en 2 horas'},
       {num:'04',color:'#ffffff66',title:'Producimos y entregamos'}
     ];
+    // Estilo configurable de la franja
+    if (data.bandColor) band.style.background = data.bandColor;
+    if (data.bandPadding != null) band.style.padding = data.bandPadding + 'px 0';
+    if (data.bandRadius != null) band.style.borderRadius = data.bandRadius + 'px';
+    if (data.bandWidth != null && data.bandWidth < 100) {
+      band.style.maxWidth = data.bandWidth + '%';
+      band.style.marginLeft = 'auto'; band.style.marginRight = 'auto';
+    }
+    band.style.overflow = 'hidden';
     grid.innerHTML = steps.map(function(s){
       return '<div class="trust-step"><span class="trust-num" style="color:'+s.color+'">'+s.num+'</span><div class="trust-body"><span class="trust-title">'+s.title+'</span></div></div>';
     }).join('');

@@ -998,6 +998,30 @@ img{max-width:100%;display:block}
             Guardar cambios
           </button>
         </div>
+        <!-- ESTILO DE LA FRANJA -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:18px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px">🎨 Estilo de la franja</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <label style="font-size:13px;font-weight:600;color:var(--fg2)">Color de la franja
+              <input type="color" id="procBandColor" value="#1a1815" style="display:block;margin-top:6px;width:100%;height:42px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none">
+            </label>
+            <div>
+              <label style="font-size:13px;font-weight:600;color:var(--fg2)">Grosor (alto): <span id="procBandPaddingVal">8px</span></label>
+              <input type="range" id="procBandPadding" min="2" max="28" value="8" oninput="document.getElementById('procBandPaddingVal').textContent=this.value+'px'" style="display:block;margin-top:10px;width:100%">
+            </div>
+            <div>
+              <label style="font-size:13px;font-weight:600;color:var(--fg2)">Ancho de la barra: <span id="procBandWidthVal">100%</span></label>
+              <input type="range" id="procBandWidth" min="50" max="100" value="100" oninput="document.getElementById('procBandWidthVal').textContent=this.value+'%'" style="display:block;margin-top:10px;width:100%">
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:600;color:var(--fg2);margin-bottom:8px">Terminaciones</div>
+              <div class="height-options" id="procBandCorners">
+                <button type="button" class="height-btn active" data-radius="0">Cuadradas</button>
+                <button type="button" class="height-btn" data-radius="999">Redondeadas</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="procesoEditor" style="display:flex;flex-direction:column;gap:12px"></div>
       </div>
 
@@ -2749,13 +2773,27 @@ document.querySelector('.nav-item[data-panel="ofertas"]').addEventListener('clic
 // ── PROCESO ──────────────────────────────────────────────────────────────────
 var procesoSteps = [];
 fetch('/api/content?file=proceso.json').then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}).then(function(data){
-  procesoSteps = (data && data.steps) || [
+  data = data || {};
+  procesoSteps = data.steps || [
     {num:'01',color:'#00AEEF',title:'Elegís tu producto',sub:'Seleccionás el servicio y clickeás "Pedir ahora"'},
     {num:'02',color:'#EC008C',title:'Nos contás tu proyecto',sub:'Cantidad, medidas y cualquier detalle que tengas'},
     {num:'03',color:'#C9A800',title:'Cotización en 2 horas',sub:'Te mandamos precio final con detalle completo'},
     {num:'04',color:'#ffffff66',title:'Producimos y entregamos',sub:'48-72 hs hábiles. Envío o retiro en local'}
   ];
+  // Estilo de la franja
+  if (data.bandColor) document.getElementById('procBandColor').value = data.bandColor;
+  if (data.bandPadding != null) { document.getElementById('procBandPadding').value = data.bandPadding; document.getElementById('procBandPaddingVal').textContent = data.bandPadding + 'px'; }
+  if (data.bandWidth != null) { document.getElementById('procBandWidth').value = data.bandWidth; document.getElementById('procBandWidthVal').textContent = data.bandWidth + '%'; }
+  var rad = String(data.bandRadius != null ? data.bandRadius : 0);
+  document.querySelectorAll('#procBandCorners .height-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.radius === rad); });
   renderProcesoEditor();
+});
+// Toggle terminaciones
+document.querySelectorAll('#procBandCorners .height-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('#procBandCorners .height-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
 });
 
 function renderProcesoEditor() {
@@ -2774,7 +2812,17 @@ function renderProcesoEditor() {
 }
 
 function saveProceso() {
-  saveToGithub('content/proceso.json', { steps: procesoSteps });
+  var radBtn = document.querySelector('#procBandCorners .height-btn.active');
+  var payload = {
+    steps: procesoSteps,
+    bandColor: document.getElementById('procBandColor').value,
+    bandPadding: parseInt(document.getElementById('procBandPadding').value, 10),
+    bandWidth: parseInt(document.getElementById('procBandWidth').value, 10),
+    bandRadius: radBtn ? parseInt(radBtn.dataset.radius, 10) : 0
+  };
+  saveToGithub('content/proceso.json', payload)
+    .then(function(){ showToast('Proceso guardado'); })
+    .catch(function(){ showToast('Error al guardar', 'error'); });
 }
 
 // ── MEDIOS DE PAGO ──────────────────────────────────────────────────────────
