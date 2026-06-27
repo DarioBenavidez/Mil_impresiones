@@ -1,8 +1,32 @@
 {
   "steps": [
-    { "num": "01", "color": "#00AEEF", "title": "Elegís tu producto", "sub": "Seleccionás el servicio y clickeás \"Pedir ahora\"" },
-    { "num": "02", "color": "#EC008C", "title": "Nos contás tu proyecto", "sub": "Cantidad, medidas y cualquier detalle que tengas" },
-    { "num": "03", "color": "#C9A800", "title": "Cotización en 2 horas", "sub": "Te mandamos precio final con detalle completo" },
-    { "num": "04", "color": "#ffffff66", "title": "Producimos y entregamos", "sub": "48-72 hs hábiles. Envío o retiro en local" }
-  ]
+    {
+      "num": "01",
+      "color": "#00AEEF",
+      "title": "Elegís tu producto",
+      "sub": "Seleccionás el servicio y clickeás \"Pedir ahora\""
+    },
+    {
+      "num": "02",
+      "color": "#EC008C",
+      "title": "Nos contás tu proyecto",
+      "sub": "Cantidad, medidas y cualquier detalle que tengas"
+    },
+    {
+      "num": "03",
+      "color": "#C9A800",
+      "title": "Cotización en 2 horas",
+      "sub": "Te mandamos precio final con detalle completo"
+    },
+    {
+      "num": "04",
+      "color": "#ffffff66",
+      "title": "Producimos y entregamos",
+      "sub": "48-72 hs hábiles. Envío o retiro en local"
+    }
+  ],
+  "bandColor": "#f2f2f2",
+  "bandPadding": 8,
+  "bandWidth": 100,
+  "bandRadius": 0
 }
