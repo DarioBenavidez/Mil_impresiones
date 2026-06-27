@@ -50,27 +50,30 @@
       "hidden": false
     },
     {
-      "id": "pack-emprendedor",
-      "name": "Pack Emprendedor",
-      "cat": "impresion",
-      "category": "Impresión Digital",
+      "id": "etiquetas-para-tela",
+      "name": "Etiquetas para tela",
+      "cat": "papeleria",
+      "category": "Papelería Creativa",
       "color": "m",
-      "icon": "PA",
-      "img": "/assets/uploads/gemini_generated_image_abl00mabl00mabl0.png",
-      "badge": "⭐ Top",
-      "badgeType": "hot",
-      "desc": "Tarjetas x500 + Flyers A5 x500 + Folleto A4 x100. Todo lo que tu marca necesita para salir al mercado. Diseño incluido.",
-      "specs": [
-        "3 productos",
-        "Diseño incluido",
-        "Entrega única"
+      "icon": "ET",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-20.webp"
       ],
-      "price": 45000,
-      "unit": "el pack",
-      "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesa \"Pack Emprendedor\". ¿Pueden cotizarme?",
+      "img": "/assets/uploads/mesa-de-trabajo-20.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Etiquetas para tela impresas en DTF de alta calidad, con acabado duradero y colores vibrantes que no se despegan ni desvanecen con el lavado. Vienen en planchas A4 con aproximadamente 30 unidades por plancha según la medida elegida, ideales para personalizar ropa, accesorios y productos textiles con tu marca o diseño.",
+      "specs": [
+        "Diseño incluido",
+        "a4 (20x26)",
+        "dtf"
+      ],
+      "price": 9800,
+      "unit": "X1u",
+      "delivery": "Listo en 24 hs",
+      "whatsapp": "Me interesa \"Etiquetas para tela\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "folleto-20-x-30",
