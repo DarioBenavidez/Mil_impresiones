@@ -95,27 +95,34 @@
       "hidden": false
     },
     {
-      "id": "afiches-a3",
-      "name": "Afiches A3",
+      "id": "etiquetas-circulares",
+      "name": "Etiquetas Circulares",
       "cat": "impresion",
       "category": "Impresión Digital",
       "color": "m",
-      "icon": "AF",
+      "icon": "ET",
+      "images": [
+        "/assets/uploads/volantes-vamos-baby.png"
+      ],
       "img": "/assets/uploads/volantes-vamos-baby.png",
       "badge": null,
       "badgeType": null,
-      "desc": "Afiches A3 full color, Ideal para locales, eventos y campañas publicitarias.",
+      "desc": "Etiquetas circulares personalizadas, perfectas para darle identidad y distinción a tus productos, regalos o packaging. Con impresión de alta calidad y acabado profesional, son el detalle que marca la diferencia en cada presentación.\n100u hasta 5cm",
       "specs": [
-        "A3",
         "Full color",
-        "300gr"
+        "Papel autoadhesivo",
+        "1CM",
+        "2CM",
+        "3CM",
+        "4CM",
+        "5CM"
       ],
-      "price": 7200,
-      "unit": "1",
-      "delivery": "Listo en 24hs",
-      "whatsapp": "Me interesa \"Afiches A3\". ¿Pueden cotizarme?",
+      "price": 12400,
+      "unit": "100",
+      "delivery": "Listo en 24 hs",
+      "whatsapp": "Me interesa \"Etiquetas Circulares\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "sobres-personalizados",
