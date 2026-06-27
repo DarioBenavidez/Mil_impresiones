@@ -101,6 +101,11 @@
       "id": "etiquetas-circulares",
       "name": "Etiquetas Circulares",
       "cat": "impresion",
+      "cats": [
+        "impresion",
+        "merch",
+        "papeleria"
+      ],
       "category": "Impresión Digital",
       "color": "m",
       "icon": "ET",
