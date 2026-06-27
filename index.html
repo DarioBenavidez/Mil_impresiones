@@ -522,7 +522,7 @@
 var allProducts = [];
 
 function filterProducts(cat){
-  var filtered = cat==='all' ? allProducts : allProducts.filter(function(p){ return p.cat===cat; });
+  var filtered = cat==='all' ? allProducts : allProducts.filter(function(p){ return (p.cats||[p.cat]).indexOf(cat)>=0; });
   renderProducts(filtered);
 }
 
@@ -786,7 +786,7 @@ function addToCart(p) {
       filterBtns.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       var cat = btn.dataset.cat;
-      var filtered = cat === 'all' ? allCatalogProducts : allCatalogProducts.filter(function(p){ return p.cat === cat; });
+      var filtered = cat === 'all' ? allCatalogProducts : allCatalogProducts.filter(function(p){ return (p.cats||[p.cat]).indexOf(cat)>=0; });
       renderCatalog(filtered);
     });
   });

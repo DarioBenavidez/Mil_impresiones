@@ -1108,6 +1108,9 @@ img{max-width:100%;display:block}
             <option value="merch">Merchandising</option>
             <option value="papeleria">Papelería Creativa</option>
           </select>
+          <div id="extraCatsWrap" style="display:flex;flex-direction:column;gap:6px;margin-top:8px"></div>
+          <button type="button" onclick="addExtraCat()" style="margin-top:8px;background:none;border:1px dashed var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;color:var(--fg2);cursor:pointer">+ Agregar otra categoría</button>
+          <div style="font-size:11px;color:var(--fg3);margin-top:4px">El producto va a aparecer en todas las categorías elegidas.</div>
         </div>
       </div>
       <div class="field">
@@ -1325,6 +1328,8 @@ var currentProductIdx = null;
 var currentTestiIdx = null;
 var currentProductSpecs = [];
 var currentProductImages = []; // mezcla de strings (URL ya subida) y {base64, filename} (pendiente)
+var currentProductExtraCats = []; // categorías adicionales (además de la principal)
+var CAT_OPTIONS = [['impresion','Impresión Digital'],['packaging','Packaging'],['giganto','Gigantografías'],['diseno','Diseño Gráfico'],['merch','Merchandising'],['papeleria','Papelería Creativa']];
 
 // ── AUTH ───────────────────────────────────────────────────────────────────
 function showApp() {
@@ -1606,6 +1611,7 @@ function openProductModal(idx) {
   currentProductIdx = idx;
   var p = idx !== null ? productos[idx] : null;
   currentProductImages = p ? ((p.images && p.images.length) ? p.images.slice() : (p.img ? [p.img] : [])) : [];
+  currentProductExtraCats = p ? ((p.cats || []).filter(function(c){ return c && c !== p.cat; })) : [];
   currentProductSpecs = p ? (p.specs || []).slice() : [];
   document.getElementById('productModalTitle').textContent = p ? 'Editar producto' : 'Nuevo producto';
   document.getElementById('pName').value = p ? p.name : '';
@@ -1620,6 +1626,7 @@ function openProductModal(idx) {
   document.getElementById('pOferta').checked = p ? !!p.oferta : false;
   document.getElementById('pHidden').checked = p ? !!p.hidden : false;
   renderProductImages();
+  renderExtraCats();
   renderSpecTags();
   document.getElementById('productModal').classList.add('open');
 }
@@ -1643,6 +1650,27 @@ function addSpec() {
 document.getElementById('specInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); addSpec(); } });
 
 function removeSpec(i) { currentProductSpecs.splice(i, 1); renderSpecTags(); }
+
+// Categorías adicionales del producto
+function renderExtraCats() {
+  var wrap = document.getElementById('extraCatsWrap');
+  if (!wrap) return;
+  wrap.innerHTML = currentProductExtraCats.map(function(catKey, i) {
+    var opts = CAT_OPTIONS.map(function(o){ return '<option value="' + o[0] + '"' + (o[0] === catKey ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('');
+    return '<div style="display:flex;gap:6px;align-items:center">'
+      + '<select onchange="currentProductExtraCats[' + i + ']=this.value" style="flex:1">' + opts + '</select>'
+      + '<button type="button" onclick="removeExtraCat(' + i + ')" title="Quitar" style="width:30px;height:30px;border-radius:6px;border:1px solid #e55;background:none;color:#e55;cursor:pointer;flex-shrink:0">✕</button>'
+      + '</div>';
+  }).join('');
+}
+function addExtraCat() {
+  // elige la primera categoría que no sea la principal ni esté ya agregada
+  var used = [document.getElementById('pCat').value].concat(currentProductExtraCats);
+  var avail = CAT_OPTIONS.map(function(o){ return o[0]; }).filter(function(k){ return used.indexOf(k) < 0; });
+  currentProductExtraCats.push(avail[0] || CAT_OPTIONS[0][0]);
+  renderExtraCats();
+}
+function removeExtraCat(i) { currentProductExtraCats.splice(i, 1); renderExtraCats(); }
 
 // Galería de hasta 5 fotos de producto
 function imgSrcOf(it) { return typeof it === 'string' ? it : it.base64; }
@@ -1709,6 +1737,7 @@ function saveProduct() {
       id: name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
       name: name,
       cat: formData.cat,
+      cats: [formData.cat].concat(currentProductExtraCats).filter(function(c, i, a){ return c && a.indexOf(c) === i; }),
       category: catLabels[formData.cat] || formData.cat,
       color: formData.color,
       icon: name.slice(0, 2).toUpperCase(),

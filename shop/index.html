@@ -306,7 +306,7 @@
 
   function getFiltered() {
     var list = allProducts.filter(function(p) { return !p.hidden; });
-    if (activeCat !== 'all') list = list.filter(function(p) { return p.cat === activeCat; });
+    if (activeCat !== 'all') list = list.filter(function(p) { return (p.cats||[p.cat]).indexOf(activeCat) >= 0; });
     if (searchQ) {
       list = list.filter(function(p) {
         return (p.name || '').toLowerCase().includes(searchQ)
