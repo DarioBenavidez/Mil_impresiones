@@ -434,7 +434,7 @@
       "delivery": "Listo en 3 días",
       "whatsapp": "Me interesa \"Centro de mesa\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     }
   ]
 }
