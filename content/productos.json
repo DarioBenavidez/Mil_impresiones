@@ -448,9 +448,10 @@
       "color": "m",
       "icon": "TA",
       "images": [
+        "/assets/uploads/mesa-de-trabajo-22.webp",
         "/assets/uploads/mesa-de-trabajo-23.webp"
       ],
-      "img": "/assets/uploads/mesa-de-trabajo-23.webp",
+      "img": "/assets/uploads/mesa-de-trabajo-22.webp",
       "badge": "Nuevo",
       "badgeType": "hot",
       "desc": "Taza conica de ceramica nacional, sublimada con logo , fotos o diseño personalizado. \nIdeal souvenir, empresas o regalos particulares.",
