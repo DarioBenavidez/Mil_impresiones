@@ -125,27 +125,30 @@
       "hidden": false
     },
     {
-      "id": "sobres-personalizados",
-      "name": "Sobres Personalizados",
-      "cat": "impresion",
-      "category": "Impresión Digital",
+      "id": "foto-mural-con-atril",
+      "name": "Foto mural con atril",
+      "cat": "merch",
+      "category": "Merchandising",
       "color": "c",
-      "icon": "SO",
-      "img": "/assets/uploads/papeleria.png",
+      "icon": "FO",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-15.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-15.webp",
       "badge": "Nuevo",
       "badgeType": "new",
-      "desc": "Sobres de carta o americanos con tu logo e identidad visual. Papel obra 90g. Ideales para correspondencia corporativa.",
+      "desc": "Cuadro mural en MDF de 9 mm con acabado en bordes negros e incluye atril de madera de pino, ideal para inmortalizar tus momentos más especiales con una foto personalizada de alta calidad. \nIdeal para eventos.",
       "specs": [
-        "Carta o americano",
-        "Logo incluido",
-        "90g"
+        "atril",
+        "mural 40x60cm",
+        "alta calidad"
       ],
-      "price": 18000,
-      "unit": "× 500 u.",
+      "price": 98000,
+      "unit": "1u",
       "delivery": "Listo en 72 hs",
-      "whatsapp": "Me interesa \"Sobres Personalizados\". ¿Pueden cotizarme?",
+      "whatsapp": "Me interesa \"Foto mural con atril\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "sticker-personalizados",
