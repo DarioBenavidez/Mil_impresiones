@@ -85,7 +85,7 @@
 .products-subtitle{font-size:14px;color:var(--fg-3);margin-top:4px}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
 /* Ofertas como carrusel: 3 visibles + flechas si hay más */
-#productsGrid{display:flex;gap:var(--s3);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+#productsGrid{display:flex;gap:var(--s3);overflow-x:auto;overflow-y:hidden;touch-action:pan-x;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
 #productsGrid::-webkit-scrollbar{display:none}
 #productsGrid>*{flex:0 0 calc((100% - 2*var(--s3))/3);scroll-snap-align:start}
 #catalogGrid{grid-template-columns:repeat(var(--catalog-cols,3),1fr)}
@@ -97,6 +97,7 @@
 .ofertas-arrow.prev{left:-10px}
 .ofertas-arrow.next{right:-10px}
 .ofertas-carousel.has-overflow .ofertas-arrow{display:flex}
+@media(max-width:600px){.ofertas-carousel.has-overflow .ofertas-arrow{display:none}}
 
 /* ── PRODUCT CARD ──────────────────────────────────────────────────────────── */
 .product-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.2,.9,.3,1),box-shadow .3s;position:relative;box-shadow:0 16px 36px -10px rgba(0,0,0,.30)}
