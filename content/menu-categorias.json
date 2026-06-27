@@ -23,7 +23,7 @@
         "Packaging kraft",
         "Blísters / Displays"
       ],
-      "hidden": false
+      "hidden": true
     },
     {
       "key": "giganto",
@@ -48,7 +48,7 @@
         "Piezas para redes sociales",
         "Material de impresión"
       ],
-      "hidden": false
+      "hidden": true
     },
     {
       "key": "merch",
