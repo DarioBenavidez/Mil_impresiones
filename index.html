@@ -84,19 +84,17 @@
 .products-title{font-family:var(--font-display);font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-.03em;color:var(--fg)}
 .products-subtitle{font-size:14px;color:var(--fg-3);margin-top:4px}
 .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s5)}
-/* Ofertas como carrusel: 3 visibles + flechas si hay más */
-#productsGrid{display:flex;gap:var(--s3);overflow-x:auto;overflow-y:hidden;touch-action:pan-x;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
-#productsGrid::-webkit-scrollbar{display:none}
-#productsGrid>*{flex:0 0 calc((100% - 2*var(--s3))/3);scroll-snap-align:start;touch-action:pan-x}
-#productsGrid .product-thumb,#productsGrid .tg-link,#productsGrid .tg-img{touch-action:pan-x}
+/* Ofertas: carrusel por transform (JS). Vertical = scroll de página; horizontal = swipe */
+.ofertas-carousel{position:relative;overflow:hidden;padding:6px 0 28px}
+#productsGrid{display:flex;gap:var(--s3);transition:transform .35s ease;touch-action:pan-y}
+#productsGrid>*{flex:0 0 calc((100% - 2*var(--s3))/3)}
 #catalogGrid{grid-template-columns:repeat(var(--catalog-cols,3),1fr)}
 @media(max-width:900px){.products-grid,#catalogGrid{grid-template-columns:1fr 1fr}#productsGrid>*{flex-basis:calc((100% - var(--s3))/2)}}
 @media(max-width:580px){.products-grid,#catalogGrid{grid-template-columns:1fr}#productsGrid>*{flex-basis:100%}}
-.ofertas-carousel{position:relative}
-.ofertas-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#111;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:26px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:background .2s}
+.ofertas-arrow{position:absolute;top:46%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:#111;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:26px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:background .2s}
 .ofertas-arrow:hover{background:#fff}
-.ofertas-arrow.prev{left:-10px}
-.ofertas-arrow.next{right:-10px}
+.ofertas-arrow.prev{left:8px}
+.ofertas-arrow.next{right:8px}
 .ofertas-carousel.has-overflow .ofertas-arrow{display:flex}
 @media(max-width:600px){.ofertas-carousel.has-overflow .ofertas-arrow{display:none}}
 
@@ -580,32 +578,50 @@ function renderProducts(products){
       el.classList.add('revealed');
     });
   }, 50);
-  // Carrusel: mostrar flechas solo si hay más de 3 (overflow)
-  var carousel = document.getElementById('ofertasCarousel');
-  if (carousel) {
-    setTimeout(function(){
-      carousel.classList.toggle('has-overflow', grid.scrollWidth - grid.clientWidth > 4);
-    }, 60);
-  }
+  // Carrusel (transform): reposicionar al inicio y actualizar flechas
+  if (window.__ofertasReset) setTimeout(window.__ofertasReset, 60);
 }
 
-// Flechas del carrusel de ofertas
+// Carrusel de ofertas por transform (swipe horizontal; vertical scrollea la página)
 (function(){
-  var grid = document.getElementById('productsGrid');
+  var track = document.getElementById('productsGrid');
+  var carousel = document.getElementById('ofertasCarousel');
   var prev = document.getElementById('ofertasPrev');
   var next = document.getElementById('ofertasNext');
-  if (!grid || !prev || !next) return;
-  function step(){
-    var c = grid.querySelector('.product-card');
-    var gap = parseInt(getComputedStyle(grid).columnGap || getComputedStyle(grid).gap || '12', 10) || 12;
-    return c ? c.offsetWidth + gap : grid.clientWidth;
+  if (!track || !carousel) return;
+  var index = 0;
+  function perView(){ var w = window.innerWidth; return w <= 580 ? 1 : (w <= 900 ? 2 : 3); }
+  function maxIndex(){ return Math.max(0, track.children.length - perView()); }
+  function cardStep(){
+    var c = track.querySelector('.product-card');
+    var gap = parseInt(getComputedStyle(track).columnGap || getComputedStyle(track).gap || '12', 10) || 12;
+    return c ? c.getBoundingClientRect().width + gap : track.clientWidth;
   }
-  prev.addEventListener('click', function(){ grid.scrollBy({ left: -step(), behavior: 'smooth' }); });
-  next.addEventListener('click', function(){ grid.scrollBy({ left: step(), behavior: 'smooth' }); });
-  window.addEventListener('resize', function(){
-    var carousel = document.getElementById('ofertasCarousel');
-    if (carousel) carousel.classList.toggle('has-overflow', grid.scrollWidth - grid.clientWidth > 4);
+  function apply(){
+    index = Math.max(0, Math.min(index, maxIndex()));
+    track.style.transform = 'translateX(' + (-index * cardStep()) + 'px)';
+    carousel.classList.toggle('has-overflow', track.children.length > perView());
+  }
+  window.__ofertasReset = function(){ index = 0; apply(); };
+  window.__ofertasApply = apply;
+  if (prev) prev.addEventListener('click', function(){ index--; apply(); });
+  if (next) next.addEventListener('click', function(){ index++; apply(); });
+  // Swipe táctil: solo bloquea el gesto cuando es claramente horizontal
+  var x0 = null, y0 = null, decided = false, horiz = false;
+  track.addEventListener('touchstart', function(e){ var t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; decided = false; horiz = false; }, { passive: true });
+  track.addEventListener('touchmove', function(e){
+    if (x0 === null) return;
+    var t = e.touches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    if (!decided && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) { decided = true; horiz = Math.abs(dx) > Math.abs(dy); }
+    if (decided && horiz) e.preventDefault();
+  }, { passive: false });
+  track.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (decided && horiz && Math.abs(dx) > 40) { index += dx < 0 ? 1 : -1; apply(); }
+    x0 = null;
   });
+  window.addEventListener('resize', apply);
 })();
 
 // Render default products IMMEDIATELY (sync) — fix loading delay
