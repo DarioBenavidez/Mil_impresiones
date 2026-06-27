@@ -8,8 +8,8 @@
     "Merchandising",
     "Papelería creativa"
   ],
-  "bgColor": "#ffffff",
-  "textColor": "#000000",
+  "bgColor": "#000000",
+  "textColor": "#ffffff",
   "dotColor": "#ec008c",
   "speed": 15,
   "fontSize": 12
