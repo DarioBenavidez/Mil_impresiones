@@ -198,27 +198,30 @@
       "hidden": false
     },
     {
-      "id": "bolsas-con-logo",
-      "name": "Bolsas con Logo",
-      "cat": "packaging",
-      "category": "Packaging",
+      "id": "choop-personalizado",
+      "name": "Choop personalizado",
+      "cat": "merch",
+      "category": "Merchandising",
       "color": "k",
-      "icon": "BO",
-      "img": "/assets/uploads/packagin.png",
+      "icon": "CH",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-19.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-19.webp",
       "badge": null,
       "badgeType": null,
-      "desc": "Bolsas de papel kraft o plastificadas con manija. Logo impreso a color. Ideales para locales, regalos y eventos.",
+      "desc": "Choop personalizado en ceramica. \n500ml",
       "specs": [
-        "Kraft o plastificada",
-        "Varios tamaños",
-        "Manija incluida"
+        "Ceramica",
+        "500ML",
+        "Sublimada"
       ],
-      "price": 28000,
-      "unit": "× 100 u.",
-      "delivery": "Listo en 5 días",
-      "whatsapp": "Me interesa \"Bolsas con Logo\". ¿Pueden cotizarme?",
+      "price": 19000,
+      "unit": "x 1u",
+      "delivery": "Listo en 72hs",
+      "whatsapp": "Me interesa \"Choop personalizado\". ¿Pueden cotizarme?",
       "oferta": false,
-      "hidden": true
+      "hidden": false
     },
     {
       "id": "banner-lona-190-x-90-cm",
