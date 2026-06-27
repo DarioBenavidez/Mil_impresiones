@@ -577,8 +577,19 @@
     init(results[0]);
     if (results[1] && results[1].categories) {
       buildMegaMenu(results[1].categories);
+      hideCategoryChips(results[1].categories);
     }
   });
+
+  // Oculta los chips de filtro (catálogo del home y tienda) de las categorías marcadas como ocultas
+  function hideCategoryChips(categories) {
+    (categories || []).forEach(function(c) {
+      if (!c || !c.hidden || !c.key) return;
+      document.querySelectorAll('[data-cat="' + c.key + '"]').forEach(function(el) {
+        if (el.classList.contains('cat-card') || el.classList.contains('fchip')) el.style.display = 'none';
+      });
+    });
+  }
 
 })();
 
