@@ -277,26 +277,28 @@
       "hidden": false
     },
     {
-      "id": "diseo-de-logo",
-      "name": "Diseño de Logo",
-      "cat": "diseno",
-      "category": "Diseño Gráfico",
+      "id": "difusor-aromatico-personalizado",
+      "name": "Difusor aromatico personalizado",
+      "cat": "merch",
+      "category": "Merchandising",
       "color": "m",
       "icon": "DI",
-      "img": "/assets/uploads/diseno.png",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-10.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-10.webp",
       "badge": null,
       "badgeType": null,
-      "desc": "Logo profesional con 3 propuestas iniciales, 3 rondas de revisión, entrega en PNG, JPG, SVG y PDF. Manual de uso básico incluido.",
+      "desc": "Difusor aromático artesanal de 125 ml, el recuerdo perfecto para llevarte un pedacito de este lugar en cada aroma. Con varillas de ratán y fragancia de larga duración, transforma cualquier espacio en una experiencia única e inolvidable.",
       "specs": [
-        "3 propuestas",
-        "3 revisiones",
-        "Todos los formatos",
-        "Manual incluido"
+        "Diseño incluido",
+        "125ml",
+        "Fragancias a eleccion"
       ],
-      "price": 55000,
-      "unit": "por proyecto",
-      "delivery": "Listo en 5 días hábiles",
-      "whatsapp": "Me interesa \"Diseño de Logo\". ¿Pueden cotizarme?",
+      "price": 40000,
+      "unit": "10u",
+      "delivery": "Listo en 3 días hábiles",
+      "whatsapp": "Me interesa \"Difusor aromatico personalizado\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": true
     },
