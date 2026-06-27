@@ -87,7 +87,8 @@
 /* Ofertas como carrusel: 3 visibles + flechas si hay más */
 #productsGrid{display:flex;gap:var(--s3);overflow-x:auto;overflow-y:hidden;touch-action:pan-x;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
 #productsGrid::-webkit-scrollbar{display:none}
-#productsGrid>*{flex:0 0 calc((100% - 2*var(--s3))/3);scroll-snap-align:start}
+#productsGrid>*{flex:0 0 calc((100% - 2*var(--s3))/3);scroll-snap-align:start;touch-action:pan-x}
+#productsGrid .product-thumb,#productsGrid .tg-link,#productsGrid .tg-img{touch-action:pan-x}
 #catalogGrid{grid-template-columns:repeat(var(--catalog-cols,3),1fr)}
 @media(max-width:900px){.products-grid,#catalogGrid{grid-template-columns:1fr 1fr}#productsGrid>*{flex-basis:calc((100% - var(--s3))/2)}}
 @media(max-width:580px){.products-grid,#catalogGrid{grid-template-columns:1fr}#productsGrid>*{flex-basis:100%}}
