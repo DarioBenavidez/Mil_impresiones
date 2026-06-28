@@ -1,4 +1,18 @@
 // chrome.js v5 — cart drawer, producto detail links, light mode permanente
+
+// ── Google Analytics (GA4) ──────────────────────────────────────────────────
+(function () {
+  var GA_ID = 'G-HX2NLSZHTP';
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', GA_ID);
+})();
+
 (function () {
   const CURRENT = document.body.dataset.page || 'home';
 
