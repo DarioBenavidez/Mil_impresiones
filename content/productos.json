@@ -470,6 +470,35 @@
       "whatsapp": "Me interesa \"Taza conica ceramica\". ¿Pueden cotizarme?",
       "oferta": true,
       "hidden": false
+    },
+    {
+      "id": "taza-polimero-plastico-personalizada",
+      "name": "Taza Polimero (plastico) personalizada",
+      "cat": "merch",
+      "cats": [
+        "merch"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "TA",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-30-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-30-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Taza de polímero personalizada de 250 ml, liviana, resistente y ideal para regalos, souvenirs o uso diario. Personalizala con nombre, frase, logo o diseño especial. Perfecta para llevar tu estilo",
+      "specs": [
+        "polimero",
+        "personalizado",
+        "taza recta"
+      ],
+      "price": 8500,
+      "unit": "X 1u",
+      "delivery": "Listo en 48hs",
+      "whatsapp": "Me interesa \"Taza Polimero (plastico) personalizada\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
