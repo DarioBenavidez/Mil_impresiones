@@ -101,13 +101,16 @@
       "id": "etiquetas-circulares",
       "name": "Etiquetas Circulares",
       "cat": "impresion",
+      "cats": [
+        "impresion"
+      ],
       "category": "Impresión Digital",
       "color": "m",
       "icon": "ET",
       "images": [
-        "/assets/uploads/etiquetas-autoadhesivas.webp"
+        "/assets/uploads/mesa-de-trabajo-34-100.webp"
       ],
-      "img": "/assets/uploads/etiquetas-autoadhesivas.webp",
+      "img": "/assets/uploads/mesa-de-trabajo-34-100.webp",
       "badge": null,
       "badgeType": null,
       "desc": "Etiquetas circulares personalizadas, perfectas para darle identidad y distinción a tus productos, regalos o packaging. Con impresión de alta calidad y acabado profesional, son el detalle que marca la diferencia en cada presentación.\n100u hasta 5cm",
