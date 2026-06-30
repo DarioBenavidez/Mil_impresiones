@@ -499,6 +499,37 @@
       "whatsapp": "Me interesa \"Taza Polimero (plastico) personalizada\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "fotos-polaroid-9x13cm",
+      "name": "Fotos polaroid 9x13cm",
+      "cat": "impresion",
+      "cats": [
+        "impresion",
+        "merch"
+      ],
+      "category": "Impresión Digital",
+      "color": "m",
+      "icon": "FO",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-22-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-22-100.webp",
+      "badge": "⚡ Rápido",
+      "badgeType": "hot",
+      "desc": "9 Fotos estilo Polaroid 9x13 cm, impresas en papel fotográfico de 200 gr, con excelente calidad de color y terminación. Ideales para decorar, regalar, armar álbumes, souvenirs o guardar tus mejores recuerdos con un toque retro y personalizado.\nPodés agregar nombres, fechas, frases o diseños especiales.",
+      "specs": [
+        "papel fotografico",
+        "200g",
+        "9x13cm",
+        "9 fotos"
+      ],
+      "price": 8500,
+      "unit": "x 9u",
+      "delivery": "Listo en 24 hs",
+      "whatsapp": "Me interesa \"Fotos polaroid 9x13cm\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
