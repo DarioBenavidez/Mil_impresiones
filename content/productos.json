@@ -592,6 +592,36 @@
       "whatsapp": "Me interesa \"Estampas en papel texturado\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "cuadro-mural-30x45cm",
+      "name": "Cuadro Mural  30X45CM",
+      "cat": "merch",
+      "cats": [
+        "merch",
+        "impresion"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "CU",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-26-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-26-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Cuadro mural personalizado en MDF de 9 mm con acabado en bordes negros, ideal para inmortalizar tus momentos más especiales con una foto personalizada de alta calidad. \nSu material resistente y diseño elegante lo convierten en una pieza decorativa única que embellece cualquier pared del hogar u oficina.",
+      "specs": [
+        "SIN MARCOS",
+        "CUADRO MURAL",
+        "30 X45CM"
+      ],
+      "price": 34999,
+      "unit": "x 1u",
+      "delivery": "Listo en 72 hs",
+      "whatsapp": "Me interesa \"Cuadro Mural  30X45CM\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
