@@ -710,6 +710,34 @@
       "whatsapp": "Me interesa \"Vinilo esmerilado 50x30\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "vinilo-autoadhesivo-nubes-25-x-30-cm",
+      "name": "Vinilo autoadhesivo Nubes 25 x 30 cm.",
+      "cat": "giganto",
+      "cats": [
+        "giganto"
+      ],
+      "category": "Gigantografías",
+      "color": "m",
+      "icon": "VI",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-47-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-47-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Vinilos decorativos de nubes troqueladas\n\nDale un toque dulce, delicado y original a cualquier ambiente con estos vinilos autoadhesivos de nubes, ideales para decorar habitaciones infantiles, salas de juego, muebles, puertas, vidrios o paredes lisas.\n\nEl vinilo viene troquelado, listo para despegar y pegar. Puede aplicarse sobre cualquier superficie limpia, lisa y suave. Es de alta calidad, no tóxico y lavable, aunque se recomienda no limpiarlo con productos o elementos abrasivos.\n\nMedidas de la plancha:\n\n1 plancha de 25 x 30 cm.\nContiene 8 nubes grandes.\nCada nube mide aproximadamente 14 cm de ancho x 6 cm de alto.\nCada plancha viene en un solo color.\n\nLa cantidad de planchas necesarias dependerá del tamaño de la superficie a cubrir y de qué tan separadas quieras colocar las figuras.\n\nImportante: los colores pueden variar según la pantalla y el material puede tener una leve diferencia de tono respecto a la imagen publicada.",
+      "specs": [
+        "25 x 30 cm.",
+        "Vinilo de corte"
+      ],
+      "price": 12999,
+      "unit": "x 1u",
+      "delivery": "Listo en 48hs",
+      "whatsapp": "Me interesa \"Vinilo autoadhesivo Nubes 25 x 30 cm.\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
