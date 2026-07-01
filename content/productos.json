@@ -651,6 +651,35 @@
       "whatsapp": "Me interesa \"Choop esmerilado personalizado\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "botella-hoppy-doble-tapa",
+      "name": "Botella Hoppy doble tapa",
+      "cat": "merch",
+      "cats": [
+        "merch"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "BO",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-36-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-36-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Hoppy personalizado , ideal para regalar, usar en eventos, cumpleaños, souvenirs o para llevar tu bebida favorita con mucho estilo.\n\nSe personaliza con nombre, frase, logo, imagen o temática a elección, logrando un diseño único y especial para cada ocasión.\n\nCapacidad: 600 ml\nIncluye doble tapa\nDiámetro: 7,2 cm\nAltura total: 20,5 cm\n\nPráctico, moderno y original: perfecto para sorprender con un detalle útil y personalizado.",
+      "specs": [
+        "Hoppy",
+        "Deportivo",
+        "600ml"
+      ],
+      "price": 22999,
+      "unit": "x 1u",
+      "delivery": "Listo en 48hs",
+      "whatsapp": "Me interesa \"Botella Hoppy doble tapa\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
