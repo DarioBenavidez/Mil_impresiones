@@ -3,14 +3,38 @@
 //   type: 'store' | 'client' | 'both'
 //   order: { code, nombre, dni, wsp, email, empresa, envio, dir, obs, items, total, pago }
 
+// Campos como nombre/dni/obs/dir vienen del formulario del cliente: hay que
+// escaparlos antes de meterlos en el HTML del email (si no, un cliente podría
+// inyectar markup/links en el mail que recibe ventas@).
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'RESEND_API_KEY no configurado' });
 
-  const { order, type = 'both' } = req.body || {};
-  if (!order) return res.status(400).json({ error: 'order requerido' });
+  const { order: rawOrder, type = 'both' } = req.body || {};
+  if (!rawOrder) return res.status(400).json({ error: 'order requerido' });
+
+  const order = {
+    code: escapeHtml(rawOrder.code),
+    nombre: escapeHtml(rawOrder.nombre),
+    dni: escapeHtml(rawOrder.dni),
+    wsp: escapeHtml(rawOrder.wsp),
+    email: escapeHtml(rawOrder.email),
+    empresa: escapeHtml(rawOrder.empresa),
+    envio: escapeHtml(rawOrder.envio),
+    dir: escapeHtml(rawOrder.dir),
+    obs: escapeHtml(rawOrder.obs),
+    total: escapeHtml(rawOrder.total),
+    pago: escapeHtml(rawOrder.pago),
+    items: rawOrder.items,
+  };
 
   const domainVerified = process.env.RESEND_DOMAIN_VERIFIED === 'true';
   const fromEmail = domainVerified
@@ -20,9 +44,9 @@ export default async function handler(req, res) {
 
   const itemsHtml = (order.items || []).map(function(i) {
     return `<tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">${i.name}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center">${i.qty}</td>
-      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right">$${(i.price * i.qty).toLocaleString('es-AR')}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(i.name)}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center">${Number(i.qty) || 0}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right">$${((Number(i.price) || 0) * (Number(i.qty) || 0)).toLocaleString('es-AR')}</td>
     </tr>`;
   }).join('');
 
