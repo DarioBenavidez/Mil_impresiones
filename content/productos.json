@@ -560,6 +560,38 @@
       "whatsapp": "Me interesa \"Vasos Milkshake\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "estampas-en-papel-texturado",
+      "name": "Estampas en papel texturado",
+      "cat": "impresion",
+      "cats": [
+        "impresion",
+        "merch"
+      ],
+      "category": "Impresión Digital",
+      "color": "m",
+      "icon": "ES",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-33-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-33-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Conservá un recuerdo único de ese día tan especial con este set de 20 estampas personalizadas de Primera Comunión, diseñadas con un estilo elegante y delicado.\n\nImpresas en papel texturado de alta calidad, ofrecen una terminación sutil que realza cada detalle del diseño. Son ideales para entregar a familiares y amigos como recuerdo de la celebración.\n\nCaracterísticas:\n\n📦 Incluye 20 estampas personalizadas.\n📏 Medida: 8 x 12 cm.\n📄 Impresas en papel texturado, con acabado fino y elegante.\n✨ Personalización con nombre, fecha, frase o diseño a elección.\n🎁 Ideales como recuerdo de Primera Comunión.\n\nUn detalle especial para que tus seres queridos conserven un hermoso recuerdo de un momento inolvidable.",
+      "specs": [
+        "papel texturado",
+        "20 unidades",
+        "8x12cm",
+        "comunión/Bautismo",
+        "souvenir"
+      ],
+      "price": 29999,
+      "unit": "x 20u",
+      "delivery": "",
+      "whatsapp": "Me interesa \"Estampas en papel texturado\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
