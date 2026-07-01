@@ -29,13 +29,19 @@
     },
     add: function (product) {
       var items = this.get();
-      var ex = items.find(function (i) { return i.id === product.id; });
+      // Mismo producto pero distinto color (variant) = línea de carrito distinta.
+      var ex = items.find(function (i) { return i.id === product.id && (i.variant || '') === (product.variant || ''); });
       if (ex) { ex.qty += 1; } else { items.push(Object.assign({}, product, { qty: 1 })); }
       this.save(items);
       this.showToast(product.name);
     },
     remove: function (id) {
       this.save(this.get().filter(function (i) { return i.id !== id; }));
+    },
+    removeAt: function (idx) {
+      var items = this.get();
+      items.splice(idx, 1);
+      this.save(items);
     },
     setQty: function (id, qty) {
       var items = this.get();
@@ -105,7 +111,7 @@
       return '<div class="drawer-item" data-id="' + item.id + '">'
         + '<div class="drawer-item-thumb" style="background:' + thumbBg + '">' + (item.icon || '📦') + '</div>'
         + '<div class="drawer-item-info">'
-        + '<span class="drawer-item-name">' + item.name + '</span>'
+        + '<span class="drawer-item-name">' + item.name + (item.variant ? ' — ' + item.variant : '') + '</span>'
         + '<span class="drawer-item-unit">' + item.unit + '</span>'
         + '<div class="drawer-qty-row">'
         + '<div class="drawer-qty">'
@@ -116,7 +122,7 @@
         + '<span class="drawer-item-price">$' + (item.price * item.qty).toLocaleString('es-AR') + '</span>'
         + '</div>'
         + '</div>'
-        + '<button class="drawer-item-remove" data-id="' + item.id + '">✕</button>'
+        + '<button class="drawer-item-remove" data-idx="' + idx + '">✕</button>'
         + '</div>';
     }).join('');
 
@@ -137,7 +143,7 @@
 
     // Remove buttons
     body.querySelectorAll('.drawer-item-remove').forEach(function (btn) {
-      btn.addEventListener('click', function () { Cart.remove(btn.dataset.id); });
+      btn.addEventListener('click', function () { Cart.removeAt(parseInt(btn.dataset.idx)); });
     });
   }
 

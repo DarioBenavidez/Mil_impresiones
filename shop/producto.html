@@ -96,17 +96,32 @@
   max-width: 520px;
 }
 
-/* Specs */
-.producto-specs {
-  display: flex; gap: var(--s2); flex-wrap: wrap;
-  margin-bottom: var(--s5);
+/* Info técnica (debajo de la foto, separada de la descripción) */
+.producto-techinfo {
+  margin-top: var(--s5);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--border);
 }
-.producto-spec {
-  font-family: var(--font-display); font-size: 12px;
-  padding: 5px 12px; border-radius: 999px;
-  background: var(--bg-2); color: var(--fg-2);
-  border: 1px solid var(--border);
+.techinfo-title {
+  font-family: var(--font-display); font-size: 13px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase; color: var(--fg-3);
+  margin-bottom: var(--s3);
 }
+.techinfo-list { display: flex; flex-direction: column; gap: 10px; }
+.techinfo-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 14px; color: var(--fg-2);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.techinfo-item:last-child { border-bottom: none; padding-bottom: 0; }
+.techinfo-item svg { flex-shrink: 0; color: var(--c); }
+.techinfo-notes {
+  font-size: 14px; color: var(--fg-2); line-height: 1.6;
+  white-space: pre-line;
+}
+.techinfo-notes + .techinfo-notes { margin-top: var(--s3); }
+.techinfo-list + .techinfo-notes { margin-top: var(--s4); }
 
 /* Price */
 .producto-price-box {
@@ -130,6 +145,18 @@
   font-family: var(--font-display); font-size: 13px;
   color: var(--c); font-weight: 600;
 }
+
+/* Color selector */
+.color-section { margin-bottom: var(--s4); }
+.color-label { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--fg-2); display: block; margin-bottom: 6px; }
+.color-select {
+  font-family: var(--font-body); font-size: 15px; padding: 10px 14px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--fg); width: 100%; max-width: 280px; box-sizing: border-box;
+}
+.color-select.error { border-color: #ef4444; }
+.color-error { font-size: 11px; color: #ef4444; margin-top: 4px; display: none; }
+.color-select.error + .color-error { display: block; }
 
 /* Quantity */
 .qty-section {
@@ -301,6 +328,7 @@ function openImgZoom(src) {
   }
 
   function renderProduct(p) {
+    var hasColors = !!(p.colorOptions && p.colorOptions.length);
     var accentClass = getAccentClass(p.color || 'm');
     var visualClass = 'visual-' + (p.color || 'm');
     var imgs = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
@@ -351,6 +379,19 @@ function openImgZoom(src) {
         '<div class="producto-visual tg" data-imgs=\'' + JSON.stringify(imgs).replace(/'/g,"&#39;") + '\' data-i="0">',
           galleryHtml,
           (p.badge ? '<div class="producto-badge-wrap"><span class="pcard-badge badge-' + (p.badgeType||'hot') + '">' + p.badge + '</span></div>' : ''),
+          (((p.specs && p.specs.length) || (p.techNotes && p.techNotes.trim())) ? (
+            '<div class="producto-techinfo">'
+            + '<div class="techinfo-title">Información técnica</div>'
+            + ((p.specs && p.specs.length) ? (
+                '<div class="techinfo-list">'
+                + p.specs.map(function(s) {
+                    return '<div class="techinfo-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' + s + '</div>';
+                  }).join('')
+                + '</div>'
+              ) : '')
+            + ((p.techNotes && p.techNotes.trim()) ? '<p class="techinfo-notes">' + p.techNotes + '</p>' : '')
+            + '</div>'
+          ) : ''),
         '</div>',
 
         // Info
@@ -358,10 +399,6 @@ function openImgZoom(src) {
           '<span class="producto-cat">' + (p.category || '') + '</span>',
           '<h1 class="producto-name">' + p.name + '</h1>',
           '<p class="producto-desc">' + (p.desc || '') + '</p>',
-
-          '<div class="producto-specs">',
-            (p.specs || []).map(function(s) { return '<span class="producto-spec">' + s + '</span>'; }).join(''),
-          '</div>',
 
           '<div class="producto-price-box">',
             '<div class="precio-label">Precio desde</div>',
@@ -374,6 +411,17 @@ function openImgZoom(src) {
               (p.delivery || 'Consultar'),
             '</div>',
           '</div>',
+
+          (hasColors ? [
+          '<div class="color-section">',
+            '<label class="color-label" for="colorSelect">Color <span style="color:var(--m)">*</span></label>',
+            '<select class="color-select" id="colorSelect">',
+              '<option value="">Elegí un color...</option>',
+              p.colorOptions.map(function(c) { return '<option value="' + c + '">' + c + '</option>'; }).join(''),
+            '</select>',
+            '<span class="color-error" id="colorError">Elegí un color antes de agregar al carrito</span>',
+          '</div>',
+          ].join('') : ''),
 
           '<div class="qty-section">',
             '<span class="qty-label">Cantidad:</span>',
@@ -423,8 +471,17 @@ function openImgZoom(src) {
 
     // Add to cart
     document.getElementById('btnAddCart').addEventListener('click', function() {
+      var colorSelect = document.getElementById('colorSelect');
+      var variant = colorSelect ? colorSelect.value : '';
+      if (hasColors && !variant) {
+        colorSelect.classList.add('error');
+        colorSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (colorSelect) colorSelect.classList.remove('error');
+
       for (var i = 0; i < qty; i++) {
-        Cart.add({ id: p.id || p.name, name: p.name, price: p.price, unit: p.unit, color: p.color || 'm', icon: p.icon || '📦' });
+        Cart.add({ id: p.id || p.name, name: p.name, price: p.price, unit: p.unit, color: p.color || 'm', icon: p.icon || '📦', variant: variant || undefined });
       }
     });
 
