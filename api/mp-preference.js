@@ -6,6 +6,27 @@
 //
 // Docs: https://www.mercadopago.com.ar/developers/es/reference/preferences/_checkout_preferences/post
 
+// Trae el catálogo real desde GitHub (misma fuente que usa el admin) para no
+// confiar nunca en el precio que manda el cliente al crear la preferencia de pago.
+async function fetchCanonicalProducts() {
+  const repo = process.env.GITHUB_REPO || 'DarioBenavidez/Mil_impresiones';
+  const ghToken = process.env.GITHUB_TOKEN;
+  const headers = { 'User-Agent': 'MilImpresiones' };
+  if (ghToken) headers['Authorization'] = 'token ' + ghToken;
+
+  const r = await fetch(
+    `https://api.github.com/repos/${repo}/contents/content/productos.json`,
+    { headers }
+  );
+  if (!r.ok) throw new Error('No se pudo obtener el catálogo (GitHub ' + r.status + ')');
+
+  const data = await r.json();
+  const parsed = JSON.parse(Buffer.from(data.content, 'base64').toString('utf-8'));
+  const byId = new Map();
+  for (const p of parsed.products || []) byId.set(String(p.id), p);
+  return byId;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -22,10 +43,34 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { items, payer, external_reference, wsp, envio, dir, obs } = req.body;
+    const { items: rawItems, payer, external_reference, wsp, envio, dir, obs } = req.body;
 
-    if (!items || !items.length) {
+    if (!rawItems || !rawItems.length) {
       return res.status(400).json({ error: 'Items requeridos' });
+    }
+
+    // Validar cada item contra el catálogo real: nunca confiar en el precio
+    // que manda el cliente (evita pagar cualquier monto manipulando el request).
+    let productsById;
+    try {
+      productsById = await fetchCanonicalProducts();
+    } catch (err) {
+      console.error('No se pudo verificar el catálogo:', err.message);
+      return res.status(503).json({ error: 'No se pudo verificar el catálogo, intentá de nuevo en unos segundos' });
+    }
+
+    const items = [];
+    for (const raw of rawItems) {
+      const product = productsById.get(String(raw.id));
+      if (!product || product.hidden) {
+        return res.status(400).json({ error: `Producto no disponible: ${raw.id}` });
+      }
+      items.push({
+        id: product.id,
+        name: product.name,
+        qty: Number(raw.qty) > 0 ? Number(raw.qty) : 1,
+        price: product.price, // precio del catálogo, no el que mandó el cliente
+      });
     }
 
     const rawSiteUrl = process.env.SITE_URL || 'https://www.milimpresiones.com';
