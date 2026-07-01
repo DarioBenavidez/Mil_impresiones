@@ -1,6 +1,47 @@
 // api/mp-webhook.js — Recibe notificaciones de MercadoPago (IPN/webhook)
 // MP llama a este endpoint cuando cambia el estado de un pago.
 // Así el email se envía incluso si el usuario no vuelve a la página.
+//
+// Para verificar que la notificación viene realmente de MP, agregá en Vercel:
+//   MP_WEBHOOK_SECRET = la "Clave secreta" de Tu integración > Webhooks en el dashboard de MP
+// Sin esa env var, el endpoint sigue funcionando como antes (sin verificar firma).
+
+import { createHmac, timingSafeEqual } from 'crypto';
+
+// Los datos del pedido (nombre, dir, obs, etc.) vienen del external_reference
+// que arma el cliente en el checkout: hay que escaparlos antes de meterlos en
+// el HTML del email.
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+// https://www.mercadopago.com.ar/developers/es/docs/your-integrations/notifications/webhooks#editor_10
+function verifyMpSignature(req, resourceId) {
+  const secret = process.env.MP_WEBHOOK_SECRET;
+  if (!secret) return true; // no configurado todavía: no romper el flujo existente
+
+  const signatureHeader = req.headers['x-signature'] || '';
+  const requestId = req.headers['x-request-id'] || '';
+  if (!signatureHeader || !requestId || !resourceId) return false;
+
+  const parts = {};
+  signatureHeader.split(',').forEach(function (p) {
+    const idx = p.indexOf('=');
+    if (idx > -1) parts[p.slice(0, idx).trim()] = p.slice(idx + 1).trim();
+  });
+  const ts = parts.ts;
+  const v1 = parts.v1;
+  if (!ts || !v1) return false;
+
+  const manifest = `id:${String(resourceId).toLowerCase()};request-id:${requestId};ts:${ts};`;
+  const expected = createHmac('sha256', secret).update(manifest).digest('hex');
+
+  const a = Buffer.from(v1);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
@@ -16,6 +57,11 @@ export default async function handler(req, res) {
   }
 
   if (!paymentId) return res.status(200).end();
+
+  if (!verifyMpSignature(req, req.query['data.id'] || paymentId)) {
+    console.error('mp-webhook: firma x-signature inválida, notificación ignorada');
+    return res.status(200).end(); // 200 para que MP no reintente
+  }
 
   const accessToken = process.env.MP_ACCESS_TOKEN;
   const resendKey = process.env.RESEND_API_KEY;
@@ -69,19 +115,19 @@ export default async function handler(req, res) {
     const nombre = refData['n'] || [mpPayer.first_name, mpPayer.last_name].filter(Boolean).join(' ') || 'Cliente';
 
     const order = {
-      code: orderCode || ('MP-' + String(paymentId)),
-      total: '$' + totalNum.toLocaleString('es-AR'),
-      nombre: nombre,
-      dni: (mpPayer.identification && mpPayer.identification.number) || '-',
-      wsp: wspRaw || '-',
-      wspClean: wspClean,
-      email: refData['e'] || mpPayer.email || '',
+      code: escapeHtml(orderCode || ('MP-' + String(paymentId))),
+      total: escapeHtml('$' + totalNum.toLocaleString('es-AR')),
+      nombre: escapeHtml(nombre),
+      dni: escapeHtml((mpPayer.identification && mpPayer.identification.number) || '-'),
+      wsp: escapeHtml(wspRaw || '-'),
+      wspClean: wspClean, // solo dígitos, seguro para el link wa.me
+      email: escapeHtml(refData['e'] || mpPayer.email || ''),
       empresa: '',
-      envio: refData['v'] || 'A coordinar',
-      dir: refData['d'] || '',
-      obs: refData['o'] || '',
+      envio: escapeHtml(refData['v'] || 'A coordinar'),
+      dir: escapeHtml(refData['d'] || ''),
+      obs: escapeHtml(refData['o'] || ''),
       items: items,
-      pago: 'Mercado Pago ✅ APROBADO (#' + paymentId + ')',
+      pago: escapeHtml('Mercado Pago ✅ APROBADO (#' + paymentId + ')'),
     };
 
     const domainVerified = process.env.RESEND_DOMAIN_VERIFIED === 'true';
@@ -91,7 +137,7 @@ export default async function handler(req, res) {
 
     const itemsHtml = items.map(function(i) {
       return '<tr>'
-        + '<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">' + i.name + '</td>'
+        + '<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">' + escapeHtml(i.name) + '</td>'
         + '<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center">' + i.qty + '</td>'
         + '<td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right">$' + (i.price * i.qty).toLocaleString('es-AR') + '</td>'
         + '</tr>';
