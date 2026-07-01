@@ -681,6 +681,35 @@
       "whatsapp": "Me interesa \"Botella Hoppy doble tapa\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "vinilo-esmerilado-50x30",
+      "name": "Vinilo esmerilado 50x30",
+      "cat": "giganto",
+      "cats": [
+        "giganto"
+      ],
+      "category": "Gigantografías",
+      "color": "m",
+      "icon": "VI",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-43-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-43-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "Vinilo esmerilado con corte personalizado\n\nVinilo esmerilado ideal para decorar vidrios, ventanas, puertas, mamparas, oficinas, comercios o espacios del hogar, brindando privacidad sin perder el paso de la luz.\n\nSe realiza con corte personalizado, adaptado al diseño, logo, nombre, frase o medida que necesites. Su terminación elegante y sutil aporta un estilo moderno, prolijo y decorativo.\n\nIdeal para:\n\nVidrieras y puertas de vidrio.\nOficinas y locales comerciales.\nMamparas, ventanas y divisiones.\nLogos, nombres, guardas o diseños personalizados.\n\nUn detalle práctico y decorativo para darle identidad a cualquier espacio, sin dejarlo “pelado” como vidrio recién estrenado.",
+      "specs": [
+        "Esmerilado",
+        "vidriera",
+        "50x60cm"
+      ],
+      "price": 18000,
+      "unit": "x 1u",
+      "delivery": "",
+      "whatsapp": "Me interesa \"Vinilo esmerilado 50x30\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
