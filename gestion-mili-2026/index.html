@@ -1194,6 +1194,11 @@ img{max-width:100%;display:block}
         <span class="hint">Datos técnicos que aparecen como chips en la card del producto</span>
       </div>
       <div class="field">
+        <label>Notas técnicas <span style="font-weight:400;color:var(--fg3)">(opcional)</span></label>
+        <textarea id="pTechNotes" placeholder="Texto libre con info técnica adicional (aplicaciones, cuidados, aclaraciones...)"></textarea>
+        <span class="hint">Aparece como párrafo en la ficha del producto, junto a las especificaciones</span>
+      </div>
+      <div class="field">
         <label>Opciones de color <span style="font-weight:400;color:var(--fg3)">(opcional — para vinilos, etc.)</span></label>
         <div class="specs-wrap" id="colorOptionsTags"></div>
         <div class="spec-add-row">
@@ -1676,6 +1681,7 @@ function openProductModal(idx) {
   document.getElementById('pName').value = p ? p.name : '';
   document.getElementById('pCat').value = p ? p.cat : 'impresion';
   document.getElementById('pDesc').value = p ? p.desc : '';
+  document.getElementById('pTechNotes').value = p ? (p.techNotes || '') : '';
   document.getElementById('pPrice').value = p ? p.price : '';
   document.getElementById('pUnit').value = p ? p.unit : '';
   document.getElementById('pDelivery').value = p ? p.delivery : '';
@@ -1798,6 +1804,7 @@ function saveProduct() {
     badge: document.getElementById('pBadge').value.trim(),
     badgeType: document.getElementById('pBadgeType').value,
     desc: document.getElementById('pDesc').value.trim(),
+    techNotes: document.getElementById('pTechNotes').value.trim(),
     unit: document.getElementById('pUnit').value.trim(),
     delivery: document.getElementById('pDelivery').value.trim(),
     oferta: document.getElementById('pOferta').checked,
@@ -1824,6 +1831,7 @@ function saveProduct() {
       badge: formData.badge || null,
       badgeType: formData.badge ? formData.badgeType : null,
       desc: formData.desc,
+      techNotes: formData.techNotes,
       specs: currentProductSpecs,
       colorOptions: currentProductColorOptions,
       price: price,
