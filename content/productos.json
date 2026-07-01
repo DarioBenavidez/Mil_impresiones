@@ -738,6 +738,31 @@
       "whatsapp": "Me interesa \"Vinilo autoadhesivo Nubes 25 x 30 cm.\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "vinilo-adhesivo-corazones",
+      "name": "Vinilo adhesivo Corazones",
+      "cat": "giganto",
+      "cats": [
+        "giganto"
+      ],
+      "category": "Gigantografías",
+      "color": "m",
+      "icon": "VI",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-45-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-45-100.webp",
+      "badge": null,
+      "badgeType": null,
+      "desc": "",
+      "specs": [],
+      "price": 12999,
+      "unit": "",
+      "delivery": "",
+      "whatsapp": "Me interesa \"Vinilo adhesivo Corazones\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": true
     }
   ]
 }
