@@ -1,11 +1,20 @@
 // api/force-deploy.js — Fuerza un redeploy en Vercel creando un commit mínimo
-import { createHash } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
+// Token = "<expiresAt>.<hmac(expiresAt)>", generado por api/admin-auth.js.
 function verifyToken(req) {
   const auth = req.headers.authorization || '';
   const token = auth.replace('Bearer ', '').trim();
-  const expected = createHash('sha256').update(process.env.ADMIN_PASSWORD + 'mili2026').digest('hex');
-  return token === expected;
+  const [expiresStr, sig] = token.split('.');
+  if (!expiresStr || !sig) return false;
+
+  const expires = Number(expiresStr);
+  if (!Number.isFinite(expires) || Date.now() > expires) return false;
+
+  const expectedSig = createHmac('sha256', process.env.ADMIN_PASSWORD + 'mili2026').update(expiresStr).digest('hex');
+  const a = Buffer.from(sig);
+  const b = Buffer.from(expectedSig);
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 export default async function handler(req, res) {

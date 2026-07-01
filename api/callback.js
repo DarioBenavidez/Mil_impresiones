@@ -49,7 +49,12 @@ export default async function handler(req, res) {
   });
   const user = await userRes.json();
 
-  if (ALLOWED_EMAILS.length > 0 && !ALLOWED_EMAILS.includes(user.email?.toLowerCase())) {
+  // Fail-closed: si ALLOWED_EMAILS no está configurado, no se otorga acceso a nadie
+  // (antes, una env var vacía dejaba entrar a cualquier cuenta de Google).
+  if (ALLOWED_EMAILS.length === 0) {
+    return sendMessage(res, `authorization:github:error:${JSON.stringify({ error: 'access_denied', error_description: 'ALLOWED_EMAILS no configurado en Vercel' })}`);
+  }
+  if (!ALLOWED_EMAILS.includes(user.email?.toLowerCase())) {
     return sendMessage(res, `authorization:github:error:${JSON.stringify({ error: 'access_denied', error_description: 'Email no autorizado: ' + user.email })}`);
   }
 
