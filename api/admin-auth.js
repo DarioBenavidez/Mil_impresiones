@@ -2,7 +2,7 @@
 // Env vars necesarias en Vercel:
 //   ADMIN_PASSWORD = la contraseña que elijas
 
-import { createHash } from 'crypto';
+import { createHmac } from 'crypto';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
@@ -19,8 +19,11 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Contraseña incorrecta' });
   }
 
-  const token = createHash('sha256').update(adminPassword + 'mili2026').digest('hex');
+  // Token = expiresAt + firma HMAC del expiresAt, así los endpoints que lo
+  // consumen pueden verificar la expiración sin guardar estado en el servidor.
   const expires = Date.now() + 8 * 60 * 60 * 1000;
+  const sig = createHmac('sha256', adminPassword + 'mili2026').update(String(expires)).digest('hex');
+  const token = `${expires}.${sig}`;
 
   return res.status(200).json({ token, expires });
 }
