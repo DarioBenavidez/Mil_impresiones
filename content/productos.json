@@ -622,6 +622,35 @@
       "whatsapp": "Me interesa \"Cuadro Mural  30X45CM\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
+    },
+    {
+      "id": "choop-esmerilado-personalizado",
+      "name": "Choop esmerilado personalizado",
+      "cat": "merch",
+      "cats": [
+        "merch"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "CH",
+      "images": [
+        "/assets/uploads/mesa-de-trabajo-29-100.webp"
+      ],
+      "img": "/assets/uploads/mesa-de-trabajo-29-100.webp",
+      "badge": "⚡ Rápido",
+      "badgeType": "hot",
+      "desc": "Chopp esmerilado personalizado\n\nChopp de vidrio esmerilado mate, ideal para regalar, usar en eventos, cumpleaños, souvenirs o para disfrutar tus bebidas favoritas con un diseño único.\n\nSe personaliza con nombre, frase, logo, imagen o temática a elección, logrando una terminación elegante y delicada sobre el vidrio.\n\nCaracterísticas:\n\nMaterial: vidrio esmerilado mate\nMedidas: 14 cm de alto x 8 cm de diámetro\nEspesor: 4 mm\nProducto personalizable\n\nUn detalle original, resistente y con estilo para sorprender en cualquier ocasión.",
+      "specs": [
+        "Choop esmerilado",
+        "personalizado",
+        "14 x8cm"
+      ],
+      "price": 16999,
+      "unit": "x 1u",
+      "delivery": "Listo en 24hs",
+      "whatsapp": "Me interesa \"Choop esmerilado personalizado\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
     }
   ]
 }
