@@ -131,6 +131,18 @@
   color: var(--c); font-weight: 600;
 }
 
+/* Color selector */
+.color-section { margin-bottom: var(--s4); }
+.color-label { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--fg-2); display: block; margin-bottom: 6px; }
+.color-select {
+  font-family: var(--font-body); font-size: 15px; padding: 10px 14px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--bg); color: var(--fg); width: 100%; max-width: 280px; box-sizing: border-box;
+}
+.color-select.error { border-color: #ef4444; }
+.color-error { font-size: 11px; color: #ef4444; margin-top: 4px; display: none; }
+.color-select.error + .color-error { display: block; }
+
 /* Quantity */
 .qty-section {
   display: flex; align-items: center; gap: var(--s4);
@@ -301,6 +313,7 @@ function openImgZoom(src) {
   }
 
   function renderProduct(p) {
+    var hasColors = !!(p.colorOptions && p.colorOptions.length);
     var accentClass = getAccentClass(p.color || 'm');
     var visualClass = 'visual-' + (p.color || 'm');
     var imgs = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
@@ -375,6 +388,17 @@ function openImgZoom(src) {
             '</div>',
           '</div>',
 
+          (hasColors ? [
+          '<div class="color-section">',
+            '<label class="color-label" for="colorSelect">Color <span style="color:var(--m)">*</span></label>',
+            '<select class="color-select" id="colorSelect">',
+              '<option value="">Elegí un color...</option>',
+              p.colorOptions.map(function(c) { return '<option value="' + c + '">' + c + '</option>'; }).join(''),
+            '</select>',
+            '<span class="color-error" id="colorError">Elegí un color antes de agregar al carrito</span>',
+          '</div>',
+          ].join('') : ''),
+
           '<div class="qty-section">',
             '<span class="qty-label">Cantidad:</span>',
             '<div class="qty-ctrl">',
@@ -423,8 +447,17 @@ function openImgZoom(src) {
 
     // Add to cart
     document.getElementById('btnAddCart').addEventListener('click', function() {
+      var colorSelect = document.getElementById('colorSelect');
+      var variant = colorSelect ? colorSelect.value : '';
+      if (hasColors && !variant) {
+        colorSelect.classList.add('error');
+        colorSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      if (colorSelect) colorSelect.classList.remove('error');
+
       for (var i = 0; i < qty; i++) {
-        Cart.add({ id: p.id || p.name, name: p.name, price: p.price, unit: p.unit, color: p.color || 'm', icon: p.icon || '📦' });
+        Cart.add({ id: p.id || p.name, name: p.name, price: p.price, unit: p.unit, color: p.color || 'm', icon: p.icon || '📦', variant: variant || undefined });
       }
     });
 

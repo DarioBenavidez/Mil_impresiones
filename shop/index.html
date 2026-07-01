@@ -349,8 +349,12 @@
         + '<div class="pcard-price-row"><span class="pcard-from">Desde</span><span class="pcard-price">$' + (p.price || 0).toLocaleString('es-AR') + '</span><span class="pcard-unit">' + (p.unit || '') + '</span></div>'
         + '<div class="pcard-delivery"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> ' + (p.delivery || 'Consultar') + '</div>'
         + '<div class="pcard-actions">'
-        + '<button class="pcard-btn-cart" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Agregar</button>'
-        + '<a href="' + detailUrl + '" class="pcard-btn-detail">Ver producto →</a>'
+        // Si el producto tiene colores para elegir, no se puede agregar rápido
+        // desde la grilla: hay que pasar por la ficha para elegir el color.
+        + ((p.colorOptions && p.colorOptions.length)
+          ? '<a href="' + detailUrl + '" class="pcard-btn-detail" style="grid-column:1/-1">Ver producto y elegir color →</a>'
+          : '<button class="pcard-btn-cart" data-product=\'' + JSON.stringify({id:p.id||p.name,name:p.name,price:p.price,unit:p.unit,color:p.color||'m',icon:p.icon||'📦'}).replace(/'/g,"&#39;") + '\'><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg> Agregar</button>'
+            + '<a href="' + detailUrl + '" class="pcard-btn-detail">Ver producto →</a>')
         + '</div>'
         + '</div></div>';
     }).join('');

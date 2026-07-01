@@ -65,9 +65,21 @@ export default async function handler(req, res) {
       if (!product || product.hidden) {
         return res.status(400).json({ error: `Producto no disponible: ${raw.id}` });
       }
+
+      // Si el producto tiene colores para elegir, el cliente tiene que haber
+      // mandado uno válido (de la lista del catálogo, no cualquier texto).
+      const colorOptions = product.colorOptions || [];
+      let variant = '';
+      if (colorOptions.length) {
+        if (!colorOptions.includes(raw.variant)) {
+          return res.status(400).json({ error: `Elegí un color válido para: ${product.name}` });
+        }
+        variant = raw.variant;
+      }
+
       items.push({
         id: product.id,
-        name: product.name,
+        name: product.name + (variant ? ' - Color: ' + variant : ''),
         qty: Number(raw.qty) > 0 ? Number(raw.qty) : 1,
         price: product.price, // precio del catálogo, no el que mandó el cliente
       });

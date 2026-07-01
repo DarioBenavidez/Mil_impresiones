@@ -43,8 +43,9 @@ export default async function handler(req, res) {
   const storeEmail = 'ventas@milimpresiones.com';
 
   const itemsHtml = (order.items || []).map(function(i) {
+    const label = escapeHtml(i.name) + (i.variant ? ' <span style="color:#888">(' + escapeHtml(i.variant) + ')</span>' : '');
     return `<tr>
-      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(i.name)}</td>
+      <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0">${label}</td>
       <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:center">${Number(i.qty) || 0}</td>
       <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;text-align:right">$${((Number(i.price) || 0) * (Number(i.qty) || 0)).toLocaleString('es-AR')}</td>
     </tr>`;

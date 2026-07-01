@@ -1193,6 +1193,15 @@ img{max-width:100%;display:block}
         </div>
         <span class="hint">Datos técnicos que aparecen como chips en la card del producto</span>
       </div>
+      <div class="field">
+        <label>Opciones de color <span style="font-weight:400;color:var(--fg3)">(opcional — para vinilos, etc.)</span></label>
+        <div class="specs-wrap" id="colorOptionsTags"></div>
+        <div class="spec-add-row">
+          <input type="text" class="spec-input" id="colorOptionInput" placeholder="Ej: Rojo, Negro, Dorado...">
+          <button class="spec-add-btn" onclick="addColorOption()">+ Agregar</button>
+        </div>
+        <span class="hint">Si cargás al menos un color, en la tienda el cliente va a tener que elegir uno antes de agregar al carrito</span>
+      </div>
       <div class="field-row">
         <div class="field">
           <label>Color de la card</label>
@@ -1374,6 +1383,7 @@ var testimonios = [];
 var currentProductIdx = null;
 var currentTestiIdx = null;
 var currentProductSpecs = [];
+var currentProductColorOptions = []; // colores a elegir en la tienda (ej: vinilos). Vacío = sin selector.
 var currentProductImages = []; // mezcla de strings (URL ya subida) y {base64, filename} (pendiente)
 var currentProductExtraCats = []; // categorías adicionales (además de la principal)
 var CAT_OPTIONS = [['impresion','Impresión Digital'],['packaging','Packaging'],['giganto','Gigantografías'],['diseno','Diseño Gráfico'],['merch','Merchandising'],['papeleria','Papelería Creativa']];
@@ -1661,6 +1671,7 @@ function openProductModal(idx) {
   currentProductImages = p ? ((p.images && p.images.length) ? p.images.slice() : (p.img ? [p.img] : [])) : [];
   currentProductExtraCats = p ? ((p.cats || []).filter(function(c){ return c && c !== p.cat; })) : [];
   currentProductSpecs = p ? (p.specs || []).slice() : [];
+  currentProductColorOptions = p ? (p.colorOptions || []).slice() : [];
   document.getElementById('productModalTitle').textContent = p ? 'Editar producto' : 'Nuevo producto';
   document.getElementById('pName').value = p ? p.name : '';
   document.getElementById('pCat').value = p ? p.cat : 'impresion';
@@ -1676,6 +1687,7 @@ function openProductModal(idx) {
   renderProductImages();
   renderExtraCats();
   renderSpecTags();
+  renderColorOptionTags();
   document.getElementById('productModal').classList.add('open');
 }
 
@@ -1698,6 +1710,24 @@ function addSpec() {
 document.getElementById('specInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); addSpec(); } });
 
 function removeSpec(i) { currentProductSpecs.splice(i, 1); renderSpecTags(); }
+
+function renderColorOptionTags() {
+  var wrap = document.getElementById('colorOptionsTags');
+  wrap.innerHTML = currentProductColorOptions.map(function(c, i) {
+    return '<span class="spec-tag">' + c + '<button onclick="removeColorOption(' + i + ')">×</button></span>';
+  }).join('');
+}
+
+function addColorOption() {
+  var inp = document.getElementById('colorOptionInput');
+  var val = inp.value.trim();
+  if (val && !currentProductColorOptions.includes(val)) { currentProductColorOptions.push(val); renderColorOptionTags(); }
+  inp.value = '';
+  inp.focus();
+}
+document.getElementById('colorOptionInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); addColorOption(); } });
+
+function removeColorOption(i) { currentProductColorOptions.splice(i, 1); renderColorOptionTags(); }
 
 // Categorías adicionales del producto
 function renderExtraCats() {
@@ -1795,6 +1825,7 @@ function saveProduct() {
       badgeType: formData.badge ? formData.badgeType : null,
       desc: formData.desc,
       specs: currentProductSpecs,
+      colorOptions: currentProductColorOptions,
       price: price,
       unit: formData.unit,
       delivery: formData.delivery,

@@ -288,7 +288,7 @@
       return '<div class="cart-item" data-id="' + item.id + '">'
         + '<div class="cart-item-thumb ' + (item.color || 'm') + '-card">' + (item.icon || '📦') + '</div>'
         + '<div class="cart-item-info">'
-        + '<span class="cart-item-name">' + item.name + '</span>'
+        + '<span class="cart-item-name">' + item.name + (item.variant ? ' — ' + item.variant : '') + '</span>'
         + '<span class="cart-item-unit">' + item.unit + '</span>'
         + '<span class="cart-item-price">$' + (item.price * item.qty).toLocaleString('es-AR') + '</span>'
         + '</div>'
@@ -298,14 +298,14 @@
         + '<span class="qty-val">' + item.qty + '</span>'
         + '<button class="qty-btn" data-action="inc" data-idx="' + idx + '">+</button>'
         + '</div>'
-        + '<button class="cart-remove" data-id="' + item.id + '">✕ Eliminar</button>'
+        + '<button class="cart-remove" data-idx="' + idx + '">✕ Eliminar</button>'
         + '</div>'
         + '</div>';
     }).join('');
 
     // Summary lines
     sumLines.innerHTML = items.map(function (item) {
-      return '<div class="summary-row"><span>' + item.name + ' × ' + item.qty + '</span><span>$' + (item.price * item.qty).toLocaleString('es-AR') + '</span></div>';
+      return '<div class="summary-row"><span>' + item.name + (item.variant ? ' — ' + item.variant : '') + ' × ' + item.qty + '</span><span>$' + (item.price * item.qty).toLocaleString('es-AR') + '</span></div>';
     }).join('');
     sumTotal.textContent = '$' + Cart.total().toLocaleString('es-AR');
 
@@ -324,7 +324,7 @@
     // Remove buttons
     list.querySelectorAll('.cart-remove').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        Cart.remove(btn.dataset.id);
+        Cart.removeAt(parseInt(btn.dataset.idx));
         renderCart();
       });
     });
@@ -460,7 +460,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: items.map(function(i) { return { id: String(i.id), name: i.name, qty: i.qty, price: i.price }; }),
+          items: items.map(function(i) { return { id: String(i.id), name: i.name, qty: i.qty, price: i.price, variant: i.variant }; }),
           payer: {
             name: nameParts[0],
             surname: nameParts.slice(1).join(' ') || '-',
@@ -514,7 +514,7 @@
       + (empresa ? '*Empresa:* ' + empresa + '\n' : '')
       + '*Envío:* ' + envio + (dir ? ' - ' + dir : '') + '\n'
       + '*Pago:* ' + pagoLabel + '\n\n'
-      + '*Productos:*\n' + items.map(function (i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n') + '\n\n'
+      + '*Productos:*\n' + items.map(function (i) { return '• ' + i.name + (i.variant ? ' (' + i.variant + ')' : '') + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n') + '\n\n'
       + '*Total estimado:* ' + total + '\n\n'
       + (obs ? '*Observaciones:* ' + obs + '\n\n' : '')
       + 'Código: ' + orderCode
@@ -601,7 +601,7 @@
       if (!saved.code) return;
       // El email lo manda el webhook de MP server-side — no lo enviamos desde el browser
       // para evitar duplicados. Solo abrimos WhatsApp.
-      var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
+      var waItems = (saved.items || []).map(function(i) { return '• ' + i.name + (i.variant ? ' (' + i.variant + ')' : '') + ' ×' + i.qty + ' → $' + (i.price * i.qty).toLocaleString('es-AR'); }).join('\n');
       var waMsg2 = encodeURIComponent(
         '✅ *Pago aprobado - ' + saved.code + '*\n\n'
         + '*Nombre:* ' + (saved.nombre || '') + '\n'
