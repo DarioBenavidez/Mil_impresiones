@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06",
+  "updated": "2026-07",
   "currency": "ARS",
   "note": "Actualizar precios en este archivo.",
   "products": [
@@ -528,6 +528,36 @@
       "unit": "x 9u",
       "delivery": "Listo en 24 hs",
       "whatsapp": "Me interesa \"Fotos polaroid 9x13cm\". ¿Pueden cotizarme?",
+      "oferta": false,
+      "hidden": false
+    },
+    {
+      "id": "vasos-milkshake",
+      "name": "Vasos Milkshake",
+      "cat": "merch",
+      "cats": [
+        "merch",
+        "papeleria"
+      ],
+      "category": "Merchandising",
+      "color": "m",
+      "icon": "VA",
+      "images": [
+        "/assets/uploads/gemini_generated_image_t9fig4t9fig4t9fi.webp"
+      ],
+      "img": "/assets/uploads/gemini_generated_image_t9fig4t9fig4t9fi.webp",
+      "badge": "⚡ Rápido",
+      "badgeType": "hot",
+      "desc": "asos de plástico personalizados, ideales para souvenirs, cumpleaños, eventos y celebraciones especiales.\n\nCada vaso se personaliza según la temática elegida, con diseño, nombre o detalle especial para que combine perfecto con tu fiesta.\n\nIncluye tapa y sorbete.\nEl valor publicado es por unidad.\nCompra mínima: 6 unidades.",
+      "specs": [
+        "Vaso milkshake",
+        "plastico",
+        "personalizado"
+      ],
+      "price": 15000,
+      "unit": "x 6u",
+      "delivery": "Listo en 48 hs",
+      "whatsapp": "Me interesa \"Vasos Milkshake\". ¿Pueden cotizarme?",
       "oferta": false,
       "hidden": false
     }
